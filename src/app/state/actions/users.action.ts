@@ -8,3 +8,24 @@ export const loadSuccess = createAction(
   props<{ users: User[] }>()
 );
 export const loadError = createAction('[USER] load error', props<{ e: any }>());
+
+export const create = createAction(
+  '[USER] create',
+  props<{
+    name: string;
+    email: string;
+    password: string;
+    identification_number: string;
+    block_number: string;
+    address_number: string;
+  }>()
+);
+
+export const createSuccess = createAction(
+  '[USER] create success',
+  props<{ user: User }>()
+);
+export const createError = createAction(
+  '[USER] create error',
+  props<{ e: any }>()
+);

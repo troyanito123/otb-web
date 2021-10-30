@@ -18,4 +18,24 @@ export class UserService {
       .get<any[]>(this.url)
       .pipe(map((res) => res.map((r) => User.fromJson(r))));
   }
+
+  public create(
+    name: string,
+    email: string,
+    password: string,
+    identification_number: string,
+    block_number: string,
+    address_number: string
+  ): Observable<User> {
+    return this.http
+      .post(this.url, {
+        name,
+        email,
+        password,
+        identification_number,
+        block_number,
+        address_number,
+      })
+      .pipe(map((res) => User.fromJson(res)));
+  }
 }
