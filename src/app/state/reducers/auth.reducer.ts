@@ -11,12 +11,14 @@ import {
 
 export interface AuthState {
   user: User | null;
+  access_token: string | null;
   loading: boolean;
   error: any;
 }
 
 export const initialAuthState: AuthState = {
   user: null,
+  access_token: null,
   loading: false,
   error: null,
 };
@@ -26,18 +28,21 @@ const _authReducer = createReducer(
 
   on(signin, () => ({
     user: null,
+    access_token: null,
     loading: true,
     error: null,
   })),
 
-  on(setUser, (state, { user }) => ({
+  on(setUser, (state, { user, access_token }) => ({
     user,
+    access_token,
     loading: false,
     error: null,
   })),
 
   on(setError, (state, { e }) => ({
     user: null,
+    access_token: null,
     loading: false,
     error: e.error,
   })),
@@ -54,6 +59,7 @@ const _authReducer = createReducer(
 
   on(unsetUser, () => ({
     user: null,
+    access_token: null,
     loading: false,
     error: null,
   }))

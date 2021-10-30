@@ -1,1 +1,10 @@
-<p>signin works!</p>
+<h1>ACCESO</h1>
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="signin()">
+  <label>Email</label>
+  <input type="text" formControlName="email" />
+  <br />
+  <label> Contrasena</label>
+  <input type="password" formControlName="password" />
+  <br />
+  <button type="submit">INGRESAR</button>
+</form>

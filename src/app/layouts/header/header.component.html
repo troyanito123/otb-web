@@ -1,0 +1,6 @@
+<header>
+  <ul>
+    <li *ngIf="!isLogged"><a routerLink="/auth">LOGIN</a></li>
+    <li *ngIf="isLogged"><button (click)="signout()">LOGOUT</button></li>
+  </ul>
+</header>
