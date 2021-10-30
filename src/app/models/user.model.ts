@@ -1,11 +1,20 @@
 export class User {
   static fromJson(json: any) {
-    const { id, name, email, address_number, block_number, status, role } =
-      json;
+    const {
+      id,
+      name,
+      identification_number,
+      email,
+      address_number,
+      block_number,
+      status,
+      role,
+    } = json;
 
     return new User(
       id,
       name,
+      identification_number,
       email,
       address_number,
       block_number,
@@ -17,6 +26,7 @@ export class User {
   constructor(
     public id: number,
     public name: string,
+    public identification_number: string,
     public email: string,
     public address_number: string,
     public block_number: string,
