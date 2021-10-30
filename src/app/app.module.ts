@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './layouts/header/header.component';
+import { HttpHeadersService } from './interceptors/http-headers.service';
 
 /*CONFIG STORE*/
 import { EffectsModule } from '@ngrx/effects';
@@ -12,8 +15,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducers } from './state/app.reducer';
 import { EffectsArray } from './state/effects';
 import { environment } from 'src/environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './layouts/header/header.component';
 /*CONFIG STORE */
 
 @NgModule({
@@ -30,7 +31,13 @@ import { HeaderComponent } from './layouts/header/header.component';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpHeadersService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

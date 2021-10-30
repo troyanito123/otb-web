@@ -35,15 +35,15 @@ export class AuthEffect {
     )
   );
 
-  // renew$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(renew),
-  //     mergeMap(() =>
-  //       this.authService.renew().pipe(
-  //         map((user) => setUser({ user })),
-  //         catchError((e) => of(unsetUser()))
-  //       )
-  //     )
-  //   )
-  // );
+  renew$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(renew),
+      mergeMap(() =>
+        this.authService.renew().pipe(
+          map(({ user, access_token }) => setUser({ user, access_token })),
+          catchError((e) => of(unsetUser()))
+        )
+      )
+    )
+  );
 }
