@@ -1,1 +1,5 @@
-<p>user-list works!</p>
+<div *ngFor="let u of users">
+  <p>{{ u.name }}</p>
+  <p>{{ u.block_number }}</p>
+  <p>{{ u.address_number }}</p>
+</div>

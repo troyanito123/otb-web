@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
@@ -21,13 +20,12 @@ export class HeaderComponent implements OnInit {
     return !!this.user;
   }
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.authSubs = this.store.select('auth').subscribe(({ user }) => {
-      this.user = user;
-      if (!user) this.router.navigate(['auth']);
-    });
+    this.authSubs = this.store
+      .select('auth')
+      .subscribe(({ user }) => (this.user = user));
   }
 
   ngOnDestroy() {
