@@ -1,1 +1,4 @@
-<p>user-edit works!</p>
+<ng-container *ngIf="user && roles.length">
+  <h1>Modifica el usuario: {{ user.name }}</h1>
+  <app-user-form [user]="user" [roles]="roles"></app-user-form>
+</ng-container>

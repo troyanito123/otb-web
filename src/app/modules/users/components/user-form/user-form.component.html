@@ -5,9 +5,11 @@
   <label>Nombre completo</label>
   <input type="text" formControlName="name" />
   <br />
-  <label>Contraseña</label>
-  <input type="password" formControlName="password" />
-  <br />
+  <div *ngIf="!isEditing">
+    <label>Contraseña</label>
+    <input type="password" formControlName="password" />
+    <br />
+  </div>
   <label>Carnet de identidad</label>
   <input type="text" formControlName="identification_number" />
   <br />
@@ -17,6 +19,22 @@
   <label>Numero de lote</label>
   <input type="text" formControlName="address_number" />
   <br />
+
+  <div *ngIf="isEditing">
+    <label for="">Rol</label>
+    <select formControlName="role">
+      <option [value]="role.id" *ngFor="let role of roles">
+        {{ role.name }}
+      </option>
+    </select>
+    <br />
+
+    <label>Estado</label>
+    <select formControlName="status">
+      <option [value]="state" *ngFor="let state of status">{{ state }}</option>
+    </select>
+    <br />
+  </div>
 
   <button type="submit">Guardar</button>
 </form>

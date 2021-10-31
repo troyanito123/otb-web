@@ -29,12 +29,41 @@ export class UserService {
   ): Observable<User> {
     return this.http
       .post(this.url, {
-        name,
+        name: name.toUpperCase(),
         email,
         password,
-        identification_number,
-        block_number,
-        address_number,
+        identification_number: identification_number.toUpperCase(),
+        block_number: block_number.toUpperCase(),
+        address_number: address_number.toUpperCase(),
+      })
+      .pipe(map((res) => User.fromJson(res)));
+  }
+
+  public getOne(id: number) {
+    return this.http
+      .get(`${this.url}/${id}`)
+      .pipe(map((res) => User.fromJson(res)));
+  }
+
+  public update(
+    id: number,
+    name: string,
+    email: string,
+    identification_number: string,
+    block_number: string,
+    address_number: string,
+    status: string,
+    role: string
+  ) {
+    return this.http
+      .put(`${this.url}/${id}`, {
+        name: name.toUpperCase(),
+        email,
+        identification_number: identification_number.toUpperCase(),
+        block_number: block_number.toUpperCase(),
+        address_number: address_number.toUpperCase(),
+        status,
+        roleId: Number(role),
       })
       .pipe(map((res) => User.fromJson(res)));
   }

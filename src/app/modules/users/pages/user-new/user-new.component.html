@@ -1,1 +1,3 @@
-<app-user-form></app-user-form>
+<ng-container *ngIf="roles.length">
+  <app-user-form [roles]="roles"></app-user-form>
+</ng-container>

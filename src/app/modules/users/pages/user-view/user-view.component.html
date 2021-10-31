@@ -1,1 +1,5 @@
-<p>user-view works!</p>
+<ng-container *ngIf="user">
+  <hr />
+  <button [routerLink]="['../edit', user.id]">Modificar</button>
+  <h1>{{ user.name }}</h1>
+</ng-container>

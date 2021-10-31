@@ -1,11 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
-import * as UsersActions from 'src/app/state/actions/users.action';
+import * as UserActions from 'src/app/state/actions/user.action';
+
+import { User } from 'src/app/models/user.model';
+import { Role } from 'src/app/models/role.model';
 
 @Component({
   selector: 'app-user-form',
@@ -15,27 +19,51 @@ import * as UsersActions from 'src/app/state/actions/users.action';
 export class UserFormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
 
-  private usersSubs!: Subscription;
+  @Input() user!: User;
+  @Input() roles!: Role[];
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+  private userSubs!: Subscription;
+
+  get isEditing() {
+    return !!this.user;
+  }
+
+  status = ['ACTIVE', 'INACTIVE', 'DELETE'];
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
-    this.usersSubs = this.store
-      .select('users')
-      .subscribe(({ saveFinish, error }) => {
-        if (saveFinish) this.handledSaveFinish();
+    this.userSubs = this.store
+      .select('user')
+      .subscribe(({ saved, error, user }) => {
+        if (saved) this.handledSaveFinish(user);
         if (error) this.handledError(error);
       });
   }
 
   ngOnDestroy(): void {
-    this.usersSubs?.unsubscribe();
+    this.store.dispatch(UserActions.cleanUser());
+    this.userSubs?.unsubscribe();
   }
 
   public save() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      return;
+    }
 
+    if (this.isEditing) {
+      this.update();
+    } else {
+      this.create();
+    }
+  }
+
+  private create() {
     const {
       name,
       email,
@@ -46,7 +74,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     } = this.form.value;
 
     this.store.dispatch(
-      UsersActions.create({
+      UserActions.create({
         name,
         email,
         password,
@@ -57,8 +85,34 @@ export class UserFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  private handledSaveFinish() {
+  private update() {
+    const {
+      name,
+      email,
+      identification_number,
+      block_number,
+      address_number,
+      status,
+      role,
+    } = this.form.value;
+
+    this.store.dispatch(
+      UserActions.update({
+        id: this.user.id,
+        name,
+        email,
+        identification_number,
+        block_number,
+        address_number,
+        status,
+        role,
+      })
+    );
+  }
+
+  private handledSaveFinish(user: User | null) {
     this.form.reset();
+    this.router.navigate(['/users', user!.id]);
   }
   private handledError(error: any) {
     alert('ERROR AL CREAR EL USUARIO');
@@ -66,15 +120,40 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.form = this.fb.group({
-      name: ['test 09', [Validators.required, Validators.minLength(3)]],
-      email: ['test09@test.com', [Validators.required, Validators.email]],
-      password: ['test09', [Validators.required, Validators.minLength(6)]],
+      name: [
+        this.user ? this.user.name : 'test 14',
+        [Validators.required, Validators.minLength(3)],
+      ],
+      email: [
+        this.user ? this.user.email : 'test14@test.com',
+        [Validators.required, Validators.email],
+      ],
+      password: [
+        '',
+        this.user ? [] : [Validators.required, Validators.minLength(6)],
+      ],
       identification_number: [
-        '3452312cb',
+        this.user ? this.user.identification_number : '1231dd',
         [Validators.required, Validators.minLength(6)],
       ],
-      block_number: ['37f', [Validators.required]],
-      address_number: ['23', [Validators.required]],
+      block_number: [
+        this.user ? this.user.block_number : '2b',
+        [Validators.required],
+      ],
+      address_number: [
+        this.user ? this.user.address_number : '2b',
+        [Validators.required],
+      ],
+      role: [
+        this.user
+          ? this.roles.find((r) => r.code === this.user.role)?.id
+          : this.roles[0].id,
+        [Validators.required],
+      ],
+      status: [
+        this.user ? this.user.status : this.status[0],
+        [Validators.required],
+      ],
     });
   }
 }
