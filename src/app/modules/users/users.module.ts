@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,6 @@ import { UserPaymentComponent } from './pages/user-payment/user-payment.componen
     UserItemComponent,
     UserPaymentComponent,
   ],
-  imports: [CommonModule, UsersRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, UsersRoutingModule, ReactiveFormsModule, PipesModule],
 })
 export class UsersModule {}

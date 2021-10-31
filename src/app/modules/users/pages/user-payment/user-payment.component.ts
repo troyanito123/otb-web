@@ -56,6 +56,10 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
     this.monthlyPaymentsMadeSubs?.unsubscribe();
   }
 
+  pay(pay: any) {
+    console.log('alista pago', pay);
+  }
+
   private loadPayments(id: number, year: string) {
     this.store.dispatch(MonthlyPaymentsAction.loadPayments({ year }));
     this.store.dispatch(
