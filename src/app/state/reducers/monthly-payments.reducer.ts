@@ -6,13 +6,13 @@ import {
   loadPaymentsSuccess,
 } from '../actions/monthly-payments.action';
 
-export interface MonthlyPayments {
+export interface MonthlyPaymentsState {
   monthlyPayments: MonthlyPayment[];
   loading: boolean;
   error: any;
 }
 
-export const initialMonthlyPayments: MonthlyPayments = {
+export const initialMonthlyPayments: MonthlyPaymentsState = {
   monthlyPayments: [],
   loading: false,
   error: null,

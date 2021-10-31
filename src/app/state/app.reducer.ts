@@ -1,7 +1,11 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { authReducer, AuthState } from './reducers/auth.reducer';
 import {
-  MonthlyPayments,
+  MonthlyPaymentsMadeState,
+  monthlyPaymentsMadeReducer,
+} from './reducers/monthly-payments-made.reducer';
+import {
+  MonthlyPaymentsState,
   monthlyPaymentsReducer,
 } from './reducers/monthly-payments.reducer';
 import { rolesReducer, RolesState } from './reducers/roles.reducer';
@@ -13,7 +17,8 @@ export interface AppState {
   users: UsersState;
   user: UserState;
   roles: RolesState;
-  monthlyPayment: MonthlyPayments;
+  monthlyPayment: MonthlyPaymentsState;
+  monthlyPaymentMade: MonthlyPaymentsMadeState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -22,4 +27,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   user: userReducer,
   roles: rolesReducer,
   monthlyPayment: monthlyPaymentsReducer,
+  monthlyPaymentMade: monthlyPaymentsMadeReducer,
 };

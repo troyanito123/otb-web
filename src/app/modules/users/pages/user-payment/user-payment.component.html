@@ -10,8 +10,14 @@
     </select>
   </div>
 
-  <pre>
+  <div style="display: flex">
+    <pre>
     
-    {{ monthlyPayments | json }}
-  </pre>
+      {{ monthlyPayments | json }}
+    </pre>
+
+    <pre>
+      {{ monthlyPaymentsMade | json }}
+    </pre>
+  </div>
 </ng-container>

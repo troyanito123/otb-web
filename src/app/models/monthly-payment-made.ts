@@ -2,9 +2,9 @@ import { MonthlyPayment } from './monthly-payment.model';
 
 export class MonthlyPaymentMade {
   public static fromJson(json: any) {
-    const { id, amount, user, monthly_payment } = json;
+    const { id, amount, user, monthly_paymet } = json;
     const { id: userId, name, email } = user;
-    const { id: mpId, month, year, amount: mpAmount } = monthly_payment;
+    const { id: mpId, month, year, amount: mpAmount } = monthly_paymet;
     return new MonthlyPaymentMade(
       id,
       amount,

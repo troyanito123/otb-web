@@ -11,11 +11,14 @@ export class MonthlyPaymentMadeService {
   private url = `${environment.apiUrl}/monthly-payments-made`;
 
   constructor(private http: HttpClient) {}
-  public getMonthlyPaymentsByYear(id: number, year: string) {
+
+  public getMonthlyPaymentsMadeByUserAndYear(id: number, year: string) {
     const params = new HttpParams().append('year', year);
 
-    return this.http
-      .get<[]>(`${this.url}/user/${id}`, { params })
-      .pipe(map((res) => res.map((r) => MonthlyPaymentMade.fromJson(r))));
+    return this.http.get<[]>(`${this.url}/user/${id}`, { params }).pipe(
+      map((res) => {
+        return res.map((r) => MonthlyPaymentMade.fromJson(r));
+      })
+    );
   }
 }

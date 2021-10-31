@@ -15,7 +15,7 @@ export class MonthlyPaymentsEffect {
     private monthlyPaymentService: MonthlyPaymentService
   ) {}
 
-  loadRoles$ = createEffect(() =>
+  loadMonthlyPayments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MonthlyPaymentsActions.loadPayments),
       mergeMap(({ year }) =>
