@@ -67,4 +67,10 @@ export class UserService {
       })
       .pipe(map((res) => User.fromJson(res)));
   }
+
+  public remove(id: number) {
+    return this.http
+      .delete(`${this.url}/${id}`)
+      .pipe(map((res) => User.fromJson(res)));
+  }
 }

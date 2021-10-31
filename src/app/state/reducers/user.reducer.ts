@@ -9,12 +9,15 @@ import {
   update,
   saveSuccess,
   saveError,
+  remove,
+  removeSuccess,
 } from '../actions/user.action';
 
 export interface UserState {
   user: User | null;
   loading: boolean;
   saved: boolean;
+  removed: boolean;
   error: any;
 }
 
@@ -22,6 +25,7 @@ export const initialUsersState: UserState = {
   user: null,
   loading: false,
   saved: false,
+  removed: false,
   error: null,
 };
 
@@ -50,6 +54,7 @@ const _userReducer = createReducer(
     user: null,
     loading: false,
     saved: false,
+    removed: false,
     error: null,
   })),
 
@@ -59,6 +64,11 @@ const _userReducer = createReducer(
   })),
 
   on(update, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(remove, (state) => ({
     ...state,
     loading: true,
   })),
@@ -75,6 +85,12 @@ const _userReducer = createReducer(
     loading: false,
     saved: false,
     error: e.error,
+  })),
+
+  on(removeSuccess, (state) => ({
+    ...state,
+    loading: false,
+    removed: true,
   }))
 );
 

@@ -36,10 +36,17 @@ export const update = createAction(
 );
 
 export const saveSuccess = createAction(
-  '[USER] create success',
+  '[USER] save success',
   props<{ user: User }>()
 );
-export const saveError = createAction(
-  '[USER] create error',
-  props<{ e: any }>()
+export const saveError = createAction('[USER] save error', props<{ e: any }>());
+
+export const remove = createAction(
+  '[USER] remove user',
+  props<{ id: number }>()
+);
+
+export const removeSuccess = createAction(
+  '[USER] remove user success',
+  props<{ user: User }>()
 );

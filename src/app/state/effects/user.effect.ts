@@ -12,6 +12,8 @@ import {
   saveSuccess,
   saveError,
   update,
+  remove,
+  removeSuccess,
 } from '../actions/user.action';
 
 @Injectable()
@@ -88,6 +90,18 @@ export class UserEffect {
               map((user) => saveSuccess({ user })),
               catchError((e) => of(saveError({ e })))
             )
+      )
+    )
+  );
+
+  removeUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(remove),
+      mergeMap(({ id }) =>
+        this.userService.remove(id).pipe(
+          map((user) => removeSuccess({ user })),
+          catchError((e) => of(saveError({ e })))
+        )
       )
     )
   );
