@@ -1,4 +1,17 @@
 <ng-container *ngIf="user">
   <h1>Pagos mensuales de:</h1>
   <h2>{{ user.name }}</h2>
+  <hr />
+
+  <div>
+    <label>Año de cobro</label>
+    <select [formControl]="yearInput">
+      <option [value]="year" *ngFor="let year of years">{{ year }}</option>
+    </select>
+  </div>
+
+  <pre>
+    
+    {{ monthlyPayments | json }}
+  </pre>
 </ng-container>
