@@ -5,12 +5,14 @@ import * as MonthlyPaymentsMadeActions from '../actions/monthly-payments-made.ac
 export interface MonthlyPaymentsMadeState {
   monthlyPaymentsMade: MonthlyPaymentMade[];
   loading: boolean;
+  saved: boolean;
   error: any;
 }
 
 export const initialMonthlyPaymentsMade: MonthlyPaymentsMadeState = {
   monthlyPaymentsMade: [],
   loading: false,
+  saved: false,
   error: null,
 };
 
@@ -20,6 +22,7 @@ const _monthlyPaymentsMadeReducer = createReducer(
   on(MonthlyPaymentsMadeActions.loadPaymentsMade, (state) => ({
     ...state,
     loading: true,
+    saved: false,
   })),
 
   on(
@@ -36,7 +39,24 @@ const _monthlyPaymentsMadeReducer = createReducer(
     ...state,
     loading: false,
     error: e,
-  }))
+  })),
+
+  on(MonthlyPaymentsMadeActions.createManyPaymentsMade, (state) => ({
+    ...state,
+    loading: true,
+    saved: false,
+  })),
+
+  on(
+    MonthlyPaymentsMadeActions.addPaymentsMade,
+    (state, { monthlyPaymentsMade }) => ({
+      ...state,
+      monthlyPaymentsMade:
+        state.monthlyPaymentsMade.concat(monthlyPaymentsMade),
+      loading: false,
+      saved: true,
+    })
+  )
 );
 
 export function monthlyPaymentsMadeReducer(state: any, action: any) {

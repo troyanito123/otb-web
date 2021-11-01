@@ -6,6 +6,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as PrePaidActions from 'src/app/state/actions/pre-payment.action';
 
 import { PrePayment } from 'src/app/models/pre-payment';
+import { createManyPaymentsMade } from 'src/app/state/actions/monthly-payments-made.action';
 
 @Component({
   selector: 'app-user-paid-print',
@@ -15,6 +16,8 @@ import { PrePayment } from 'src/app/models/pre-payment';
 export class UserPaidPrintComponent implements OnInit, OnDestroy {
   public prePayments: PrePayment[] = [];
   private prePaymentsSubs!: Subscription;
+
+  private monthlyPaymentsMadeSubs!: Subscription;
 
   public total = 0;
 
@@ -32,10 +35,13 @@ export class UserPaidPrintComponent implements OnInit, OnDestroy {
           0
         );
       });
+
+    this.listenerStore();
   }
 
   ngOnDestroy(): void {
     this.prePaymentsSubs?.unsubscribe();
+    this.monthlyPaymentsMadeSubs?.unsubscribe();
   }
 
   substractToPrePaid(id: number) {
@@ -43,6 +49,27 @@ export class UserPaidPrintComponent implements OnInit, OnDestroy {
   }
 
   confirmPaid() {
-    console.log('confirmar pago');
+    if (!this.prePayments.length) {
+      console.log('no hay que pagar');
+      return;
+    }
+    const monthsId = JSON.stringify(this.prePayments.map((p) => p.id));
+
+    this.store.dispatch(
+      createManyPaymentsMade({ userId: this.userId, monthsId })
+    );
+  }
+
+  private listenerStore() {
+    this.monthlyPaymentsMadeSubs = this.store
+      .select('monthlyPaymentMade')
+      .subscribe(({ saved }) => {
+        if (saved) {
+          const data = [...this.prePayments];
+          this.store.dispatch(PrePaidActions.cleanPayment());
+          console.log('generar Factura');
+          console.log(data);
+        }
+      });
   }
 }
