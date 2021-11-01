@@ -1,0 +1,22 @@
+<div>
+  <h2>Meses a pagar</h2>
+  <table>
+    <thead>
+      <th>Año</th>
+      <th>Mes</th>
+      <th>Monto</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of prePayments">
+        <td>{{ item.year }}</td>
+        <td>{{ item.month }}</td>
+        <td>{{ item.amountForPay }}</td>
+        <td><button (click)="substractToPrePaid(item.id)">Quitar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Total: {{ total }}</h2>
+
+  <button (click)="confirmPaid()">CONFIRMAR PAGO</button>
+</div>

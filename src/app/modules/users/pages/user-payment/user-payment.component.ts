@@ -7,9 +7,11 @@ import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
 import { User } from 'src/app/models/user.model';
 import * as MonthlyPaymentsAction from 'src/app/state/actions/monthly-payments.action';
 import * as MonthlyPaymentsMadeAction from 'src/app/state/actions/monthly-payments-made.action';
+import * as PrePaymentActions from 'src/app/state/actions/pre-payment.action';
 import { loadUser } from 'src/app/state/actions/user.action';
 import { AppState } from 'src/app/state/app.reducer';
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made';
+import { PrePayment } from 'src/app/models/pre-payment';
 
 @Component({
   selector: 'app-user-payment',
@@ -56,8 +58,8 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
     this.monthlyPaymentsMadeSubs?.unsubscribe();
   }
 
-  pay(pay: any) {
-    console.log('alista pago', pay);
+  addToPrePaid(prePayment: PrePayment) {
+    this.store.dispatch(PrePaymentActions.addPayment({ prePayment }));
   }
 
   private loadPayments(id: number, year: string) {

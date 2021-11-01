@@ -12,6 +12,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { UserPaidPrintComponent } from './components/user-paid-print/user-paid-print.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     UserFormComponent,
     UserItemComponent,
     UserPaymentComponent,
+    UserPaidPrintComponent,
   ],
   imports: [CommonModule, UsersRoutingModule, ReactiveFormsModule, PipesModule],
 })

@@ -10,33 +10,37 @@
     </select>
   </div>
 
-  <table>
-    <thead>
-      <th>Año</th>
-      <th>Mes</th>
-      <th>Mensualidad</th>
-      <th>Pagado</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let item of monthlyPayments | monthlyPayments: monthlyPaymentsMade
-        "
-      >
-        <td>{{ item.year }}</td>
-        <td>{{ item.month }}</td>
-        <td>{{ item.amountForPay }}</td>
-        <td>{{ item.amountPay }}</td>
-        <td>
-          <button
-            (click)="pay(item)"
-            *ngIf="item.amountForPay > item.amountPay"
-          >
-            Pagar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div style="display: flex">
+    <table>
+      <thead>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Mensualidad</th>
+        <th>Pagado</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let item of monthlyPayments | monthlyPayments: monthlyPaymentsMade
+          "
+        >
+          <td>{{ item.year }}</td>
+          <td>{{ item.month }}</td>
+          <td>{{ item.amountForPay }}</td>
+          <td>{{ item.amountPay }}</td>
+          <td>
+            <button
+              (click)="addToPrePaid(item)"
+              *ngIf="item.amountForPay > item.amountPay"
+            >
+              Añadir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <app-user-paid-print [userId]="user.id"></app-user-paid-print>
+  </div>
 </ng-container>
