@@ -1,0 +1,41 @@
+.receipt_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 750px;
+  height: 450px;
+  padding: 1rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+
+  .header_receipt {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    img {
+      max-height: 100px;
+    }
+    h1,
+    h2 {
+      margin: 0;
+      text-align: center;
+    }
+  }
+  .detail_receipt {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .foote_receipt {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    p {
+      padding: 0px;
+      margin: 0px;
+      text-align: center;
+    }
+  }
+}

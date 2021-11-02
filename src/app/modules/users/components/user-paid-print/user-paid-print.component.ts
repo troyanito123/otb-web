@@ -8,6 +8,8 @@ import * as PrePaidActions from 'src/app/state/actions/pre-payment.action';
 import { PrePayment } from 'src/app/models/pre-payment';
 import { createManyPaymentsMade } from 'src/app/state/actions/monthly-payments-made.action';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-user-paid-print',
   templateUrl: './user-paid-print.component.html',
@@ -23,7 +25,7 @@ export class UserPaidPrintComponent implements OnInit, OnDestroy {
 
   @Input() userId!: number;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.prePaymentsSubs = this.store
@@ -65,11 +67,10 @@ export class UserPaidPrintComponent implements OnInit, OnDestroy {
       .select('monthlyPaymentMade')
       .subscribe(({ saved }) => {
         if (saved) {
-          const data = [...this.prePayments];
-          this.store.dispatch(PrePaidActions.cleanPayment());
-          console.log('generar Factura');
-          console.log(data);
+          this.router.navigate(['/users/receipt']);
         }
       });
   }
+
+  print() {}
 }

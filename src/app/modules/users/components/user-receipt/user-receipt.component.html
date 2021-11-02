@@ -1,0 +1,42 @@
+<button (click)="print()">Imprimir</button>
+
+<div class="receipt_container" *ngIf="user && auth" id="receipt" #receipt>
+  <div class="header_receipt">
+    <img src="../../../../../assets/logo1.PNG" alt="" />
+    <div>
+      <h1>OTB SAN JOSE</h1>
+      <h1>LA TAMBORADA</h1>
+      <h2>Pago de mensualidades</h2>
+    </div>
+    <img src="../../../../../assets/logo2.PNG" alt="" />
+  </div>
+
+  <div class="detail_receipt">
+    <div>
+      <p><strong>Descripcion: </strong> {{ description }}</p>
+      <p><strong>Vecino: </strong> {{ user.name }}</p>
+      <p><strong>Directivo OTB: </strong> {{ auth.name }}</p>
+      <p><strong>Monto:</strong> {{ total | number: "1.2" }} Bs.</p>
+    </div>
+    <div>
+      <qr-code [value]="qrValue" [size]="200"></qr-code>
+    </div>
+  </div>
+  <div class="foote_receipt">
+    <div>
+      <p>.............................</p>
+      <p><strong>Vecino</strong></p>
+      <p>
+        <strong>{{ user.name }}</strong>
+      </p>
+    </div>
+
+    <div>
+      <p>.............................</p>
+      <p><strong>Directivo OTB</strong></p>
+      <p>
+        <strong>{{ auth.name }}</strong>
+      </p>
+    </div>
+  </div>
+</div>

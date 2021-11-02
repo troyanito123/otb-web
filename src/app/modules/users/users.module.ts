@@ -13,6 +13,8 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { UserPaidPrintComponent } from './components/user-paid-print/user-paid-print.component';
+import { UserReceiptComponent } from './components/user-receipt/user-receipt.component';
+import { QRCodeModule } from 'angular2-qrcode';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,14 @@ import { UserPaidPrintComponent } from './components/user-paid-print/user-paid-p
     UserItemComponent,
     UserPaymentComponent,
     UserPaidPrintComponent,
+    UserReceiptComponent,
   ],
-  imports: [CommonModule, UsersRoutingModule, ReactiveFormsModule, PipesModule],
+  imports: [
+    CommonModule,
+    UsersRoutingModule,
+    ReactiveFormsModule,
+    PipesModule,
+    QRCodeModule,
+  ],
 })
 export class UsersModule {}
