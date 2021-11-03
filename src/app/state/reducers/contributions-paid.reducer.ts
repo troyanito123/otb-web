@@ -5,12 +5,14 @@ import * as ContributionsPaidActions from '../actions/contributions-paid.action'
 export interface ContributionsPaidState {
   contributionsPaid: ContributionPaid[];
   loading: boolean;
+  saved: boolean;
   error: any;
 }
 
 export const initialContributionsPaid: ContributionsPaidState = {
   contributionsPaid: [],
   loading: false,
+  saved: false,
   error: null,
 };
 
@@ -41,8 +43,24 @@ const _contributionsPaidReducer = createReducer(
   on(ContributionsPaidActions.cleanContributionsPaid, (state) => ({
     contributionsPaid: [],
     loading: false,
+    saved: false,
     error: null,
-  }))
+  })),
+
+  on(ContributionsPaidActions.createContributionsPaid, (state) => ({
+    ...state,
+    loading: true,
+  })),
+
+  on(
+    ContributionsPaidActions.addContributionsPaid,
+    (state, { contributionPaid }) => ({
+      ...state,
+      contributionsPaid: [...state.contributionsPaid, contributionPaid],
+      saved: true,
+      loading: false,
+    })
+  )
 );
 
 export function contributionsPaidReducer(state: any, action: any) {

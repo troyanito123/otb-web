@@ -31,4 +31,24 @@ export class ContributionsPaidEffect {
       )
     )
   );
+
+  createContributionsPaid$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ContributionsPaidActions.createContributionsPaid),
+      mergeMap(({ amount, userId, contributionId }) =>
+        this.contributionPaidService
+          .create(amount, userId, contributionId)
+          .pipe(
+            map((contributionPaid) =>
+              ContributionsPaidActions.addContributionsPaid({
+                contributionPaid,
+              })
+            ),
+            catchError((e) =>
+              of(ContributionsPaidActions.loadContributionsPaidError({ e }))
+            )
+          )
+      )
+    )
+  );
 }

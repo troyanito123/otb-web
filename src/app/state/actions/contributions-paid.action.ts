@@ -17,5 +17,15 @@ export const loadContributionsPaidError = createAction(
 );
 
 export const cleanContributionsPaid = createAction(
-  '[CONTRIBUTIONS_PAID] clean paid contributions'
+  '[CONTRIBUTIONS_PAID] clean contributions paid'
+);
+
+export const createContributionsPaid = createAction(
+  '[CONTRIBUTIONS_PAID] create contributions paid',
+  props<{ amount: number; userId: number; contributionId: number }>()
+);
+
+export const addContributionsPaid = createAction(
+  '[CONTRIBUTIONS_PAID] Add contributions paid',
+  props<{ contributionPaid: ContributionPaid }>()
 );

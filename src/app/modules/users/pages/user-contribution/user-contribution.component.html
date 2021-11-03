@@ -12,7 +12,14 @@
       <td style="max-width: 200px">{{ item.description }}</td>
       <td>{{ item.amountToPay }}</td>
       <td>{{ item.amountPay }}</td>
-      <td><button *ngIf="item.amountToPay > item.amountPay">Pagar</button></td>
+      <td>
+        <button
+          (click)="payContribution(item)"
+          *ngIf="item.amountToPay > item.amountPay"
+        >
+          Pagar
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

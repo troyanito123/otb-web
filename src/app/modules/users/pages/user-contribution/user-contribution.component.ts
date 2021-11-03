@@ -3,9 +3,11 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ContributionPaid } from 'src/app/models/contribution-paid.model';
 import { Contribution } from 'src/app/models/contribution.model';
+import { PreContribution } from 'src/app/models/pre-contributions';
 import { User } from 'src/app/models/user.model';
 import {
   cleanContributionsPaid,
+  createContributionsPaid,
   loadContributionsPaid,
 } from 'src/app/state/actions/contributions-paid.action';
 import {
@@ -44,6 +46,13 @@ export class UserContributionComponent implements OnInit, OnDestroy {
     this.contributionsPaidSubs?.unsubscribe();
   }
 
+  payContribution(preContribution: PreContribution) {
+    const { amountToPay: amount, id: contributionId } = preContribution;
+    this.store.dispatch(
+      createContributionsPaid({ amount, contributionId, userId: this.user!.id })
+    );
+  }
+
   private listenerStore() {
     this.userSubs = this.store.select('user').subscribe(({ user }) => {
       this.user = user;
@@ -55,8 +64,9 @@ export class UserContributionComponent implements OnInit, OnDestroy {
       .subscribe(({ contributions }) => (this.contributions = contributions));
     this.contributionsPaidSubs = this.store
       .select('contributionsPaid')
-      .subscribe(
-        ({ contributionsPaid }) => (this.contributionsPaid = contributionsPaid)
-      );
+      .subscribe(({ contributionsPaid, saved }) => {
+        this.contributionsPaid = contributionsPaid;
+        if (saved) console.log('mostrar recibo');
+      });
   }
 }

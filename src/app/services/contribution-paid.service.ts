@@ -12,9 +12,15 @@ export class ContributionPaidService {
 
   constructor(private http: HttpClient) {}
 
-  getByUser(userId: number) {
+  public getByUser(userId: number) {
     return this.http
       .get<[]>(`${this.url}/user/${userId}`)
       .pipe(map((res) => res.map((r) => ContributionPaid.fromJson(r))));
+  }
+
+  public create(amount: number, userId: number, contributionId: number) {
+    return this.http
+      .post(this.url, { amount, userId, contributionId })
+      .pipe(map((res) => ContributionPaid.fromJson(res)));
   }
 }
