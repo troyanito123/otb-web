@@ -15,6 +15,8 @@
     <div>
       <p><strong>Descripcion: </strong> {{ description }}</p>
       <p><strong>Vecino: </strong> {{ user.name }}</p>
+      <p><strong>Manzano: </strong> #{{ user.block_number }}</p>
+      <p><strong>lote: </strong> #{{ user.address_number }}</p>
       <p><strong>Directivo OTB: </strong> {{ auth.name }}</p>
       <p><strong>Monto:</strong> {{ total | number: "1.2" }} Bs.</p>
     </div>

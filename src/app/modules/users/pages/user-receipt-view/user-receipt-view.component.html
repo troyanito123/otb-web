@@ -1,0 +1,9 @@
+<h2>Recibo generado</h2>
+
+<app-user-receipt
+  *ngIf="user && auth"
+  [prePayments]="prePayments"
+  [preContribution]="preContribution"
+  [user]="user"
+  [auth]="auth"
+></app-user-receipt>

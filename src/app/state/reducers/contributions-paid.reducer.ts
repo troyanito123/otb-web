@@ -22,6 +22,7 @@ const _contributionsPaidReducer = createReducer(
   on(ContributionsPaidActions.loadContributionsPaid, (state) => ({
     ...state,
     loading: true,
+    saved: false,
   })),
 
   on(

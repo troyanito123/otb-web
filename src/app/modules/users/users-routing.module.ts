@@ -7,6 +7,7 @@ import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserNewComponent } from './pages/user-new/user-new.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
+import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component';
 import { UserViewComponent } from './pages/user-view/user-view.component';
 import { UsersComponent } from './users.component';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
           { path: 'payment', component: UserPaymentComponent },
           { path: 'detail', component: UserDetailComponent },
           { path: 'edit', component: UserEditComponent },
+          { path: 'receipt-view', component: UserReceiptViewComponent },
           { path: '', redirectTo: 'detail' },
         ],
       },

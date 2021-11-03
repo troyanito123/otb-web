@@ -67,7 +67,7 @@ export class UserPaidPrintComponent implements OnInit, OnDestroy {
       .select('monthlyPaymentMade')
       .subscribe(({ saved }) => {
         if (saved) {
-          this.router.navigate(['/users/receipt']);
+          this.router.navigate(['users', this.userId, 'receipt-view']);
         }
       });
   }

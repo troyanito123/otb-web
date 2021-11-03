@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ContributionPaid } from 'src/app/models/contribution-paid.model';
@@ -14,6 +15,7 @@ import {
   cleanContributions,
   loadContributions,
 } from 'src/app/state/actions/contributions.action';
+import { setPreContribution } from 'src/app/state/actions/pre-constribution.action';
 import { AppState } from 'src/app/state/app.reducer';
 
 @Component({
@@ -31,7 +33,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   public contributionsPaid: ContributionPaid[] = [];
   private contributionsPaidSubs!: Subscription;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.listenerStore();
@@ -39,7 +41,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(cleanContributionsPaid());
+    // this.store.dispatch(cleanContributionsPaid());
     this.store.dispatch(cleanContributions());
     this.userSubs?.unsubscribe();
     this.contributionsSubs?.unsubscribe();
@@ -51,6 +53,8 @@ export class UserContributionComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       createContributionsPaid({ amount, contributionId, userId: this.user!.id })
     );
+
+    this.store.dispatch(setPreContribution({ preContribution }));
   }
 
   private listenerStore() {
@@ -66,7 +70,9 @@ export class UserContributionComponent implements OnInit, OnDestroy {
       .select('contributionsPaid')
       .subscribe(({ contributionsPaid, saved }) => {
         this.contributionsPaid = contributionsPaid;
-        if (saved) console.log('mostrar recibo');
+        if (saved) {
+          this.router.navigate(['users', this.user!.id, 'receipt-view']);
+        }
       });
   }
 }
