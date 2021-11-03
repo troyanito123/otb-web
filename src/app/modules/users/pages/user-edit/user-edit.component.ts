@@ -20,18 +20,14 @@ export class UserEditComponent implements OnInit, OnDestroy {
   public user!: User | null;
   public roles: Role[] = [];
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(({ id }) =>
-      this.store.dispatch(loadUser({ id }))
-    );
-
     this.store.dispatch(loadRoles());
 
-    this.userSubs = this.store
-      .select('user')
-      .subscribe(({ user }) => (this.user = user));
+    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+      this.user = user;
+    });
 
     this.rolesSubs = this.store
       .select('roles')

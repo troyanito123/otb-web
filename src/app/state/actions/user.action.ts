@@ -50,3 +50,5 @@ export const removeSuccess = createAction(
   '[USER] remove user success',
   props<{ user: User }>()
 );
+
+export const savedDefault = createAction('[USER] saved on false');

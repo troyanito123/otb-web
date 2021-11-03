@@ -47,7 +47,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(UserActions.cleanUser());
+    this.store.dispatch(UserActions.savedDefault());
     this.userSubs?.unsubscribe();
   }
 

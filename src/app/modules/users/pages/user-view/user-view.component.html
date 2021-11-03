@@ -1,8 +1,10 @@
 <ng-container *ngIf="user">
   <hr />
-  <button [routerLink]="['../edit', user.id]">Modificar</button>
+  <button [routerLink]="['./edit']">Modificar</button>
   <button (click)="remove()">Eliminar</button>
-  <button [routerLink]="['../payment', user.id]">Mensualidades</button>
-  <button [routerLink]="['../contributions', user.id]">Aportes</button>
-  <h1>{{ user.name }}</h1>
+  <button [routerLink]="['./payment']">Mensualidades</button>
+  <button [routerLink]="['./contributions']">Aportes</button>
+  <button [routerLink]="['./detail']">Informacion del usuario</button>
+  <hr />
+  <router-outlet></router-outlet>
 </ng-container>

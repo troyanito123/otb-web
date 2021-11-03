@@ -11,6 +11,7 @@ import {
   saveError,
   remove,
   removeSuccess,
+  savedDefault,
 } from '../actions/user.action';
 
 export interface UserState {
@@ -91,6 +92,12 @@ const _userReducer = createReducer(
     ...state,
     loading: false,
     removed: true,
+  })),
+
+  on(savedDefault, (state) => ({
+    ...state,
+    saved: false,
+    error: null,
   }))
 );
 

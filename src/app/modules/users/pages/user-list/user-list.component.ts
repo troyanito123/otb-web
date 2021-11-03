@@ -21,7 +21,6 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(cleanUser());
     this.store.dispatch(UsersActions.load());
     this.usersSubs = this.store.select('users').subscribe(({ users }) => {
       this.users = users;

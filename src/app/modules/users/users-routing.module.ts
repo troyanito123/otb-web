@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserReceiptComponent } from './components/user-receipt/user-receipt.component';
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
+import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserNewComponent } from './pages/user-new/user-new.component';
@@ -16,11 +17,19 @@ const routes: Routes = [
     children: [
       { path: 'list', component: UserListComponent },
       { path: 'new', component: UserNewComponent },
-      { path: 'receipt', component: UserReceiptComponent },
-      { path: 'contributions/:id', component: UserContributionComponent },
-      { path: ':id', component: UserViewComponent },
-      { path: 'edit/:id', component: UserEditComponent },
-      { path: 'payment/:id', component: UserPaymentComponent },
+      {
+        path: ':id',
+        component: UserViewComponent,
+        children: [
+          { path: 'receipt', component: UserReceiptComponent },
+          { path: 'contributions', component: UserContributionComponent },
+          { path: 'payment', component: UserPaymentComponent },
+          { path: 'detail', component: UserDetailComponent },
+          { path: 'edit', component: UserEditComponent },
+          { path: '', redirectTo: 'detail' },
+        ],
+      },
+
       { path: '', redirectTo: 'list' },
     ],
   },
