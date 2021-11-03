@@ -1,9 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ContributionPaid } from 'src/app/models/contribution-paid.model';
 import { Contribution } from 'src/app/models/contribution.model';
 import { User } from 'src/app/models/user.model';
-import { loadContributions } from 'src/app/state/actions/contributions.action';
+import {
+  cleanContributionsPaid,
+  loadContributionsPaid,
+} from 'src/app/state/actions/contributions-paid.action';
+import {
+  cleanContributions,
+  loadContributions,
+} from 'src/app/state/actions/contributions.action';
 import { AppState } from 'src/app/state/app.reducer';
 
 @Component({
@@ -18,6 +26,9 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   public contributions: Contribution[] = [];
   private contributionsSubs!: Subscription;
 
+  public contributionsPaid: ContributionPaid[] = [];
+  private contributionsPaidSubs!: Subscription;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -26,16 +37,26 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(cleanContributionsPaid());
+    this.store.dispatch(cleanContributions());
     this.userSubs?.unsubscribe();
     this.contributionsSubs?.unsubscribe();
+    this.contributionsPaidSubs?.unsubscribe();
   }
 
   private listenerStore() {
-    this.userSubs = this.store
-      .select('user')
-      .subscribe(({ user }) => (this.user = user));
+    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+      this.user = user;
+      if (user)
+        this.store.dispatch(loadContributionsPaid({ userId: this.user!.id }));
+    });
     this.contributionsSubs = this.store
       .select('contributions')
       .subscribe(({ contributions }) => (this.contributions = contributions));
+    this.contributionsPaidSubs = this.store
+      .select('contributionsPaid')
+      .subscribe(
+        ({ contributionsPaid }) => (this.contributionsPaid = contributionsPaid)
+      );
   }
 }
