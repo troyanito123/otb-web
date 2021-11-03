@@ -4,6 +4,7 @@ import { UserEffect } from './user.effect';
 import { RolesEffect } from './roles.effect';
 import { MonthlyPaymentsEffect } from './monthly-payments.effect';
 import { MonthlyPaymentsMadeEffect } from './monthly-payments-made.effect';
+import { ContributionsEffect } from './contributions.effect';
 
 export const EffectsArray: any[] = [
   AuthEffect,
@@ -12,4 +13,5 @@ export const EffectsArray: any[] = [
   RolesEffect,
   MonthlyPaymentsEffect,
   MonthlyPaymentsMadeEffect,
+  ContributionsEffect,
 ];

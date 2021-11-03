@@ -1,6 +1,10 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { authReducer, AuthState } from './reducers/auth.reducer';
 import {
+  contributionsReducer,
+  ContributionsState,
+} from './reducers/contributions.reducer';
+import {
   MonthlyPaymentsMadeState,
   monthlyPaymentsMadeReducer,
 } from './reducers/monthly-payments-made.reducer';
@@ -24,6 +28,7 @@ export interface AppState {
   monthlyPayment: MonthlyPaymentsState;
   monthlyPaymentMade: MonthlyPaymentsMadeState;
   prePayment: PrePaymentState;
+  contributions: ContributionsState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -34,4 +39,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   monthlyPayment: monthlyPaymentsReducer,
   monthlyPaymentMade: monthlyPaymentsMadeReducer,
   prePayment: prePaymentReducer,
+  contributions: contributionsReducer,
 };

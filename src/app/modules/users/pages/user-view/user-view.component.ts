@@ -34,7 +34,8 @@ export class UserViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(cleanUser());
+    //Probando
+    // this.store.dispatch(cleanUser());
     this.userSubs?.unsubscribe();
   }
 

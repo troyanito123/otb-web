@@ -6,6 +6,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as UsersActions from 'src/app/state/actions/users.action';
 
 import { User } from 'src/app/models/user.model';
+import { cleanUser } from 'src/app/state/actions/user.action';
 
 @Component({
   selector: 'app-user-list',
@@ -20,6 +21,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
+    this.store.dispatch(cleanUser());
     this.store.dispatch(UsersActions.load());
     this.usersSubs = this.store.select('users').subscribe(({ users }) => {
       this.users = users;

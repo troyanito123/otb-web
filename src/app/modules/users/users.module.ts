@@ -15,6 +15,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { UserPaidPrintComponent } from './components/user-paid-print/user-paid-print.component';
 import { UserReceiptComponent } from './components/user-receipt/user-receipt.component';
 import { QRCodeModule } from 'angular2-qrcode';
+import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { QRCodeModule } from 'angular2-qrcode';
     UserPaymentComponent,
     UserPaidPrintComponent,
     UserReceiptComponent,
+    UserContributionComponent,
   ],
   imports: [
     CommonModule,
