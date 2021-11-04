@@ -76,8 +76,8 @@ export class UserReceiptComponent implements OnInit, OnDestroy {
       doc.addImage(imgData, 'letter', 5, 15, 200, 120);
       doc.addImage(imgData, 'letter', 5, 160, 200, 120);
       doc.save(`${this.user?.name} - ${this.description}.pdf`);
-      this.store.dispatch(PrePaymentActions.cleanPayment());
-      this.store.dispatch(PreContributionActions.unsetContribution());
+      // this.store.dispatch(PrePaymentActions.cleanPayment());
+      // this.store.dispatch(PreContributionActions.unsetContribution());
       this.router.navigate(['users', this.user.id]);
     });
   }

@@ -1,27 +1,49 @@
-<table>
-  <thead>
-    <th>Descripcion</th>
-    <th>Monto</th>
-    <th>Monto pagado</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <tr
-      *ngFor="let item of contributions | preContributions: contributionsPaid"
-    >
-      <td style="max-width: 200px">{{ item.description }}</td>
-      <td>{{ item.amountToPay }}</td>
-      <td>{{ item.amountPay }}</td>
-      <td>
-        <button
-          (click)="payContribution(item)"
-          *ngIf="item.amountToPay > item.amountPay"
-        >
-          Pagar
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div style="display: flex">
+  <table>
+    <thead>
+      <th>Descripcion</th>
+      <th>Monto</th>
+      <th>Monto pagado</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of contributions | preContributions: contributionsPaid"
+      >
+        <td style="max-width: 200px">{{ item.description }}</td>
+        <td>{{ item.amountToPay }}</td>
+        <td>{{ item.amountPay }}</td>
+        <td>
+          <button
+            (click)="addPreContributionPaid(item)"
+            *ngIf="item.amountToPay > item.amountPay"
+          >
+            Añadir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <table>
+      <thead>
+        <th>Descripcion</th>
+        <th>Monto a pagar</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of preContributions">
+          <td style="max-width: 200px">{{ item.description }}</td>
+          <td>{{ item.amountToPay }}</td>
+          <td>
+            <button (click)="substractPreContributionPaid(item)">Quitar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Total: {{ total }}</h3>
+    <button (click)="confirmPay()">Confirmar pago</button>
+  </div>
+</div>
 
 <button routerLink="../receipt-view">RECIBO</button>

@@ -17,8 +17,8 @@ import {
   monthlyPaymentsReducer,
 } from './reducers/monthly-payments.reducer';
 import {
-  preContributionReducer,
-  PreContributionState,
+  preContributionsReducer,
+  PreContributionsState,
 } from './reducers/pre-contribution.reducer';
 import {
   prePaymentReducer,
@@ -38,7 +38,7 @@ export interface AppState {
   prePayment: PrePaymentState;
   contributions: ContributionsState;
   contributionsPaid: ContributionsPaidState;
-  preContribution: PreContributionState;
+  preContribution: PreContributionsState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -51,5 +51,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   prePayment: prePaymentReducer,
   contributions: contributionsReducer,
   contributionsPaid: contributionsPaidReducer,
-  preContribution: preContributionReducer,
+  preContribution: preContributionsReducer,
 };

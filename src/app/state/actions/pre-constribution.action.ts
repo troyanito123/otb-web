@@ -1,9 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 import { PreContribution } from 'src/app/models/pre-contributions';
 
-export const setPreContribution = createAction(
-  '[PAYMENT] set contribution',
+export const addContributionPaid = createAction(
+  '[CONTRIBUTION_PAID] add pre-contribution paid',
   props<{ preContribution: PreContribution }>()
 );
 
-export const unsetContribution = createAction('[PAYMENT] unset contribution');
+export const substractContributionPaid = createAction(
+  '[CONTRIBUTION_PAID] substract pre-contribution paid',
+  props<{ preContribution: PreContribution }>()
+);
+
+export const clean = createAction(
+  '[CONTRIBUTION_PAID] clean pre-contributions paid'
+);

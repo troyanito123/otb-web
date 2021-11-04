@@ -2,29 +2,48 @@ import { createReducer, on } from '@ngrx/store';
 import { PreContribution } from 'src/app/models/pre-contributions';
 import * as PreContributionActions from '../actions/pre-constribution.action';
 
-export interface PreContributionState {
-  preContribution: PreContribution | null;
+export interface PreContributionsState {
+  preContributions: PreContribution[];
+  total: number;
 }
 
-export const initialPreContributionState: PreContributionState = {
-  preContribution: null,
+export const initialPreContributionsState: PreContributionsState = {
+  preContributions: [],
+  total: 0,
 };
 
-const _preContributionReducer = createReducer(
-  initialPreContributionState,
+const _preContributionsReducer = createReducer(
+  initialPreContributionsState,
 
   on(
-    PreContributionActions.setPreContribution,
+    PreContributionActions.addContributionPaid,
     (state, { preContribution }) => ({
-      preContribution,
+      preContributions: state.preContributions.find(
+        (p) => p.id === preContribution.id
+      )
+        ? [...state.preContributions]
+        : [...state.preContributions, preContribution],
+      total: state.preContributions.find((p) => p.id === preContribution.id)
+        ? state.total
+        : state.total + preContribution.amountToPay,
+    })
+  ),
+  on(
+    PreContributionActions.substractContributionPaid,
+    (state, { preContribution }) => ({
+      preContributions: state.preContributions.filter(
+        (p) => p.id !== preContribution.id
+      ),
+      total: state.total - preContribution.amountToPay,
     })
   ),
 
-  on(PreContributionActions.unsetContribution, (state, {}) => ({
-    preContribution: null,
+  on(PreContributionActions.clean, (state) => ({
+    preContributions: [],
+    total: 0,
   }))
 );
 
-export function preContributionReducer(state: any, action: any) {
-  return _preContributionReducer(state, action);
+export function preContributionsReducer(state: any, action: any) {
+  return _preContributionsReducer(state, action);
 }

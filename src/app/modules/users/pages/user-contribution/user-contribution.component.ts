@@ -6,16 +6,9 @@ import { ContributionPaid } from 'src/app/models/contribution-paid.model';
 import { Contribution } from 'src/app/models/contribution.model';
 import { PreContribution } from 'src/app/models/pre-contributions';
 import { User } from 'src/app/models/user.model';
-import {
-  cleanContributionsPaid,
-  createContributionsPaid,
-  loadContributionsPaid,
-} from 'src/app/state/actions/contributions-paid.action';
-import {
-  cleanContributions,
-  loadContributions,
-} from 'src/app/state/actions/contributions.action';
-import { setPreContribution } from 'src/app/state/actions/pre-constribution.action';
+import * as ContributionsPaidActions from 'src/app/state/actions/contributions-paid.action';
+import * as ContributionsActions from 'src/app/state/actions/contributions.action';
+import * as PreContributionsActions from 'src/app/state/actions/pre-constribution.action';
 import { AppState } from 'src/app/state/app.reducer';
 
 @Component({
@@ -33,39 +26,69 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   public contributionsPaid: ContributionPaid[] = [];
   private contributionsPaidSubs!: Subscription;
 
+  public preContributions: PreContribution[] = [];
+  public total = 0;
+  private precontributionsSubs!: Subscription;
+
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.listenerStore();
-    this.store.dispatch(loadContributions());
+    this.store.dispatch(ContributionsActions.loadContributions());
   }
 
   ngOnDestroy(): void {
-    // this.store.dispatch(cleanContributionsPaid());
-    this.store.dispatch(cleanContributions());
+    this.store.dispatch(ContributionsActions.cleanContributions());
+    this.store.dispatch(PreContributionsActions.clean());
     this.userSubs?.unsubscribe();
     this.contributionsSubs?.unsubscribe();
     this.contributionsPaidSubs?.unsubscribe();
+    this.precontributionsSubs?.unsubscribe();
   }
 
-  payContribution(preContribution: PreContribution) {
-    const { amountToPay: amount, id: contributionId } = preContribution;
+  addPreContributionPaid(preContribution: PreContribution) {
     this.store.dispatch(
-      createContributionsPaid({ amount, contributionId, userId: this.user!.id })
+      PreContributionsActions.addContributionPaid({ preContribution })
     );
+  }
 
-    this.store.dispatch(setPreContribution({ preContribution }));
+  substractPreContributionPaid(preContribution: PreContribution) {
+    this.store.dispatch(
+      PreContributionsActions.substractContributionPaid({ preContribution })
+    );
+  }
+
+  confirmPay() {
+    if (!this.preContributions.length) {
+      console.log('no hay que pagar');
+      return;
+    }
+    const contributionsId = JSON.stringify(
+      this.preContributions.map((p) => p.id)
+    );
+    const userId = this.user!.id;
+    this.store.dispatch(
+      ContributionsPaidActions.createManyContributionsPaid({
+        userId,
+        contributionsId,
+      })
+    );
   }
 
   private listenerStore() {
     this.userSubs = this.store.select('user').subscribe(({ user }) => {
       this.user = user;
       if (user)
-        this.store.dispatch(loadContributionsPaid({ userId: this.user!.id }));
+        this.store.dispatch(
+          ContributionsPaidActions.loadContributionsPaid({
+            userId: this.user!.id,
+          })
+        );
     });
     this.contributionsSubs = this.store
       .select('contributions')
       .subscribe(({ contributions }) => (this.contributions = contributions));
+
     this.contributionsPaidSubs = this.store
       .select('contributionsPaid')
       .subscribe(({ contributionsPaid, saved }) => {
@@ -73,6 +96,13 @@ export class UserContributionComponent implements OnInit, OnDestroy {
         if (saved) {
           this.router.navigate(['users', this.user!.id, 'receipt-view']);
         }
+      });
+
+    this.precontributionsSubs = this.store
+      .select('preContribution')
+      .subscribe(({ preContributions, total }) => {
+        this.preContributions = preContributions;
+        this.total = total;
       });
   }
 }

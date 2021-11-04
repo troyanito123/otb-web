@@ -50,10 +50,10 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
       .subscribe(({ prePayments }) => {
         this.prePayments = prePayments;
       });
-    this.preContributionSubs = this.store
-      .select('preContribution')
-      .subscribe(
-        ({ preContribution }) => (this.preContribution = preContribution)
-      );
+    // this.preContributionSubs = this.store
+    //   .select('preContribution')
+    //   .subscribe(
+    //     ({ preContribution }) => (this.preContribution = preContribution)
+    //   );
   }
 }

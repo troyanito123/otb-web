@@ -61,6 +61,22 @@ const _contributionsPaidReducer = createReducer(
       saved: true,
       loading: false,
     })
+  ),
+
+  on(ContributionsPaidActions.createManyContributionsPaid, (state) => ({
+    ...state,
+    saved: false,
+    loading: true,
+  })),
+
+  on(
+    ContributionsPaidActions.addManyContributionsPaid,
+    (state, { contributionsPaid }) => ({
+      ...state,
+      contributionsPaid: state.contributionsPaid.concat(contributionsPaid),
+      saved: true,
+      loading: false,
+    })
   )
 );
 

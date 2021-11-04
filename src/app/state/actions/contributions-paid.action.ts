@@ -29,3 +29,13 @@ export const addContributionsPaid = createAction(
   '[CONTRIBUTIONS_PAID] Add contributions paid',
   props<{ contributionPaid: ContributionPaid }>()
 );
+
+export const createManyContributionsPaid = createAction(
+  '[CONTRIBUTIONS_PAID] create many contributions paid',
+  props<{ userId: number; contributionsId: string }>()
+);
+
+export const addManyContributionsPaid = createAction(
+  '[CONTRIBUTIONS_PAID] Add many contributions paid',
+  props<{ contributionsPaid: ContributionPaid[] }>()
+);
