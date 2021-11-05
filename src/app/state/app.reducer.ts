@@ -24,6 +24,11 @@ import {
   prePaymentReducer,
   PrePaymentState,
 } from './reducers/pre-payment.reducer';
+import {
+  transactionsReducer,
+  TransactionsState,
+} from './reducers/receipt.reducer';
+
 import { rolesReducer, RolesState } from './reducers/roles.reducer';
 import { userReducer, UserState } from './reducers/user.reducer';
 import { usersReducer, UsersState } from './reducers/users.reducer';
@@ -39,6 +44,7 @@ export interface AppState {
   contributions: ContributionsState;
   contributionsPaid: ContributionsPaidState;
   preContribution: PreContributionsState;
+  transactions: TransactionsState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -52,4 +58,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   contributions: contributionsReducer,
   contributionsPaid: contributionsPaidReducer,
   preContribution: preContributionsReducer,
+  transactions: transactionsReducer,
 };

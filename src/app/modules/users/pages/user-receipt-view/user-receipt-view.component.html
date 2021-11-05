@@ -1,9 +1,53 @@
-<h2>Recibo generado</h2>
+<button (click)="print()">Imprimir</button>
 
-<app-user-receipt
-  *ngIf="user && auth"
-  [prePayments]="prePayments"
-  [preContribution]="preContribution"
-  [user]="user"
-  [auth]="auth"
-></app-user-receipt>
+<div class="receipt_container" id="receipt" #receipt *ngIf="user && auth">
+  <div class="header_receipt">
+    <img src="../../../../../assets/logo1.PNG" alt="" />
+    <div>
+      <h1>OTB SAN JOSE</h1>
+      <h1>LA TAMBORADA</h1>
+    </div>
+    <img src="../../../../../assets/logo2.PNG" alt="" />
+  </div>
+
+  <div class="detail_receipt" *ngIf="transactions.length">
+    <div>
+      <div class="detail_description">
+        <p><strong>Descripcion: </strong></p>
+        <p *ngFor="let item of transactions" class="description_item">
+          {{ item.description }} - {{ item.amount | number: "1.2" }}Bs.
+        </p>
+      </div>
+      <p><strong>Vecino: </strong> {{ user.name }}</p>
+      <p>
+        <strong>Manzano: </strong> #{{ user.block_number }}
+        <strong>Lote: </strong> #{{ user.address_number }}
+      </p>
+      <p><strong>Directivo OTB: </strong> {{ auth.name }}</p>
+      <p>
+        <strong>Monto:</strong>
+        {{ transactions | transactionsToTotal | number: "1.2" }} Bs.
+      </p>
+    </div>
+    <div>
+      <qr-code [value]="qrValue" [size]="200"></qr-code>
+    </div>
+  </div>
+  <div class="foote_receipt">
+    <div>
+      <p>.............................</p>
+      <p><strong>Vecino</strong></p>
+      <p>
+        <strong>{{ user.name }}</strong>
+      </p>
+    </div>
+
+    <div>
+      <p>.............................</p>
+      <p><strong>Directivo OTB</strong></p>
+      <p>
+        <strong>{{ auth.name }}</strong>
+      </p>
+    </div>
+  </div>
+</div>

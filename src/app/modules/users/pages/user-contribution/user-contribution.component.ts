@@ -5,10 +5,12 @@ import { Subscription } from 'rxjs';
 import { ContributionPaid } from 'src/app/models/contribution-paid.model';
 import { Contribution } from 'src/app/models/contribution.model';
 import { PreContribution } from 'src/app/models/pre-contributions';
+import { Transaction } from 'src/app/models/transaction.model';
 import { User } from 'src/app/models/user.model';
 import * as ContributionsPaidActions from 'src/app/state/actions/contributions-paid.action';
 import * as ContributionsActions from 'src/app/state/actions/contributions.action';
 import * as PreContributionsActions from 'src/app/state/actions/pre-constribution.action';
+import * as TransactionsActions from 'src/app/state/actions/transactions.action';
 import { AppState } from 'src/app/state/app.reducer';
 
 @Component({
@@ -39,7 +41,8 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(ContributionsActions.cleanContributions());
-    this.store.dispatch(PreContributionsActions.clean());
+    this.store.dispatch(ContributionsPaidActions.cleanContributionsPaid());
+
     this.userSubs?.unsubscribe();
     this.contributionsSubs?.unsubscribe();
     this.contributionsPaidSubs?.unsubscribe();
@@ -85,6 +88,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
           })
         );
     });
+
     this.contributionsSubs = this.store
       .select('contributions')
       .subscribe(({ contributions }) => (this.contributions = contributions));
@@ -94,6 +98,12 @@ export class UserContributionComponent implements OnInit, OnDestroy {
       .subscribe(({ contributionsPaid, saved }) => {
         this.contributionsPaid = contributionsPaid;
         if (saved) {
+          this.store.dispatch(
+            TransactionsActions.addTransaction({
+              transactions: this.generateTransactions(),
+            })
+          );
+          this.store.dispatch(PreContributionsActions.clean());
           this.router.navigate(['users', this.user!.id, 'receipt-view']);
         }
       });
@@ -104,5 +114,11 @@ export class UserContributionComponent implements OnInit, OnDestroy {
         this.preContributions = preContributions;
         this.total = total;
       });
+  }
+
+  private generateTransactions() {
+    return this.preContributions.map(
+      (p) => new Transaction(p.description, p.amountToPay)
+    );
   }
 }

@@ -1,1 +1,5 @@
-<p>user-detail works!</p>
+<ng-container *ngIf="user">
+  <h1>{{ user.name }}</h1>
+  <p><strong>Manzano: </strong>#{{ user.block_number }}</p>
+  <p><strong>Lote: </strong>#{{ user.address_number }}</p>
+</ng-container>

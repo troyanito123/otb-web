@@ -12,8 +12,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-import { UserPaidPrintComponent } from './components/user-paid-print/user-paid-print.component';
-import { UserReceiptComponent } from './components/user-receipt/user-receipt.component';
+import { UserPrePaymentComponent } from './components/user-pre-payment/user-pre-payment.component';
 import { QRCodeModule } from 'angular2-qrcode';
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
@@ -29,8 +28,7 @@ import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt
     UserFormComponent,
     UserItemComponent,
     UserPaymentComponent,
-    UserPaidPrintComponent,
-    UserReceiptComponent,
+    UserPrePaymentComponent,
     UserContributionComponent,
     UserDetailComponent,
     UserReceiptViewComponent,

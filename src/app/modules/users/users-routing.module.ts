@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserReceiptComponent } from './components/user-receipt/user-receipt.component';
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
@@ -22,7 +21,6 @@ const routes: Routes = [
         path: ':id',
         component: UserViewComponent,
         children: [
-          { path: 'receipt', component: UserReceiptComponent },
           { path: 'contributions', component: UserContributionComponent },
           { path: 'payment', component: UserPaymentComponent },
           { path: 'detail', component: UserDetailComponent },
