@@ -1,0 +1,31 @@
+<h2>Crea una certificaion para este usuario</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div>
+    <label>Description</label>
+    <input type="text" formControlName="description" />
+    <br />
+  </div>
+  <div>
+    <label>Cantidad</label>
+    <input type="number" formControlName="amount" />
+    <br />
+  </div>
+
+  <div>
+    <label>Tipo</label>
+    <select formControlName="type">
+      <option [value]="item" *ngFor="let item of certificationsTypes">
+        {{ item }}
+      </option>
+    </select>
+    <br />
+  </div>
+
+  <div>
+    <label for="">Fecha</label>
+    <input type="date" formControlName="date" />
+  </div>
+
+  <button type="submit">Guaardar</button>
+</form>

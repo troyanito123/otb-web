@@ -17,6 +17,7 @@ import { QRCodeModule } from 'angular2-qrcode';
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component';
+import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt
     UserContributionComponent,
     UserDetailComponent,
     UserReceiptViewComponent,
+    UserCertificationsComponent,
   ],
   imports: [
     CommonModule,
