@@ -24,9 +24,9 @@ export class ContributionPaidService {
       .pipe(map((res) => ContributionPaid.fromJson(res)));
   }
 
-  public crateMany(userId: number, contributionsId: string) {
+  public crateMany(userId: number, contributionsId: string, date: Date) {
     return this.http
-      .post<[]>(`${this.url}/many`, { userId, contributionsId })
+      .post<[]>(`${this.url}/many`, { userId, contributionsId, date })
       .pipe(map((res) => res.map((r) => ContributionPaid.fromJson(r))));
   }
 }

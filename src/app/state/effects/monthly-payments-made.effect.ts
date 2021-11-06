@@ -37,9 +37,9 @@ export class MonthlyPaymentsMadeEffect {
   createManyMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MonthlyPaymentsMadeActions.createManyPaymentsMade),
-      mergeMap(({ userId, monthsId }) =>
+      mergeMap(({ userId, monthsId, date }) =>
         this.monthlyPaymentMadeService
-          .createManyMonthlyPayments(userId, monthsId)
+          .createManyMonthlyPayments(userId, monthsId, date)
           .pipe(
             map((monthlyPaymentsMade) =>
               MonthlyPaymentsMadeActions.addPaymentsMade({

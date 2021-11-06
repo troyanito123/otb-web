@@ -12,6 +12,7 @@ import * as TransactionsActions from 'src/app/state/actions/transactions.action'
 import { PrePayment } from 'src/app/models/pre-payment';
 import { User } from 'src/app/models/user.model';
 import { Transaction } from 'src/app/models/transaction.model';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-pre-payment',
@@ -29,19 +30,11 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
   public user!: User | null;
   private userSubs!: Subscription;
 
+  inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
+
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
-    this.prePaymentsSubs = this.store
-      .select('prePayment')
-      .subscribe(({ prePayments }) => {
-        this.prePayments = prePayments;
-        this.total = this.prePayments.reduce(
-          (counter, item) => counter + item.amountForPay,
-          0
-        );
-      });
-
     this.listenerStore();
   }
 
@@ -66,6 +59,7 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
       MonthlyPaymentsMadeActions.createManyPaymentsMade({
         userId: this.user!.id,
         monthsId,
+        date: this.inputDate.value,
       })
     );
   }
@@ -86,6 +80,16 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
         }
       });
 
+    this.prePaymentsSubs = this.store
+      .select('prePayment')
+      .subscribe(({ prePayments }) => {
+        this.prePayments = prePayments;
+        this.total = this.prePayments.reduce(
+          (counter, item) => counter + item.amountForPay,
+          0
+        );
+      });
+
     this.userSubs = this.store
       .select('user')
       .subscribe(({ user }) => (this.user = user));
@@ -95,7 +99,7 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
     return this.prePayments.map((p) => {
       const { month, year, amountForPay } = p;
       const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
-      return new Transaction(description, amountForPay);
+      return new Transaction(description, amountForPay, this.inputDate.value);
     });
   }
 }

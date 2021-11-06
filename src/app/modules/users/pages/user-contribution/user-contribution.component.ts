@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -31,6 +32,8 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   public preContributions: PreContribution[] = [];
   public total = 0;
   private precontributionsSubs!: Subscription;
+
+  inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
 
   constructor(private store: Store<AppState>, private router: Router) {}
 
@@ -74,6 +77,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
       ContributionsPaidActions.createManyContributionsPaid({
         userId,
         contributionsId,
+        date: this.inputDate.value,
       })
     );
   }
@@ -118,7 +122,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
   private generateTransactions() {
     return this.preContributions.map(
-      (p) => new Transaction(p.description, p.amountToPay)
+      (p) => new Transaction(p.description, p.amountToPay, this.inputDate.value)
     );
   }
 }

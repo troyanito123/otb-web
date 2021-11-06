@@ -55,17 +55,19 @@ export class ContributionsPaidEffect {
   createManyContributionsPaid$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ContributionsPaidActions.createManyContributionsPaid),
-      mergeMap(({ userId, contributionsId }) =>
-        this.contributionPaidService.crateMany(userId, contributionsId).pipe(
-          map((contributionsPaid) =>
-            ContributionsPaidActions.addManyContributionsPaid({
-              contributionsPaid,
-            })
-          ),
-          catchError((e) =>
-            of(ContributionsPaidActions.loadContributionsPaidError({ e }))
+      mergeMap(({ userId, contributionsId, date }) =>
+        this.contributionPaidService
+          .crateMany(userId, contributionsId, date)
+          .pipe(
+            map((contributionsPaid) =>
+              ContributionsPaidActions.addManyContributionsPaid({
+                contributionsPaid,
+              })
+            ),
+            catchError((e) =>
+              of(ContributionsPaidActions.loadContributionsPaidError({ e }))
+            )
           )
-        )
       )
     )
   );

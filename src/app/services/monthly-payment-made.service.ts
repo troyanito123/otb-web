@@ -22,9 +22,13 @@ export class MonthlyPaymentMadeService {
     );
   }
 
-  public createManyMonthlyPayments(userId: number, monthsId: string) {
+  public createManyMonthlyPayments(
+    userId: number,
+    monthsId: string,
+    date: Date
+  ) {
     return this.http
-      .post<[]>(`${this.url}/many`, { userId, monthsId })
+      .post<[]>(`${this.url}/many`, { userId, monthsId, date })
       .pipe(map((res) => res.map((r) => MonthlyPaymentMade.fromJson(r))));
   }
 }

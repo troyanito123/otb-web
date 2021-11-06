@@ -2,10 +2,11 @@ import { Contribution } from './contribution.model';
 
 export class ContributionPaid {
   public static fromJson(json: any) {
-    const { id, amount, user, contribution } = json;
+    const { id, amount, date, user, contribution } = json;
     return new ContributionPaid(
       id,
       amount,
+      date,
       UserPaid.fromJson(user),
       Contribution.fromJson(contribution)
     );
@@ -14,6 +15,7 @@ export class ContributionPaid {
   constructor(
     public id: number,
     public amount: number,
+    public date: Date,
     public user: UserPaid,
     public contribution: Contribution
   ) {}

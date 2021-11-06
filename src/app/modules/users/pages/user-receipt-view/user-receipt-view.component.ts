@@ -35,6 +35,9 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
         address_number: this.user?.address_number,
       },
       to_user: this.auth?.name,
+      date: this.transactions[0]
+        ? this.transactions[0].date
+        : new Date().toISOString(),
     });
   }
   constructor(private store: Store<AppState>, private router: Router) {}

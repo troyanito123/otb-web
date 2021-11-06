@@ -28,6 +28,11 @@
         <strong>Monto:</strong>
         {{ transactions | transactionsToTotal | number: "1.2" }} Bs.
       </p>
+
+      <p>
+        <strong>Fecha de registro:</strong>
+        {{ transactions[0].date | date }}
+      </p>
     </div>
     <div>
       <qr-code [value]="qrValue" [size]="200"></qr-code>

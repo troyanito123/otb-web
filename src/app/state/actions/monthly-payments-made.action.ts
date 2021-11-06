@@ -17,7 +17,7 @@ export const loadPaymentsMadeError = createAction(
 
 export const createManyPaymentsMade = createAction(
   '[PAYMENTS_MADE] Create many monthly payments',
-  props<{ userId: number; monthsId: string }>()
+  props<{ userId: number; monthsId: string; date: Date }>()
 );
 
 export const addPaymentsMade = createAction(

@@ -101,20 +101,24 @@ export class UserCertificationsComponent implements OnInit, OnDestroy {
   }
 
   private generateTransaction() {
+    const { date } = this.form.value;
     return new Transaction(
       this.certification!.description,
-      this.certification!.amount
+      this.certification!.amount,
+      date
     );
   }
 
   private handleCreateSuccess(certification: Certification) {
     this.certification = certification;
-    this.resetForm();
+
     this.store.dispatch(
       TransactionsActions.addTransaction({
         transactions: [this.generateTransaction()],
       })
     );
+
+    this.resetForm();
     this.router
       .navigate(['users', this.user!.id, 'receipt-view'])
       .then(() => this.store.dispatch(CertificationActions.clean()));

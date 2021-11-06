@@ -18,5 +18,10 @@
   </table>
   <h2>Total: {{ total }}</h2>
 
+  <div>
+    <label for="">Fecha de registro</label>
+    <input type="date" [formControl]="inputDate" />
+  </div>
+
   <button (click)="confirmPaid()">CONFIRMAR PAGO</button>
 </div>

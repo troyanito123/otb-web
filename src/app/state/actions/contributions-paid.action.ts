@@ -32,7 +32,7 @@ export const addContributionsPaid = createAction(
 
 export const createManyContributionsPaid = createAction(
   '[CONTRIBUTIONS_PAID] create many contributions paid',
-  props<{ userId: number; contributionsId: string }>()
+  props<{ userId: number; contributionsId: string; date: Date }>()
 );
 
 export const addManyContributionsPaid = createAction(
