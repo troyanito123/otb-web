@@ -1,6 +1,10 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { authReducer, AuthState } from './reducers/auth.reducer';
 import {
+  certificationReducer,
+  CertificationState,
+} from './reducers/certification.reducer';
+import {
   contributionsPaidReducer,
   ContributionsPaidState,
 } from './reducers/contributions-paid.reducer';
@@ -45,6 +49,7 @@ export interface AppState {
   contributionsPaid: ContributionsPaidState;
   preContribution: PreContributionsState;
   transactions: TransactionsState;
+  certification: CertificationState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -59,4 +64,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   contributionsPaid: contributionsPaidReducer,
   preContribution: preContributionsReducer,
   transactions: transactionsReducer,
+  certification: certificationReducer,
 };
