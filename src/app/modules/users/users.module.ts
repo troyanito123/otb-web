@@ -18,6 +18,7 @@ import { UserContributionComponent } from './pages/user-contribution/user-contri
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component';
 import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component';
+import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { UserCertificationsComponent } from './pages/user-certifications/user-ce
     UserDetailComponent,
     UserReceiptViewComponent,
     UserCertificationsComponent,
+    UserAttendencesComponent,
   ],
   imports: [
     CommonModule,
