@@ -26,7 +26,7 @@ const _meetingsReducer = createReducer(
     error: null,
   })),
 
-  on(MeetingsActions.load, () => ({
+  on(MeetingsActions.clean, () => ({
     meetings: [],
     loaded: false,
     loading: false,

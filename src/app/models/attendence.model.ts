@@ -11,5 +11,9 @@ export class Attendence {
     );
   }
 
-  constructor(public id: number, user: UserPartial, meeting: Meeting) {}
+  constructor(
+    public id: number,
+    public user: UserPartial,
+    public meeting: Meeting
+  ) {}
 }

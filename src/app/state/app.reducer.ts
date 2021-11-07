@@ -1,4 +1,8 @@
 import { ActionReducerMap } from '@ngrx/store';
+import {
+  attendencesReducer,
+  AttendencesState,
+} from './reducers/attendences.reducer';
 import { authReducer, AuthState } from './reducers/auth.reducer';
 import {
   certificationReducer,
@@ -52,6 +56,7 @@ export interface AppState {
   transactions: TransactionsState;
   certification: CertificationState;
   meetings: MeetingsState;
+  attendences: AttendencesState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -68,4 +73,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   transactions: transactionsReducer,
   certification: certificationReducer,
   meetings: meetingsReducer,
+  attendences: attendencesReducer,
 };
