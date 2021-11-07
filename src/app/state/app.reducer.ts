@@ -12,6 +12,7 @@ import {
   contributionsReducer,
   ContributionsState,
 } from './reducers/contributions.reducer';
+import { meetingsReducer, MeetingsState } from './reducers/meetings.reducer';
 import {
   MonthlyPaymentsMadeState,
   monthlyPaymentsMadeReducer,
@@ -50,6 +51,7 @@ export interface AppState {
   preContribution: PreContributionsState;
   transactions: TransactionsState;
   certification: CertificationState;
+  meetings: MeetingsState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -65,4 +67,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   preContribution: preContributionsReducer,
   transactions: transactionsReducer,
   certification: certificationReducer,
+  meetings: meetingsReducer,
 };
