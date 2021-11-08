@@ -7,6 +7,16 @@ export const loadByUser = createAction(
 );
 export const clean = createAction('[ATTENDENCES] clean attencendes');
 
+export const create = createAction(
+  '[ATTENDENCES] create one attencende',
+  props<{ userId: number; meetingId: number }>()
+);
+
+export const createSuccess = createAction(
+  '[ATTENDENCES] create success attencende',
+  props<{ attendence: Attendence }>()
+);
+
 export const load = createAction(
   '[ATTENDENCES] load success attencendes',
   props<{ attendences: Attendence[] }>()

@@ -25,4 +25,16 @@ export class AttendencesEffect {
       )
     )
   );
+
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AttendencesActions.create),
+      mergeMap(({ userId, meetingId }) =>
+        this.attendencesService.create(userId, meetingId).pipe(
+          map((attendence) => AttendencesActions.createSuccess({ attendence })),
+          catchError((e) => of(AttendencesActions.error({ e })))
+        )
+      )
+    )
+  );
 }

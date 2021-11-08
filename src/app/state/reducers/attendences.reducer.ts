@@ -45,6 +45,20 @@ const _attendencesReducer = createReducer(
     loaded: true,
     loading: false,
     error: e.error,
+  })),
+
+  on(AttendencesActions.create, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+
+  on(AttendencesActions.createSuccess, (state, { attendence }) => ({
+    ...state,
+    attendences: [...state.attendences, attendence],
+    loading: false,
+    loaded: true,
   }))
 );
 

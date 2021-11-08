@@ -18,4 +18,10 @@ export class AttendenceService {
       .get<[]>(`${this.url}/user/${userId}`)
       .pipe(map((res) => res.map((r) => Attendence.fromJson(r))));
   }
+
+  public create(userId: number, meetingId: number): Observable<Attendence> {
+    return this.http
+      .post(this.url, { userId, meetingId })
+      .pipe(map((res) => Attendence.fromJson(res)));
+  }
 }

@@ -1,6 +1,28 @@
 <div>
   <h2>Reuniones</h2>
-  <pre>{{ meetings | json }}</pre>
-  <h2>Asistencias</h2>
-  <pre>{{ attendences | json }}</pre>
+  <table>
+    <thead>
+      <th>Reunion</th>
+      <th>Fecha</th>
+      <th>Asistencia</th>
+      <th>Multa</th>
+      <th>Marcar Asistencia</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of meetings | toAttendence: attendences">
+        <td>{{ item.name }}</td>
+        <td>{{ item.date | date }}</td>
+        <td>{{ item.isPresent }}</td>
+        <td>{{ item.fine }}</td>
+        <td>
+          <button
+            *ngIf="item.isPresent === 'NO' && canAsist(item.date)"
+            (click)="markAttendence(item)"
+          >
+            Asistir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

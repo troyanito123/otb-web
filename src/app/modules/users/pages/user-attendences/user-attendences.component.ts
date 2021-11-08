@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { Meeting } from 'src/app/models/meeting.model';
 import { Attendence } from 'src/app/models/attendence.model';
 import { User } from 'src/app/models/user.model';
+import { AttendenceMeeting } from 'src/app/models/attendence-meeting.mode';
 @Component({
   selector: 'app-user-attendences',
   templateUrl: './user-attendences.component.html',
@@ -38,6 +39,18 @@ export class UserAttendencesComponent implements OnInit, OnDestroy {
     this.store.dispatch(AttendencesActions.clean());
 
     this.unsubscribeStore();
+  }
+
+  public markAttendence(item: AttendenceMeeting) {
+    this.store.dispatch(
+      AttendencesActions.create({ userId: this.user!.id, meetingId: item.id })
+    );
+  }
+
+  public canAsist(date: Date) {
+    const meetingDate = new Date(date);
+    const todayDate = new Date();
+    return meetingDate > todayDate;
   }
 
   private subscribeStore() {
