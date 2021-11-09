@@ -11,3 +11,5 @@ export const loadError = createAction(
   '[USERS] load error',
   props<{ e: any }>()
 );
+
+export const clean = createAction('[USERS] clean users state');

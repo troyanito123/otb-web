@@ -56,7 +56,14 @@ const _monthlyPaymentsMadeReducer = createReducer(
       loading: false,
       saved: true,
     })
-  )
+  ),
+
+  on(MonthlyPaymentsMadeActions.clean, (state) => ({
+    monthlyPaymentsMade: [],
+    loading: false,
+    saved: false,
+    error: null,
+  }))
 );
 
 export function monthlyPaymentsMadeReducer(state: any, action: any) {

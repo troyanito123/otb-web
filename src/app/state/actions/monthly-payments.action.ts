@@ -14,3 +14,5 @@ export const loadPaymentsError = createAction(
   '[PAYMENTS] load monthly payments error',
   props<{ e: any }>()
 );
+
+export const clean = createAction('[PAYMENTS] clean payments state');

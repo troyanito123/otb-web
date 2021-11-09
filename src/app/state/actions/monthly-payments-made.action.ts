@@ -24,3 +24,5 @@ export const addPaymentsMade = createAction(
   '[PAYMENTS_MADE] add monthly payments',
   props<{ monthlyPaymentsMade: MonthlyPaymentMade[] }>()
 );
+
+export const clean = createAction('[PAYMENTS_MADE] clean payments made state');

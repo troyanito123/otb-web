@@ -45,6 +45,8 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(MonthlyPaymentsAction.clean());
+    this.store.dispatch(MonthlyPaymentsMadeAction.clean());
     this.userSubs?.unsubscribe();
     this.monthlyPaymentsSubs?.unsubscribe();
     this.monthlyPaymentsMadeSubs?.unsubscribe();

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { User } from 'src/app/models/user.model';
-import { load, loadError, loadSuccess } from '../actions/users.action';
+import * as UsersActions from '../actions/users.action';
 
 export interface UsersState {
   users: User[];
@@ -19,25 +19,32 @@ export const initialUsersState: UsersState = {
 const _usersReducer = createReducer(
   initialUsersState,
 
-  on(load, () => ({
+  on(UsersActions.load, () => ({
     users: [],
     loading: true,
     saveFinish: false,
     error: null,
   })),
 
-  on(loadSuccess, (state, { users }) => ({
+  on(UsersActions.loadSuccess, (state, { users }) => ({
     users,
     loading: false,
     saveFinish: false,
     error: null,
   })),
 
-  on(loadError, (state, { e }) => ({
+  on(UsersActions.loadError, (state, { e }) => ({
     users: [],
     loading: false,
     saveFinish: false,
     error: e.error,
+  })),
+
+  on(UsersActions.clean, () => ({
+    users: [],
+    loading: false,
+    saveFinish: false,
+    error: null,
   }))
 );
 

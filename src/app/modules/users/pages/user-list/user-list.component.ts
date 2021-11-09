@@ -28,6 +28,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(UsersActions.clean());
     this.usersSubs?.unsubscribe();
   }
 }
