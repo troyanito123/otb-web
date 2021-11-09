@@ -1,1 +1,5 @@
-
+<div *ngFor="let item of expenses">
+  <p>{{ item.description }}</p>
+  <p>{{ item.date | date }}</p>
+  <button [routerLink]="['../', item.id]">Ver</button>
+</div>

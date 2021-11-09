@@ -3,6 +3,7 @@ import {
   attendencesReducer,
   AttendencesState,
 } from './reducers/attendences.reducer';
+import { expensesReducer, ExpensesState } from './reducers/expenses.reducer';
 import { authReducer, AuthState } from './reducers/auth.reducer';
 import {
   certificationReducer,
@@ -57,6 +58,7 @@ export interface AppState {
   certification: CertificationState;
   meetings: MeetingsState;
   attendences: AttendencesState;
+  expenses: ExpensesState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -74,4 +76,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   certification: certificationReducer,
   meetings: meetingsReducer,
   attendences: attendencesReducer,
+  expenses: expensesReducer,
 };

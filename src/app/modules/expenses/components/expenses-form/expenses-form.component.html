@@ -1,1 +1,28 @@
-<p>expenses-form works!</p>
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div>
+    <label for="">Descripcion</label>
+    <textarea cols="30" rows="5" formControlName="description"></textarea>
+  </div>
+
+  <div>
+    <label for="">Monto</label>
+    <input type="number" formControlName="amount" />
+  </div>
+
+  <div>
+    <label for="">Quien da:</label>
+    <input type="text" formControlName="from_user" />
+  </div>
+
+  <div>
+    <label for="">Quien recibe:</label>
+    <input type="text" formControlName="to_user" />
+  </div>
+
+  <div>
+    <label for="">Fecha:</label>
+    <input type="date" formControlName="date" />
+  </div>
+
+  <button type="submit">Guardar</button>
+</form>

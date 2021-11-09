@@ -9,7 +9,7 @@ import { ExpensesEditComponent } from './pages/expenses-edit/expenses-edit.compo
 import { ExpensesViewComponent } from './pages/expenses-view/expenses-view.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { ExpensesSingleComponent } from './components/expenses-single/expenses-single.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +19,8 @@ import { ExpensesSingleComponent } from './components/expenses-single/expenses-s
     ExpensesEditComponent,
     ExpensesViewComponent,
     ExpensesFormComponent,
-    ExpensesSingleComponent
+    ExpensesSingleComponent,
   ],
-  imports: [
-    CommonModule,
-    ExpensesRoutingModule
-  ]
+  imports: [CommonModule, ExpensesRoutingModule, ReactiveFormsModule],
 })
-export class ExpensesModule { }
+export class ExpensesModule {}
