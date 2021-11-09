@@ -1,3 +1,12 @@
 <h2>Detalle del gasto</h2>
 
-<button [routerLink]="['../edit', expenseId]">Editar</button>
+<ng-container *ngIf="expense">
+  <button [routerLink]="['../edit', expense.id]">Editar</button>
+  <button (click)="remove()">Eliminar</button>
+
+  <p>{{ expense.description }}</p>
+  <p>{{ expense.amount | number: "1.2" }}</p>
+  <p>{{ expense.date | date }}</p>
+  <p>{{ expense.from_user }}</p>
+  <p>{{ expense.to_user }}</p>
+</ng-container>

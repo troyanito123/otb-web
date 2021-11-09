@@ -26,18 +26,4 @@ export class ExpensesEffect {
       )
     )
   );
-
-  create$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ExpensesActions.create),
-      mergeMap(({ description, amount, date, from_user, to_user }) =>
-        this.expenseService
-          .create(description, amount, date, from_user, to_user)
-          .pipe(
-            map((expense) => ExpensesActions.createSuccess({ expense })),
-            catchError((e) => of(ExpensesActions.error({ e })))
-          )
-      )
-    )
-  );
 }

@@ -42,6 +42,7 @@ import {
 import { rolesReducer, RolesState } from './reducers/roles.reducer';
 import { userReducer, UserState } from './reducers/user.reducer';
 import { usersReducer, UsersState } from './reducers/users.reducer';
+import { expenseReducer, ExpenseState } from './reducers/expense.reducer';
 
 export interface AppState {
   auth: AuthState;
@@ -59,6 +60,7 @@ export interface AppState {
   meetings: MeetingsState;
   attendences: AttendencesState;
   expenses: ExpensesState;
+  expense: ExpenseState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -77,4 +79,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   meetings: meetingsReducer,
   attendences: attendencesReducer,
   expenses: expensesReducer,
+  expense: expenseReducer,
 };

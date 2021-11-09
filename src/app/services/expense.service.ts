@@ -18,6 +18,12 @@ export class ExpenseService {
       .pipe(map((res) => res.map((r) => Expense.fromJson(r))));
   }
 
+  public getOne(id: number) {
+    return this.http
+      .get(`${this.url}/${id}`)
+      .pipe(map((res) => Expense.fromJson(res)));
+  }
+
   public create(
     description: string,
     amount: number,
@@ -33,6 +39,31 @@ export class ExpenseService {
         from_user,
         to_user,
       })
+      .pipe(map((res) => Expense.fromJson(res)));
+  }
+
+  public update(
+    id: number,
+    description: string,
+    amount: number,
+    date: Date,
+    from_user: string,
+    to_user: string
+  ) {
+    return this.http
+      .put(`${this.url}/${id}`, {
+        description,
+        amount,
+        date,
+        from_user,
+        to_user,
+      })
+      .pipe(map((res) => Expense.fromJson(res)));
+  }
+
+  public remove(id: number) {
+    return this.http
+      .delete(`${this.url}/${id}`)
       .pipe(map((res) => Expense.fromJson(res)));
   }
 }

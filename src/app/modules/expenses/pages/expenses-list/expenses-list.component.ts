@@ -23,7 +23,7 @@ export class ExpensesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(ExpensesActions.softClean());
+    this.store.dispatch(ExpensesActions.clean());
     this.unsubscribeStore();
   }
 

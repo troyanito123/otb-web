@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
-import * as ExpensesActions from 'src/app/state/actions/expenses.action';
+import * as ExpenseActions from 'src/app/state/actions/expense.action';
 
 import { Expense } from 'src/app/models/expense.model';
 import { User } from 'src/app/models/user.model';
@@ -22,7 +22,7 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
 
   private auth!: User | null;
   private authSubs!: Subscription;
-  private expensesSubs!: Subscription;
+  private expenseSubs!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +35,6 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(ExpensesActions.softClean());
     this.unsubscribeStore();
   }
 
@@ -45,7 +44,7 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
     }
 
     if (!!this.expense) {
-      console.log('actualizar');
+      this.update();
     } else {
       this.create();
     }
@@ -54,7 +53,21 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
   private create() {
     const { description, amount, date, from_user, to_user } = this.form.value;
     this.store.dispatch(
-      ExpensesActions.create({ description, amount, date, from_user, to_user })
+      ExpenseActions.create({ description, amount, date, from_user, to_user })
+    );
+  }
+
+  private update() {
+    const { description, amount, date, from_user, to_user } = this.form.value;
+    this.store.dispatch(
+      ExpenseActions.update({
+        id: this.expense.id,
+        description,
+        amount,
+        date,
+        from_user,
+        to_user,
+      })
     );
   }
 
@@ -93,18 +106,24 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
       this.createForm();
     });
 
-    this.expensesSubs = this.store
-      .select('expenses')
-      .subscribe(({ loading, loaded, error, expenses }) => {
-        console.log(loaded);
-        if (loaded) {
+    this.expenseSubs = this.store
+      .select('expense')
+      .subscribe(({ loading, error, created, updated, expense }) => {
+        if (created) {
           console.log('quitar loading');
-          this.router.navigate(['expenses', expenses[expenses.length - 1].id]);
+          this.router.navigate(['expenses', expense!.id]);
         }
+
+        if (updated) {
+          console.log('quitar loading');
+          this.router.navigate(['expenses', expense!.id]);
+        }
+
         if (loading) {
           console.log('mostrar loading');
         }
         if (error) {
+          console.log('quitar loading');
           console.warn('mostrar error');
         }
       });
@@ -112,6 +131,6 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
 
   private unsubscribeStore() {
     this.authSubs?.unsubscribe();
-    this.expensesSubs?.unsubscribe();
+    this.expenseSubs?.unsubscribe();
   }
 }

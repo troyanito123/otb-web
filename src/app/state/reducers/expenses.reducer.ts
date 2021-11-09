@@ -33,51 +33,6 @@ const _expensesReducer = createReducer(
     error: null,
   })),
 
-  on(ExpensesActions.create, (state) => ({
-    ...state,
-    loading: true,
-    loaded: false,
-    error: null,
-  })),
-
-  on(ExpensesActions.createSuccess, (state, { expense }) => ({
-    ...state,
-    expenses: [...state.expenses, expense],
-    loading: false,
-    loaded: true,
-    error: null,
-  })),
-
-  on(ExpensesActions.update, (state) => ({
-    ...state,
-    loading: true,
-    loaded: false,
-    error: null,
-  })),
-
-  on(ExpensesActions.updateSuccess, (state, { expense }) => ({
-    ...state,
-    expenses: state.expenses.map((e) => (e.id === expense.id ? expense : e)),
-    loading: false,
-    loaded: true,
-    error: null,
-  })),
-
-  on(ExpensesActions.remove, (state) => ({
-    ...state,
-    loading: true,
-    loaded: false,
-    error: null,
-  })),
-
-  on(ExpensesActions.removeSuccess, (state, { expense }) => ({
-    ...state,
-    expenses: state.expenses.filter((e) => e.id !== expense.id),
-    loading: false,
-    loaded: true,
-    error: null,
-  })),
-
   on(ExpensesActions.error, (state, { e }) => ({
     ...state,
     loading: false,
@@ -87,13 +42,6 @@ const _expensesReducer = createReducer(
 
   on(ExpensesActions.clean, () => ({
     expenses: [],
-    loading: false,
-    loaded: false,
-    error: null,
-  })),
-
-  on(ExpensesActions.softClean, (state) => ({
-    ...state,
     loading: false,
     loaded: false,
     error: null,
