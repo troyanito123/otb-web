@@ -66,4 +66,8 @@ export class ExpenseService {
       .delete(`${this.url}/${id}`)
       .pipe(map((res) => Expense.fromJson(res)));
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }

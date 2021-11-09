@@ -29,4 +29,8 @@ export class ContributionPaidService {
       .post<[]>(`${this.url}/many`, { userId, contributionsId, date })
       .pipe(map((res) => res.map((r) => ContributionPaid.fromJson(r))));
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }

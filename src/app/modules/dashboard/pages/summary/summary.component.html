@@ -1,0 +1,24 @@
+<h1>Resumen hacienda</h1>
+
+<div>
+  <div>
+    <h2>Ingresos</h2>
+    <p>Mensualidades: {{ monthlyPaymentsTotal | number: "1.2" }} bs.</p>
+    <p>Aportes: {{ contributionsTotal | number: "1.2" }} bs.</p>
+    <p>Certificaciones: {{ certificationsTotal | number: "1.2" }} bs.</p>
+
+    <p>
+      <strong>TOTAL: {{ incomeTotal }} Bs.</strong>
+    </p>
+  </div>
+  <div>
+    <h2>Egresos</h2>
+    <p>
+      <strong>TOTAL: {{ expensesTotal | number: "1.2" }} Bs.</strong>
+    </p>
+  </div>
+</div>
+<div>
+  <h2>En caja</h2>
+  <h3>{{ inBox | number: "1.2" }} bs</h3>
+</div>

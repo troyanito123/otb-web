@@ -31,4 +31,8 @@ export class MonthlyPaymentMadeService {
       .post<[]>(`${this.url}/many`, { userId, monthsId, date })
       .pipe(map((res) => res.map((r) => MonthlyPaymentMade.fromJson(r))));
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }

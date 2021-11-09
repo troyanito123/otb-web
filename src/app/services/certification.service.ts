@@ -26,4 +26,8 @@ export class CertificationService {
       .post<[]>(this.url, { description, amount, type, date, userId })
       .pipe(map((res) => Certification.fromJson(res)));
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }
