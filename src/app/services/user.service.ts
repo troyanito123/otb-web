@@ -15,8 +15,8 @@ export class UserService {
 
   public getAll(): Observable<User[]> {
     return this.http
-      .get<any[]>(this.url)
-      .pipe(map((res) => res.map((r) => User.fromJson(r))));
+      .get<{ users: []; count: number }>(this.url)
+      .pipe(map(({ users, count }) => users.map((r) => User.fromJson(r))));
   }
 
   public create(

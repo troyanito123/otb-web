@@ -14,8 +14,10 @@ export class ExpenseService {
 
   public getAll() {
     return this.http
-      .get<[]>(this.url)
-      .pipe(map((res) => res.map((r) => Expense.fromJson(r))));
+      .get<{ expenses: []; count: number }>(this.url)
+      .pipe(
+        map(({ expenses, count }) => expenses.map((r) => Expense.fromJson(r)))
+      );
   }
 
   public getOne(id: number) {
@@ -33,11 +35,11 @@ export class ExpenseService {
   ) {
     return this.http
       .post(this.url, {
-        description,
+        description: description.toUpperCase(),
         amount,
         date,
-        from_user,
-        to_user,
+        from_user: from_user.toUpperCase(),
+        to_user: to_user.toUpperCase(),
       })
       .pipe(map((res) => Expense.fromJson(res)));
   }
