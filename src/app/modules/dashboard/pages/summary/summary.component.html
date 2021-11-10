@@ -3,22 +3,22 @@
 <div>
   <div>
     <h2>Ingresos</h2>
-    <p>Mensualidades: {{ monthlyPaymentsTotal | number: "1.2" }} bs.</p>
-    <p>Aportes: {{ contributionsTotal | number: "1.2" }} bs.</p>
-    <p>Certificaciones: {{ certificationsTotal | number: "1.2" }} bs.</p>
+    <p>Mensualidades: {{ monthlyPayments | number: "1.2" }} bs.</p>
+    <p>Aportes: {{ contributions | number: "1.2" }} bs.</p>
+    <p>Certificaciones: {{ certifications | number: "1.2" }} bs.</p>
 
     <p>
-      <strong>TOTAL: {{ incomeTotal }} Bs.</strong>
+      <strong>TOTAL: {{ incomes }} Bs.</strong>
     </p>
   </div>
   <div>
     <h2>Egresos</h2>
     <p>
-      <strong>TOTAL: {{ expensesTotal | number: "1.2" }} Bs.</strong>
+      <strong>TOTAL: {{ expenses | number: "1.2" }} Bs.</strong>
     </p>
   </div>
 </div>
 <div>
   <h2>En caja</h2>
-  <h3>{{ inBox | number: "1.2" }} bs</h3>
+  <h3>{{ total | number: "1.2" }} bs</h3>
 </div>

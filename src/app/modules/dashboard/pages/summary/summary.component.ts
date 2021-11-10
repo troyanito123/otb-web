@@ -1,54 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { CertificationService } from 'src/app/services/certification.service';
-import { ContributionPaidService } from 'src/app/services/contribution-paid.service';
-import { ExpenseService } from 'src/app/services/expense.service';
-import { MonthlyPaymentMadeService } from 'src/app/services/monthly-payment-made.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import * as IncomeExpensesActions from 'src/app/state/actions/income-expenses.actions';
+import { AppState } from 'src/app/state/app.reducer';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss'],
 })
-export class SummaryComponent implements OnInit {
-  certificationsTotal!: number;
-  contributionsTotal!: number;
-  expensesTotal!: number;
-  monthlyPaymentsTotal!: number;
+export class SummaryComponent implements OnInit, OnDestroy {
+  public contributions = 0;
+  public monthlyPayments = 0;
+  public certifications = 0;
+  public expenses = 0;
+  public incomes = 0;
+  public total = 0;
 
-  get incomeTotal() {
-    return (
-      this.certificationsTotal +
-      this.contributionsTotal +
-      this.monthlyPaymentsTotal
-    );
-  }
+  private incomeExpensesSubs!: Subscription;
 
-  get inBox() {
-    return this.incomeTotal - this.expensesTotal;
-  }
-
-  constructor(
-    private certificationService: CertificationService,
-    private contributionsPaidService: ContributionPaidService,
-    private expenseService: ExpenseService,
-    private monthlyPaymentMade: MonthlyPaymentMadeService
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.certificationService
-      .getTotalAmount()
-      .subscribe(({ total }) => (this.certificationsTotal = Number(total)));
+    this.store.dispatch(IncomeExpensesActions.loadCertifications());
+    this.store.dispatch(IncomeExpensesActions.loadContribution());
+    this.store.dispatch(IncomeExpensesActions.loadMonthlyPayments());
+    this.store.dispatch(IncomeExpensesActions.loadExpenses());
 
-    this.contributionsPaidService
-      .getTotalAmount()
-      .subscribe(({ total }) => (this.contributionsTotal = Number(total)));
+    this.incomeExpensesSubs = this.store
+      .select('incomeExpenses')
+      .subscribe(
+        ({
+          contributions,
+          monthlyPayments,
+          certifications,
+          expenses,
+          incomes,
+          total,
+        }) => {
+          this.contributions = contributions;
+          this.monthlyPayments = monthlyPayments;
+          this.certifications = certifications;
+          this.expenses = expenses;
+          this.incomes = incomes;
+          this.total = total;
+        }
+      );
+  }
 
-    this.expenseService
-      .getTotalAmount()
-      .subscribe(({ total }) => (this.expensesTotal = Number(total)));
-
-    this.monthlyPaymentMade
-      .getTotalAmount()
-      .subscribe(({ total }) => (this.monthlyPaymentsTotal = Number(total)));
+  ngOnDestroy() {
+    this.store.dispatch(IncomeExpensesActions.clean());
+    this.incomeExpensesSubs?.unsubscribe();
   }
 }
