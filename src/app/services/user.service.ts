@@ -21,18 +21,12 @@ export class UserService {
 
   public create(
     name: string,
-    email: string,
-    password: string,
-    identification_number: string,
     block_number: string,
     address_number: string
   ): Observable<User> {
     return this.http
       .post(this.url, {
         name: name.toUpperCase(),
-        email,
-        password,
-        identification_number: identification_number.toUpperCase(),
         block_number: block_number.toUpperCase(),
         address_number: address_number.toUpperCase(),
       })
@@ -48,8 +42,6 @@ export class UserService {
   public update(
     id: number,
     name: string,
-    email: string,
-    identification_number: string,
     block_number: string,
     address_number: string,
     status: string,
@@ -58,8 +50,6 @@ export class UserService {
     return this.http
       .put(`${this.url}/${id}`, {
         name: name.toUpperCase(),
-        email,
-        identification_number: identification_number.toUpperCase(),
         block_number: block_number.toUpperCase(),
         address_number: address_number.toUpperCase(),
         status,

@@ -13,9 +13,6 @@ export const create = createAction(
   '[USER] create',
   props<{
     name: string;
-    email: string;
-    password: string;
-    identification_number: string;
     block_number: string;
     address_number: string;
   }>()
@@ -26,8 +23,6 @@ export const update = createAction(
   props<{
     id: number;
     name: string;
-    email: string;
-    identification_number: string;
     block_number: string;
     address_number: string;
     status: string;

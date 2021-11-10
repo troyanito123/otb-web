@@ -64,21 +64,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private create() {
-    const {
-      name,
-      email,
-      password,
-      identification_number,
-      block_number,
-      address_number,
-    } = this.form.value;
+    const { name, block_number, address_number } = this.form.value;
 
     this.store.dispatch(
       UserActions.create({
         name,
-        email,
-        password,
-        identification_number,
         block_number,
         address_number,
       })
@@ -86,22 +76,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private update() {
-    const {
-      name,
-      email,
-      identification_number,
-      block_number,
-      address_number,
-      status,
-      role,
-    } = this.form.value;
+    const { name, block_number, address_number, status, role } =
+      this.form.value;
 
     this.store.dispatch(
       UserActions.update({
         id: this.user.id,
         name,
-        email,
-        identification_number,
         block_number,
         address_number,
         status,
@@ -121,27 +102,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
   private createForm() {
     this.form = this.fb.group({
       name: [
-        this.user ? this.user.name : 'test 14',
+        this.user ? this.user.name : '',
         [Validators.required, Validators.minLength(3)],
       ],
-      email: [
-        this.user ? this.user.email : 'test14@test.com',
-        [Validators.required, Validators.email],
-      ],
-      password: [
-        '',
-        this.user ? [] : [Validators.required, Validators.minLength(6)],
-      ],
-      identification_number: [
-        this.user ? this.user.identification_number : '1231dd',
-        [Validators.required, Validators.minLength(6)],
-      ],
       block_number: [
-        this.user ? this.user.block_number : '2b',
+        this.user ? this.user.block_number : '',
         [Validators.required],
       ],
       address_number: [
-        this.user ? this.user.address_number : '2b',
+        this.user ? this.user.address_number : '',
         [Validators.required],
       ],
       role: [

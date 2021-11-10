@@ -1,17 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="save()">
-  <label>Correo</label>
-  <input type="text" formControlName="email" />
-  <br />
   <label>Nombre completo</label>
   <input type="text" formControlName="name" />
-  <br />
-  <div *ngIf="!isEditing">
-    <label>Contraseña</label>
-    <input type="password" formControlName="password" />
-    <br />
-  </div>
-  <label>Carnet de identidad</label>
-  <input type="text" formControlName="identification_number" />
   <br />
   <label>Numero de Manzano</label>
   <input type="text" formControlName="block_number" />

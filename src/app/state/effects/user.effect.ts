@@ -35,28 +35,11 @@ export class UserEffect {
   createUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(create),
-      mergeMap(
-        ({
-          name,
-          email,
-          password,
-          identification_number,
-          block_number,
-          address_number,
-        }) =>
-          this.userService
-            .create(
-              name,
-              email,
-              password,
-              identification_number,
-              block_number,
-              address_number
-            )
-            .pipe(
-              map((user) => saveSuccess({ user })),
-              catchError((e) => of(saveError({ e })))
-            )
+      mergeMap(({ name, block_number, address_number }) =>
+        this.userService.create(name, block_number, address_number).pipe(
+          map((user) => saveSuccess({ user })),
+          catchError((e) => of(saveError({ e })))
+        )
       )
     )
   );
@@ -64,32 +47,13 @@ export class UserEffect {
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(update),
-      mergeMap(
-        ({
-          id,
-          name,
-          email,
-          identification_number,
-          block_number,
-          address_number,
-          status,
-          role,
-        }) =>
-          this.userService
-            .update(
-              id,
-              name,
-              email,
-              identification_number,
-              block_number,
-              address_number,
-              status,
-              role
-            )
-            .pipe(
-              map((user) => saveSuccess({ user })),
-              catchError((e) => of(saveError({ e })))
-            )
+      mergeMap(({ id, name, block_number, address_number, status, role }) =>
+        this.userService
+          .update(id, name, block_number, address_number, status, role)
+          .pipe(
+            map((user) => saveSuccess({ user })),
+            catchError((e) => of(saveError({ e })))
+          )
       )
     )
   );
