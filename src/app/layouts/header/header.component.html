@@ -1,6 +1,18 @@
-<header>
-  <ul>
-    <li *ngIf="!isLogged"><a routerLink="/auth">LOGIN</a></li>
-    <li *ngIf="isLogged"><button (click)="signout()">LOGOUT</button></li>
-  </ul>
-</header>
+<mat-toolbar
+  color="primary"
+  class="toolbar"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>OTB SAN JOSE</span>
+  <button mat-icon-button [routerLink]="['/auth']" *ngIf="!isLogged">
+    <mat-icon>person</mat-icon>
+  </button>
+
+  <button mat-icon-button (click)="signout()" *ngIf="isLogged">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

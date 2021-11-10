@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { HttpHeadersService } from './interceptors/http-headers.service';
 
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 /*CONFIG STORE*/
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -16,10 +19,11 @@ import { appReducers } from './state/app.reducer';
 import { EffectsArray } from './state/effects';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 /*CONFIG STORE */
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, SidebarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,6 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     BrowserAnimationsModule,
+    AngularMaterialModule,
+    FlexLayoutModule,
   ],
   providers: [
     {
