@@ -20,10 +20,12 @@ import { EffectsArray } from './state/effects';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { LoadingComponent } from './layouts/loading/loading.component';
+import { AlertComponent } from './layouts/alert/alert.component';
 /*CONFIG STORE */
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SidebarComponent],
+  declarations: [AppComponent, HeaderComponent, SidebarComponent, LoadingComponent, AlertComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/state/app.reducer';
 import * as AuthActions from 'src/app/state/actions/auth.action';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,12 +21,15 @@ export class HeaderComponent implements OnInit {
     return !!this.user;
   }
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit() {
-    this.authSubs = this.store
-      .select('auth')
-      .subscribe(({ user }) => (this.user = user));
+    this.authSubs = this.store.select('auth').subscribe(({ user }) => {
+      this.user = user;
+      if (!user) {
+        this.router.navigate(['/auth']);
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
 import * as authActions from 'src/app/state/actions/auth.action';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+
 import { User } from 'src/app/models/user.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 
 @Component({
   selector: 'app-signin',
@@ -21,7 +25,8 @@ export class SigninComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -43,15 +48,21 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   private handledSuccess(user: User) {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard']).then(() => this.form.reset());
   }
   private handledError(error: any) {
-    alert('error');
+    this.form.get('password')?.setValue('');
+    this.dialog.open(AlertComponent, {
+      data: {
+        title: 'Error al iniciar sesión',
+        content: 'Por favor revisa tus credenciales.',
+      },
+    });
   }
   private createForm() {
     this.form = this.fb.group({
-      email: ['admin@test.com', [Validators.required]],
-      password: ['jhoseph123', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 }

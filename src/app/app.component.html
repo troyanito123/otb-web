@@ -6,6 +6,7 @@
       [opened]="!mobileQuery.matches"
       [mode]="mobileQuery.matches ? 'over' : 'side'"
       fixedTopGap="56"
+      *ngIf="isLogged"
     >
       <app-sidebar></app-sidebar>
     </mat-sidenav>
@@ -15,3 +16,5 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+
+<app-loading></app-loading>
