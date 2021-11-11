@@ -8,6 +8,8 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as ExpenseActions from 'src/app/state/actions/expense.action';
 
 import { Expense } from 'src/app/models/expense.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-expenses-view',
@@ -21,7 +23,8 @@ export class ExpensesViewComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +41,14 @@ export class ExpensesViewComponent implements OnInit, OnDestroy {
   }
 
   public remove() {
-    this.store.dispatch(ExpenseActions.remove({ id: this.expense!.id }));
+    const dialogRef = this.matDialog.open(DeleteDialogComponent, {
+      data: { name: 'gasto' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(ExpenseActions.remove({ id: this.expense!.id }));
+      }
+    });
   }
 
   private subscribeStore() {

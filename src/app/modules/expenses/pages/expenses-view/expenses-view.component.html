@@ -1,12 +1,35 @@
-<h2>Detalle del gasto</h2>
+<div style="width: 80%">
+  <h2>Detalle del gasto</h2>
 
-<ng-container *ngIf="expense">
-  <button [routerLink]="['../edit', expense.id]">Editar</button>
-  <button (click)="remove()">Eliminar</button>
-
-  <p>{{ expense.description }}</p>
-  <p>{{ expense.amount | number: "1.2" }}</p>
-  <p>{{ expense.date | date }}</p>
-  <p>{{ expense.from_user }}</p>
-  <p>{{ expense.to_user }}</p>
-</ng-container>
+  <ng-container *ngIf="expense">
+    <mat-card>
+      <mat-card-title>
+        <p>COD GASTO: #00{{ expense.id }}</p>
+      </mat-card-title>
+      <mat-card-content
+        ><p><strong>Descripción: </strong> {{ expense.description }}</p>
+        <p><strong>Monto:</strong> {{ expense.amount | number: "1.2" }} Bs.</p>
+        <p>
+          <strong>Fecha: </strong>
+          {{ expense.date | date: "fullDate" | uppercase }}
+        </p>
+        <p><strong>Quién dio: </strong> {{ expense.from_user }}</p>
+        <p><strong>Quién recibio: </strong>{{ expense.to_user }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['../edit', expense.id]"
+          >
+            Editar
+          </button>
+          <button mat-raised-button color="warn" (click)="remove()">
+            Eliminar
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
+</div>

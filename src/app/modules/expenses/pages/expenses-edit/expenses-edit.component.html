@@ -1,5 +1,15 @@
-<h2>Editar un gasto</h2>
-<ng-container *ngIf="expense">
-  <button [routerLink]="['../../', expense.id]">Regresar</button>
-  <app-expenses-form [expense]="expense"></app-expenses-form>
-</ng-container>
+<div>
+  <ng-container *ngIf="expense">
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <h2>Editar un gasto</h2>
+      <button
+        mat-stroked-button
+        color="primary"
+        [routerLink]="['../../', expense.id]"
+      >
+        Regresar
+      </button>
+    </div>
+    <app-expenses-form [expense]="expense"></app-expenses-form>
+  </ng-container>
+</div>
