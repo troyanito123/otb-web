@@ -11,6 +11,7 @@ import { Meeting } from 'src/app/models/meeting.model';
 import { Attendence } from 'src/app/models/attendence.model';
 import { User } from 'src/app/models/user.model';
 import { AttendenceMeeting } from 'src/app/models/attendence-meeting.mode';
+import { ToAttendencePipe } from 'src/app/pipes/to-attendence.pipe';
 @Component({
   selector: 'app-user-attendences',
   templateUrl: './user-attendences.component.html',
@@ -25,6 +26,10 @@ export class UserAttendencesComponent implements OnInit, OnDestroy {
 
   public user!: User | null;
   private userSubs!: Subscription;
+
+  public attendenceMeeting: AttendenceMeeting[] = [];
+
+  attendenceMeetingColumns = ['name', 'date', 'isPresent', 'fine', 'option'];
 
   constructor(private store: Store<AppState>) {}
 
@@ -65,12 +70,20 @@ export class UserAttendencesComponent implements OnInit, OnDestroy {
       .select('meetings')
       .subscribe(({ meetings }) => {
         this.meetings = meetings;
+        this.attendenceMeeting = new ToAttendencePipe().transform(
+          this.meetings,
+          this.attendences
+        );
       });
 
     this.attendencesSubs = this.store
       .select('attendences')
       .subscribe(({ attendences }) => {
         this.attendences = attendences;
+        this.attendenceMeeting = new ToAttendencePipe().transform(
+          this.meetings,
+          this.attendences
+        );
       });
   }
 
