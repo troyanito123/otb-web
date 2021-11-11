@@ -20,7 +20,7 @@ export class ExpensesEffect {
       ofType(ExpensesActions.load),
       mergeMap(() =>
         this.expenseService.getAll().pipe(
-          map((expenses) => ExpensesActions.loadSuccess({ expenses })),
+          map(({ expenses }) => ExpensesActions.loadSuccess({ expenses })),
           catchError((e) => of(ExpensesActions.error({ e })))
         )
       )

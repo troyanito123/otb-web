@@ -1,5 +1,51 @@
-<div *ngFor="let item of expenses">
-  <p>{{ item.description }}</p>
-  <p>{{ item.date | date }}</p>
-  <button [routerLink]="['../', item.id]">Ver</button>
+<div class="expenses_container">
+  <mat-form-field>
+    <input matInput placeholder="Buscador..." #keyword />
+  </mat-form-field>
+
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="date"
+    matSortDirection="asc"
+    matSortDisableClear
+    class="demo-table"
+  >
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        FECHA
+      </mat-header-cell>
+      <mat-cell *matCellDef="let expense">
+        {{ expense.date | date: "mediumDate" | uppercase }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> DESCRIPCION </mat-header-cell>
+      <mat-cell *matCellDef="let expense">{{ expense.description }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef> MONTO</mat-header-cell>
+      <mat-cell *matCellDef="let expense">
+        {{ expense.amount | number: "1.2" }} Bs.
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      [routerLink]="['/expenses', row.id]"
+      *matRowDef="let row; columns: displayedColumns"
+    ></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [length]="dataSource.size$ | async"
+    [pageSize]="take"
+    [pageSizeOptions]="[5, 10, 15]"
+  ></mat-paginator>
 </div>

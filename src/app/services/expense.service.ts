@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -12,11 +12,25 @@ export class ExpenseService {
 
   constructor(private http: HttpClient) {}
 
-  public getAll() {
+  public getAll(
+    keyword: string = '',
+    sort: string = 'ASC',
+    page: number = 0,
+    take: number = 10
+  ) {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('take', take.toString())
+      .set('sort', sort.toUpperCase())
+      .set('keyword', keyword.toUpperCase());
+
     return this.http
-      .get<{ expenses: []; count: number }>(this.url)
+      .get<{ expenses: []; count: number }>(this.url, { params })
       .pipe(
-        map(({ expenses, count }) => expenses.map((r) => Expense.fromJson(r)))
+        map(({ expenses, count }) => ({
+          expenses: expenses.map((r) => Expense.fromJson(r)),
+          count,
+        }))
       );
   }
 
