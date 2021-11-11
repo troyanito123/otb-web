@@ -12,6 +12,7 @@ export class LoadingComponent implements OnInit {
   private authSubs!: Subscription;
   private userSubs!: Subscription;
   private monthlyPaymentsMadeSubs!: Subscription;
+  private contributionsPaidSubs!: Subscription;
 
   loading = false;
 
@@ -27,11 +28,15 @@ export class LoadingComponent implements OnInit {
     this.monthlyPaymentsMadeSubs = this.store
       .select('monthlyPaymentMade')
       .subscribe(({ loading }) => (this.loading = loading));
+    this.contributionsPaidSubs = this.store
+      .select('contributionsPaid')
+      .subscribe(({ loading }) => (this.loading = loading));
   }
 
   ngOnDestroy(): void {
     this.authSubs?.unsubscribe();
     this.userSubs?.unsubscribe();
     this.monthlyPaymentsMadeSubs?.unsubscribe();
+    this.contributionsPaidSubs?.unsubscribe();
   }
 }

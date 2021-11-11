@@ -1,13 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 import { ContributionPaid } from 'src/app/models/contribution-paid.model';
 import { Contribution } from 'src/app/models/contribution.model';
 import { PreContribution } from 'src/app/models/pre-contributions';
 import { Transaction } from 'src/app/models/transaction.model';
 import { User } from 'src/app/models/user.model';
+import { PreContributionsPipe } from 'src/app/pipes/pre-contributions.pipe';
 import * as ContributionsPaidActions from 'src/app/state/actions/contributions-paid.action';
 import * as ContributionsActions from 'src/app/state/actions/contributions.action';
 import * as PreContributionsActions from 'src/app/state/actions/pre-constribution.action';
@@ -35,7 +38,21 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
   inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  dataSource: PreContribution[] = [];
+  dataSourceColumns: string[] = [
+    'description',
+    'amountToPay',
+    'amountPay',
+    'option',
+  ];
+
+  preContributionsColumns: string[] = ['description', 'amountToPay', 'option'];
+
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.listenerStore();
@@ -66,7 +83,12 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
   confirmPay() {
     if (!this.preContributions.length) {
-      console.log('no hay que pagar');
+      this.matDialog.open(AlertComponent, {
+        data: {
+          title: 'Error al realizar un pago',
+          content: 'Tiene que añadir por lo menos un aporte.',
+        },
+      });
       return;
     }
     const contributionsId = JSON.stringify(
@@ -95,12 +117,22 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
     this.contributionsSubs = this.store
       .select('contributions')
-      .subscribe(({ contributions }) => (this.contributions = contributions));
+      .subscribe(({ contributions }) => {
+        this.contributions = contributions;
+        this.dataSource = new PreContributionsPipe().transform(
+          this.contributions,
+          this.contributionsPaid
+        );
+      });
 
     this.contributionsPaidSubs = this.store
       .select('contributionsPaid')
       .subscribe(({ contributionsPaid, saved }) => {
         this.contributionsPaid = contributionsPaid;
+        this.dataSource = new PreContributionsPipe().transform(
+          this.contributions,
+          this.contributionsPaid
+        );
         if (saved) {
           this.store.dispatch(
             TransactionsActions.addTransaction({
