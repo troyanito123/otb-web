@@ -10,15 +10,15 @@ import { load, loadError, loadSuccess } from '../actions/users.action';
 export class UsersEffect {
   constructor(private actions$: Actions, private userService: UserService) {}
 
-  loadUsers$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(load),
-      mergeMap(() =>
-        this.userService.getAll().pipe(
-          map((users) => loadSuccess({ users })),
-          catchError((e) => of(loadError({ e })))
-        )
-      )
-    )
-  );
+  // loadUsers$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(load),
+  //     mergeMap(() =>
+  //       this.userService.getAll().pipe(
+  //         map((users) => loadSuccess({ users })),
+  //         catchError((e) => of(loadError({ e })))
+  //       )
+  //     )
+  //   )
+  // );
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,10 +13,26 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  public getAll(): Observable<User[]> {
+  public getAll(
+    keyword: string = '',
+    sort: string = 'ASC',
+    page: number = 0,
+    take: number = 10
+  ): Observable<{ users: User[]; count: number }> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('take', take.toString())
+      .set('sort', sort.toUpperCase())
+      .set('keyword', keyword.toUpperCase());
+
     return this.http
-      .get<{ users: []; count: number }>(this.url)
-      .pipe(map(({ users, count }) => users.map((r) => User.fromJson(r))));
+      .get<{ users: []; count: number }>(this.url, { params })
+      .pipe(
+        map(({ users, count }) => ({
+          users: users.map((r) => User.fromJson(r)),
+          count,
+        }))
+      );
   }
 
   public create(
