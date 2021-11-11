@@ -19,6 +19,8 @@ import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component';
 import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component';
 import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component';
+import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { UserAttendencesComponent } from './pages/user-attendences/user-attenden
     ReactiveFormsModule,
     PipesModule,
     QRCodeModule,
+    AngularMaterialModule,
+    FlexLayoutModule,
   ],
 })
 export class UsersModule {}

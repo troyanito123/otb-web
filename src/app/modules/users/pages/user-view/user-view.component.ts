@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
 import { User } from 'src/app/models/user.model';
 import { cleanUser, loadUser, remove } from 'src/app/state/actions/user.action';
 import { AppState } from 'src/app/state/app.reducer';
@@ -19,7 +21,8 @@ export class UserViewComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,13 @@ export class UserViewComponent implements OnInit, OnDestroy {
   }
 
   remove() {
-    this.store.dispatch(remove({ id: this.user!.id }));
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { name: 'usuario' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(remove({ id: this.user!.id }));
+      }
+    });
   }
 }

@@ -1,12 +1,39 @@
 <ng-container *ngIf="user">
-  <hr />
-  <button [routerLink]="['./edit']">Modificar</button>
-  <button (click)="remove()">Eliminar</button>
-  <button [routerLink]="['./payment']">Mensualidades</button>
-  <button [routerLink]="['./contributions']">Aportes</button>
-  <button [routerLink]="['./certifications']">Certificaciones</button>
-  <button [routerLink]="['./attendences']">Asistencias a reuniones</button>
-  <button [routerLink]="['./detail']">Informacion del usuario</button>
-  <hr />
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="16px">
+    <button mat-raised-button color="primary" [routerLink]="['./edit']">
+      Modificar
+    </button>
+    <button mat-raised-button color="primary" (click)="remove()">
+      Eliminar
+    </button>
+    <button mat-raised-button color="primary" [routerLink]="['./payment']">
+      Mensualidades
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['./contributions']"
+    >
+      Aportes
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['./certifications']"
+    >
+      Certificaciones
+    </button>
+    <button mat-raised-button color="primary" [routerLink]="['./attendences']">
+      Asistencias a reuniones
+    </button>
+    <button mat-raised-button color="primary" [routerLink]="['./detail']">
+      Informacion del usuario
+    </button>
+  </div>
+
+  <div style="margin-top: 12px">
+    <p><strong>Usuario: </strong> {{ user.name }}</p>
+  </div>
+
   <router-outlet></router-outlet>
 </ng-container>

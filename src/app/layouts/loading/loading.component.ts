@@ -10,6 +10,8 @@ import { AppState } from 'src/app/state/app.reducer';
 })
 export class LoadingComponent implements OnInit {
   private authSubs!: Subscription;
+  private userSubs!: Subscription;
+  private monthlyPaymentsMadeSubs!: Subscription;
 
   loading = false;
 
@@ -19,9 +21,17 @@ export class LoadingComponent implements OnInit {
     this.authSubs = this.store
       .select('auth')
       .subscribe(({ loading }) => (this.loading = loading));
+    this.userSubs = this.store
+      .select('user')
+      .subscribe(({ loading }) => (this.loading = loading));
+    this.monthlyPaymentsMadeSubs = this.store
+      .select('monthlyPaymentMade')
+      .subscribe(({ loading }) => (this.loading = loading));
   }
 
   ngOnDestroy(): void {
     this.authSubs?.unsubscribe();
+    this.userSubs?.unsubscribe();
+    this.monthlyPaymentsMadeSubs?.unsubscribe();
   }
 }

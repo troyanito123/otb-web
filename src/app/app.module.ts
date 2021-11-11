@@ -22,10 +22,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { LoadingComponent } from './layouts/loading/loading.component';
 import { AlertComponent } from './layouts/alert/alert.component';
+import { DeleteDialogComponent } from './layouts/delete-dialog/delete-dialog.component';
 /*CONFIG STORE */
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SidebarComponent, LoadingComponent, AlertComponent],
+  declarations: [AppComponent, HeaderComponent, SidebarComponent, LoadingComponent, AlertComponent, DeleteDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

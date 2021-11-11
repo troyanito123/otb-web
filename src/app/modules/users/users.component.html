@@ -1,4 +1,8 @@
-<button routerLink="./list">Lista</button>
-<button routerLink="./new">Nuevo</button>
+<div class="user_container">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" routerLink="./list">Lista</button>
+    <button mat-stroked-button color="primary" routerLink="./new">Nuevo</button>
+  </div>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>

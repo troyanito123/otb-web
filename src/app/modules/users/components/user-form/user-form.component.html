@@ -1,29 +1,64 @@
-<form [formGroup]="form" (ngSubmit)="save()">
-  <label>Nombre completo</label>
-  <input type="text" formControlName="name" />
-  <br />
-  <label>Numero de Manzano</label>
-  <input type="text" formControlName="block_number" />
-  <br />
-  <label>Numero de lote</label>
-  <input type="text" formControlName="address_number" />
-  <br />
+<form
+  [formGroup]="form"
+  (ngSubmit)="save()"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <mat-form-field appearance="legacy">
+    <mat-label>Nombre</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="name"
+      placeholder="JUAN PEREZ"
+    />
+    <mat-icon matSuffix color="primary">face</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
 
-  <div *ngIf="isEditing">
-    <label for="">Rol</label>
-    <select formControlName="role">
-      <option [value]="role.id" *ngFor="let role of roles">
+  <mat-form-field appearance="legacy">
+    <mat-label>Numero de manzano</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="block_number"
+      placeholder="38F"
+    />
+    <mat-icon matSuffix color="primary">dashboard</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="legacy">
+    <mat-label>Numero de lote</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="address_number"
+      placeholder="4"
+    />
+    <mat-icon matSuffix color="primary">store</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="isEditing">
+    <mat-label>Rol</mat-label>
+    <mat-select formControlName="role">
+      <mat-option [value]="role.id" *ngFor="let role of roles">
         {{ role.name }}
-      </option>
-    </select>
-    <br />
+      </mat-option>
+    </mat-select>
+    <mat-hint align="end">Selecciona</mat-hint>
+  </mat-form-field>
 
-    <label>Estado</label>
-    <select formControlName="status">
-      <option [value]="state" *ngFor="let state of status">{{ state }}</option>
-    </select>
-    <br />
-  </div>
+  <mat-form-field appearance="fill" *ngIf="isEditing">
+    <mat-label>Estado</mat-label>
+    <mat-select formControlName="status">
+      <mat-option [value]="state" *ngFor="let state of status">
+        {{ state }}
+      </mat-option>
+    </mat-select>
+    <mat-hint align="end">Selecciona</mat-hint>
+  </mat-form-field>
 
-  <button type="submit">Guardar</button>
+  <button mat-raised-button color="primary" type="submit">Guardar</button>
 </form>

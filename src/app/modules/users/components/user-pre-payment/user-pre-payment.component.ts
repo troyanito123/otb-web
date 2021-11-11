@@ -13,6 +13,8 @@ import { PrePayment } from 'src/app/models/pre-payment';
 import { User } from 'src/app/models/user.model';
 import { Transaction } from 'src/app/models/transaction.model';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 
 @Component({
   selector: 'app-user-pre-payment',
@@ -30,9 +32,15 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
   public user!: User | null;
   private userSubs!: Subscription;
 
+  displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option'];
+
   inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.listenerStore();
@@ -50,9 +58,15 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
 
   confirmPaid() {
     if (!this.prePayments.length) {
-      console.log('no hay que pagar');
+      this.matDialog.open(AlertComponent, {
+        data: {
+          title: 'Error al realizar un pago',
+          content: 'Tiene que añadir por lo menos una mensualidad.',
+        },
+      });
       return;
     }
+
     const monthsId = JSON.stringify(this.prePayments.map((p) => p.id));
 
     this.store.dispatch(

@@ -1,5 +1,16 @@
 <ng-container *ngIf="user">
-  <h1>{{ user.name }}</h1>
-  <p><strong>Manzano: </strong>#{{ user.block_number }}</p>
-  <p><strong>Lote: </strong>#{{ user.address_number }}</p>
+  <mat-card>
+    <mat-card-title>
+      <h2>{{ user.name }}</h2>
+    </mat-card-title>
+
+    <mat-card-content>
+      <p><strong>Manzano: </strong>#{{ user.block_number }}</p>
+      <p>
+        <strong>Carnet de identidad: </strong>#{{ user.identification_number }}
+      </p>
+      <p><strong>Lote: </strong>#{{ user.address_number }}</p>
+      <p><strong>Estado: </strong>{{ user.status }}</p>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

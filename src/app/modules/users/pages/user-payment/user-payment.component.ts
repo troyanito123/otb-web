@@ -10,6 +10,7 @@ import * as PrePaymentActions from 'src/app/state/actions/pre-payment.action';
 import { AppState } from 'src/app/state/app.reducer';
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made';
 import { PrePayment } from 'src/app/models/pre-payment';
+import { MonthlyPaymentsPipe } from 'src/app/pipes/monthly-payments.pipe';
 
 @Component({
   selector: 'app-user-payment',
@@ -28,6 +29,16 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
 
   yearInput = new FormControl('2021', Validators.required);
   years = ['2021', '2022', '2023'];
+
+  displayedColumns: string[] = [
+    'year',
+    'month',
+    'amountForPay',
+    'amountPay',
+    'option',
+  ];
+
+  dataSource: PrePayment[] = [];
 
   constructor(private store: Store<AppState>) {}
 
@@ -66,15 +77,22 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   private listenerPayments() {
     this.monthlyPaymentsSubs = this.store
       .select('monthlyPayment')
-      .subscribe(
-        ({ monthlyPayments }) => (this.monthlyPayments = monthlyPayments)
-      );
+      .subscribe(({ monthlyPayments }) => {
+        this.monthlyPayments = monthlyPayments;
+        this.dataSource = new MonthlyPaymentsPipe().transform(
+          this.monthlyPayments,
+          this.monthlyPaymentsMade
+        );
+      });
 
     this.monthlyPaymentsMadeSubs = this.store
       .select('monthlyPaymentMade')
-      .subscribe(
-        ({ monthlyPaymentsMade }) =>
-          (this.monthlyPaymentsMade = monthlyPaymentsMade)
-      );
+      .subscribe(({ monthlyPaymentsMade }) => {
+        this.monthlyPaymentsMade = monthlyPaymentsMade;
+        this.dataSource = new MonthlyPaymentsPipe().transform(
+          this.monthlyPayments,
+          this.monthlyPaymentsMade
+        );
+      });
   }
 }

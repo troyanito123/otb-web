@@ -26,9 +26,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.authSubs = this.store.select('auth').subscribe(({ user }) => {
       this.user = user;
-      if (!user) {
-        this.router.navigate(['/auth']);
-      }
     });
   }
 
@@ -38,5 +35,6 @@ export class HeaderComponent implements OnInit {
 
   signout() {
     this.store.dispatch(AuthActions.signout());
+    this.router.navigate(['/auth']);
   }
 }
