@@ -1,28 +1,59 @@
-<form [formGroup]="form" (ngSubmit)="save()">
-  <div>
-    <label for="">Descripcion</label>
-    <textarea cols="30" rows="5" formControlName="description"></textarea>
-  </div>
+<form
+  [formGroup]="form"
+  (ngSubmit)="save()"
+  fxLayout="column"
+  fxLayoutAlign="start center"
+  fxLayoutGap="16px"
+>
+  <mat-form-field appearance="fill">
+    <mat-label>Descripción</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Pago de refrigerios ..."
+    ></textarea>
+    <mat-icon matSuffix color="primary">description</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
 
-  <div>
-    <label for="">Monto</label>
-    <input type="number" formControlName="amount" />
-  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Monto</mat-label>
+    <input matInput type="number" formControlName="amount" placeholder="5" />
+    <span matPrefix>$&nbsp;</span>
+    <span matSuffix>.00</span>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
 
-  <div>
-    <label for="">Quien da:</label>
-    <input type="text" formControlName="from_user" />
-  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Quien da</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="from_user"
+      placeholder="PEPE GUZMAN"
+    />
+    <mat-icon matSuffix color="primary">face</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
 
-  <div>
-    <label for="">Quien recibe:</label>
-    <input type="text" formControlName="to_user" />
-  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Quien recibe</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="to_user"
+      placeholder="CARLA GOMEZ"
+    />
+    <mat-icon matSuffix color="primary">face</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
 
-  <div>
-    <label for="">Fecha:</label>
-    <input type="date" formControlName="date" />
-  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Fecha</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-  <button type="submit">Guardar</button>
+  <button mat-raised-button color="primary" type="submit">Guardar</button>
 </form>
