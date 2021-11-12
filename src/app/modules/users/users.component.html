@@ -1,7 +1,11 @@
 <div class="user_container">
   <div fxLayout="row" fxLayoutAlign="end center">
-    <button mat-raised-button color="primary" routerLink="./list">Lista</button>
-    <button mat-stroked-button color="primary" routerLink="./new">Nuevo</button>
+    <button mat-raised-button routerLink="./list" routerLinkActive="active">
+      Lista
+    </button>
+    <button mat-raised-button routerLink="./new" routerLinkActive="active">
+      Nuevo
+    </button>
   </div>
 
   <router-outlet></router-outlet>

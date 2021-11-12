@@ -79,7 +79,7 @@ const _incomeExpensesReducer = createReducer(
     ...state,
     expenses: Number(total),
     loading: false,
-    total: state.incomes - state.expenses + Number(total),
+    total: state.incomes - (state.expenses + Number(total)),
   })),
 
   on(IncomeExpensesActions.error, (state, { e }) => ({

@@ -1,7 +1,11 @@
 <div style="margin: 2rem">
   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
-    <button mat-raised-button color="primary" routerLink="list">Lista</button>
-    <button mat-raised-button color="primary" routerLink="new">Nuevo</button>
+    <button mat-raised-button routerLink="list" routerLinkActive="active">
+      Lista
+    </button>
+    <button mat-raised-button routerLink="new" routerLinkActive="active">
+      Nuevo
+    </button>
   </div>
 
   <router-outlet></router-outlet>

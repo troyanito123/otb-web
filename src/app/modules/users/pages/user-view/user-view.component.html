@@ -1,34 +1,53 @@
 <ng-container *ngIf="user">
   <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="16px">
-    <button mat-raised-button color="primary" [routerLink]="['./edit']">
-      Modificar
+    <button
+      mat-raised-button
+      [routerLink]="['./detail']"
+      routerLinkActive="active"
+    >
+      Informacion del usuario
     </button>
-    <button mat-raised-button color="primary" (click)="remove()">
-      Eliminar
-    </button>
-    <button mat-raised-button color="primary" [routerLink]="['./payment']">
+
+    <button
+      mat-raised-button
+      routerLinkActive="active"
+      [routerLink]="['./payment']"
+    >
       Mensualidades
     </button>
     <button
       mat-raised-button
-      color="primary"
       [routerLink]="['./contributions']"
+      routerLinkActive="active"
     >
       Aportes
     </button>
+
     <button
       mat-raised-button
-      color="primary"
+      [routerLink]="['./attendences']"
+      routerLinkActive="active"
+    >
+      Asistencias a reuniones
+    </button>
+
+    <button
+      mat-raised-button
       [routerLink]="['./certifications']"
+      routerLinkActive="active"
     >
       Certificaciones
     </button>
-    <button mat-raised-button color="primary" [routerLink]="['./attendences']">
-      Asistencias a reuniones
+
+    <button
+      mat-raised-button
+      [routerLink]="['./edit']"
+      routerLinkActive="active"
+    >
+      Modificar
     </button>
-    <button mat-raised-button color="primary" [routerLink]="['./detail']">
-      Informacion del usuario
-    </button>
+
+    <button mat-raised-button color="warn" (click)="remove()">Eliminar</button>
   </div>
 
   <div style="margin-top: 12px">

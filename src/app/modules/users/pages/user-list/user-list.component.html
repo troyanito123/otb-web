@@ -1,9 +1,8 @@
-<div fxLayout="column">
-  <div fxFlexAlign="start">
-    <mat-form-field>
-      <input matInput placeholder="Buscador..." #keyword />
-    </mat-form-field>
-  </div>
+<div class="users_container">
+  <h2>Vecinos OTB SAN JOSE</h2>
+  <mat-form-field>
+    <input matInput placeholder="Buscador..." #keyword />
+  </mat-form-field>
 
   <div class="spinner-container" *ngIf="dataSource.loading$ | async">
     <mat-spinner></mat-spinner>
