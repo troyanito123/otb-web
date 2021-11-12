@@ -17,8 +17,18 @@
   border-color: currentColor;
 }
 
+.mat-column-date {
+  flex: 0 0 15%;
+  justify-content: center;
+}
+
+.mat-column-description {
+  flex: 0 0 60%;
+  justify-content: start;
+}
+
 .mat-column-amount {
-  width: 32px;
-  text-align: center;
+  flex: 0 0 15%;
+  justify-content: center;
   font-weight: bold;
 }

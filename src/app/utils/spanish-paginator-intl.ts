@@ -24,6 +24,8 @@ export function getSpanishPaginatorIntl() {
   paginatorIntl.nextPageLabel = 'Página siguiente';
   paginatorIntl.previousPageLabel = 'Página anterior';
   paginatorIntl.getRangeLabel = spanishRangeLabel;
+  paginatorIntl.lastPageLabel = 'Última página';
+  paginatorIntl.firstPageLabel = 'Primera página';
 
   return paginatorIntl;
 }

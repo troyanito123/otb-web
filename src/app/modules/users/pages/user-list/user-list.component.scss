@@ -2,10 +2,6 @@
   margin: 1.5rem;
 }
 
-mat-table {
-  width: 100%;
-}
-
 .mat-row .mat-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
@@ -16,17 +12,15 @@ mat-table {
   border-color: currentColor;
 }
 
-.mat-column-block-number {
-  width: 32px;
-  text-align: center;
-}
-
 .mat-column-name {
-  width: 10rem;
   font-weight: bold;
-  text-align: center;
+  flex: 0 0 60%;
 }
-
-.w-2rem {
-  width: 2rem;
+.mat-column-block-number {
+  justify-content: center;
+  flex: 0 0 20%;
+}
+.mat-column-address-number {
+  justify-content: center;
+  flex: 0 0 20%;
 }

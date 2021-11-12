@@ -1,7 +1,9 @@
-<div class="users_container">
-  <mat-form-field>
-    <input matInput placeholder="Buscador..." #keyword />
-  </mat-form-field>
+<div fxLayout="column">
+  <div fxFlexAlign="start">
+    <mat-form-field>
+      <input matInput placeholder="Buscador..." #keyword />
+    </mat-form-field>
+  </div>
 
   <div class="spinner-container" *ngIf="dataSource.loading$ | async">
     <mat-spinner></mat-spinner>
@@ -42,5 +44,6 @@
     [length]="dataSource.size$ | async"
     [pageSize]="take"
     [pageSizeOptions]="[5, 10, 15]"
+    showFirstLastButtons
   ></mat-paginator>
 </div>
