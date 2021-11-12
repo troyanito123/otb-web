@@ -7,10 +7,13 @@ import { User } from 'src/app/models/user.model';
 import * as MonthlyPaymentsAction from 'src/app/state/actions/monthly-payments.action';
 import * as MonthlyPaymentsMadeAction from 'src/app/state/actions/monthly-payments-made.action';
 import * as PrePaymentActions from 'src/app/state/actions/pre-payment.action';
+import * as TransactionsActions from 'src/app/state/actions/transactions.action';
 import { AppState } from 'src/app/state/app.reducer';
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made';
 import { PrePayment } from 'src/app/models/pre-payment';
 import { MonthlyPaymentsPipe } from 'src/app/pipes/monthly-payments.pipe';
+import { Transaction } from 'src/app/models/transaction.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-payment',
@@ -40,7 +43,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
 
   dataSource: PrePayment[] = [];
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
     this.userSubs = this.store.select('user').subscribe(({ user }) => {
@@ -65,6 +68,24 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
 
   addToPrePaid(prePayment: PrePayment) {
     this.store.dispatch(PrePaymentActions.addPayment({ prePayment }));
+  }
+
+  public reprint() {
+    this.store.dispatch(
+      TransactionsActions.addTransaction({
+        transactions: this.generateTransactions(),
+      })
+    );
+    this.router.navigate(['users', this.user!.id, 'receipt-view']);
+  }
+
+  private generateTransactions() {
+    return this.monthlyPaymentsMade.map((p) => {
+      const { monthlyPayment, amount, date } = p;
+      const { month, year } = monthlyPayment;
+      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
+      return new Transaction(description, amount, date);
+    });
   }
 
   private loadPayments(id: number, year: string) {

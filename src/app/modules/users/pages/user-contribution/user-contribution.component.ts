@@ -104,6 +104,15 @@ export class UserContributionComponent implements OnInit, OnDestroy {
     );
   }
 
+  reprint() {
+    this.store.dispatch(
+      TransactionsActions.addTransaction({
+        transactions: this.genereteTransactionFromContributionsPaid(),
+      })
+    );
+    this.router.navigate(['users', this.user!.id, 'receipt-view']);
+  }
+
   private listenerStore() {
     this.userSubs = this.store.select('user').subscribe(({ user }) => {
       this.user = user;
@@ -156,5 +165,13 @@ export class UserContributionComponent implements OnInit, OnDestroy {
     return this.preContributions.map(
       (p) => new Transaction(p.description, p.amountToPay, this.inputDate.value)
     );
+  }
+
+  private genereteTransactionFromContributionsPaid() {
+    return this.contributionsPaid.map((c) => {
+      const { date, contribution, amount } = c;
+      const { description } = contribution;
+      return new Transaction(description, amount, date);
+    });
   }
 }
