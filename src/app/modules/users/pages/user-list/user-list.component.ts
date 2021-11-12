@@ -6,19 +6,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { fromEvent, merge, Subscription } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as UsersActions from 'src/app/state/actions/users.action';
-
-import { User } from 'src/app/models/user.model';
-import { cleanUser } from 'src/app/state/actions/user.action';
-import { UserService } from 'src/app/services/user.service';
 import { UsersDataSource } from './users-datasource';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-list',
