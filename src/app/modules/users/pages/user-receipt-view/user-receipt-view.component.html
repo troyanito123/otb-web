@@ -1,4 +1,11 @@
-<button (click)="print()">Imprimir</button>
+<button
+  mat-raised-button
+  color="primary"
+  (click)="print()"
+  style="margin-bottom: 1rem"
+>
+  Imprimir
+</button>
 
 <div class="receipt_container" id="receipt" #receipt *ngIf="user && auth">
   <div class="header_receipt">
@@ -13,7 +20,7 @@
   <div class="detail_receipt" *ngIf="transactions.length">
     <div>
       <div class="detail_description">
-        <p><strong>Descripcion: </strong></p>
+        <p><strong>Descripción: </strong></p>
         <p *ngFor="let item of transactions" class="description_item">
           {{ item.description }} - {{ item.amount | number: "1.2" }}Bs.
         </p>
@@ -31,7 +38,7 @@
 
       <p>
         <strong>Fecha de registro:</strong>
-        {{ transactions[0].date | date }}
+        {{ transactions[0].date | date: "fullDate" | uppercase }}
       </p>
     </div>
     <div>

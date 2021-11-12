@@ -18,6 +18,7 @@
     display: flex;
     width: 100%;
     justify-content: space-around;
+    align-items: center;
     img {
       max-height: 100px;
     }
@@ -25,6 +26,7 @@
     h2 {
       margin: 0;
       text-align: center;
+      font-weight: bold;
     }
   }
   .detail_receipt {
