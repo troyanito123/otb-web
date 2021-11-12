@@ -1,7 +1,28 @@
-<mat-nav-list>
-  <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+<mat-nav-list fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <button
+    mat-flat-button
+    [routerLink]="['/dashboard']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
     INICIO
-  </a>
-  <a mat-list-item routerLink="/users" routerLinkActive="active"> Usuarios </a>
-  <a mat-list-item routerLink="/expenses" routerLinkActive="active"> Gastos </a>
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['/users']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    USUARIOS
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['/expenses']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    GASTOS
+  </button>
 </mat-nav-list>
