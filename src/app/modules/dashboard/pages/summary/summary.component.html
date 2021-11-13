@@ -1,24 +1,36 @@
-<h1>Resumen hacienda</h1>
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <h2>Resumen hacienda</h2>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Ingresos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ngx-charts-advanced-pie-chart
+        [view]="view"
+        scheme="cool"
+        [results]="incomesChart"
+      >
+      </ngx-charts-advanced-pie-chart>
+    </mat-card-content>
+  </mat-card>
 
-<div>
-  <div>
-    <h2>Ingresos</h2>
-    <p>Mensualidades: {{ monthlyPayments | number: "1.2" }} bs.</p>
-    <p>Aportes: {{ contributions | number: "1.2" }} bs.</p>
-    <p>Certificaciones: {{ certifications | number: "1.2" }} bs.</p>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Egresos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ expenses | number: "1.2" }} bs</h2>
+      </mat-card-content>
+    </mat-card>
 
-    <p>
-      <strong>TOTAL: {{ incomes }} Bs.</strong>
-    </p>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>En Caja</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ total | number: "1.2" }} bs</h2>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <div>
-    <h2>Egresos</h2>
-    <p>
-      <strong>TOTAL: {{ expenses | number: "1.2" }} Bs.</strong>
-    </p>
-  </div>
-</div>
-<div>
-  <h2>En caja</h2>
-  <h3>{{ total | number: "1.2" }} bs</h3>
 </div>

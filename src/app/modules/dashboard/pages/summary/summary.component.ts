@@ -19,6 +19,10 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
   private incomeExpensesSubs!: Subscription;
 
+  view: [number, number] = [450, 200];
+
+  public incomesChart: any[] = [];
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -44,6 +48,20 @@ export class SummaryComponent implements OnInit, OnDestroy {
           this.expenses = expenses;
           this.incomes = incomes;
           this.total = total;
+          this.incomesChart = [
+            {
+              name: 'Mensualidades',
+              value: monthlyPayments,
+            },
+            {
+              name: 'Aportes',
+              value: contributions,
+            },
+            {
+              name: 'Certificados',
+              value: certifications,
+            },
+          ];
         }
       );
   }
@@ -51,5 +69,17 @@ export class SummaryComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.store.dispatch(IncomeExpensesActions.clean());
     this.incomeExpensesSubs?.unsubscribe();
+  }
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 }
