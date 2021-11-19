@@ -55,7 +55,9 @@ export class UserAttendencesComponent implements OnInit, OnDestroy {
   public canAsist(date: Date) {
     const meetingDate = new Date(date);
     const todayDate = new Date();
-    return meetingDate > todayDate;
+
+    const limitDate = new Date(meetingDate.setHours(23, 59, 59));
+    return limitDate > todayDate;
   }
 
   private subscribeStore() {
