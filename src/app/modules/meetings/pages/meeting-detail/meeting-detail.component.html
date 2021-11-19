@@ -1,0 +1,31 @@
+<div
+  *ngIf="meeting"
+  fxLayout="column"
+  fxLayoutAlign="center start"
+  fxLayoutGap="16px"
+  style="margin-top: 2rem"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ meeting.name }}</mat-card-title>
+      <mat-card-subtitle>{{
+        meeting.date | date: "fullDate" | uppercase
+      }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Puntos a tratar: </strong> {{ meeting.description }}</p>
+      <p><strong>Conclusiones: </strong> {{ meeting.conclutions }}</p>
+      <p>
+        <strong>Multa: </strong> {{ meeting.fine_amount | number: "1.2" }} Bs.
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+        <button mat-raised-button color="warn" (click)="delete()">
+          Eliminar
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,1 +1,10 @@
-<p>meeting-view works!</p>
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <button mat-raised-button [routerLink]="['./view']" routerLinkActive="active">
+    Detalle
+  </button>
+  <button mat-raised-button [routerLink]="['./edit']" routerLinkActive="active">
+    Editar
+  </button>
+</div>
+
+<router-outlet></router-outlet>

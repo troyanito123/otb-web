@@ -1,0 +1,19 @@
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+  height: 4rem;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.mat-column-name {
+  width: 60%;
+  font-weight: bold;
+}
+
+.mat-column-date {
+  width: 40%;
+}

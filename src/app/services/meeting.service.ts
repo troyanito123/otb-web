@@ -21,4 +21,53 @@ export class MeetingService {
       .get<[]>(this.url)
       .pipe(map((res) => res.map((r) => Meeting.fromJson(r))));
   }
+
+  public getOne(id: number) {
+    return this.http
+      .get(`${this.url}/${id}`)
+      .pipe(map((res) => Meeting.fromJson(res)));
+  }
+
+  public create(
+    name: string,
+    description: string,
+    date: Date,
+    fine_amount: number,
+    conclutions?: string
+  ) {
+    return this.http
+      .post(this.url, {
+        name: name.toUpperCase(),
+        description,
+        date,
+        fine_amount,
+        conclutions,
+      })
+      .pipe(map((res) => Meeting.fromJson(res)));
+  }
+
+  public update(
+    id: number,
+    name: string,
+    description: string,
+    date: Date,
+    fine_amount: number,
+    conclutions?: string
+  ) {
+    return this.http
+      .put(`${this.url}/${id}`, {
+        name,
+        description,
+        date,
+        fine_amount,
+        conclutions,
+      })
+      .pipe(map((res) => Meeting.fromJson(res)));
+  }
+
+  public remove(id: number) {
+    return this.http
+      .delete(`${this.url}/${id}`)
+      .pipe(map((res) => Meeting.fromJson(res)));
+  }
 }

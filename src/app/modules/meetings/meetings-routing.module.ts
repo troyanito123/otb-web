@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MeetingsComponent } from './meetings.component';
+import { MeetingDetailComponent } from './pages/meeting-detail/meeting-detail.component';
 import { MeetingEditComponent } from './pages/meeting-edit/meeting-edit.component';
 import { MeetingListComponent } from './pages/meeting-list/meeting-list.component';
 import { MeetingNewComponent } from './pages/meeting-new/meeting-new.component';
@@ -13,8 +14,17 @@ const routes: Routes = [
     children: [
       { path: 'list', component: MeetingListComponent },
       { path: 'new', component: MeetingNewComponent },
-      { path: 'edit', component: MeetingEditComponent },
-      { path: ':id', component: MeetingViewComponent },
+
+      {
+        path: ':id',
+        component: MeetingViewComponent,
+        children: [
+          { path: 'view', component: MeetingDetailComponent },
+          { path: 'edit', component: MeetingEditComponent },
+          { path: '', redirectTo: 'view' },
+        ],
+      },
+
       { path: '', redirectTo: 'list' },
     ],
   },

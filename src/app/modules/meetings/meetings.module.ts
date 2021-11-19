@@ -12,6 +12,7 @@ import { MeetingsComponent } from './meetings.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MeetingDetailComponent } from './pages/meeting-detail/meeting-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MeetingFormComponent,
     MeetingSingleComponent,
     MeetingsComponent,
+    MeetingDetailComponent,
   ],
   imports: [
     CommonModule,
