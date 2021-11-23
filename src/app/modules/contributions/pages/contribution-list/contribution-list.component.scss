@@ -1,0 +1,23 @@
+table {
+  width: 80%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.mat-column-description {
+  width: 80%;
+}
+
+.mat-column-amount {
+  width: 20%;
+  font-weight: bold;
+  text-align: center;
+}

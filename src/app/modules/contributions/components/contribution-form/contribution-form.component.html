@@ -1,0 +1,41 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="save()"
+  fxLayout="column"
+  fxLayoutAlign="start center"
+  fxLayoutGap="8px"
+  style="margin-top: 1rem"
+>
+  <h2 *ngIf="isEditing">Modifica una contribución</h2>
+  <h2 *ngIf="!isEditing">Crea una contribución</h2>
+  <mat-form-field appearance="fill">
+    <mat-label>Descripción</mat-label>
+
+    <textarea
+      formControlName="description"
+      matInput
+      placeholder="APORTE PARA ..."
+    >
+    </textarea>
+
+    <mat-icon matSuffix>description</mat-icon>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Aporte</mat-label>
+    <input
+      formControlName="amount"
+      matInput
+      type="number"
+      min="5"
+      max="1000"
+      step="5"
+      placeholder="10"
+    />
+    <span matPrefix>Bs.&nbsp;</span>
+    <span matSuffix>.00</span>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary">Guadar</button>
+</form>

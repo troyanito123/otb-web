@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+  <h2>Lista de aportes a la OTB</h2>
+
+  <table mat-table #table [dataSource]="contributions">
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>DESCRIPCIÓN</th>
+      <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>MULTA</th>
+      <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [routerLink]="['/contributions', row.id]"
+    ></tr>
+  </table>
+</div>

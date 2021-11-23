@@ -1,0 +1,14 @@
+<mat-card style="width: 80%">
+  <mat-card-header>
+    <mat-card-title>Aporte</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="contribution">
+    <p><strong>Descripción: </strong> {{ contribution.description }}</p>
+    <p><strong>Aporte: </strong> {{ contribution.amount }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+      <button mat-button color="warn" (click)="remove()">Eliminar</button>
+    </div>
+  </mat-card-actions>
+</mat-card>
