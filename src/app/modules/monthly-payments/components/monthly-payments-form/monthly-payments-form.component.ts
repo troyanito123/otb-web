@@ -39,6 +39,10 @@ export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
     'DICIEMBRE',
   ];
 
+  get isEditing() {
+    return !!this.monthlyPayment;
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
@@ -59,8 +63,8 @@ export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-    if (!!this.monthlyPayment) this.update();
-    if (!this.monthlyPayment) this.create();
+    if (this.isEditing) this.update();
+    if (!this.isEditing) this.create();
   }
 
   private create() {
@@ -104,15 +108,15 @@ export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
   private createForm() {
     this.form = this.formBuilder.group({
       year: [
-        this.monthlyPayment ? this.monthlyPayment.year : this.years[0],
+        this.isEditing ? this.monthlyPayment!.year : this.years[0],
         [Validators.required],
       ],
       month: [
-        this.monthlyPayment ? this.monthlyPayment.month : this.months[0],
+        this.isEditing ? this.monthlyPayment!.month : this.months[0],
         [Validators.required],
       ],
       amount: [
-        this.monthlyPayment ? this.monthlyPayment.amount : 10,
+        this.isEditing ? this.monthlyPayment!.amount : 10,
         [Validators.required],
       ],
     });
