@@ -1,0 +1,17 @@
+<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Mensualidad</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="monthlyPayment">
+      <p><strong>Año: </strong>{{ monthlyPayment.year }}</p>
+      <p><strong>Mes: </strong>{{ monthlyPayment.month }}</p>
+      <p><strong>multa: </strong>{{ monthlyPayment.amount }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+        <button mat-button color="warn">eliminar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

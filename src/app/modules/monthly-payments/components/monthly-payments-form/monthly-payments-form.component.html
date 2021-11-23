@@ -1,0 +1,47 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="save()"
+  fxLayout="column"
+  fxLayoutAlign="start center"
+  fxLayoutGap="8px"
+>
+  <h2 *ngIf="!monthlyPayment">Crea una nueva mensualidad</h2>
+  <h2 *ngIf="!!monthlyPayment">Modifica la mensualidad</h2>
+  <mat-form-field appearance="fill">
+    <mat-label>Año</mat-label>
+    <mat-select formControlName="year">
+      <mat-option *ngFor="let year of years" [value]="year">
+        {{ year }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Mes</mat-label>
+    <mat-select formControlName="month">
+      <mat-option *ngFor="let month of months" [value]="month">
+        {{ month }}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Multa</mat-label>
+    <input
+      type="number"
+      formControlName="amount"
+      min="5"
+      max="1000"
+      step="5"
+      matInput
+      placeholder="10"
+    />
+    <span matPrefix>Bs.&nbsp;</span>
+    <span matSuffix>.00</span>
+    <mat-hint>Campo obligatorio</mat-hint>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Guardar</button>
+</form>

@@ -97,7 +97,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
 
   private listenerPayments() {
     this.monthlyPaymentsSubs = this.store
-      .select('monthlyPayment')
+      .select('monthlyPayments')
       .subscribe(({ monthlyPayments }) => {
         this.monthlyPayments = monthlyPayments;
         this.dataSource = new MonthlyPaymentsPipe().transform(
