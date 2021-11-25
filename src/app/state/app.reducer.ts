@@ -56,6 +56,8 @@ import {
   contributionReducer,
   ContributionState,
 } from './reducers/contribution.reducer';
+import { finesReducer, FinesState } from './reducers/fines.reducer';
+import { preFinesReducer, PreFinesState } from './reducers/pre-fine.reducer';
 
 export interface AppState {
   auth: AuthState;
@@ -78,6 +80,8 @@ export interface AppState {
   meeting: MeetingState;
   monthlyPayment: MonthlyPaymentState;
   contribution: ContributionState;
+  fines: FinesState;
+  preFines: PreFinesState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -101,4 +105,6 @@ export const appReducers: ActionReducerMap<AppState> = {
   meeting: meetingReducer,
   monthlyPayment: monthlyPaymentReducer,
   contribution: contributionReducer,
+  fines: finesReducer,
+  preFines: preFinesReducer,
 };

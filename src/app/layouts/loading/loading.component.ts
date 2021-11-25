@@ -20,6 +20,7 @@ export class LoadingComponent implements OnInit {
   private meetingSubs!: Subscription;
   private monthlyPaymentSubs!: Subscription;
   private contributionSubs!: Subscription;
+  private finesSubs!: Subscription;
 
   loading = false;
 
@@ -59,6 +60,9 @@ export class LoadingComponent implements OnInit {
     this.contributionSubs = this.store
       .select('contribution')
       .subscribe(({ loading }) => (this.loading = loading));
+    this.finesSubs = this.store
+      .select('fines')
+      .subscribe(({ loading }) => (this.loading = loading));
   }
 
   ngOnDestroy(): void {
@@ -73,5 +77,6 @@ export class LoadingComponent implements OnInit {
     this.meetingSubs?.unsubscribe();
     this.monthlyPaymentSubs?.unsubscribe();
     this.contributionSubs?.unsubscribe();
+    this.finesSubs?.unsubscribe();
   }
 }

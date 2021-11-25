@@ -15,6 +15,7 @@ import { IncomeExpensesEffect } from './incomeExpenses.effect';
 import { MeetingEffect } from './meeting.effect';
 import { MonthlyPaymentEffect } from './monthly-payment.effect';
 import { ContributionEffect } from './contribution.effect';
+import { FinesEffect } from './fines.effect';
 
 export const EffectsArray: any[] = [
   AuthEffect,
@@ -34,4 +35,5 @@ export const EffectsArray: any[] = [
   MeetingEffect,
   MonthlyPaymentEffect,
   ContributionEffect,
+  FinesEffect,
 ];

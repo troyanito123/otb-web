@@ -21,6 +21,7 @@ import { UserCertificationsComponent } from './pages/user-certifications/user-ce
 import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { UserFinesComponent } from './pages/user-fines/user-fines.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     UserReceiptViewComponent,
     UserCertificationsComponent,
     UserAttendencesComponent,
+    UserFinesComponent,
   ],
   imports: [
     CommonModule,

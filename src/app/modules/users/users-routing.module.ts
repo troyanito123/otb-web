@@ -5,6 +5,7 @@ import { UserCertificationsComponent } from './pages/user-certifications/user-ce
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
+import { UserFinesComponent } from './pages/user-fines/user-fines.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserNewComponent } from './pages/user-new/user-new.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
           { path: 'detail', component: UserDetailComponent },
           { path: 'edit', component: UserEditComponent },
           { path: 'receipt-view', component: UserReceiptViewComponent },
+          { path: 'fines', component: UserFinesComponent },
           { path: '', redirectTo: 'detail' },
         ],
       },
