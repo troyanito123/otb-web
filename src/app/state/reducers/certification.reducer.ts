@@ -6,6 +6,8 @@ export interface CertificationState {
   certification: Certification | null;
   loading: boolean;
   saved: boolean;
+  updated: boolean;
+  removed: boolean;
   error: any;
 }
 
@@ -13,6 +15,8 @@ export const initialCertificationState: CertificationState = {
   certification: null,
   loading: false,
   saved: false,
+  updated: false,
+  removed: false,
   error: null,
 };
 
@@ -33,10 +37,49 @@ const _certificationReducer = createReducer(
     saved: true,
   })),
 
+  on(CertificationActions.load, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(CertificationActions.loadSuccess, (state, { certification }) => ({
+    ...state,
+    certification,
+    loading: false,
+  })),
+
+  on(CertificationActions.update, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(CertificationActions.updateSuccess, (state, { certification }) => ({
+    ...state,
+    certification,
+    loading: false,
+    updated: true,
+  })),
+
+  on(CertificationActions.remove, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(CertificationActions.removeSuccess, (state, { certification }) => ({
+    ...state,
+    certification,
+    loading: false,
+    removed: true,
+  })),
+
   on(CertificationActions.error, (state, { e }) => ({
     ...state,
     loading: false,
     saved: false,
+    remoded: false,
     error: e.error,
   })),
 
@@ -44,6 +87,15 @@ const _certificationReducer = createReducer(
     certification: null,
     loading: false,
     saved: false,
+    updated: false,
+    removed: false,
+    error: null,
+  })),
+
+  on(CertificationActions.softClean, (state) => ({
+    ...state,
+    saved: false,
+    updated: false,
     error: null,
   }))
 );

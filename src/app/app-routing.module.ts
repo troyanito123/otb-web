@@ -57,6 +57,16 @@ const routes: Routes = [
     data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
+
+  {
+    path: 'certifications',
+    loadChildren: () =>
+      import('./modules/certifications/certifications.module').then(
+        (m) => m.CertificationsModule
+      ),
+    data: { roles: ['ADMIN'] },
+    canActivate: [AuthGuard],
+  },
   {
     path: 'auth',
     loadChildren: () =>

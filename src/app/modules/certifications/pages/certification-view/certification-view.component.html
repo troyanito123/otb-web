@@ -1,0 +1,17 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <button
+    mat-raised-button
+    [routerLink]="['./detail']"
+    routerLinkActive="active"
+  >
+    Detalle
+  </button>
+
+  <button mat-raised-button [routerLink]="['./edit']" routerLinkActive="active">
+    Editar
+  </button>
+</div>
+
+<div style="margin-top: 1rem">
+  <router-outlet></router-outlet>
+</div>

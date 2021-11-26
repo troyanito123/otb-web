@@ -5,6 +5,7 @@ import { PreContributionsPipe } from './pre-contributions.pipe';
 import { TransactionsToTotalPipe } from './transactions-to-total.pipe';
 import { ToAttendencePipe } from './to-attendence.pipe';
 import { PreFinesPaidPipe } from './pre-fines-paid.pipe';
+import { ToSpanishPipe } from './to-spanish.pipe';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { PreFinesPaidPipe } from './pre-fines-paid.pipe';
     TransactionsToTotalPipe,
     ToAttendencePipe,
     PreFinesPaidPipe,
+    ToSpanishPipe,
   ],
   imports: [CommonModule],
   exports: [
@@ -21,6 +23,7 @@ import { PreFinesPaidPipe } from './pre-fines-paid.pipe';
     TransactionsToTotalPipe,
     ToAttendencePipe,
     PreFinesPaidPipe,
+    ToSpanishPipe,
   ],
 })
 export class PipesModule {}

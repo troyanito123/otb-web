@@ -1,0 +1,27 @@
+table {
+  width: 80%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+.mat-column-date {
+  width: 30%;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mat-column-amount {
+  width: 30%;
+  text-align: center;
+}
+
+.mat-column-user {
+  width: 40%;
+}
