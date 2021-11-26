@@ -34,6 +34,15 @@ export const loadExpensesSuccess = createAction(
   props<{ total: string }>()
 );
 
+export const loadFines = createAction(
+  '[INCOME-EXPENSES] load fines total amount'
+);
+
+export const loadFinesSuccess = createAction(
+  '[INCOME-EXPENSES] load fines total amount success',
+  props<{ total: string }>()
+);
+
 export const error = createAction(
   '[INCOME-EXPENSES] error',
   props<{ e: any }>()

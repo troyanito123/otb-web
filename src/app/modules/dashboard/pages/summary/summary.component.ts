@@ -13,13 +13,14 @@ export class SummaryComponent implements OnInit, OnDestroy {
   public contributions = 0;
   public monthlyPayments = 0;
   public certifications = 0;
+  public fines = 0;
   public expenses = 0;
   public incomes = 0;
   public total = 0;
 
   private incomeExpensesSubs!: Subscription;
 
-  view: [number, number] = [450, 200];
+  view: [number, number] = [650, 250];
 
   public incomesChart: any[] = [];
 
@@ -30,6 +31,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
     this.store.dispatch(IncomeExpensesActions.loadContribution());
     this.store.dispatch(IncomeExpensesActions.loadMonthlyPayments());
     this.store.dispatch(IncomeExpensesActions.loadExpenses());
+    this.store.dispatch(IncomeExpensesActions.loadFines());
 
     this.incomeExpensesSubs = this.store
       .select('incomeExpenses')
@@ -38,6 +40,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
           contributions,
           monthlyPayments,
           certifications,
+          fines,
           expenses,
           incomes,
           total,
@@ -45,6 +48,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
           this.contributions = contributions;
           this.monthlyPayments = monthlyPayments;
           this.certifications = certifications;
+          this.fines = fines;
           this.expenses = expenses;
           this.incomes = incomes;
           this.total = total;
@@ -60,6 +64,10 @@ export class SummaryComponent implements OnInit, OnDestroy {
             {
               name: 'Certificados',
               value: certifications,
+            },
+            {
+              name: 'Multas',
+              value: fines,
             },
           ];
         }

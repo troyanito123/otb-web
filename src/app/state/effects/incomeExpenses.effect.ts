@@ -9,6 +9,7 @@ import { MonthlyPaymentMadeService } from 'src/app/services/monthly-payment-made
 import { CertificationService } from 'src/app/services/certification.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { ContributionPaidService } from 'src/app/services/contribution-paid.service';
+import { FineService } from 'src/app/services/fine.service';
 
 @Injectable()
 export class IncomeExpensesEffect {
@@ -17,7 +18,8 @@ export class IncomeExpensesEffect {
     private contributionPaidService: ContributionPaidService,
     private monthlyPaymentMadeService: MonthlyPaymentMadeService,
     private certificationService: CertificationService,
-    private expenseService: ExpenseService
+    private expenseService: ExpenseService,
+    private fineService: FineService
   ) {}
 
   certificationsTotal$ = createEffect(() =>
@@ -56,6 +58,18 @@ export class IncomeExpensesEffect {
           map(({ total }) =>
             IncomeExpensesActions.loadMonthlyPaymentSuccess({ total })
           ),
+          catchError((e) => of(IncomeExpensesActions.error({ e })))
+        )
+      )
+    )
+  );
+
+  finesTotal$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(IncomeExpensesActions.loadFines),
+      mergeMap(() =>
+        this.fineService.getTotalAmount().pipe(
+          map(({ total }) => IncomeExpensesActions.loadFinesSuccess({ total })),
           catchError((e) => of(IncomeExpensesActions.error({ e })))
         )
       )

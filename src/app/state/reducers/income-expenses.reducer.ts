@@ -6,6 +6,7 @@ export interface IncomeExpensesState {
   contributions: number;
   monthlyPayments: number;
   certifications: number;
+  fines: number;
   expenses: number;
   incomes: number;
   total: number;
@@ -17,6 +18,7 @@ export const initialIncomeExpensesState: IncomeExpensesState = {
   contributions: 0,
   monthlyPayments: 0,
   certifications: 0,
+  fines: 0,
   expenses: 0,
   incomes: 0,
   total: 0,
@@ -69,6 +71,20 @@ const _incomeExpensesReducer = createReducer(
     total: state.incomes + Number(total) - state.expenses,
   })),
 
+  on(IncomeExpensesActions.loadFines, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(IncomeExpensesActions.loadFinesSuccess, (state, { total }) => ({
+    ...state,
+    fines: Number(total),
+    incomes: state.incomes + Number(total),
+    loading: false,
+    total: state.incomes + Number(total) - state.expenses,
+  })),
+
   on(IncomeExpensesActions.loadExpenses, (state) => ({
     ...state,
     loading: true,
@@ -91,6 +107,7 @@ const _incomeExpensesReducer = createReducer(
     contributions: 0,
     monthlyPayments: 0,
     certifications: 0,
+    fines: 0,
     expenses: 0,
     incomes: 0,
     total: 0,

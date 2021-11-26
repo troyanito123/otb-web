@@ -25,4 +25,8 @@ export class FineService {
       .post<[]>(`${this.url}/many`, { userId, date, meetingIds })
       .pipe(map((res) => res.map((r) => Fine.fromJson(r))));
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }

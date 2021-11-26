@@ -7,7 +7,7 @@
     <mat-card-content>
       <ngx-charts-advanced-pie-chart
         [view]="view"
-        scheme="cool"
+        scheme="vivid"
         [results]="incomesChart"
       >
       </ngx-charts-advanced-pie-chart>
@@ -15,22 +15,24 @@
   </mat-card>
 
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Egresos</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <h2>{{ expenses | number: "1.2" }} bs</h2>
-      </mat-card-content>
-    </mat-card>
+    <div class="custom_card">
+      <div class="icon">
+        <mat-icon color="primary">money_off</mat-icon>
+      </div>
+      <div class="content">
+        <h2>Egresos</h2>
+        <p>{{ expenses | currency: "Bs." }}</p>
+      </div>
+    </div>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>En Caja</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <h2>{{ total | number: "1.2" }} bs</h2>
-      </mat-card-content>
-    </mat-card>
+    <div class="custom_card">
+      <div class="icon">
+        <mat-icon color="primary">savings</mat-icon>
+      </div>
+      <div class="content">
+        <h2>En Caja</h2>
+        <p>{{ total | currency: "Bs." }}</p>
+      </div>
+    </div>
   </div>
 </div>
