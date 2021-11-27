@@ -1,17 +1,31 @@
-<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-  <button
-    mat-raised-button
-    [routerLink]="['./detail']"
-    routerLinkActive="active"
-  >
-    Detalle
-  </button>
+<div style="margin: 1rem">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+    <button
+      mat-raised-button
+      [routerLink]="['./detail']"
+      routerLinkActive="active"
+    >
+      Detalle
+    </button>
 
-  <button mat-raised-button [routerLink]="['./edit']" routerLinkActive="active">
-    Editar
-  </button>
-</div>
+    <button
+      mat-raised-button
+      [routerLink]="['./edit']"
+      routerLinkActive="active"
+    >
+      Editar
+    </button>
 
-<div style="margin-top: 1rem">
-  <router-outlet></router-outlet>
+    <button
+      mat-raised-button
+      [routerLink]="['../list']"
+      routerLinkActive="active"
+    >
+      Lista
+    </button>
+  </div>
+
+  <div style="margin-top: 1rem">
+    <router-outlet></router-outlet>
+  </div>
 </div>

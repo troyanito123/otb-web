@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -38,10 +38,31 @@ export class CertificationService {
     return this.http.get<{ total: string }>(`${this.url}/total-amount`);
   }
 
-  public getAll(): Observable<Certification[]> {
+  public getAll(
+    keyword: string = '',
+    page: number = 0,
+    take: number = 10,
+    sort: string = 'ASC',
+    column: string = ''
+  ): Observable<{ certifications: Certification[]; count: number }> {
+    const toColumn = column === 'user' ? 'name' : 'date';
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('take', take.toString())
+      .set('sort', sort.toUpperCase())
+      .set('keyword', keyword.toUpperCase())
+      .set('column', toColumn.toLowerCase());
+
     return this.http
-      .get<[]>(this.url)
-      .pipe(map((res) => res.map((r) => Certification.fromJson(r))));
+      .get<{ certifications: []; count: number }>(this.url, { params })
+      .pipe(
+        map((res) => ({
+          certifications: res.certifications.map((r) =>
+            Certification.fromJson(r)
+          ),
+          count: res.count,
+        }))
+      );
   }
 
   public getOne(id: number): Observable<Certification> {

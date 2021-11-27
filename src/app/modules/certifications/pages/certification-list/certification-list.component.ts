@@ -1,41 +1,84 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as CertificationsActions from 'src/app/state/actions/certifications.action';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
-import { Certification } from 'src/app/models/certification.model';
+import { CertificationsDataSource } from './certification-datasource';
+import { CertificationService } from 'src/app/services/certification.service';
 
 @Component({
   selector: 'app-certification-list',
   templateUrl: './certification-list.component.html',
   styleUrls: ['./certification-list.component.scss'],
 })
-export class CertificationListComponent implements OnInit, OnDestroy {
-  public certifications: Certification[] = [];
-  private certificationsSubs!: Subscription;
+export class CertificationListComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  dataSource!: CertificationsDataSource;
+  displayedColumns = ['date', 'user', 'amount'];
 
-  public displayedColumns = ['date', 'user', 'amount'];
+  page = 0;
+  take = 5;
+  sortTable = 'ASC';
+  column = 'date';
 
-  constructor(private store: Store<AppState>) {}
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(MatSort) sort!: MatSort;
+
+  @ViewChild('keyword') keyword!: ElementRef;
+
+  constructor(private certificationService: CertificationService) {}
 
   ngOnInit(): void {
-    this.store.dispatch(CertificationsActions.load());
-    this.certificationsSubs = this.store
-      .select('certifications')
-      .subscribe(({ certifications, error }) => {
-        this.certifications = certifications;
-        if (error) this.handledError(error);
-      });
+    this.dataSource = new CertificationsDataSource(this.certificationService);
+    this.dataSource.loadCertifications(
+      '',
+      this.page,
+      this.take,
+      this.sortTable,
+      this.column
+    );
   }
 
-  ngOnDestroy() {
-    this.certificationsSubs?.unsubscribe();
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    fromEvent(this.keyword.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+
+          this.loadCertificationsPage();
+        })
+      )
+      .subscribe();
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(tap(() => this.loadCertificationsPage()))
+      .subscribe();
   }
 
-  private handledError(error: any) {
-    console.log(error);
+  ngOnDestroy(): void {}
+
+  private loadCertificationsPage() {
+    this.dataSource.loadCertifications(
+      this.keyword.nativeElement.value,
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      this.sort.direction,
+      this.sort.active
+    );
   }
 }

@@ -1,7 +1,3 @@
-table {
-  width: 80%;
-}
-
 .mat-row .mat-cell {
   border-bottom: 1px solid transparent;
   border-top: 1px solid transparent;
@@ -11,17 +7,16 @@ table {
 .mat-row:hover .mat-cell {
   border-color: currentColor;
 }
+
 .mat-column-date {
-  width: 30%;
   font-weight: bold;
-  text-align: center;
+  justify-content: center;
+  flex: 0 0 40%;
 }
-
-.mat-column-amount {
-  width: 30%;
-  text-align: center;
-}
-
 .mat-column-user {
-  width: 40%;
+  flex: 0 0 40%;
+}
+.mat-column-amount {
+  justify-content: center;
+  flex: 0 0 20%;
 }

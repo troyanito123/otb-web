@@ -66,7 +66,7 @@ export class CertificationEffect {
       ofType(CertificationsActions.load),
       mergeMap(() =>
         this.certificationService.getAll().pipe(
-          map((certifications) =>
+          map(({ certifications }) =>
             CertificationsActions.loadSuccess({ certifications })
           ),
           catchError((e) => of(CertificationsActions.error({ e })))

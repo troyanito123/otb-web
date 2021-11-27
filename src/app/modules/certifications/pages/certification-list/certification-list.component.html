@@ -1,27 +1,58 @@
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
-  <h2>Certificaciones entregadas</h2>
+<div style="margin: 1rem">
+  <h2>CERTIFICACIONES OTB SAN JOSE</h2>
+  <mat-form-field>
+    <mat-label>Nombre de vecino</mat-label>
+    <input matInput placeholder="JUAN PEREZ" #keyword />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 
-  <table mat-table #table [dataSource]="certifications">
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="date"
+    matSortDirection="asc"
+    matSortDisableClear
+  >
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>FECHA</th>
-      <td mat-cell *matCellDef="let row">{{ row.date | date }}</td>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        FECHA
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.date | date: "fullDate" | uppercase }}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef>Vecino</th>
-      <td mat-cell *matCellDef="let row">{{ row.user.name | uppercase }}</td>
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >VECINO</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        {{ element.user.name | uppercase }}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>COSTO</th>
-      <td mat-cell *matCellDef="let row">{{ row.amount | currency: "Bs." }}</td>
+      <mat-header-cell *matHeaderCellDef>COSTO</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.amount | currency: "Bs." }}
+      </mat-cell>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
       [routerLink]="['/certifications', row.id]"
-    ></tr>
-  </table>
+      *matRowDef="let row; columns: displayedColumns"
+    ></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [length]="dataSource.size$ | async"
+    [pageSize]="take"
+    [pageSizeOptions]="[5, 10, 15]"
+    showFirstLastButtons
+  ></mat-paginator>
 </div>
