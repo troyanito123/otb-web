@@ -86,4 +86,17 @@ export class ExpenseService {
   public getTotalAmount() {
     return this.http.get<{ total: string }>(`${this.url}/total-amount`);
   }
+
+  public getByDateRange(initDate: string, endDate: string) {
+    console.log({
+      initDate,
+      endDate,
+    });
+    return this.http
+      .post<[]>(`${this.url}/bydate`, {
+        initDate: initDate,
+        endDate: endDate,
+      })
+      .pipe(map((res) => res.map((r) => Expense.fromJson(r))));
+  }
 }

@@ -26,4 +26,16 @@ export class ExpensesEffect {
       )
     )
   );
+
+  loadByDates$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ExpensesActions.loadByDates),
+      mergeMap(({ initDate, endDate }) =>
+        this.expenseService.getByDateRange(initDate, endDate).pipe(
+          map((expenses) => ExpensesActions.loadSuccess({ expenses })),
+          catchError((e) => of(ExpensesActions.error({ e })))
+        )
+      )
+    )
+  );
 }

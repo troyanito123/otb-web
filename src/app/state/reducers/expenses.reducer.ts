@@ -26,6 +26,13 @@ const _expensesReducer = createReducer(
     error: null,
   })),
 
+  on(ExpensesActions.loadByDates, (state) => ({
+    ...state,
+    loading: true,
+    loded: false,
+    error: null,
+  })),
+
   on(ExpensesActions.loadSuccess, (state, { expenses }) => ({
     expenses,
     loading: false,
