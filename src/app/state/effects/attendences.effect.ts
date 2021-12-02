@@ -26,6 +26,20 @@ export class AttendencesEffect {
     )
   );
 
+  loadByMeeting$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AttendencesActions.loadByMeeting),
+      mergeMap(({ meetingId }) =>
+        this.attendencesService.getByMeeting(meetingId).pipe(
+          map((attendences) =>
+            AttendencesActions.loadByMeetingSuccess({ attendences })
+          ),
+          catchError((e) => of(AttendencesActions.error({ e })))
+        )
+      )
+    )
+  );
+
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AttendencesActions.create),

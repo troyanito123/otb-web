@@ -1,0 +1,19 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+  fxLayoutGap="16px"
+  style="padding: 1rem"
+>
+  <mat-form-field appearance="fill">
+    <mat-label>Reuniones</mat-label>
+    <mat-select [formControl]="meetingInput">
+      <mat-option *ngFor="let meeting of meetings" [value]="meeting">
+        {{ meeting.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="generateReport()">
+    Generar Lista de Asistencia
+  </button>
+</div>

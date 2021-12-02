@@ -26,3 +26,13 @@ export const error = createAction(
   '[ATTENDENCES] error on load attencendes',
   props<{ e: any }>()
 );
+
+export const loadByMeeting = createAction(
+  '[ATTENDENCES] loadByMeeting',
+  props<{ meetingId: number }>()
+);
+
+export const loadByMeetingSuccess = createAction(
+  '[ATTENDENCES] loadByMeetingSuccess',
+  props<{ attendences: Attendence[] }>()
+);

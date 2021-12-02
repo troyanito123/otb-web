@@ -26,6 +26,20 @@ const _attendencesReducer = createReducer(
     error: null,
   })),
 
+  on(AttendencesActions.loadByMeeting, (state) => ({
+    ...state,
+    loaded: false,
+    loading: true,
+    error: null,
+  })),
+
+  on(AttendencesActions.loadByMeetingSuccess, (state, { attendences }) => ({
+    ...state,
+    attendences,
+    loaded: true,
+    loading: false,
+  })),
+
   on(AttendencesActions.clean, () => ({
     attendences: [],
     loaded: false,

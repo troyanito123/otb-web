@@ -67,6 +67,14 @@ const routes: Routes = [
     data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
+
+  {
+    path: 'reports',
+    loadChildren: () =>
+      import('./modules/reports/reports.module').then((m) => m.ReportsModule),
+    data: { roles: ['ADMIN'] },
+    canActivate: [AuthGuard],
+  },
   {
     path: 'auth',
     loadChildren: () =>

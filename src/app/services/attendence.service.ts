@@ -24,4 +24,10 @@ export class AttendenceService {
       .post(this.url, { userId, meetingId })
       .pipe(map((res) => Attendence.fromJson(res)));
   }
+
+  public getByMeeting(meetingId: number) {
+    return this.http
+      .get<[]>(`${this.url}/meeting/${meetingId}`)
+      .pipe(map((res) => res.map((r) => Attendence.fromJson(r))));
+  }
 }
