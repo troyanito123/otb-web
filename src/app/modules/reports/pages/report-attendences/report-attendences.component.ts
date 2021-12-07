@@ -3,9 +3,6 @@ import { FormControl, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
 import * as AttendencesActions from 'src/app/state/actions/attendences.actions';
@@ -13,6 +10,7 @@ import * as MeetingsActions from 'src/app/state/actions/meetings.actions';
 
 import { Meeting } from 'src/app/models/meeting.model';
 import { Attendence } from 'src/app/models/attendence.model';
+import { PrintTableService } from 'src/app/services/print-table.service';
 
 @Component({
   selector: 'app-report-attendences',
@@ -27,7 +25,10 @@ export class ReportAttendencesComponent implements OnInit, OnDestroy {
 
   public meetingInput!: FormControl;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private printTableService: PrintTableService
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(MeetingsActions.load());
@@ -67,19 +68,11 @@ export class ReportAttendencesComponent implements OnInit, OnDestroy {
   }
 
   private generatePdf(attendences: Attendence[]) {
-    const doc = new jsPDF();
     const head = [['#', 'NOMBRE', 'FIRMA']];
     const data = attendences.map((a, i) => [i + 1, a.user.name, '']);
 
-    doc.setFontSize(12);
-    doc.text(`LISTA DE ASISTENCIA DE: ${this.meetingInput.value.name}`, 11, 11);
+    const title = `LISTA DE ASISTENCIA DE: ${this.meetingInput.value.name}`;
 
-    autoTable(doc, {
-      head: head,
-      body: data,
-      theme: 'grid',
-      headStyles: { fillColor: '#3F51B5' },
-    });
-    doc.save(`${this.meetingInput.value.name} - LISTA DE ASISTENCIA`);
+    this.printTableService.generatePdf(title, head, data, 'ASISTENCIAS');
   }
 }

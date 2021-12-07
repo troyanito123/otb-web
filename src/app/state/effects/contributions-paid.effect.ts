@@ -32,6 +32,24 @@ export class ContributionsPaidEffect {
     )
   );
 
+  loadContributionsPaidByDate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ContributionsPaidActions.loadContributionsPaidByDate),
+      mergeMap(({ initDate, endDate }) =>
+        this.contributionPaidService.getByDate(initDate, endDate).pipe(
+          map((contributionsPaid) =>
+            ContributionsPaidActions.loadContributionsPaidSuccess({
+              contributionsPaid,
+            })
+          ),
+          catchError((e) =>
+            of(ContributionsPaidActions.loadContributionsPaidError({ e }))
+          )
+        )
+      )
+    )
+  );
+
   createContributionsPaid$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ContributionsPaidActions.createContributionsPaid),

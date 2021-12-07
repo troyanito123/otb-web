@@ -22,6 +22,14 @@ export class MonthlyPaymentMadeService {
     );
   }
 
+  public getByDate(initDate: string, endDate: string) {
+    return this.http.post<[]>(`${this.url}/bydate`, { initDate, endDate }).pipe(
+      map((res) => {
+        return res.map((r) => MonthlyPaymentMade.fromJson(r));
+      })
+    );
+  }
+
   public createManyMonthlyPayments(
     userId: number,
     monthsId: string,

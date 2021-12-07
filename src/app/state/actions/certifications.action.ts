@@ -3,6 +3,11 @@ import { Certification } from 'src/app/models/certification.model';
 
 export const load = createAction('[CERTIFICATIONS] load certifications');
 
+export const loadByDate = createAction(
+  '[CERTIFICATIONS] load certifications by date',
+  props<{ initDate: string; endDate: string }>()
+);
+
 export const loadSuccess = createAction(
   '[CERTIFICATIONS] load certifications success',
   props<{ certifications: Certification[] }>()

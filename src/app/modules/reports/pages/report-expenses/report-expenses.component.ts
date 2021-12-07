@@ -5,10 +5,9 @@ import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/models/expense.model';
 import { AppState } from 'src/app/state/app.reducer';
 
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common';
 import * as ExpensesActions from 'src/app/state/actions/expenses.action';
+import { PrintTableService } from 'src/app/services/print-table.service';
 
 @Component({
   selector: 'app-report-expenses',
@@ -20,7 +19,11 @@ export class ReportExpensesComponent implements OnInit, OnDestroy {
 
   private expensesSub!: Subscription;
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<AppState>,
+    private printTableService: PrintTableService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -58,10 +61,10 @@ export class ReportExpensesComponent implements OnInit, OnDestroy {
   }
 
   private generatePdf(expenses: Expense[]) {
-    const doc = new jsPDF();
-    const head = [['#', 'FECHA', 'QUIEN USÓ', 'PARA QUE USÓ', 'CUANTO USÓ']];
     const pipe = new DatePipe('es-Es');
     const upper = new UpperCasePipe();
+
+    const head = [['#', 'FECHA', 'QUIEN USÓ', 'PARA QUE USÓ', 'CUANTO USÓ']];
     const data = expenses.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE, d MMMM, y')),
@@ -72,25 +75,15 @@ export class ReportExpensesComponent implements OnInit, OnDestroy {
 
     const count = expenses.reduce((counter, item) => counter + item.amount, 0);
 
-    doc.setFontSize(12);
-    doc.text(
-      `Reporte de gastos del ${pipe.transform(
-        this.form.value.initDate,
-        'd MMMM y'
-      )} al ${pipe.transform(
-        this.form.value.endDate,
-        'd MMMM y'
-      )}. TOTAL: ${formatNumber(count, 'es-Es', '1.2')}`,
-      11,
-      11
-    );
-    autoTable(doc, {
-      head: head,
-      body: data,
-      theme: 'striped',
-      headStyles: { fillColor: '#3F51B5' },
-    });
-    doc.save(`REPORTE DE GASTOS.pdf`);
+    const title = `Reporte de gastos del ${pipe.transform(
+      this.form.value.initDate,
+      'd MMMM y'
+    )} al ${pipe.transform(
+      this.form.value.endDate,
+      'd MMMM y'
+    )}. TOTAL: ${formatNumber(count, 'es-Es', '1.2')}`;
+
+    this.printTableService.generatePdf(title, head, data, 'GASTOS');
   }
 
   private transformDate(date: Date) {

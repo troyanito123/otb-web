@@ -1,0 +1,32 @@
+<form [formGroup]="form" (ngSubmit)="generate()" style="padding: 1rem">
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+    <mat-form-field appearance="fill">
+      <mat-select placeholder="Tipo" formControlName="income">
+        <mat-option *ngFor="let type of incomes" [value]="type">
+          {{ type | toSpanish }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de inicio</mat-label>
+      <input matInput [matDatepicker]="initPicker" formControlName="initDate" />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="initPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #initPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de fin</mat-label>
+      <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="endPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button color="primary">Generar reporte</button>
+</form>

@@ -5,12 +5,14 @@ import * as CertificationsActions from '../actions/certifications.action';
 export interface CertificationsState {
   certifications: Certification[];
   loading: boolean;
+  loaded: boolean;
   error: any;
 }
 
 export const initialCertificationsState: CertificationsState = {
   certifications: [],
   loading: false,
+  loaded: false,
   error: null,
 };
 
@@ -20,12 +22,21 @@ const _certificationsReducer = createReducer(
   on(CertificationsActions.load, (state) => ({
     ...state,
     loading: true,
+    loaded: false,
+    error: null,
+  })),
+
+  on(CertificationsActions.loadByDate, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
     error: null,
   })),
 
   on(CertificationsActions.loadSuccess, (state, { certifications }) => ({
     ...state,
     certifications,
+    loaded: true,
     loading: false,
   })),
 
@@ -38,6 +49,7 @@ const _certificationsReducer = createReducer(
   on(CertificationsActions.clean, () => ({
     certifications: [],
     loading: false,
+    loaded: false,
     error: null,
   }))
 );

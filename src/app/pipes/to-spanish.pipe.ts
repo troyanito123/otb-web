@@ -10,7 +10,23 @@ export class ToSpanishPipe implements PipeTransform {
       case 'COMPLETE':
         res = 'COMPLETO';
         break;
+      case 'MONTHLYPAYMENTS':
+        res = 'MENSUALIDADES';
+        break;
+
+      case 'CONTRIBUTIONS':
+        res = 'APORTES';
+        break;
+
+      case 'CERTIFICATIONS':
+        res = 'CERTIFICACIONES';
+        break;
+
+      case 'FINES':
+        res = 'MULTAS';
+        break;
     }
+
     return res;
   }
 }

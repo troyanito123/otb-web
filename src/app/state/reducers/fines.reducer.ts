@@ -6,12 +6,14 @@ export interface FinesState {
   fines: Fine[];
   loading: boolean;
   saved: boolean;
+  loaded: boolean;
   error: any;
 }
 
 export const initialFinesState: FinesState = {
   fines: [],
   loading: false,
+  loaded: false,
   saved: false,
   error: null,
 };
@@ -25,9 +27,17 @@ const _finesReducer = createReducer(
     error: null,
   })),
 
-  on(FinesActions.loadByUserSuccess, (state, { fines }) => ({
+  on(FinesActions.loadByDate, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+
+  on(FinesActions.loadSuccess, (state, { fines }) => ({
     ...state,
     fines,
+    loaded: true,
     loading: false,
   })),
 
@@ -51,6 +61,7 @@ const _finesReducer = createReducer(
   on(FinesActions.clean, () => ({
     fines: [],
     loading: false,
+    loaded: false,
     saved: false,
     error: null,
   }))

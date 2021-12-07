@@ -16,7 +16,19 @@ export class FinesEffect {
       ofType(FinesActions.loadByUser),
       mergeMap(({ id }) =>
         this.fineService.getByUser(id).pipe(
-          map((fines) => FinesActions.loadByUserSuccess({ fines })),
+          map((fines) => FinesActions.loadSuccess({ fines })),
+          catchError((e) => of(FinesActions.error({ e })))
+        )
+      )
+    )
+  );
+
+  loadByDate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FinesActions.loadByDate),
+      mergeMap(({ initDate, endDate }) =>
+        this.fineService.getByDate(initDate, endDate).pipe(
+          map((fines) => FinesActions.loadSuccess({ fines })),
           catchError((e) => of(FinesActions.error({ e })))
         )
       )

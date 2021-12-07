@@ -19,6 +19,12 @@ export class FineService {
       .pipe(map((res) => res.map((r) => Fine.fromJson(r))));
   }
 
+  public getByDate(initDate: string, endDate: string) {
+    return this.http
+      .post<[]>(`${this.url}/bydate`, { initDate, endDate })
+      .pipe(map((res) => res.map((r) => Fine.fromJson(r))));
+  }
+
   public createMany(userId: number, date: Date, meetingIds: string) {
     console.log({ userId, date, meetingIds });
     return this.http

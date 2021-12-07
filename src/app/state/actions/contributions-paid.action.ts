@@ -6,6 +6,11 @@ export const loadContributionsPaid = createAction(
   props<{ userId: number }>()
 );
 
+export const loadContributionsPaidByDate = createAction(
+  '[CONTRIBUTIONS_PAID] load contributions paid by date',
+  props<{ initDate: string; endDate: string }>()
+);
+
 export const loadContributionsPaidSuccess = createAction(
   '[CONTRIBUTIONS_PAID] load contributions paid success',
   props<{ contributionsPaid: ContributionPaid[] }>()

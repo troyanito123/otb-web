@@ -6,6 +6,11 @@ export const loadPaymentsMade = createAction(
   props<{ id: number; year: string }>()
 );
 
+export const loadByDate = createAction(
+  '[PAYMENTS_MADE] load payments by date',
+  props<{ initDate: string; endDate: string }>()
+);
+
 export const loadPaymentsMadeSuccess = createAction(
   '[PAYMENTS_MADE] load monthly payments made success',
   props<{ monthlyPaymentsMade: MonthlyPaymentMade[] }>()

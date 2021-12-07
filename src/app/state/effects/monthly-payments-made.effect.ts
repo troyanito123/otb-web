@@ -34,6 +34,24 @@ export class MonthlyPaymentsMadeEffect {
     )
   );
 
+  loadByDate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MonthlyPaymentsMadeActions.loadByDate),
+      mergeMap(({ initDate, endDate }) =>
+        this.monthlyPaymentMadeService.getByDate(initDate, endDate).pipe(
+          map((monthlyPaymentsMade) =>
+            MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess({
+              monthlyPaymentsMade,
+            })
+          ),
+          catchError((e) =>
+            of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e }))
+          )
+        )
+      )
+    )
+  );
+
   createManyMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MonthlyPaymentsMadeActions.createManyPaymentsMade),

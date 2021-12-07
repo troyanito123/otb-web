@@ -88,4 +88,18 @@ export class CertificationEffect {
       )
     )
   );
+
+  getByDate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CertificationsActions.loadByDate),
+      mergeMap(({ initDate, endDate }) =>
+        this.certificationService.getByDate(initDate, endDate).pipe(
+          map((certifications) =>
+            CertificationsActions.loadSuccess({ certifications })
+          ),
+          catchError((e) => of(CertificationsActions.error({ e })))
+        )
+      )
+    )
+  );
 }

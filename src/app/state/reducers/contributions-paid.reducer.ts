@@ -6,6 +6,7 @@ export interface ContributionsPaidState {
   contributionsPaid: ContributionPaid[];
   loading: boolean;
   saved: boolean;
+  loaded: boolean;
   error: any;
 }
 
@@ -13,6 +14,7 @@ export const initialContributionsPaid: ContributionsPaidState = {
   contributionsPaid: [],
   loading: false,
   saved: false,
+  loaded: false,
   error: null,
 };
 
@@ -25,12 +27,20 @@ const _contributionsPaidReducer = createReducer(
     saved: false,
   })),
 
+  on(ContributionsPaidActions.loadContributionsPaidByDate, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+
   on(
     ContributionsPaidActions.loadContributionsPaidSuccess,
     (state, { contributionsPaid }) => ({
       ...state,
       contributionsPaid,
       loading: false,
+      loaded: true,
       error: null,
     })
   ),
@@ -45,6 +55,7 @@ const _contributionsPaidReducer = createReducer(
     contributionsPaid: [],
     loading: false,
     saved: false,
+    loaded: false,
     error: null,
   })),
 

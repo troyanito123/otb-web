@@ -18,6 +18,12 @@ export class ContributionPaidService {
       .pipe(map((res) => res.map((r) => ContributionPaid.fromJson(r))));
   }
 
+  public getByDate(initDate: string, endDate: string) {
+    return this.http
+      .post<[]>(`${this.url}/bydate`, { initDate, endDate })
+      .pipe(map((res) => res.map((r) => ContributionPaid.fromJson(r))));
+  }
+
   public create(amount: number, userId: number, contributionId: number) {
     return this.http
       .post(this.url, { amount, userId, contributionId })

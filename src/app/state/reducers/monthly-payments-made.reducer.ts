@@ -6,6 +6,7 @@ export interface MonthlyPaymentsMadeState {
   monthlyPaymentsMade: MonthlyPaymentMade[];
   loading: boolean;
   saved: boolean;
+  loaded: boolean;
   error: any;
 }
 
@@ -13,6 +14,7 @@ export const initialMonthlyPaymentsMade: MonthlyPaymentsMadeState = {
   monthlyPaymentsMade: [],
   loading: false,
   saved: false,
+  loaded: false,
   error: null,
 };
 
@@ -23,6 +25,14 @@ const _monthlyPaymentsMadeReducer = createReducer(
     ...state,
     loading: true,
     saved: false,
+    loaded: false,
+  })),
+
+  on(MonthlyPaymentsMadeActions.loadByDate, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    saved: false,
   })),
 
   on(
@@ -30,6 +40,7 @@ const _monthlyPaymentsMadeReducer = createReducer(
     (state, { monthlyPaymentsMade }) => ({
       ...state,
       monthlyPaymentsMade,
+      loaded: true,
       loading: false,
       error: null,
     })
@@ -62,6 +73,7 @@ const _monthlyPaymentsMadeReducer = createReducer(
     monthlyPaymentsMade: [],
     loading: false,
     saved: false,
+    loaded: false,
     error: null,
   }))
 );

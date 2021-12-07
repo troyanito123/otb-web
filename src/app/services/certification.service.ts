@@ -65,6 +65,12 @@ export class CertificationService {
       );
   }
 
+  public getByDate(initDate: string, endDate: string) {
+    return this.http
+      .post<[]>(`${this.url}/bydate`, { initDate, endDate })
+      .pipe(map((res) => res.map((r) => Certification.fromJson(r))));
+  }
+
   public getOne(id: number): Observable<Certification> {
     return this.http
       .get(`${this.url}/${id}`)

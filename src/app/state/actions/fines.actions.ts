@@ -6,7 +6,12 @@ export const loadByUser = createAction(
   props<{ id: number }>()
 );
 
-export const loadByUserSuccess = createAction(
+export const loadByDate = createAction(
+  '[FINES] load fines by date',
+  props<{ initDate: string; endDate: string }>()
+);
+
+export const loadSuccess = createAction(
   '[FINES] load fines by user success',
   props<{ fines: Fine[] }>()
 );
