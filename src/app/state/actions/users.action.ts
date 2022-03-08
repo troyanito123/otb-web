@@ -12,4 +12,14 @@ export const loadError = createAction(
   props<{ e: any }>()
 );
 
+export const loadByBlock = createAction(
+  '[USERS] load users by block',
+  props<{ block: string }>()
+);
+
+export const loadByBlockSuccess = createAction(
+  '[USERS] load users by block success',
+  props<{ users: User[] }>()
+);
+
 export const clean = createAction('[USERS] clean users state');

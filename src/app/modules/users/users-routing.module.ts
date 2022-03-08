@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component';
 import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component';
+import { UserBlockComponent } from './pages/user-block/user-block.component';
 import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component';
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
@@ -20,6 +22,12 @@ const routes: Routes = [
     children: [
       { path: 'list', component: UserListComponent },
       { path: 'new', component: UserNewComponent },
+      {
+        path: 'blocks',
+        component: UserAllBlocksComponent,
+        children: [{ path: ':block', component: UserBlockComponent }],
+      },
+
       {
         path: ':id',
         component: UserViewComponent,

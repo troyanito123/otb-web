@@ -22,6 +22,8 @@ import { UserAttendencesComponent } from './pages/user-attendences/user-attenden
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { UserFinesComponent } from './pages/user-fines/user-fines.component';
+import { UserBlockComponent } from './pages/user-block/user-block.component';
+import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { UserFinesComponent } from './pages/user-fines/user-fines.component';
     UserCertificationsComponent,
     UserAttendencesComponent,
     UserFinesComponent,
+    UserBlockComponent,
+    UserAllBlocksComponent,
   ],
   imports: [
     CommonModule,

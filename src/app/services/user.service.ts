@@ -35,6 +35,12 @@ export class UserService {
       );
   }
 
+  public findByBlock(block: string) {
+    return this.http
+      .get<[]>(`${this.url}/blocks/${block}`)
+      .pipe(map((res) => res.map((u) => User.fromJson(u))));
+  }
+
   public create(
     name: string,
     block_number: string,

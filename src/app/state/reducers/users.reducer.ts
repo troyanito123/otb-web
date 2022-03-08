@@ -33,6 +33,26 @@ const _usersReducer = createReducer(
     error: null,
   })),
 
+  on(UsersActions.loadByBlock, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(UsersActions.loadByBlockSuccess, (state, { users }) => ({
+    ...state,
+    users,
+    loading: false,
+    error: null,
+  })),
+
+  on(UsersActions.loadSuccess, (state, { users }) => ({
+    users,
+    loading: false,
+    saveFinish: false,
+    error: null,
+  })),
+
   on(UsersActions.loadError, (state, { e }) => ({
     users: [],
     loading: false,
