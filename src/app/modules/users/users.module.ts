@@ -24,6 +24,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UserFinesComponent } from './pages/user-fines/user-fines.component';
 import { UserBlockComponent } from './pages/user-block/user-block.component';
 import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component';
+import { UserExtraContributionComponent } from './pages/user-extra-contribution/user-extra-contribution.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.
     UserFinesComponent,
     UserBlockComponent,
     UserAllBlocksComponent,
+    UserExtraContributionComponent,
   ],
   imports: [
     CommonModule,
