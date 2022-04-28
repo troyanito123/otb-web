@@ -17,6 +17,7 @@ import { AppState } from 'src/app/state/app.reducer';
 export class ExtraContributionsDetailComponent implements OnInit, OnDestroy {
   public extraContribution?: ExtraContribution;
   public payments: ExtraContributionPaid[] = [];
+  public total = 0;
   public displayedColumns = ['name', 'date', 'amount'];
   private exContrSubs?: Subscription;
 
@@ -31,6 +32,7 @@ export class ExtraContributionsDetailComponent implements OnInit, OnDestroy {
       .subscribe(({ extraContribution, error }) => {
         this.extraContribution = extraContribution;
         this.payments = extraContribution?.extra_contributions_paid || [];
+        this.total = this.payments.reduce((counter, item) => counter + item.amount,0);
       });
   }
 
