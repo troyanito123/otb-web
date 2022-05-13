@@ -24,6 +24,10 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
 
   meetingSubs!: Subscription;
 
+  get isEditing() {
+    return !!this.meeting;
+  }
+
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
@@ -46,14 +50,10 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.meeting) {
-      console.log('updated');
+    if (this.isEditing) {
       this.update();
-      return;
     } else {
-      console.log('created');
       this.create();
-      return;
     }
   }
 
@@ -125,8 +125,8 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
       conclutions: [this.meeting ? this.meeting.conclutions : ''],
 
       fine_amount: [
-        this.meeting ? this.meeting.fine_amount : 10,
-        [Validators.required, Validators.min(5), Validators.max(1000)],
+        this.meeting ? this.meeting.fine_amount : 20,
+        [Validators.required, Validators.min(0), Validators.max(1000)],
       ],
     });
   }
