@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { ExtraContributionsComponent } from './extra-contributions.component';
 import { ExtraContributionsDetailComponent } from './pages/extra-contributions-detail/extra-contributions-detail.component';
 import { ExtraContributionsEditComponent } from './pages/extra-contributions-edit/extra-contributions-edit.component';
@@ -13,13 +14,23 @@ const routes: Routes = [
     component: ExtraContributionsComponent,
     children: [
       { path: 'list', component: ExtraContributionsListComponent },
-      { path: 'new', component: ExtraContributionsNewComponent },
+      {
+        path: 'new',
+        component: ExtraContributionsNewComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
       {
         path: ':id',
         component: ExtraContributionsViewComponent,
         children: [
           { path: 'detail', component: ExtraContributionsDetailComponent },
-          { path: 'edit', component: ExtraContributionsEditComponent },
+          {
+            path: 'edit',
+            component: ExtraContributionsEditComponent,
+            canActivate: [AuthGuard],
+            data: { roles: ['ADMIN'] },
+          },
           { path: '', redirectTo: 'detail' },
         ],
       },

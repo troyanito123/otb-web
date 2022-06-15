@@ -17,7 +17,12 @@
         <p><strong>Quién recibio: </strong>{{ expense.to_user }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+        <div
+          *ngIf="auth?.role == 'ADMIN'"
+          fxLayout="row"
+          fxLayoutAlign="end center"
+          fxLayoutGap="16px"
+        >
           <button
             mat-raised-button
             color="primary"

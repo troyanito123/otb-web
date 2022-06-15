@@ -14,16 +14,19 @@
         <p>
           <strong>Descripción: </strong> {{ extraContribution.description }}
         </p>
-        <p>
-          <strong>Total Aportado: </strong> {{ total | currency: 'Bs.' }}
-        </p>
+        <p><strong>Total Aportado: </strong> {{ total | currency: "Bs." }}</p>
       </mat-card-content>
 
       <mat-card-actions align="end">
         <button mat-raised-button color="accent" (click)="generateList()">
           Lista de contribuyentes
         </button>
-        <button mat-raised-button color="primary" [routerLink]="['../edit']">
+        <button
+          *ngIf="auth?.role == 'ADMIN'"
+          mat-raised-button
+          color="primary"
+          [routerLink]="['../edit']"
+        >
           Editar
         </button>
       </mat-card-actions>

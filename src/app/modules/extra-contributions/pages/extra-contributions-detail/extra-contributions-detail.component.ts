@@ -6,6 +6,7 @@ import {
   ExtraContribution,
   ExtraContributionPaid,
 } from 'src/app/models/extra-contribution.interface';
+import { User } from 'src/app/models/user.model';
 import { PrintTableService } from 'src/app/services/print-table.service';
 import { AppState } from 'src/app/state/app.reducer';
 
@@ -21,6 +22,9 @@ export class ExtraContributionsDetailComponent implements OnInit, OnDestroy {
   public displayedColumns = ['name', 'date', 'amount'];
   private exContrSubs?: Subscription;
 
+  public auth!: User | null;
+  private authSubs?: Subscription;
+
   constructor(
     private store: Store<AppState>,
     private printTableService: PrintTableService
@@ -32,12 +36,19 @@ export class ExtraContributionsDetailComponent implements OnInit, OnDestroy {
       .subscribe(({ extraContribution, error }) => {
         this.extraContribution = extraContribution;
         this.payments = extraContribution?.extra_contributions_paid || [];
-        this.total = this.payments.reduce((counter, item) => counter + item.amount,0);
+        this.total = this.payments.reduce(
+          (counter, item) => counter + item.amount,
+          0
+        );
       });
+    this.authSubs = this.store.select('auth').subscribe(({ user }) => {
+      this.auth = user;
+    });
   }
 
   ngOnDestroy(): void {
     this.exContrSubs?.unsubscribe();
+    this.authSubs?.unsubscribe();
   }
 
   public generateList() {

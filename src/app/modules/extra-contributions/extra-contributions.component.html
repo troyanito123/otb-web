@@ -11,6 +11,7 @@
       mat-raised-button
       [routerLink]="['./new']"
       routerLinkActive="active"
+      *ngIf="auth?.role == 'ADMIN'"
     >
       Nuevo
     </button>

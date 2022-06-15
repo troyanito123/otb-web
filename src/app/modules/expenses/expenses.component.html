@@ -3,7 +3,12 @@
     <button mat-raised-button routerLink="list" routerLinkActive="active">
       Lista
     </button>
-    <button mat-raised-button routerLink="new" routerLinkActive="active">
+    <button
+      *ngIf="auth?.role == 'ADMIN'"
+      mat-raised-button
+      routerLink="new"
+      routerLinkActive="active"
+    >
       Nuevo
     </button>
   </div>

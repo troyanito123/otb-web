@@ -10,6 +10,7 @@ import * as ExpenseActions from 'src/app/state/actions/expense.action';
 import { Expense } from 'src/app/models/expense.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-expenses-view',
@@ -19,6 +20,9 @@ import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dial
 export class ExpensesViewComponent implements OnInit, OnDestroy {
   public expense!: Expense | null;
   private expenseSubs!: Subscription;
+
+  public auth!: User | null;
+  public authSubs?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,9 +64,14 @@ export class ExpensesViewComponent implements OnInit, OnDestroy {
           this.router.navigate(['expenses']);
         }
       });
+
+    this.authSubs = this.store.select('auth').subscribe(({ user }) => {
+      this.auth = user;
+    });
   }
 
   private unsubscribeStore() {
     this.expenseSubs?.unsubscribe();
+    this.authSubs?.unsubscribe();
   }
 }

@@ -11,6 +11,7 @@
       matInput
       formControlName="description"
       placeholder="Pago de refrigerios ..."
+      autocomplete="off"
     ></textarea>
     <mat-icon matSuffix color="primary">description</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
@@ -18,7 +19,13 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Monto</mat-label>
-    <input matInput type="number" formControlName="amount" placeholder="5" />
+    <input
+      matInput
+      type="number"
+      formControlName="amount"
+      placeholder="5"
+      autocomplete="off"
+    />
     <span matPrefix>$&nbsp;</span>
     <span matSuffix>.00</span>
     <mat-hint>Campo obligatorio</mat-hint>
@@ -31,6 +38,7 @@
       type="text"
       formControlName="from_user"
       placeholder="PEPE GUZMAN"
+      autocomplete="off"
     />
     <mat-icon matSuffix color="primary">face</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
@@ -43,6 +51,7 @@
       type="text"
       formControlName="to_user"
       placeholder="CARLA GOMEZ"
+      autocomplete="off"
     />
     <mat-icon matSuffix color="primary">face</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
