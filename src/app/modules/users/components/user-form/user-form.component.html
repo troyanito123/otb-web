@@ -15,6 +15,29 @@
     <mat-icon matSuffix color="primary">face</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
+  <mat-form-field appearance="legacy">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      type="email"
+      formControlName="email"
+      placeholder="usuario@mail.com"
+      autocomplete="off"
+    />
+    <mat-icon matSuffix color="primary">mail</mat-icon>
+    <mat-hint>Tiene que ser un email valido</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="legacy">
+    <mat-label>Contraseña</mat-label>
+    <input
+      matInput
+      type="password"
+      formControlName="password"
+      placeholder="*******"
+    />
+    <mat-icon matSuffix color="primary">password</mat-icon>
+    <mat-hint>Si existe, minimo 6 caracteres</mat-hint>
+  </mat-form-field>
 
   <mat-form-field appearance="legacy">
     <mat-label>Numero de manzano</mat-label>

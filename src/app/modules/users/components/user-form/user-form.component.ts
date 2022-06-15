@@ -76,8 +76,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private update() {
-    const { name, block_number, address_number, status, role } =
-      this.form.value;
+    const {
+      name,
+      block_number,
+      address_number,
+      status,
+      role,
+      email,
+      password,
+    } = this.form.value;
 
     this.store.dispatch(
       UserActions.update({
@@ -87,6 +94,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
         address_number,
         status,
         role,
+        email,
+        password,
       })
     );
   }
@@ -105,6 +114,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
         this.user ? this.user.name : '',
         [Validators.required, Validators.minLength(3)],
       ],
+
+      email: [this.user.email ? this.user.email : ''],
+      password: [],
       block_number: [
         this.user ? this.user.block_number : '',
         [Validators.required],

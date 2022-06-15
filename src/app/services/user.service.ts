@@ -67,7 +67,9 @@ export class UserService {
     block_number: string,
     address_number: string,
     status: string,
-    role: string
+    role: string,
+    email?: string,
+    password?: string
   ) {
     return this.http
       .put(`${this.url}/${id}`, {
@@ -76,6 +78,8 @@ export class UserService {
         address_number: address_number.toUpperCase(),
         status,
         roleId: Number(role),
+        email: email?.trim(),
+        password,
       })
       .pipe(map((res) => User.fromJson(res)));
   }

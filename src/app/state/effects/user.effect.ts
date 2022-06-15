@@ -47,13 +47,32 @@ export class UserEffect {
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(update),
-      mergeMap(({ id, name, block_number, address_number, status, role }) =>
-        this.userService
-          .update(id, name, block_number, address_number, status, role)
-          .pipe(
-            map((user) => saveSuccess({ user })),
-            catchError((e) => of(saveError({ e })))
-          )
+      mergeMap(
+        ({
+          id,
+          name,
+          block_number,
+          address_number,
+          status,
+          role,
+          email,
+          password,
+        }) =>
+          this.userService
+            .update(
+              id,
+              name,
+              block_number,
+              address_number,
+              status,
+              role,
+              email,
+              password
+            )
+            .pipe(
+              map((user) => saveSuccess({ user })),
+              catchError((e) => of(saveError({ e })))
+            )
       )
     )
   );

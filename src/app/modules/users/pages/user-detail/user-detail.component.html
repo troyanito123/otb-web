@@ -4,7 +4,15 @@
       <h2>{{ user.name }}</h2>
     </mat-card-title>
 
+    <mat-card-subtitle *ngIf="user.role != 'USER'">
+      {{ user.role }}
+    </mat-card-subtitle>
+
     <mat-card-content>
+      <ng-container *ngIf="user.role != 'USER'">
+        <p><strong>Email: </strong>{{ user.email }}</p>
+        <p><strong>Rol: </strong>{{ user.role }}</p>
+      </ng-container>
       <p><strong>Manzano: </strong>#{{ user.block_number }}</p>
       <p>
         <strong>Carnet de identidad: </strong>#{{ user.identification_number }}

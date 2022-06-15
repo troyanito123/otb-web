@@ -27,6 +27,8 @@ export const update = createAction(
     address_number: string;
     status: string;
     role: string;
+    email?: string;
+    password?: string;
   }>()
 );
 

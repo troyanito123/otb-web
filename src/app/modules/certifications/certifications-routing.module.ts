@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { CertificationsComponent } from './certifications.component';
 import { CertificationDetailComponent } from './pages/certification-detail/certification-detail.component';
 import { CertificationEditComponent } from './pages/certification-edit/certification-edit.component';
