@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'users',
     loadChildren: () =>
       import('./modules/users/users.module').then((m) => m.UsersModule),
-    data: { roles: ['USER', 'ADMIN', 'SUPERVISOR'] },
+    data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
       import('./modules/meetings/meetings.module').then(
         (m) => m.MeetingsModule
       ),
-    data: { roles: ['ADMIN', 'SUPVERVISOR'] },
+    data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
 
@@ -44,7 +44,7 @@ const routes: Routes = [
       import('./modules/monthly-payments/monthly-payments.module').then(
         (m) => m.MonthlyPaymentsModule
       ),
-    data: { roles: ['ADMIN', 'SUPVERVISOR'] },
+    data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
 
@@ -54,7 +54,7 @@ const routes: Routes = [
       import('./modules/contributions/contributions.module').then(
         (m) => m.ContributionsModule
       ),
-    data: { roles: ['ADMIN', 'SUPVERVISOR'] },
+    data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
 
@@ -64,7 +64,7 @@ const routes: Routes = [
       import('./modules/certifications/certifications.module').then(
         (m) => m.CertificationsModule
       ),
-    data: { roles: ['ADMIN', 'SUPVERVISOR'] },
+    data: { roles: ['ADMIN'] },
     canActivate: [AuthGuard],
   },
 
@@ -72,7 +72,7 @@ const routes: Routes = [
     path: 'reports',
     loadChildren: () =>
       import('./modules/reports/reports.module').then((m) => m.ReportsModule),
-    data: { roles: ['ADMIN', 'SUPVERVISOR'] },
+    data: { roles: ['ADMIN', 'SUPERVISOR'] },
     canActivate: [AuthGuard],
   },
 
@@ -82,7 +82,7 @@ const routes: Routes = [
       import('./modules/extra-contributions/extra-contributions.module').then(
         (m) => m.ExtraContributionsModule
       ),
-    data: { roles: ['ADMIN', 'SUPVERVISOR'] },
+    data: { roles: ['ADMIN', 'SUPERVISOR'] },
     canActivate: [AuthGuard],
   },
   {
