@@ -115,7 +115,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.minLength(3)],
       ],
 
-      email: [this.user.email ? this.user.email : ''],
+      email: [this.user ? this.user.email : ''],
       password: [],
       block_number: [
         this.user ? this.user.block_number : '',

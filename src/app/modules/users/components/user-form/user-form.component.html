@@ -15,7 +15,7 @@
     <mat-icon matSuffix color="primary">face</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
-  <mat-form-field appearance="legacy">
+  <mat-form-field appearance="legacy" *ngIf="isEditing">
     <mat-label>Email</mat-label>
     <input
       matInput
@@ -27,7 +27,7 @@
     <mat-icon matSuffix color="primary">mail</mat-icon>
     <mat-hint>Tiene que ser un email valido</mat-hint>
   </mat-form-field>
-  <mat-form-field appearance="legacy">
+  <mat-form-field appearance="legacy" *ngIf="isEditing">
     <mat-label>Contraseña</mat-label>
     <input
       matInput
