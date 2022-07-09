@@ -48,13 +48,13 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSubs = this.store.select('user').subscribe(({ user }) => {
       this.user = user;
-      this.loadPayments(user!.id, this.yearInput.value);
+      this.loadPayments(user!.id, this.yearInput.value!);
     });
 
     this.listenerPayments();
 
     this.yearInput.valueChanges.subscribe((year) =>
-      this.loadPayments(this.user!.id, year)
+      this.loadPayments(this.user!.id, year!)
     );
   }
 

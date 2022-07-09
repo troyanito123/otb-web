@@ -101,7 +101,7 @@ export class UserFinesComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       FinesActions.createMany({
         userId: this.user!.id,
-        date: this.inputDate.value,
+        date: new Date(this.inputDate.value!),
         meetingIds,
       })
     );
@@ -186,7 +186,7 @@ export class UserFinesComponent implements OnInit, OnDestroy {
         new Transaction(
           `Multa de ${p.meetingName}`,
           p.fine,
-          this.inputDate.value
+          new Date(this.inputDate.value!)
         )
     );
   }

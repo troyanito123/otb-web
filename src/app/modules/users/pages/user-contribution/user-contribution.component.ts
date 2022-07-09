@@ -99,7 +99,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
       ContributionsPaidActions.createManyContributionsPaid({
         userId,
         contributionsId,
-        date: this.inputDate.value,
+        date: new Date(this.inputDate.value!),
       })
     );
   }
@@ -163,7 +163,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
   private generateTransactions() {
     return this.preContributions.map(
-      (p) => new Transaction(p.description, p.amountToPay, this.inputDate.value)
+      (p) => new Transaction(p.description, p.amountToPay, new Date(this.inputDate.value!))
     );
   }
 

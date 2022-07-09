@@ -73,7 +73,7 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
       MonthlyPaymentsMadeActions.createManyPaymentsMade({
         userId: this.user!.id,
         monthsId,
-        date: this.inputDate.value,
+        date: new Date(this.inputDate.value!),
       })
     );
   }
@@ -113,7 +113,7 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
     return this.prePayments.map((p) => {
       const { month, year, amountForPay } = p;
       const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
-      return new Transaction(description, amountForPay, this.inputDate.value);
+      return new Transaction(description, amountForPay, new Date(this.inputDate.value!));
     });
   }
 }

@@ -25,11 +25,11 @@ export class MonthlyPaymentsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(
-      MonthlyPaymentsActions.loadPayments({ year: this.inputYear.value })
+      MonthlyPaymentsActions.loadPayments({ year: this.inputYear.value! })
     );
 
     this.inputYear.valueChanges.subscribe((year) =>
-      this.store.dispatch(MonthlyPaymentsActions.loadPayments({ year }))
+      this.store.dispatch(MonthlyPaymentsActions.loadPayments({ year: year! }))
     );
     this.subscribeStore();
   }
