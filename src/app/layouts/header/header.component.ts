@@ -15,7 +15,7 @@ import { SidenavService } from 'src/app/utils/sidenav.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  private user!: User | null;
+  public user!: User | null;
 
   private authSubs!: Subscription;
 

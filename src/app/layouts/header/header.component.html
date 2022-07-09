@@ -4,15 +4,18 @@
   fxLayout="row"
   fxLayoutAlign="space-between center"
 >
-  <button mat-icon-button (click)="sidebarToogle()">
+  <button mat-icon-button (click)="sidebarToogle()" *ngIf="isLogged">
     <mat-icon>menu</mat-icon>
   </button>
   <span>OTB SAN JOSE</span>
-  <button mat-icon-button [routerLink]="['/auth']" *ngIf="!isLogged">
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isLogged">
     <mat-icon>person</mat-icon>
   </button>
-
-  <button mat-icon-button (click)="signout()" *ngIf="isLogged">
-    <mat-icon>logout</mat-icon>
-  </button>
+  <mat-menu #menu="matMenu">
+    <p style="text-align: center">{{ user?.name }}</p>
+    <button mat-menu-item (click)="signout()">
+      <mat-icon>logout</mat-icon>
+      Salir
+    </button>
+  </mat-menu>
 </mat-toolbar>
