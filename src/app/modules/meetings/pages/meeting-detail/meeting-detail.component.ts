@@ -51,7 +51,7 @@ export class MeetingDetailComponent implements OnInit, OnDestroy {
       .select('meeting')
       .subscribe(({ meeting, removed }) => {
         this.meeting = meeting;
-        if (removed) this.router.navigate(['/meetings']);
+        if (removed) this.router.navigate(['privagte/meetings']);
       });
   }
 

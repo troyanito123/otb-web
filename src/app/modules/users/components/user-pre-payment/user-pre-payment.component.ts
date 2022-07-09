@@ -90,7 +90,11 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
           );
           this.store.dispatch(PrePaymentActions.cleanPayment());
 
-          this.router.navigate(['users', this.user!.id, 'receipt-view']);
+          this.router.navigate([
+            'private/users',
+            this.user!.id,
+            'receipt-view',
+          ]);
         }
       });
 
@@ -113,7 +117,11 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
     return this.prePayments.map((p) => {
       const { month, year, amountForPay } = p;
       const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
-      return new Transaction(description, amountForPay, new Date(this.inputDate.value!));
+      return new Transaction(
+        description,
+        amountForPay,
+        new Date(this.inputDate.value!)
+      );
     });
   }
 }

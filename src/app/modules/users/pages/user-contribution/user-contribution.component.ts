@@ -110,7 +110,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
         transactions: this.genereteTransactionFromContributionsPaid(),
       })
     );
-    this.router.navigate(['users', this.user!.id, 'receipt-view']);
+    this.router.navigate(['private/users', this.user!.id, 'receipt-view']);
   }
 
   private listenerStore() {
@@ -149,7 +149,11 @@ export class UserContributionComponent implements OnInit, OnDestroy {
             })
           );
           this.store.dispatch(PreContributionsActions.clean());
-          this.router.navigate(['users', this.user!.id, 'receipt-view']);
+          this.router.navigate([
+            'private/users',
+            this.user!.id,
+            'receipt-view',
+          ]);
         }
       });
 
@@ -163,7 +167,12 @@ export class UserContributionComponent implements OnInit, OnDestroy {
 
   private generateTransactions() {
     return this.preContributions.map(
-      (p) => new Transaction(p.description, p.amountToPay, new Date(this.inputDate.value!))
+      (p) =>
+        new Transaction(
+          p.description,
+          p.amountToPay,
+          new Date(this.inputDate.value!)
+        )
     );
   }
 

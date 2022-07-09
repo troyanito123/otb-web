@@ -96,7 +96,7 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
   }
 
   private handledSuccess(meeting: Meeting | null) {
-    this.router.navigate(['/meetings', meeting!.id]);
+    this.router.navigate(['private/meetings', meeting!.id]);
   }
 
   private handledError() {

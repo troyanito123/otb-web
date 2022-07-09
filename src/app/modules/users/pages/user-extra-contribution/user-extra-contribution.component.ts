@@ -86,7 +86,7 @@ export class UserExtraContributionComponent implements OnInit, OnDestroy {
     const { name, amount_paid, date_paid } = extraContributionMade;
     const transactions = [new Transaction(name, amount_paid, date_paid)];
     this.store.dispatch(addTransaction({ transactions }));
-    this.router.navigate(['users', this.user!.id, 'receipt-view']);
+    this.router.navigate(['private/users', this.user!.id, 'receipt-view']);
   }
 
   private generateTransaction(extraContributionPaid: ExtraContributionPaid) {

@@ -76,7 +76,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
         transactions: this.generateTransactions(),
       })
     );
-    this.router.navigate(['users', this.user!.id, 'receipt-view']);
+    this.router.navigate(['private/users', this.user!.id, 'receipt-view']);
   }
 
   private generateTransactions() {

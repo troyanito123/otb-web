@@ -132,7 +132,11 @@ export class UserFinesComponent implements OnInit, OnDestroy {
             })
           );
           this.store.dispatch(PreFinesActions.clean());
-          this.router.navigate(['users', this.user!.id, 'receipt-view']);
+          this.router.navigate([
+            'private/users',
+            this.user!.id,
+            'receipt-view',
+          ]);
         }
       });
 

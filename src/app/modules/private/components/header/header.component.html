@@ -4,11 +4,11 @@
   fxLayout="row"
   fxLayoutAlign="space-between center"
 >
-  <button mat-icon-button (click)="sidebarToogle()" *ngIf="isLogged">
+  <button mat-icon-button (click)="sidebarToogle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>OTB SAN JOSE</span>
-  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isLogged">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>person</mat-icon>
   </button>
   <mat-menu #menu="matMenu">

@@ -1,0 +1,87 @@
+<mat-nav-list fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <button
+    mat-flat-button
+    [routerLink]="['dashboard']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    INICIO
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['users']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+    *ngIf="auth?.role == 'ADMIN'"
+  >
+    USUARIOS
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['expenses']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    GASTOS
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['meetings']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+    *ngIf="auth?.role == 'ADMIN'"
+  >
+    REUNIONES
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['monthly-payments']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+    *ngIf="auth?.role == 'ADMIN'"
+  >
+    MENSUALIDADES
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['contributions']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+    *ngIf="auth?.role == 'ADMIN'"
+  >
+    APORTES
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['extra-contributions']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    APORTES EXTRAS
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['certifications']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+    *ngIf="auth?.role == 'ADMIN'"
+  >
+    CERTIFICACIONES
+  </button>
+
+  <button
+    mat-flat-button
+    [routerLink]="['reports']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: false }"
+  >
+    REPORTES
+  </button>
+</mat-nav-list>

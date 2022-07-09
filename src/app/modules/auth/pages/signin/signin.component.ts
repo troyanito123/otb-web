@@ -48,7 +48,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   private handledSuccess(user: User) {
-    this.router.navigate(['/dashboard']).then(() => this.form.reset());
+    this.router.navigate(['/private/dashboard']).then(() => this.form.reset());
   }
   private handledError(error: any) {
     this.form.get('password')?.setValue('');

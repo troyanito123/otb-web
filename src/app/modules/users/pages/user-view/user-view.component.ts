@@ -32,7 +32,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
     this.store.select('user').subscribe(({ user, removed }) => {
       this.user = user;
-      if (removed) this.router.navigate(['/users']);
+      if (removed) this.router.navigate(['private/users']);
     });
   }
 

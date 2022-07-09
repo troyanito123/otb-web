@@ -9,8 +9,6 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './layouts/header/header.component';
-import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { LoadingComponent } from './layouts/loading/loading.component';
 import { AlertComponent } from './layouts/alert/alert.component';
 import { DeleteDialogComponent } from './layouts/delete-dialog/delete-dialog.component';
@@ -42,8 +40,6 @@ import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    SidebarComponent,
     LoadingComponent,
     AlertComponent,
     DeleteDialogComponent,

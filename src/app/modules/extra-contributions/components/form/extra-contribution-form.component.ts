@@ -35,10 +35,13 @@ export class ExtraContributionFormComponent implements OnInit, OnDestroy {
       .select('extraContributions')
       .subscribe(({ extraContribution, error, created, updated }) => {
         if (created)
-          this.router.navigate(['extra-contributions', extraContribution!.id]);
+          this.router.navigate([
+            'private/extra-contributions',
+            extraContribution!.id,
+          ]);
         if (updated)
           this.router.navigate([
-            'extra-contributions',
+            'private/extra-contributions',
             this.extraContribution!.id,
           ]);
 

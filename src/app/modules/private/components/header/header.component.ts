@@ -6,7 +6,6 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as AuthActions from 'src/app/state/actions/auth.action';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
-import { MatSidenav } from '@angular/material/sidenav';
 import { SidenavService } from 'src/app/utils/sidenav.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
   signout() {
     this.store.dispatch(AuthActions.signout());
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/public']);
   }
 
   sidebarToogle() {

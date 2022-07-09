@@ -61,7 +61,7 @@ export class ExpensesViewComponent implements OnInit, OnDestroy {
       .subscribe(({ expense, loading, removed }) => {
         this.expense = expense;
         if (removed) {
-          this.router.navigate(['expenses']);
+          this.router.navigate(['private/expenses']);
         }
       });
 

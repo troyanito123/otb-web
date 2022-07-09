@@ -59,7 +59,7 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
       doc.addImage(imgData, 'letter', 5, 160, 200, 120);
       doc.save(`${this.user?.name}.pdf`);
       this.router
-        .navigate(['users', this.user?.id])
+        .navigate(['private/users', this.user?.id])
         .then(() =>
           this.store.dispatch(TransactionsActions.cleanTransactions())
         );

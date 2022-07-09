@@ -66,7 +66,7 @@ export class CertificationEditComponent implements OnInit, OnDestroy {
   }
 
   private handledUpdated(certification: Certification) {
-    this.router.navigate(['certifications', certification.id]);
+    this.router.navigate(['private/certifications', certification.id]);
   }
 
   private createForm() {

@@ -122,6 +122,6 @@ export class UserCertificationsComponent implements OnInit, OnDestroy {
     this.router
       .navigate(['users', this.user!.id, 'receipt-view'])
       .then(() => this.store.dispatch(CertificationActions.clean()));
-    this.router.navigate(['users', this.user!.id, 'receipt-view']);
+    this.router.navigate(['private/users', this.user!.id, 'receipt-view']);
   }
 }

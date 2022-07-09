@@ -98,11 +98,11 @@ export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
   }
 
   private handledCreated(monthlyPayment: MonthlyPayment) {
-    this.router.navigate(['monthly-payments', monthlyPayment.id]);
+    this.router.navigate(['private/monthly-payments', monthlyPayment.id]);
   }
 
   private handledUpdated(monthlyPayment: MonthlyPayment) {
-    this.router.navigate(['monthly-payments', monthlyPayment.id]);
+    this.router.navigate(['private/monthly-payments', monthlyPayment.id]);
   }
 
   private createForm() {

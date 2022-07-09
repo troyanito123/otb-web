@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
       map(({ user }) => allowedRoles.includes(user.role)),
       catchError((e) => of(false)),
       tap((success) => {
-        if (!success) this.router.navigate(['/auth']);
+        if (!success) this.router.navigate(['/public']);
       })
     );
   }

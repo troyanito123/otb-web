@@ -32,7 +32,6 @@ export class ExpensesDataSource implements DataSource<Expense> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<Expense[]> {
-    console.log('Connecting data source');
     return this.expensesSubject.asObservable();
   }
 

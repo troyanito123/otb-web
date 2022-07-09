@@ -108,22 +108,15 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
 
     this.expenseSubs = this.store
       .select('expense')
-      .subscribe(({ loading, error, created, updated, expense }) => {
+      .subscribe(({ error, created, updated, expense }) => {
         if (created) {
-          console.log('quitar loading');
-          this.router.navigate(['expenses', expense!.id]);
+          this.router.navigate(['private/expenses', expense!.id]);
         }
-
         if (updated) {
-          console.log('quitar loading');
-          this.router.navigate(['expenses', expense!.id]);
+          this.router.navigate(['private/expenses', expense!.id]);
         }
 
-        if (loading) {
-          console.log('mostrar loading');
-        }
         if (error) {
-          console.log('quitar loading');
           console.warn('mostrar error');
         }
       });
