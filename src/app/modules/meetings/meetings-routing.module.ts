@@ -21,11 +21,11 @@ const routes: Routes = [
         children: [
           { path: 'view', component: MeetingDetailComponent },
           { path: 'edit', component: MeetingEditComponent },
-          { path: '', redirectTo: 'view' },
+          { path: '', redirectTo: 'view', pathMatch: 'full' },
         ],
       },
 
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

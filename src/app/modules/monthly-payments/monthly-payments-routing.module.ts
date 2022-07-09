@@ -20,10 +20,10 @@ const routes: Routes = [
         children: [
           { path: 'detail', component: MonthlyPaymentsDetailComponent },
           { path: 'edit', component: MonthlyPaymentsEditComponent },
-          { path: '', redirectTo: 'detail' },
+          { path: '', redirectTo: 'detail', pathMatch: 'full' },
         ],
       },
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

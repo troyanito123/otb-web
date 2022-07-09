@@ -20,10 +20,10 @@ const routes: Routes = [
         children: [
           { path: 'edit', component: ContributionEditComponent },
           { path: 'detail', component: ContributionDetailComponent },
-          { path: '', redirectTo: 'detail' },
+          { path: '', redirectTo: 'detail', pathMatch: 'full' },
         ],
       },
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

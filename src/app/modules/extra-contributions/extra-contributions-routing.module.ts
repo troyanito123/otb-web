@@ -31,10 +31,10 @@ const routes: Routes = [
             canActivate: [AuthGuard],
             data: { roles: ['ADMIN'] },
           },
-          { path: '', redirectTo: 'detail' },
+          { path: '', redirectTo: 'detail', pathMatch: 'full' },
         ],
       },
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

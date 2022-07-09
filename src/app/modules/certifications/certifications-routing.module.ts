@@ -19,10 +19,10 @@ const routes: Routes = [
         children: [
           { path: 'detail', component: CertificationDetailComponent },
           { path: 'edit', component: CertificationEditComponent },
-          { path: '', redirectTo: 'detail' },
+          { path: '', redirectTo: 'detail', pathMatch: 'full' },
         ],
       },
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

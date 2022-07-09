@@ -45,11 +45,11 @@ const routes: Routes = [
             path: 'extra-contributions',
             component: UserExtraContributionComponent,
           },
-          { path: '', redirectTo: 'detail' },
+          { path: '', redirectTo: 'detail', pathMatch: 'full' },
         ],
       },
 
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

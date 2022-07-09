@@ -26,7 +26,7 @@ const routes: Routes = [
         data: { roles: ['ADMIN'] },
       },
       { path: ':id', component: ExpensesViewComponent },
-      { path: '', redirectTo: 'list' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: 'attendences', component: ReportAttendencesComponent },
       { path: 'expenses', component: ReportExpensesComponent },
       { path: 'income', component: ReportIncomeComponent },
-      { path: '', redirectTo: 'attendences' },
+      { path: '', redirectTo: 'attendences', pathMatch: 'full' },
     ],
   },
 ];
