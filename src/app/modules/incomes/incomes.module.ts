@@ -9,7 +9,10 @@ import { IncomeEditComponent } from './pages/income-edit/income-edit.component';
 import { IncomeViewComponent } from './pages/income-view/income-view.component';
 import { IncomeDetailComponent } from './pages/income-detail/income-detail.component';
 import { IncomeFormComponent } from './components/income-form/income-form.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,11 +22,15 @@ import { IncomeFormComponent } from './components/income-form/income-form.compon
     IncomeEditComponent,
     IncomeViewComponent,
     IncomeDetailComponent,
-    IncomeFormComponent
+    IncomeFormComponent,
   ],
   imports: [
     CommonModule,
-    IncomesRoutingModule
-  ]
+    IncomesRoutingModule,
+    HttpClientModule,
+    AngularMaterialModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+  ],
 })
-export class IncomesModule { }
+export class IncomesModule {}
