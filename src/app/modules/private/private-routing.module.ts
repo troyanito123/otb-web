@@ -87,6 +87,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'incomes',
+        loadChildren: () =>
+          import('../incomes/incomes.module').then((m) => m.IncomesModule),
+        data: { roles: ['ADMIN', 'SUPERVISOR'] },
+        canActivate: [AuthGuard],
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
