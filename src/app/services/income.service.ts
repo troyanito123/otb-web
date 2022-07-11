@@ -55,13 +55,21 @@ export class IncomeService {
     userId,
   }: any): Observable<IncomeModel> {
     return this.http
-      .post(this.url, { amount, description, date, userId })
+      .post(this.url, {
+        amount,
+        description: description.toUpperCase(),
+        date,
+        userId,
+      })
       .pipe(map((res) => IncomeModel.fromJson(res)));
   }
 
   public updated(
     id: number,
-    { amount, description, date, status }: any
+    amount: number,
+    description: string,
+    date: Date,
+    status: string
   ): Observable<IncomeModel> {
     return this.http
       .put(`${this.url}/${id}`, { amount, description, date, status })

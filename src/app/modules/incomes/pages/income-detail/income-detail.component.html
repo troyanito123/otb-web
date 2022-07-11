@@ -1,1 +1,18 @@
-<p>income-detail works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ income?.user?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ income?.date | date }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>Monto pagado: </strong> {{ income?.amount }}</p>
+    <p><strong>Descripción: </strong> {{ income?.description }}</p>
+    <p><strong>Quien cobro: </strong> {{ income?.collector }}</p>
+    <p><strong>Estado: </strong> {{ income?.status }}</p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" [routerLink]="['../edit']">
+      Editar
+    </button>
+  </mat-card-actions>
+</mat-card>

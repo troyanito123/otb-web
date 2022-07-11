@@ -1,9 +1,18 @@
 export class IncomeModel {
-  public static fromJson({ id, amount, description, date, status, user }: any) {
+  public static fromJson({
+    id,
+    amount,
+    description,
+    collector,
+    date,
+    status,
+    user,
+  }: any) {
     return new IncomeModel(
       id,
       amount,
       description,
+      collector,
       date,
       status,
       User.fromJson(user)
@@ -14,6 +23,7 @@ export class IncomeModel {
     public id: number,
     public amount: number,
     public description: string,
+    public collector: string,
     public date: Date,
     public status: GenericStatus,
     public user: User
