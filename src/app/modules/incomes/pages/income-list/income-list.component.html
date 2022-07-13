@@ -42,7 +42,7 @@
           MONTO
         </mat-header-cell>
         <mat-cell *matCellDef="let income">{{
-          income.amount | currency
+          income.amount | currency: "Bs."
         }}</mat-cell>
       </ng-container>
 

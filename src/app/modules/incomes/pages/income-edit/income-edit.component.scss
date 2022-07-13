@@ -1,0 +1,9 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  button {
+    margin: 1rem;
+    flex-grow: 1;
+  }
+}
