@@ -38,9 +38,29 @@ export class IncomesEffects {
     )
   );
 
-  setSaved$ = createEffect(() =>
-    this.actions$
-      .pipe(ofType(IncomesAction.setIncome))
-      .pipe(map((res) => IncomesAction.setSaved()))
+  create$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(IncomesAction.create),
+      mergeMap(({ amount, description, collector, date, userId }) =>
+        this.incomeService
+          .create(amount, description, collector, date, userId)
+          .pipe(
+            map((income) => IncomesAction.setIncome({ income })),
+            catchError((error) => of(IncomesAction.setError({ error })))
+          )
+      )
+    )
+  );
+
+  loadByUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(IncomesAction.loadByUser),
+      mergeMap(({ userId }) =>
+        this.incomeService.getAllByUser(userId).pipe(
+          map((incomes) => IncomesAction.loadByUserSuccess({ incomes })),
+          catchError((error) => of(IncomesAction.setError({ error })))
+        )
+      )
+    )
   );
 }

@@ -7,11 +7,13 @@ export interface IncomeState {
   saved: boolean;
   income?: IncomeModel;
   error?: any;
+  incomes: IncomeModel[];
 }
 
 export const initialIncomeState: IncomeState = {
   loading: false,
   saved: false,
+  incomes: [],
 };
 
 const _incomeReducer = createReducer(
@@ -29,9 +31,34 @@ const _incomeReducer = createReducer(
     income,
   })),
 
+  on(IncomesActions.loadByUser, (state) => ({
+    ...state,
+    loading: true,
+    error: undefined,
+  })),
+
+  on(IncomesActions.loadByUserSuccess, (state, { incomes }) => ({
+    ...state,
+    loading: false,
+    incomes,
+  })),
+
+  on(IncomesActions.create, (state) => ({
+    ...state,
+    error: undefined,
+    loading: true,
+  })),
+
+  on(IncomesActions.update, (state) => ({
+    ...state,
+    error: undefined,
+    loading: true,
+  })),
+
   on(IncomesActions.setIncome, (state, { income }) => ({
     ...state,
     loading: false,
+    saved: true,
     income,
   })),
 
@@ -39,11 +66,6 @@ const _incomeReducer = createReducer(
     ...state,
     loading: false,
     error,
-  })),
-
-  on(IncomesActions.setSaved, (state) => ({
-    ...state,
-    saved: true,
   })),
 
   on(IncomesActions.unsetSaved, (state) => ({
@@ -56,6 +78,7 @@ const _incomeReducer = createReducer(
     error: undefined,
     saved: false,
     loading: false,
+    incomes: [],
   }))
 );
 

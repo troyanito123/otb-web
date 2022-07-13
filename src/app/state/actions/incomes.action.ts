@@ -6,6 +6,16 @@ export const load = createAction(
   props<{ id: number }>()
 );
 
+export const loadByUser = createAction(
+  '[INCOMES] load by user',
+  props<{ userId: number }>()
+);
+
+export const loadByUserSuccess = createAction(
+  '[INCOMES] load by user success',
+  props<{ incomes: IncomeModel[] }>()
+);
+
 export const loadSuccess = createAction(
   '[INCOMES] load income succes',
   props<{ income: IncomeModel }>()
@@ -23,7 +33,13 @@ export const setError = createAction(
 
 export const create = createAction(
   '[INCOMES] create income',
-  props<{ amount: number; description: string; date: Date; userId: number }>()
+  props<{
+    amount: number;
+    description: string;
+    collector: string;
+    date: Date;
+    userId: number;
+  }>()
 );
 
 export const update = createAction(
@@ -39,5 +55,4 @@ export const update = createAction(
 
 export const clean = createAction('[INCOMES] clean');
 
-export const setSaved = createAction('[INCOMES] set saved to true');
 export const unsetSaved = createAction('[INCOMES] set saved to false');

@@ -1,0 +1,17 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as IncomeActions from '@state/actions/incomes.action';
+import { AppState } from '@state/app.reducer';
+
+@Component({
+  selector: 'app-user-incomes',
+  templateUrl: './user-incomes.component.html',
+  styleUrls: ['./user-incomes.component.scss'],
+})
+export class UserIncomesComponent implements OnDestroy {
+  constructor(private store: Store<AppState>) {}
+
+  ngOnDestroy(): void {
+    this.store.dispatch(IncomeActions.clean());
+  }
+}

@@ -6,9 +6,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
 import * as IncomeActions from '@state/actions/incomes.action';
 
-import { distinct } from 'rxjs/operators';
-
 import { IncomeModel } from '@models/income.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-income-edit',
@@ -21,6 +20,7 @@ export class IncomeEditComponent implements OnInit, OnDestroy {
   public statusList = ['ACTIVE', 'INACTIVE', 'DELETED'];
 
   private income?: IncomeModel;
+  private incomeSubs?: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -31,20 +31,21 @@ export class IncomeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.store
+    this.incomeSubs = this.store
       .select('incomes')
-      .pipe(distinct())
-      .subscribe(({ income, saved }) => {
+      .subscribe(({ income, saved, error }) => {
         if (income) {
           this.income = income;
-          this.form?.reset({ ...income, date: new Date(income.date) });
+          this.form.reset({ ...income, date: new Date(income.date) });
         }
         if (saved) this.router.navigate(['private/incomes', this.income!.id]);
+        if (error) alert('Error');
       });
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(IncomeActions.unsetSaved());
+    this.incomeSubs?.unsubscribe();
   }
 
   public onSubmit() {

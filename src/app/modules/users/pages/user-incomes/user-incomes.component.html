@@ -1,0 +1,15 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="end center"
+  fxLayoutGap="16px"
+  style="margin-bottom: 1rem"
+>
+  <button mat-raised-button routerLinkActive="active" [routerLink]="['./list']">
+    Lista
+  </button>
+  <button mat-raised-button routerLinkActive="active" [routerLink]="['./new']">
+    Nuevo
+  </button>
+</div>
+
+<router-outlet></router-outlet>

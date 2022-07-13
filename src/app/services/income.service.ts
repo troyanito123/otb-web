@@ -48,16 +48,18 @@ export class IncomeService {
       .pipe(map((res) => IncomeModel.fromJson(res)));
   }
 
-  public create({
-    amount,
-    description,
-    date,
-    userId,
-  }: any): Observable<IncomeModel> {
+  public create(
+    amount: number,
+    description: string,
+    collector: string,
+    date: Date,
+    userId: number
+  ): Observable<IncomeModel> {
     return this.http
       .post(this.url, {
         amount,
         description: description.toUpperCase(),
+        collector,
         date,
         userId,
       })

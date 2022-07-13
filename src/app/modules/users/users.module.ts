@@ -25,6 +25,9 @@ import { UserFinesComponent } from './pages/user-fines/user-fines.component';
 import { UserBlockComponent } from './pages/user-block/user-block.component';
 import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component';
 import { UserExtraContributionComponent } from './pages/user-extra-contribution/user-extra-contribution.component';
+import { UserIncomesComponent } from './pages/user-incomes/user-incomes.component';
+import { UserIncomesCreateComponent } from './pages/user-incomes/user-incomes-create/user-incomes-create.component';
+import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list/user-incomes-list.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { UserExtraContributionComponent } from './pages/user-extra-contribution/
     UserBlockComponent,
     UserAllBlocksComponent,
     UserExtraContributionComponent,
+    UserIncomesComponent,
+    UserIncomesCreateComponent,
+    UserIncomesListComponent,
   ],
   imports: [
     CommonModule,

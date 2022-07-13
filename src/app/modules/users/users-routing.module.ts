@@ -9,6 +9,9 @@ import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { UserExtraContributionComponent } from './pages/user-extra-contribution/user-extra-contribution.component';
 import { UserFinesComponent } from './pages/user-fines/user-fines.component';
+import { UserIncomesCreateComponent } from './pages/user-incomes/user-incomes-create/user-incomes-create.component';
+import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list/user-incomes-list.component';
+import { UserIncomesComponent } from './pages/user-incomes/user-incomes.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserNewComponent } from './pages/user-new/user-new.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
@@ -41,6 +44,15 @@ const routes: Routes = [
           { path: 'edit', component: UserEditComponent },
           { path: 'receipt-view', component: UserReceiptViewComponent },
           { path: 'fines', component: UserFinesComponent },
+          {
+            path: 'incomes',
+            component: UserIncomesComponent,
+            children: [
+              { path: 'list', component: UserIncomesListComponent },
+              { path: 'new', component: UserIncomesCreateComponent },
+              { path: '', redirectTo: 'list', pathMatch: 'full' },
+            ],
+          },
           {
             path: 'extra-contributions',
             component: UserExtraContributionComponent,

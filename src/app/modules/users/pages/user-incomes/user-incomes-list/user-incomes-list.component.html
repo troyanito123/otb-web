@@ -1,0 +1,30 @@
+<mat-table [dataSource]="incomes">
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> FECHA </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{ row.date | date }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef> MONTO </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      {{ row.amount | currency: "Bs. " }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef> DESCRIPCIÓN </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{ row.description }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="options">
+    <mat-header-cell *matHeaderCellDef> OPCIONES </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button mat-icon-button color="primary" (click)="editIncome(row.id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

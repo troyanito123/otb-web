@@ -23,12 +23,6 @@ export class IncomeFormComponent implements OnInit {
 
   public onSubmit() {
     console.log(this.form.value);
-    this.create();
-  }
-
-  private create() {
-    if (this.form.valid)
-      this.incomeService.create(this.form.value).subscribe(console.log);
   }
 
   private createForm() {
