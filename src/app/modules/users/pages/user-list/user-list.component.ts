@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns = ['name', 'block-number', 'address-number'];
 
   page = 0;
-  take = 5;
+  take = 10;
   sortTable = 'ASC';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
