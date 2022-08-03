@@ -83,4 +83,8 @@ export class IncomeService {
       .delete(`${this.url}/${id}`)
       .pipe(map((res) => IncomeModel.fromJson(res)));
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }

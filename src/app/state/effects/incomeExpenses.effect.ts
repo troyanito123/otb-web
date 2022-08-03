@@ -10,12 +10,16 @@ import { CertificationService } from 'src/app/services/certification.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { ContributionPaidService } from 'src/app/services/contribution-paid.service';
 import { FineService } from 'src/app/services/fine.service';
+import { IncomeService } from '@services/income.service';
+import { ExtraContributionService } from '@services/extra-contribution.service';
 
 @Injectable()
 export class IncomeExpensesEffect {
   constructor(
     private actions$: Actions,
     private contributionPaidService: ContributionPaidService,
+    private incomeService: IncomeService,
+    private extraContributionService: ExtraContributionService,
     private monthlyPaymentMadeService: MonthlyPaymentMadeService,
     private certificationService: CertificationService,
     private expenseService: ExpenseService,
@@ -43,6 +47,33 @@ export class IncomeExpensesEffect {
         this.contributionPaidService.getTotalAmount().pipe(
           map(({ total }) =>
             IncomeExpensesActions.loadContributionSuccess({ total })
+          ),
+          catchError((e) => of(IncomeExpensesActions.error({ e })))
+        )
+      )
+    )
+  );
+  extraContributionsTotal$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(IncomeExpensesActions.loadExtraContribution),
+      mergeMap(() =>
+        this.extraContributionService.getTotalAmount().pipe(
+          map(({ total }) =>
+            IncomeExpensesActions.loadExtraContributionSuccess({ total })
+          ),
+          catchError((e) => of(IncomeExpensesActions.error({ e })))
+        )
+      )
+    )
+  );
+
+  incomesTotal$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(IncomeExpensesActions.loadIncome),
+      mergeMap(() =>
+        this.incomeService.getTotalAmount().pipe(
+          map(({ total }) =>
+            IncomeExpensesActions.loadIncomeSuccess({ total })
           ),
           catchError((e) => of(IncomeExpensesActions.error({ e })))
         )

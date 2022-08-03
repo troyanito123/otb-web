@@ -59,4 +59,8 @@ export class ExtraContributionService {
       date,
     });
   }
+
+  public getTotalAmount() {
+    return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
 }

@@ -57,7 +57,12 @@ export class UserExtraContributionComponent implements OnInit, OnDestroy {
               transactions: this.generateTransaction(extraContributionPaid),
             })
           );
-          this.router.navigate(['users', this.user!.id, 'receipt-view']);
+          this.router.navigate([
+            'private',
+            'users',
+            this.user!.id,
+            'receipt-view',
+          ]);
         }
       });
   }

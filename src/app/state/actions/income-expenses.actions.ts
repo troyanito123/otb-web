@@ -9,6 +9,22 @@ export const loadContributionSuccess = createAction(
   props<{ total: string }>()
 );
 
+export const loadIncome = createAction('[INCOME-EXPENSES] load incomes');
+
+export const loadIncomeSuccess = createAction(
+  '[INCOME-EXPENSES] load incomes success',
+  props<{ total: string }>()
+);
+
+export const loadExtraContribution = createAction(
+  '[INCOME-EXPENSES] load extra-contributions'
+);
+
+export const loadExtraContributionSuccess = createAction(
+  '[INCOME-EXPENSES] load extra-contributions success',
+  props<{ total: string }>()
+);
+
 export const loadMonthlyPayments = createAction(
   '[INCOME-EXPENSES] load monthly payments'
 );

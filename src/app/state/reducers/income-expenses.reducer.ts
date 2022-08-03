@@ -4,11 +4,13 @@ import * as IncomeExpensesActions from '../actions/income-expenses.actions';
 
 export interface IncomeExpensesState {
   contributions: number;
+  extraContributions: number;
   monthlyPayments: number;
   certifications: number;
   fines: number;
   expenses: number;
   incomes: number;
+  incomesFromPeople: number;
   total: number;
   loading: boolean;
   error: any;
@@ -16,11 +18,13 @@ export interface IncomeExpensesState {
 
 export const initialIncomeExpensesState: IncomeExpensesState = {
   contributions: 0,
+  extraContributions: 0,
   monthlyPayments: 0,
   certifications: 0,
   fines: 0,
   expenses: 0,
   incomes: 0,
+  incomesFromPeople: 0,
   total: 0,
   loading: false,
   error: null,
@@ -42,6 +46,37 @@ const _incomeExpensesReducer = createReducer(
     loading: false,
     total: state.incomes + Number(total) - state.expenses,
   })),
+
+  on(IncomeExpensesActions.loadIncome, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(IncomeExpensesActions.loadIncomeSuccess, (state, { total }) => ({
+    ...state,
+    incomesFromPeople: Number(total),
+    incomes: state.incomes + Number(total),
+    loading: false,
+    total: state.incomes + Number(total) - state.expenses,
+  })),
+
+  on(IncomeExpensesActions.loadExtraContribution, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(
+    IncomeExpensesActions.loadExtraContributionSuccess,
+    (state, { total }) => ({
+      ...state,
+      extraContributions: Number(total),
+      incomes: state.incomes + Number(total),
+      loading: false,
+      total: state.incomes + Number(total) - state.expenses,
+    })
+  ),
 
   on(IncomeExpensesActions.loadContribution, (state) => ({
     ...state,
@@ -105,11 +140,13 @@ const _incomeExpensesReducer = createReducer(
 
   on(IncomeExpensesActions.clean, (state) => ({
     contributions: 0,
+    extraContributions: 0,
     monthlyPayments: 0,
     certifications: 0,
     fines: 0,
     expenses: 0,
     incomes: 0,
+    incomesFromPeople: 0,
     total: 0,
     loading: false,
     error: null,

@@ -11,11 +11,13 @@ import { AppState } from 'src/app/state/app.reducer';
 })
 export class SummaryComponent implements OnInit, OnDestroy {
   public contributions = 0;
+  public extraContributions = 0;
   public monthlyPayments = 0;
   public certifications = 0;
   public fines = 0;
   public expenses = 0;
   public incomes = 0;
+  public incomesFromPeople = 0;
   public total = 0;
 
   private incomeExpensesSubs!: Subscription;
@@ -32,25 +34,31 @@ export class SummaryComponent implements OnInit, OnDestroy {
     this.store.dispatch(IncomeExpensesActions.loadMonthlyPayments());
     this.store.dispatch(IncomeExpensesActions.loadExpenses());
     this.store.dispatch(IncomeExpensesActions.loadFines());
+    this.store.dispatch(IncomeExpensesActions.loadExtraContribution());
+    this.store.dispatch(IncomeExpensesActions.loadIncome());
 
     this.incomeExpensesSubs = this.store
       .select('incomeExpenses')
       .subscribe(
         ({
           contributions,
+          extraContributions,
           monthlyPayments,
           certifications,
           fines,
           expenses,
           incomes,
+          incomesFromPeople,
           total,
         }) => {
           this.contributions = contributions;
+          this.extraContributions = extraContributions;
           this.monthlyPayments = monthlyPayments;
           this.certifications = certifications;
           this.fines = fines;
           this.expenses = expenses;
           this.incomes = incomes;
+          this.incomesFromPeople = incomesFromPeople;
           this.total = total;
           this.incomesChart = [
             {
@@ -68,6 +76,14 @@ export class SummaryComponent implements OnInit, OnDestroy {
             {
               name: 'Multas',
               value: fines,
+            },
+            {
+              name: 'Ingresos Extras',
+              value: incomesFromPeople,
+            },
+            {
+              name: 'Contribuciones extras',
+              value: extraContributions,
             },
           ];
         }
