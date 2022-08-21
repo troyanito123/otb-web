@@ -27,7 +27,7 @@ export class ExpensesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   page = 0;
   take = 5;
-  sortTable = 'ASC';
+  sortTable = 'DESC';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
