@@ -75,6 +75,13 @@ const _expenseReducer = createReducer(
     loading: false,
     removed: true,
   })),
+  on(ExpenseActions.cleanChanges, (state) => ({
+    ...state,
+    loading: false,
+    created: false,
+    updated: false,
+    removed: false,
+  })),
 
   on(ExpenseActions.clean, () => ({
     expense: null,

@@ -35,6 +35,7 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(ExpenseActions.cleanChanges());
     this.unsubscribeStore();
   }
 

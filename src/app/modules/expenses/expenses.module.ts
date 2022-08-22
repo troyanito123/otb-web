@@ -12,6 +12,8 @@ import { ExpensesEditComponent } from './pages/expenses-edit/expenses-edit.compo
 import { ExpensesViewComponent } from './pages/expenses-view/expenses-view.component';
 import { ExpensesFormComponent } from './components/expenses-form/expenses-form.component';
 import { ExpensesSingleComponent } from './components/expenses-single/expenses-single.component';
+import { ExpensesReceiptComponent } from './pages/expenses-receipt/expenses-receipt.component';
+import { ExpensesDetailComponent } from './pages/expenses-detail/expenses-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { ExpensesSingleComponent } from './components/expenses-single/expenses-s
     ExpensesViewComponent,
     ExpensesFormComponent,
     ExpensesSingleComponent,
+    ExpensesReceiptComponent,
+    ExpensesDetailComponent,
   ],
   imports: [
     CommonModule,

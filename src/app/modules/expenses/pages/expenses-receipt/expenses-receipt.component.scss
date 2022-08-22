@@ -1,0 +1,46 @@
+.receipt_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 400px;
+  padding: 1rem;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  P {
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 4px;
+  }
+
+  .header_receipt {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      max-height: 100px;
+    }
+    h1,
+    h2 {
+      margin: 0;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  .detail_receipt {
+    width: 100%;
+    display: flex;
+  }
+
+  .foote_receipt {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    p {
+      padding: 0px;
+      margin: 0px;
+      text-align: center;
+    }
+  }
+}

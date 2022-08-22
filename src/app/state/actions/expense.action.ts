@@ -59,4 +59,6 @@ export const error = createAction(
   props<{ e: any }>()
 );
 
+export const cleanChanges = createAction('[EXPENSE] clean changes');
+
 export const clean = createAction('[EXPENSE] clean state');
