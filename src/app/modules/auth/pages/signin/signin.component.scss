@@ -1,14 +1,54 @@
-mat-form-field,
-button {
-  width: 80%;
+.signin-container {
+  min-height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: linear-gradient(45deg, #4358d0, #ca50c2);
+}
+.img-container {
+  display: none;
 }
 
-button {
-  margin-top: 0.5rem;
+.button-expand {
+  width: 100%;
+  margin-top: 1.5rem;
 }
 
-img {
-  height: 250px;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+.custom-card {
+  background-color: white;
+  margin: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+}
+
+.custom-button {
+  border-radius: 1rem;
+}
+
+.title {
+  font-weight: 700;
+  text-align: center;
+  font-size: 32px;
+}
+
+@media only screen and (min-width: 768px) {
+  .signin-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .img-container {
+    display: block;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-width: 90%;
+    }
+  }
 }
