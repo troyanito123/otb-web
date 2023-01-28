@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Expense } from 'src/app/models/expense.model';
@@ -15,12 +15,12 @@ import { PrintTableService } from 'src/app/services/print-table.service';
   styleUrls: ['./report-expenses.component.scss'],
 })
 export class ReportExpensesComponent implements OnInit, OnDestroy {
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
 
   private expensesSub!: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private printTableService: PrintTableService
   ) {}

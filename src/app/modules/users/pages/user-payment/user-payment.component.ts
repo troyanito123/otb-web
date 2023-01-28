@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
@@ -30,7 +30,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   private monthlyPaymentsMadeSubs!: Subscription;
   public monthlyPaymentsMade: MonthlyPaymentMade[] = [];
 
-  yearInput = new FormControl('2021', Validators.required);
+  yearInput = new UntypedFormControl('2021', Validators.required);
   years = ['2021', '2022', '2023'];
 
   displayedColumns: string[] = [

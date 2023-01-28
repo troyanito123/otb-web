@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 export class ContributionFormComponent implements OnInit, OnDestroy {
   @Input() contribution!: Contribution | null;
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   private constributionSubs!: Subscription;
 
@@ -26,7 +26,7 @@ export class ContributionFormComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private store: Store<AppState>
   ) {}

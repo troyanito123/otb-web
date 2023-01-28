@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -20,7 +20,7 @@ import { Meeting } from 'src/app/models/meeting.model';
 export class MeetingFormComponent implements OnInit, OnDestroy {
   @Input() meeting!: Meeting;
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   meetingSubs!: Subscription;
 
@@ -29,7 +29,7 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router,
     private matDialog: MatDialog

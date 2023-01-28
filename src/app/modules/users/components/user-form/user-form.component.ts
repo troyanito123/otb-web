@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ import { Role } from 'src/app/models/role.model';
   styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit, OnDestroy {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   @Input() user!: User;
   @Input() roles!: Role[];
@@ -31,7 +31,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   status = ['ACTIVE', 'INACTIVE', 'DELETE'];
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router
   ) {}

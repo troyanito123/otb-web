@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,13 +18,13 @@ import { AlertComponent } from 'src/app/layouts/alert/alert.component';
   styleUrls: ['./signin.component.scss'],
 })
 export class SigninComponent implements OnInit, OnDestroy {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   private authSubs!: Subscription;
 
   constructor(
     private store: Store<AppState>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private dialog: MatDialog
   ) {}

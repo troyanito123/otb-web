@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common';
 
@@ -26,7 +26,7 @@ import { Fine } from 'src/app/models/fine.model';
 export class ReportIncomeComponent implements OnInit, OnDestroy {
   incomes = ['MONTHLYPAYMENTS', 'CONTRIBUTIONS', 'CERTIFICATIONS', 'FINES'];
 
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
 
   private monthlyPaymentsMadeSubs!: Subscription;
   private contributionsPaidSubs!: Subscription;
@@ -34,7 +34,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
   private finesSubs!: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private printTableService: PrintTableService
   ) {}

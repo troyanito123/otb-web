@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { User } from '@models/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./user-incomes-create.component.scss'],
 })
 export class UserIncomesCreateComponent implements OnInit, OnDestroy {
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   private user!: User | null;
   private incomeSubs?: Subscription;
   private userSubs?: Subscription;
@@ -23,7 +23,7 @@ export class UserIncomesCreateComponent implements OnInit, OnDestroy {
   private incomeId?: number;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router
   ) {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -36,7 +36,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   public total = 0;
   private precontributionsSubs!: Subscription;
 
-  inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
+  inputDate = new UntypedFormControl(new Date().toISOString(), [Validators.required]);
 
   dataSource: PreContribution[] = [];
   dataSourceColumns: string[] = [

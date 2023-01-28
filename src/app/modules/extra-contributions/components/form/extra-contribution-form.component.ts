@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
 import * as ExtraContActions from 'src/app/state/actions/extra-contribution.action';
@@ -13,7 +13,7 @@ import { ExtraContribution } from 'src/app/models/extra-contribution.interface';
   styleUrls: ['./extra-contribution-form.component.scss'],
 })
 export class ExtraContributionFormComponent implements OnInit, OnDestroy {
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
 
   @Input() extraContribution?: ExtraContribution;
 
@@ -24,7 +24,7 @@ export class ExtraContributionFormComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private store: Store<AppState>
   ) {}

@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./expenses-form.component.scss'],
 })
 export class ExpensesFormComponent implements OnInit, OnDestroy {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   @Input() expense!: Expense;
 
   private auth!: User | null;
@@ -25,7 +25,7 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
   private expenseSubs!: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router
   ) {}

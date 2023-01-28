@@ -16,7 +16,7 @@ import { PreFinesPaid } from 'src/app/models/pre-fines-paid.model';
 import { PreFinesPaidPipe } from 'src/app/pipes/pre-fines-paid.pipe';
 import * as PreFinesActions from 'src/app/state/actions/pre-fine.action';
 import * as TransactionsActions from 'src/app/state/actions/transactions.action';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Transaction } from 'src/app/models/transaction.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -57,7 +57,7 @@ export class UserFinesComponent implements OnInit, OnDestroy {
 
   displayedColumnsPrePaid = ['meetingx', 'finex', 'optionx'];
 
-  inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
+  inputDate = new UntypedFormControl(new Date().toISOString(), [Validators.required]);
 
   constructor(
     private store: Store<AppState>,

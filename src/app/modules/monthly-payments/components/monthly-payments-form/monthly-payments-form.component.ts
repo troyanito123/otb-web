@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
   styleUrls: ['./monthly-payments-form.component.scss'],
 })
 export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
 
   @Input() monthlyPayment!: MonthlyPayment | null;
 
@@ -44,7 +44,7 @@ export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router
   ) {}

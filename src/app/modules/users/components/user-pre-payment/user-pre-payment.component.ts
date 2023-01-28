@@ -12,7 +12,7 @@ import * as TransactionsActions from 'src/app/state/actions/transactions.action'
 import { PrePayment } from 'src/app/models/pre-payment';
 import { User } from 'src/app/models/user.model';
 import { Transaction } from 'src/app/models/transaction.model';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 
@@ -34,7 +34,7 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option'];
 
-  inputDate = new FormControl(new Date().toISOString(), [Validators.required]);
+  inputDate = new UntypedFormControl(new Date().toISOString(), [Validators.required]);
 
   constructor(
     private store: Store<AppState>,

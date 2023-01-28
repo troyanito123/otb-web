@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IncomeModel } from 'src/app/models/income.model';
 import { IncomeService } from 'src/app/services/income.service';
 
@@ -9,13 +9,13 @@ import { IncomeService } from 'src/app/services/income.service';
   styleUrls: ['./income-form.component.scss'],
 })
 export class IncomeFormComponent implements OnInit {
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   public statusList = ['ACTIVE', 'INACTIVE', 'DELETED'];
 
   @Input() income!: IncomeModel;
 
-  constructor(private fb: FormBuilder, private incomeService: IncomeService) {
+  constructor(private fb: UntypedFormBuilder, private incomeService: IncomeService) {
     this.form = this.createForm();
   }
 

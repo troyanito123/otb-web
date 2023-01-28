@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -22,7 +22,7 @@ import { Transaction } from 'src/app/models/transaction.model';
   styleUrls: ['./user-certifications.component.scss'],
 })
 export class UserCertificationsComponent implements OnInit, OnDestroy {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   public user!: User | null;
   private userSubs!: Subscription;
@@ -33,7 +33,7 @@ export class UserCertificationsComponent implements OnInit, OnDestroy {
   certificationsTypes = Object.values(CertificationType);
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router
   ) {}

@@ -4,7 +4,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as MonthlyPaymentsActions from 'src/app/state/actions/monthly-payments.action';
 import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
 import { Subscription } from 'rxjs';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-monthly-payments-list',
@@ -17,7 +17,7 @@ export class MonthlyPaymentsListComponent implements OnInit, OnDestroy {
 
   public years = ['2021', '2022', '2023'];
 
-  public inputYear = new FormControl('2021', [Validators.required]);
+  public inputYear = new UntypedFormControl('2021', [Validators.required]);
 
   displayedColumns = ['year', 'month', 'amount'];
 

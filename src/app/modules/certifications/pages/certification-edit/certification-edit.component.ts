@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -19,12 +19,12 @@ export class CertificationEditComponent implements OnInit, OnDestroy {
   public certification!: Certification | null;
   private certificationSubs!: Subscription;
 
-  public form!: FormGroup;
+  public form!: UntypedFormGroup;
   public certificationsTypes = ['SIMPLE', 'COMPLETE'];
 
   constructor(
     private store: Store<AppState>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router
   ) {}
 

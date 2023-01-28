@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./income-edit.component.scss'],
 })
 export class IncomeEditComponent implements OnInit, OnDestroy {
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   public statusList = ['ACTIVE', 'INACTIVE', 'DELETED'];
 
@@ -23,7 +23,7 @@ export class IncomeEditComponent implements OnInit, OnDestroy {
   private incomeSubs?: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router
   ) {

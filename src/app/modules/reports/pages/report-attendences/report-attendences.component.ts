@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class ReportAttendencesComponent implements OnInit, OnDestroy {
 
   private attendecesSubs!: Subscription;
 
-  public meetingInput!: FormControl;
+  public meetingInput!: UntypedFormControl;
 
   constructor(
     private store: Store<AppState>,
@@ -37,7 +37,7 @@ export class ReportAttendencesComponent implements OnInit, OnDestroy {
       .select('meetings')
       .subscribe(({ meetings }) => {
         this.meetings = meetings;
-        this.meetingInput = new FormControl(
+        this.meetingInput = new UntypedFormControl(
           meetings.length ? meetings[0] : '',
           Validators.required
         );
