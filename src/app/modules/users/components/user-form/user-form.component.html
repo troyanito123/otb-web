@@ -41,12 +41,11 @@
 
   <mat-form-field appearance="legacy">
     <mat-label>Numero de manzano</mat-label>
-    <input
-      matInput
-      type="text"
-      formControlName="block_number"
-      placeholder="38F"
-    />
+    <mat-select formControlName="block_number">
+      <mat-option *ngFor="let block of blocks" [value]="block">
+        {{ block }}
+      </mat-option>
+    </mat-select>
     <mat-icon matSuffix color="primary">dashboard</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>

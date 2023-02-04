@@ -10,6 +10,7 @@ import * as UserActions from 'src/app/state/actions/user.action';
 
 import { User } from 'src/app/models/user.model';
 import { Role } from 'src/app/models/role.model';
+import { BLOCKS } from 'src/app/utils/gobal-data';
 
 @Component({
   selector: 'app-user-form',
@@ -21,6 +22,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   @Input() user!: User;
   @Input() roles!: Role[];
+  public blocks = BLOCKS;
 
   private userSubs!: Subscription;
 
@@ -118,7 +120,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       email: [this.user ? this.user.email : ''],
       password: [],
       block_number: [
-        this.user ? this.user.block_number : '',
+        this.user ? this.user.block_number : this.blocks[0],
         [Validators.required],
       ],
       address_number: [

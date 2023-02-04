@@ -116,7 +116,7 @@ export class MonthlyPaymentsFormComponent implements OnInit, OnDestroy {
         [Validators.required],
       ],
       amount: [
-        this.isEditing ? this.monthlyPayment!.amount : 10,
+        this.isEditing ? this.monthlyPayment!.amount : 5,
         [Validators.required],
       ],
     });

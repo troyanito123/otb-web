@@ -4,7 +4,7 @@
   <mat-selection-list [multiple]="false">
     <mat-list-option
       *ngFor="let user of users"
-      [routerLink]="['/users', user.id, 'detail']"
+      [routerLink]="['../../', user.id, 'detail']"
     >
       <mat-icon mat-list-icon>person</mat-icon>
       <div mat-line>{{ user.name }}</div>

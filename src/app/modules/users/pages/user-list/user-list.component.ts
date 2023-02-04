@@ -6,8 +6,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { fromEvent, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { merge, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { UsersDataSource } from './users-datasource';
 import { MatPaginator } from '@angular/material/paginator';
@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns = ['name', 'block-number', 'address-number'];
 
   page = 0;
-  take = 10;
+  take = 15;
   sortTable = 'ASC';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -34,6 +34,9 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('keyword') keyword!: ElementRef;
 
+  private sortSubs?: Subscription;
+  private paginatorSubs?: Subscription;
+  
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -42,25 +45,21 @@ export class UserListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    fromEvent(this.keyword.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-
-          this.loadUsersPage();
-        })
-      )
-      .subscribe();
-
-    merge(this.sort.sortChange, this.paginator.page)
+    this.sortSubs = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    this.paginatorSubs = merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.loadUsersPage()))
       .subscribe();
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.sortSubs?.unsubscribe()
+    this.paginatorSubs?.unsubscribe()
+  }
+
+  search(){
+    this.paginator.pageIndex = 0;
+    this.loadUsersPage();
+  }
 
   private loadUsersPage() {
     this.dataSource.loadUsers(
