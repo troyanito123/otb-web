@@ -1,9 +1,6 @@
 <div
   *ngIf="meeting"
-  fxLayout="column"
-  fxLayoutAlign="center start"
-  fxLayoutGap="16px"
-  style="margin-top: 2rem"
+  class="m-top-1"
 >
   <mat-card>
     <mat-card-header>
@@ -20,12 +17,10 @@
       </p>
     </mat-card-content>
 
-    <mat-card-actions>
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+    <mat-card-actions align="end">
         <button mat-raised-button color="warn" (click)="delete()">
           Eliminar
         </button>
-      </div>
     </mat-card-actions>
   </mat-card>
 </div>

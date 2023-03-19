@@ -1,8 +1,7 @@
 <form
   [formGroup]="form!"
   (ngSubmit)="onSubmit()"
-  fxLayout="column"
-  fxLayoutAlign="center stretch"
+  class="flex-column-center-stretch"
 >
   <mat-form-field appearance="legacy">
     <mat-label>Monto</mat-label>
@@ -42,7 +41,7 @@
       mat-raised-button
       color="secondary"
       type="button"
-      [routerLink]="['../detail']"
+      [routerLink]="['../']"
     >
       Cancelar
     </button>

@@ -1,9 +1,7 @@
 <form
   [formGroup]="form"
   (ngSubmit)="save()"
-  fxLayout="column"
-  fxLayoutAlign="start center"
-  fxLayoutGap="8px"
+  class="flex-column-center-center"
 >
   <h2 *ngIf="!monthlyPayment">Crea una nueva mensualidad</h2>
   <h2 *ngIf="!!monthlyPayment">Modifica la mensualidad</h2>

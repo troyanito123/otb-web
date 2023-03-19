@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -23,7 +23,8 @@ export class MeetingDetailComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +52,7 @@ export class MeetingDetailComponent implements OnInit, OnDestroy {
       .select('meeting')
       .subscribe(({ meeting, removed }) => {
         this.meeting = meeting;
-        if (removed) this.router.navigate(['privagte/meetings']);
+        if (removed) this.router.navigate(['../../'], {relativeTo: this.route});
       });
   }
 

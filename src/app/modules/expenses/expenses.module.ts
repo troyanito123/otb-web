@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExpensesRoutingModule } from './expenses-routing.module';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ExpensesComponent } from './expenses.component';
 import { ExpensesListComponent } from './pages/expenses-list/expenses-list.component';
@@ -32,7 +31,6 @@ import { ExpensesDetailComponent } from './pages/expenses-detail/expenses-detail
     ExpensesRoutingModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    FlexLayoutModule,
   ],
 })
 export class ExpensesModule {}

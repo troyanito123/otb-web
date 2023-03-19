@@ -6,7 +6,6 @@ import { PrivateComponent } from './private.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SidenavService } from 'src/app/utils/sidenav.service';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { SidenavService } from 'src/app/utils/sidenav.service';
     CommonModule,
     PrivateRoutingModule,
     AngularMaterialModule,
-    FlexLayoutModule,
   ],
   providers: [SidenavService],
 })

@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+<div class="flex-column-center-center">
   <mat-card>
     <mat-card-header>
       <mat-card-title>Mensualidad</mat-card-title>
@@ -8,10 +8,8 @@
       <p><strong>Mes: </strong>{{ monthlyPayment.month }}</p>
       <p><strong>multa: </strong>{{ monthlyPayment.amount }}</p>
     </mat-card-content>
-    <mat-card-actions>
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
-        <button mat-button color="warn" (click)="remove()">Eliminar</button>
-      </div>
+    <mat-card-actions align="end">
+      <button mat-button color="warn" (click)="remove()">Eliminar</button>
     </mat-card-actions>
   </mat-card>
 </div>

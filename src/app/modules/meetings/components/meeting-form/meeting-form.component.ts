@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -32,7 +32,8 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     private store: Store<AppState>,
     private router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -89,14 +90,17 @@ export class MeetingFormComponent implements OnInit, OnDestroy {
     this.meetingSubs = this.store
       .select('meeting')
       .subscribe(({ meeting, updated, created, error }) => {
-        if (updated) this.handledSuccess(meeting);
-        if (created) this.handledSuccess(meeting);
+        if (updated) this.handledSuccessUpdated(meeting);
+        if (created) this.handledSuccessCreated(meeting);
         if (error) this.handledError();
       });
   }
 
-  private handledSuccess(meeting: Meeting | null) {
-    this.router.navigate(['private/meetings', meeting!.id]);
+  private handledSuccessCreated(meeting: Meeting | null) {
+    this.router.navigate(['../', meeting!.id], {relativeTo: this.route});
+  }
+  private handledSuccessUpdated(meeting: Meeting | null) {
+    this.router.navigate(['../../', meeting!.id], {relativeTo: this.route});
   }
 
   private handledError() {

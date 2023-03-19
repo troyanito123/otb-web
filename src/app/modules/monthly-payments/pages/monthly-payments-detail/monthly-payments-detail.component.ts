@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -25,7 +25,8 @@ export class MonthlyPaymentsDetailComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class MonthlyPaymentsDetailComponent implements OnInit, OnDestroy {
       .subscribe(({ monthlyPayment, removed }) => {
         this.monthlyPayment = monthlyPayment;
         if (removed)
-          this.router.navigate(['monthly-payments']).then(() =>
+          this.router.navigate(['../../'], {relativeTo: this.route}).then(() =>
             this.matDialog.open(AlertComponent, {
               data: {
                 title: 'Mensualidad eliminada',

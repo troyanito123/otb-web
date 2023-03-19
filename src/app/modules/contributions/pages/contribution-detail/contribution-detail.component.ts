@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -25,7 +25,8 @@ export class ContributionDetailComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +57,7 @@ export class ContributionDetailComponent implements OnInit, OnDestroy {
         this.contribution = contribution;
 
         if (removed)
-          this.router.navigate(['/contributions']).then(() =>
+          this.router.navigate(['../../'], {relativeTo: this.route}).then(() =>
             this.matDialog.open(AlertComponent, {
               data: {
                 title: 'Aporte eliminado',

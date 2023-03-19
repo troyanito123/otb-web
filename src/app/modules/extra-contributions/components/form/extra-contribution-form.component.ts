@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
 import * as ExtraContActions from 'src/app/state/actions/extra-contribution.action';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ExtraContribution } from 'src/app/models/extra-contribution.interface';
 
 @Component({
@@ -26,7 +26,8 @@ export class ExtraContributionFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: UntypedFormBuilder,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -36,14 +37,14 @@ export class ExtraContributionFormComponent implements OnInit, OnDestroy {
       .subscribe(({ extraContribution, error, created, updated }) => {
         if (created)
           this.router.navigate([
-            'private/extra-contributions',
+            '../',
             extraContribution!.id,
-          ]);
+          ], {relativeTo: this.route});
         if (updated)
           this.router.navigate([
-            'private/extra-contributions',
+            '../../',
             this.extraContribution!.id,
-          ]);
+          ], {relativeTo: this.route});
 
         if (error) console.warn({ error });
       });

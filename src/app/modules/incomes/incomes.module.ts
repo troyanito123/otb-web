@@ -11,7 +11,6 @@ import { IncomeDetailComponent } from './pages/income-detail/income-detail.compo
 import { IncomeFormComponent } from './components/income-form/income-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     IncomesRoutingModule,
     HttpClientModule,
     AngularMaterialModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
   ],
 })

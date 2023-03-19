@@ -1,13 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+<div class="flex-row-start-center">
   <button mat-raised-button color="primary" (click)="reprint()">
     REIMPRESION
   </button>
 </div>
 
 <div
-  fxLayout="row"
-  fxLayoutAlign="start start"
-  fxLayoutGap="16px"
+  class="flex-row-start-start"
   style="margin-top: 1rem"
 >
   <table
@@ -49,7 +47,7 @@
     <tr mat-row *matRowDef="let row; columns: dataSourceColumns"></tr>
   </table>
 
-  <div fxLayout="column" fxLayoutGap="16px" style="width: 50%">
+  <div class="flex-column-center-stretch" style="width: 50%">
     <table mat-table [dataSource]="preContributions" class="mat-elevation-z8">
       <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef>DESCRIPCION</th>

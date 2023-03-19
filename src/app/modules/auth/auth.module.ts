@@ -7,7 +7,6 @@ import { SigninComponent } from './pages/signin/signin.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AuthComponent, SigninComponent, SignupComponent],
@@ -16,7 +15,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AuthRoutingModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    FlexLayoutModule,
   ],
 })
 export class AuthModule {}

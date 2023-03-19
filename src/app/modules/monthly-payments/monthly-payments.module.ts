@@ -11,7 +11,6 @@ import { MonthlyPaymentsDetailComponent } from './pages/monthly-payments-detail/
 import { MonthlyPaymentsFormComponent } from './components/monthly-payments-form/monthly-payments-form.component';
 import { MonthlyPaymentsSingleComponent } from './components/monthly-payments-single/monthly-payments-single.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MonthlyPaymentsRoutingModule,
     AngularMaterialModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
   ],
 })

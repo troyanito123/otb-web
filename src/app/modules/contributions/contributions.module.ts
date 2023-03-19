@@ -11,7 +11,6 @@ import { ContributionFormComponent } from './components/contribution-form/contri
 import { ContributionSingleComponent } from './components/contribution-single/contribution-single.component';
 import { ContributionsComponent } from './contributions.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ContributionsRoutingModule,
     AngularMaterialModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
   ],
 })

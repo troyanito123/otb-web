@@ -9,7 +9,6 @@ import { ExtraContributionsViewComponent } from './pages/extra-contributions-vie
 import { ExtraContributionsEditComponent } from './pages/extra-contributions-edit/extra-contributions-edit.component';
 import { ExtraContributionsDetailComponent } from './pages/extra-contributions-detail/extra-contributions-detail.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExtraContributionFormComponent } from './components/form/extra-contribution-form.component';
 
@@ -27,7 +26,6 @@ import { ExtraContributionFormComponent } from './components/form/extra-contribu
     CommonModule,
     ExtraContributionsRoutingModule,
     AngularMaterialModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
   ],
 })

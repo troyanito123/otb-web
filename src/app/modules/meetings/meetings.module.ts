@@ -10,7 +10,6 @@ import { MeetingFormComponent } from './components/meeting-form/meeting-form.com
 import { MeetingSingleComponent } from './components/meeting-single/meeting-single.component';
 import { MeetingsComponent } from './meetings.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MeetingDetailComponent } from './pages/meeting-detail/meeting-detail.component';
 
@@ -29,7 +28,6 @@ import { MeetingDetailComponent } from './pages/meeting-detail/meeting-detail.co
     CommonModule,
     MeetingsRoutingModule,
     AngularMaterialModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
   ],
 })

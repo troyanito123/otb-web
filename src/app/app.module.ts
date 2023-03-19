@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { LoadingComponent } from './layouts/loading/loading.component';
@@ -58,7 +57,6 @@ import { environment } from 'src/environments/environment';
     }),
     BrowserAnimationsModule,
     AngularMaterialModule,
-    FlexLayoutModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es' },

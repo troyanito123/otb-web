@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="generateReport()" style="padding: 1rem">
-  <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+  <div class="flex-row-start-center">
     <mat-form-field appearance="fill">
       <mat-label>Fecha de inicio</mat-label>
       <input matInput [matDatepicker]="initPicker" formControlName="initDate" />

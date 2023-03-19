@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -27,7 +27,8 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: UntypedFormBuilder,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -111,10 +112,10 @@ export class ExpensesFormComponent implements OnInit, OnDestroy {
       .select('expense')
       .subscribe(({ error, created, updated, expense }) => {
         if (created) {
-          this.router.navigate(['private/expenses', expense!.id]);
+          this.router.navigate(['../', expense!.id], {relativeTo: this.route});
         }
         if (updated) {
-          this.router.navigate(['private/expenses', expense!.id]);
+          this.router.navigate(['../../', expense!.id], {relativeTo: this.route});
         }
 
         if (error) {

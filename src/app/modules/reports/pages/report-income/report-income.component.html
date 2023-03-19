@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="generate()" style="padding: 1rem">
-  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+  <div class="flex-column-center-stretch">
     <mat-form-field appearance="fill">
       <mat-select placeholder="Tipo" formControlName="income">
         <mat-option *ngFor="let type of incomes" [value]="type">

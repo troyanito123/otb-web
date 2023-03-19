@@ -1,9 +1,7 @@
 <form
   [formGroup]="form"
   (ngSubmit)="save()"
-  fxLayout="column"
-  fxLayoutAlign="start center"
-  fxLayoutGap="8px"
+  class="flex-column-center-center"
   style="margin-top: 1rem"
 >
   <h2 *ngIf="isEditing">Modifica una contribución</h2>

@@ -1,12 +1,10 @@
-<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+<div class="flex-column-center-center">
   <form
     [formGroup]="form"
     (ngSubmit)="save()"
-    fxLayout="column"
-    fxLayoutAlign="start center"
-    fxLayoutGap="8px"
+    class="flex-column-center-center"
   >
-    <div fxFlex="100%" fxFlexAlign="start">
+    <div>
       <h2 *ngIf="!meeting">Crea una nueva reunión</h2>
       <h2 *ngIf="meeting">Modifica esta reunión</h2>
     </div>

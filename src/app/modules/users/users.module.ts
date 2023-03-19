@@ -20,7 +20,6 @@ import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt
 import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component';
 import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { UserFinesComponent } from './pages/user-fines/user-fines.component';
 import { UserBlockComponent } from './pages/user-block/user-block.component';
 import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component';
@@ -60,7 +59,6 @@ import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list
     PipesModule,
     QRCodeModule,
     AngularMaterialModule,
-    FlexLayoutModule,
   ],
 })
 export class UsersModule {}

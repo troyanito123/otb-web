@@ -6,7 +6,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as ContributionActions from 'src/app/state/actions/contribution.action';
 
 import { Contribution } from 'src/app/models/contribution.model';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -28,7 +28,8 @@ export class ContributionFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: UntypedFormBuilder,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -80,11 +81,11 @@ export class ContributionFormComponent implements OnInit, OnDestroy {
   }
 
   private handledCreated(contribution: Contribution) {
-    this.router.navigate(['contributions', contribution.id]);
+    this.router.navigate(['../', contribution.id], {relativeTo: this.route});
   }
 
   private handledUpdated(contribution: Contribution) {
-    this.router.navigate(['contributions', contribution.id]);
+    this.router.navigate(['../', contribution.id], {relativeTo: this.route});
   }
 
   private createForm() {

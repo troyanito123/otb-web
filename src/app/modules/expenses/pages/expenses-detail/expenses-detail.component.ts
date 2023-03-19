@@ -56,7 +56,7 @@ export class ExpensesDetailComponent implements OnInit {
       .subscribe(({ expense, loading, removed }) => {
         this.expense = expense;
         if (removed) {
-          this.router.navigate(['private/expenses']);
+          this.router.navigate(['../../'], {relativeTo: this.route});
         }
       });
 

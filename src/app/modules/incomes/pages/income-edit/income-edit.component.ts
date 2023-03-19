@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
@@ -25,7 +25,8 @@ export class IncomeEditComponent implements OnInit, OnDestroy {
   constructor(
     private fb: UntypedFormBuilder,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.form = this.createForm();
   }
@@ -38,7 +39,7 @@ export class IncomeEditComponent implements OnInit, OnDestroy {
           this.income = income;
           this.form.reset({ ...income, date: new Date(income.date) });
         }
-        if (saved) this.router.navigate(['private/incomes', this.income!.id]);
+        if (saved) this.router.navigate(['../'], {relativeTo: this.route});
         if (error) alert('Error');
       });
   }

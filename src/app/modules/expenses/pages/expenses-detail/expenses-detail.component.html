@@ -19,9 +19,7 @@
       <mat-card-actions>
         <div
           *ngIf="auth?.role == 'ADMIN'"
-          fxLayout="row"
-          fxLayoutAlign="end center"
-          fxLayoutGap="16px"
+          class="flex-row-end-center"
         >
           <button mat-raised-button color="warn" (click)="remove()">
             Eliminar

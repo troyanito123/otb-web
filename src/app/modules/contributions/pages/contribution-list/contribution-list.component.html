@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+<div class="flex-column-center-center">
   <h2>Lista de aportes a la OTB</h2>
 
   <table mat-table #table [dataSource]="contributions">
@@ -16,7 +16,7 @@
     <tr
       mat-row
       *matRowDef="let row; columns: displayedColumns"
-      [routerLink]="['/contributions', row.id]"
+      [routerLink]="['../', row.id]"
     ></tr>
   </table>
 </div>

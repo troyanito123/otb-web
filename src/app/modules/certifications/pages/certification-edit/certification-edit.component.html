@@ -1,10 +1,8 @@
 <form
   [formGroup]="form"
   (ngSubmit)="save()"
-  fxLayout="column"
-  fxLayoutAlign="start center"
-  fxLayoutGap="16px"
   *ngIf="certification"
+  class="flex-column-center-center"
 >
   <h2>Edita esta certificacion</h2>
   <mat-form-field appearance="legacy">
