@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -35,7 +35,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: UntypedFormBuilder,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -104,7 +105,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   private handledSaveFinish(user: User | null) {
     this.form.reset();
-    this.router.navigate(['/users', user!.id]);
+    this.router.navigate(['../', user!.id], {relativeTo: this.route});
   }
   private handledError(error: any) {
     alert('ERROR AL CREAR EL USUARIO');
