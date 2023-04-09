@@ -31,7 +31,11 @@
   <ng-container matColumnDef="option">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button
+      <ng-container *ngIf="element.meetingDate | couldPayFine: user!.subscription_at; else paylable">
+        NO APLICA
+      </ng-container>
+      <ng-template #paylable>
+        <button
         mat-raised-button
         color="primary"
         *ngIf="element.fine > element.finePaid"
@@ -39,6 +43,7 @@
       >
         Añadir
       </button>
+      </ng-template>
     </td>
   </ng-container>
 

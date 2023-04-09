@@ -14,6 +14,7 @@ import { PrePayment } from 'src/app/models/pre-payment';
 import { MonthlyPaymentsPipe } from 'src/app/pipes/monthly-payments.pipe';
 import { Transaction } from 'src/app/models/transaction.model';
 import { Router } from '@angular/router';
+import { couldPay } from 'src/app/utils/helper';
 
 @Component({
   selector: 'app-user-payment',
@@ -103,7 +104,9 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
         this.dataSource = new MonthlyPaymentsPipe().transform(
           this.monthlyPayments,
           this.monthlyPaymentsMade
-        );
+        ).filter(mp => couldPay(mp.year, mp.month, this.user!.subscription_at));
+
+        
       });
 
     this.monthlyPaymentsMadeSubs = this.store
@@ -113,7 +116,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
         this.dataSource = new MonthlyPaymentsPipe().transform(
           this.monthlyPayments,
           this.monthlyPaymentsMade
-        );
+        ).filter(mp => couldPay(mp.year, mp.month, this.user!.subscription_at))
       });
   }
 }

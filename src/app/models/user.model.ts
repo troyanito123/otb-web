@@ -9,6 +9,7 @@ export class User {
       block_number,
       status,
       role,
+      subscription_at,
     } = json;
 
     return new User(
@@ -19,7 +20,8 @@ export class User {
       address_number,
       block_number,
       status,
-      role
+      role,
+      subscription_at,
     );
   }
 
@@ -31,7 +33,8 @@ export class User {
     public address_number: string,
     public block_number: string,
     public status: string,
-    public role: RoleType
+    public role: RoleType,
+    public subscription_at: string
   ) {}
 }
 

@@ -10,7 +10,7 @@ export class MonthlyPaymentsPipe implements PipeTransform {
   transform(
     payments: MonthlyPayment[],
     paymentsMade: MonthlyPaymentMade[]
-  ): any[] {
+  ): PrePayment[] {
     const res: PrePayment[] = [];
 
     for (let i = 0; i < payments.length; i++) {
