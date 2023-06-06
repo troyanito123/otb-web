@@ -9,6 +9,7 @@ import {
   ExtraContributionPaid,
   ExtraContributionPayMade,
 } from '../models/extra-contribution.interface';
+import { Report } from '../modules/reports/models/report.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -62,5 +63,9 @@ export class ExtraContributionService {
 
   public getTotalAmount() {
     return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
+
+  public getReportByDate(initDate: string, endDate: string) {
+    return this.http.post<Report[]>(`${this.url}/bydate`, { initDate, endDate });
   }
 }

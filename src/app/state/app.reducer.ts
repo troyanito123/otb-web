@@ -67,6 +67,7 @@ import {
   ExtraContributionState,
 } from './reducers/extra-contribution.reducer';
 import { incomeReducer, IncomeState } from './reducers/incomes.reducer';
+import { reportReducer, ReportSate } from './reducers/reports.reducer';
 
 export interface AppState {
   auth: AuthState;
@@ -94,6 +95,7 @@ export interface AppState {
   certifications: CertificationsState;
   extraContributions: ExtraContributionState;
   incomes: IncomeState;
+  report: ReportSate
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -122,4 +124,5 @@ export const appReducers: ActionReducerMap<AppState> = {
   certifications: certificationsReducer,
   extraContributions: extraContributionReducer,
   incomes: incomeReducer,
+  report: reportReducer
 };

@@ -25,6 +25,12 @@ export class ToSpanishPipe implements PipeTransform {
       case 'FINES':
         res = 'MULTAS';
         break;
+      case 'EXTRA_CONTRIBUTIONS':
+        res = 'APORTES EXTRAS';
+        break;
+      case 'INCOMES':
+        res = 'INGRESOS EXTRAS';
+        break;
     }
 
     return res;

@@ -18,6 +18,7 @@ import { ContributionEffect } from './contribution.effect';
 import { FinesEffect } from './fines.effect';
 import { ExtraContributionEffect } from './extra-contribution.effect';
 import { IncomesEffects } from './incomes.effect';
+import { ReportEffect } from './reports.effect';
 
 export const EffectsArray: any[] = [
   AuthEffect,
@@ -40,4 +41,5 @@ export const EffectsArray: any[] = [
   FinesEffect,
   ExtraContributionEffect,
   IncomesEffects,
+  ReportEffect
 ];

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IncomeModel } from '../models/income.model';
+import { Report } from '../modules/reports/models/report.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -86,5 +87,9 @@ export class IncomeService {
 
   public getTotalAmount() {
     return this.http.get<{ total: string }>(`${this.url}/total-amount`);
+  }
+
+  public getReportByDate(initDate: string, endDate: string) {
+    return this.http.post<Report[]>(`${this.url}/bydate`, { initDate, endDate });
   }
 }
