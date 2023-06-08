@@ -8,6 +8,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common';
 import * as ExpensesActions from 'src/app/state/actions/expenses.action';
 import { PrintTableService } from 'src/app/services/print-table.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-report-expenses',
@@ -54,8 +55,8 @@ export class ReportExpensesComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(
       ExpensesActions.loadByDates({
-        initDate: this.transformDate(initDate),
-        endDate: this.transformDate(endDate),
+        initDate: moment(initDate).startOf('day').toISOString(),
+        endDate: moment(endDate).endOf('day').toISOString()
       })
     );
   }

@@ -22,14 +22,15 @@ const _expensesReducer = createReducer(
   on(ExpensesActions.load, (state) => ({
     ...state,
     loading: true,
-    loded: false,
+    loaded: false,
     error: null,
   })),
 
   on(ExpensesActions.loadByDates, (state) => ({
     ...state,
+    expenses: [],
     loading: true,
-    loded: false,
+    loaded: false,
     error: null,
   })),
 

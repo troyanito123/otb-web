@@ -20,6 +20,7 @@ import { ContributionPaid } from 'src/app/models/contribution-paid.model';
 import { Certification } from 'src/app/models/certification.model';
 import { Fine } from 'src/app/models/fine.model';
 import { Report } from '../../models/report.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-report-income',
@@ -111,8 +112,8 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
       case this.incomes[0]:
         this.store.dispatch(
           MonthlyPaymentsMade.loadByDate({
-            initDate: this.transformDate(initDate),
-            endDate: this.transformDate(endDate),
+            initDate: moment(initDate).startOf('day').toISOString(),
+            endDate: moment(endDate).endOf('day').toISOString(),
           })
         );
         break;
@@ -120,8 +121,8 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
       case this.incomes[1]:
         this.store.dispatch(
           ContributionsPaidActions.loadContributionsPaidByDate({
-            initDate: this.transformDate(initDate),
-            endDate: this.transformDate(endDate),
+            initDate: moment(initDate).startOf('day').toISOString(),
+            endDate: moment(endDate).endOf('day').toISOString(),
           })
         );
         break;
@@ -129,8 +130,8 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
       case this.incomes[2]:
         this.store.dispatch(
           CertificationsActions.loadByDate({
-            initDate: this.transformDate(initDate),
-            endDate: this.transformDate(endDate),
+            initDate: moment(initDate).startOf('day').toISOString(),
+            endDate: moment(endDate).endOf('day').toISOString(),
           })
         );
         break;
@@ -138,16 +139,16 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
       case this.incomes[3]:
         this.store.dispatch(
           FinesActions.loadByDate({
-            initDate: this.transformDate(initDate),
-            endDate: this.transformDate(endDate),
+            initDate: moment(initDate).startOf('day').toISOString(),
+            endDate: moment(endDate).endOf('day').toISOString(),
           })
         );
         break;
       case this.incomes[4]:
         this.store.dispatch(
           ReportActions.getExtraContributionReportByDate({
-            initDate: this.transformDate(initDate),
-            endDate: this.transformDate(endDate),
+            initDate: moment(initDate).startOf('day').toISOString(),
+            endDate: moment(endDate).endOf('day').toISOString(),
           })
         );
         this.reportTile = 'APORTES EXTRAS'
@@ -155,8 +156,8 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
       case this.incomes[5]:
         this.store.dispatch(
           ReportActions.getIncomesReportByDate({
-            initDate: this.transformDate(initDate),
-            endDate: this.transformDate(endDate),
+            initDate: moment(initDate).startOf('day').toISOString(),
+            endDate: moment(endDate).endOf('day').toISOString(),
           })
         );
         this.reportTile = 'INGRESOS EXTRAS'

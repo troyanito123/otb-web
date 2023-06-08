@@ -88,10 +88,6 @@ export class ExpenseService {
   }
 
   public getByDateRange(initDate: string, endDate: string) {
-    console.log({
-      initDate,
-      endDate,
-    });
     return this.http
       .post<[]>(`${this.url}/bydate`, {
         initDate: initDate,
