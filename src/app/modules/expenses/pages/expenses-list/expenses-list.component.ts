@@ -77,6 +77,5 @@ export class ExpensesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   print(expense: Expense){
     this.selectExpense = expense
-    console.log(expense)
   }
 }

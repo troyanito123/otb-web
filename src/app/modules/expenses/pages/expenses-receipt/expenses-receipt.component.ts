@@ -14,7 +14,7 @@ import jsPDF from 'jspdf';
 export class ExpensesReceiptComponent implements OnInit {
   // public expense!: Expense | null;
   @ViewChild('receipt', { static: true }) receipt?: ElementRef;
-  @Input() expense!: Expense
+  @Input() expense?: Expense
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
