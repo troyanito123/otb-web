@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 
 import { ExpenseService } from 'src/app/services/expense.service';
 import { ExpensesDataSource } from './expenses-datasource';
+import { Expense } from '@models/expense.model';
 
 @Component({
   selector: 'app-expenses-list',
@@ -23,7 +24,7 @@ import { ExpensesDataSource } from './expenses-datasource';
 })
 export class ExpensesListComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource!: ExpensesDataSource;
-  displayedColumns = ['date', 'description', 'amount'];
+  displayedColumns = ['date', 'description', 'amount', 'options'];
 
   page = 0;
   take = 15;
@@ -70,5 +71,12 @@ export class ExpensesListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
+  }
+
+  public selectExpense?: Expense
+
+  print(expense: Expense){
+    this.selectExpense = expense
+    console.log(expense)
   }
 }

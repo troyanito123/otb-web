@@ -36,10 +36,15 @@
         {{ expense.amount | number: "1.2" }} Bs.
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef> MONTO</mat-header-cell>
+      <mat-cell *matCellDef="let expense">
+        <button mat-button (click)="print(expense)">Imprimir</button>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row
-      [routerLink]="['../', row.id]"
       *matRowDef="let row; columns: displayedColumns"
     ></mat-row>
   </mat-table>
@@ -51,3 +56,9 @@
     showFirstLastButtons
   ></mat-paginator>
 </div>
+
+<ng-container *ngIf="selectExpense">
+  <app-expenses-receipt [expense]="selectExpense"></app-expenses-receipt>
+</ng-container>
+
+

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
 import { Expense } from '@models/expense.model';
@@ -12,14 +12,15 @@ import jsPDF from 'jspdf';
   styleUrls: ['./expenses-receipt.component.scss'],
 })
 export class ExpensesReceiptComponent implements OnInit {
-  public expense!: Expense | null;
+  // public expense!: Expense | null;
   @ViewChild('receipt', { static: true }) receipt?: ElementRef;
+  @Input() expense!: Expense
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.select('expense').subscribe(({ expense }) => {
-      this.expense = expense;
-    });
+    // this.store.select('expense').subscribe(({ expense }) => {
+    //   this.expense = expense;
+    // });
   }
 
   public print() {
