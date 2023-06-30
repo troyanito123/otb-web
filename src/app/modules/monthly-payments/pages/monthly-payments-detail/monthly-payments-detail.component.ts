@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
 import * as MonthlyPaymentActions from 'src/app/state/actions/monthly-payment.action';
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
 import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';

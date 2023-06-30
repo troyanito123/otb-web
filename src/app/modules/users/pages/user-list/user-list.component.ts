@@ -10,7 +10,7 @@ import { merge, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { UsersDataSource } from './users-datasource';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { UserService } from 'src/app/services/user.service';
