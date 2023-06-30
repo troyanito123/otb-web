@@ -13,7 +13,7 @@ import { PrePayment } from 'src/app/models/pre-payment';
 import { User } from 'src/app/models/user.model';
 import { Transaction } from 'src/app/models/transaction.model';
 import { UntypedFormControl, Validators } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 
 @Component({

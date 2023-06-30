@@ -19,7 +19,7 @@ import * as TransactionsActions from 'src/app/state/actions/transactions.action'
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { Transaction } from 'src/app/models/transaction.model';
 import { Router } from '@angular/router';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 
 @Component({

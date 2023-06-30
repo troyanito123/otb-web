@@ -9,7 +9,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as authActions from 'src/app/state/actions/auth.action';
 
 import { User } from 'src/app/models/user.model';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 
 @Component({

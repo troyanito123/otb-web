@@ -22,7 +22,7 @@ registerLocaleData(localeEs, 'es');
 /*Change language to spanish */
 
 /* Change language to material table */
-import { MatLegacyPaginatorIntl as MatPaginatorIntl } from '@angular/material/legacy-paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getSpanishPaginatorIntl } from './utils/spanish-paginator-intl';
 /* Change language to material table */
 

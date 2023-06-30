@@ -8,13 +8,13 @@
       isEditing ? "Estas editando un ingreso..." : "Estas creando un ingreso..."
     }}
   </h1>
-  <mat-form-field appearance="legacy">
+  <mat-form-field>
     <mat-label>Monto</mat-label>
     <input matInput type="number" formControlName="amount" placeholder="100" />
     <mat-icon matSuffix color="primary">paid</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
-  <mat-form-field appearance="legacy">
+  <mat-form-field>
     <mat-label>Descripción</mat-label>
     <textarea
       matInput
@@ -25,7 +25,7 @@
     <mat-icon matSuffix color="primary">density_medium</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
-  <mat-form-field appearance="legacy">
+  <mat-form-field>
     <mat-label>Cobrador</mat-label>
     <input
       matInput
@@ -36,7 +36,7 @@
     <mat-icon matSuffix color="primary">person</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
-  <mat-form-field appearance="legacy">
+  <mat-form-field>
     <mat-label>Fecha de pago</mat-label>
     <input matInput [matDatepicker]="picker" formControlName="date" />
     <mat-hint>DD/MM/YYYY</mat-hint>
@@ -44,7 +44,7 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="legacy" *ngIf="isEditing">
+  <mat-form-field *ngIf="isEditing">
     <mat-label>Fecha de pago</mat-label>
     <mat-select formControlName="status">
       <mat-option [value]="status" *ngFor="let status of statusList">

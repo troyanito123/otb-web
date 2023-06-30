@@ -8,7 +8,7 @@ import { AppState } from 'src/app/state/app.reducer';
 import * as ExpenseActions from 'src/app/state/actions/expense.action';
 
 import { Expense } from 'src/app/models/expense.model';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
 import { User } from 'src/app/models/user.model';
 
