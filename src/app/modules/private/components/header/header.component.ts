@@ -1,49 +1,31 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
 
-import { AppState } from 'src/app/state/app.reducer';
-import * as AuthActions from 'src/app/state/actions/auth.action';
-import { User } from 'src/app/models/user.model';
-import { Router } from '@angular/router';
-import { SidenavService } from 'src/app/utils/sidenav.service';
+import { AppState } from 'src/app/state/app.reducer'
+import * as AuthActions from 'src/app/state/actions/auth.action'
+
+import { SidenavService } from 'src/app/utils/sidenav.service'
+import { authUser } from '@state/selectors/auth.selector'
+import { User } from '@models/user.model'
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  public user!: User | null;
+export class HeaderComponent {
+  public user$: Observable<User | null>
 
-  private authSubs!: Subscription;
-
-  get isLogged() {
-    return !!this.user;
-  }
-
-  constructor(
-    private store: Store<AppState>,
-    private router: Router,
-    private sidenavService: SidenavService
-  ) {}
-
-  ngOnInit() {
-    this.authSubs = this.store.select('auth').subscribe(({ user }) => {
-      this.user = user;
-    });
-  }
-
-  ngOnDestroy() {
-    this.authSubs?.unsubscribe();
+  constructor(private store: Store<AppState>, private sidenavService: SidenavService) {
+    this.user$ = this.store.select(authUser)
   }
 
   signout() {
-    this.store.dispatch(AuthActions.signout());
-    this.router.navigate(['/public']);
+    this.store.dispatch(AuthActions.signout())
   }
 
   sidebarToogle() {
-    this.sidenavService.toggle();
+    this.sidenavService.toggle()
   }
 }

@@ -10,7 +10,7 @@
     <mat-icon>person</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <p style="text-align: center">{{ user?.name }}</p>
+    <p style="text-align: center">{{ (user$ | async)?.name }}</p>
     <button mat-menu-item (click)="signout()">
       <mat-icon>logout</mat-icon>
       Salir

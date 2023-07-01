@@ -1,19 +1,12 @@
-import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
-import {
-  signin,
-  setUser,
-  setError,
-  signout,
-  unsetUser,
-  renew,
-} from '../actions/auth.action';
+import { createReducer, on } from '@ngrx/store'
+import { User } from 'src/app/models/user.model'
+import { signin, setUser, setError, signout, unsetUser, renew } from '../actions/auth.action'
 
 export interface AuthState {
-  user: User | null;
-  access_token: string | null;
-  loading: boolean;
-  error: any;
+  user: User | null
+  access_token: string | null
+  loading: boolean
+  error: any
 }
 
 export const initialAuthState: AuthState = {
@@ -21,9 +14,9 @@ export const initialAuthState: AuthState = {
   access_token: null,
   loading: false,
   error: null,
-};
+}
 
-const _authReducer = createReducer(
+export const authReducer = createReducer(
   initialAuthState,
 
   on(signin, () => ({
@@ -63,8 +56,4 @@ const _authReducer = createReducer(
     loading: false,
     error: null,
   }))
-);
-
-export function authReducer(state: any, action: any) {
-  return _authReducer(state, action);
-}
+)

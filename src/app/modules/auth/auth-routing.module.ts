@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from './auth.component';
-import { SigninComponent } from './pages/signin/signin.component';
-import { SignupComponent } from './pages/signup/signup.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { AuthComponent } from './auth.component'
+import { SigninComponent } from './pages/signin/signin.component'
+import { SignupComponent } from './pages/signup/signup.component'
 
 const routes: Routes = [
   {
@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'signin', pathMatch: 'full' },
     ],
   },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
