@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { mergeMap, map, catchError, tap } from 'rxjs/operators'
+import { of } from 'rxjs'
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UserService } from 'src/app/services/user.service';
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { UserService } from 'src/app/services/user.service'
 import {
   loadUser,
   loadError,
@@ -14,11 +14,16 @@ import {
   update,
   remove,
   removeSuccess,
-} from '../actions/user.action';
+} from '../actions/user.action'
+import { Router } from '@angular/router'
 
 @Injectable()
 export class UserEffect {
-  constructor(private actions$: Actions, private userService: UserService) {}
+  constructor(
+    private actions$: Actions,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
@@ -30,7 +35,7 @@ export class UserEffect {
         )
       )
     )
-  );
+  )
 
   createUser$ = createEffect(() =>
     this.actions$.pipe(
@@ -42,40 +47,21 @@ export class UserEffect {
         )
       )
     )
-  );
+  )
 
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(update),
-      mergeMap(
-        ({
-          id,
-          name,
-          block_number,
-          address_number,
-          status,
-          role,
-          email,
-          password,
-        }) =>
-          this.userService
-            .update(
-              id,
-              name,
-              block_number,
-              address_number,
-              status,
-              role,
-              email,
-              password
-            )
-            .pipe(
-              map((user) => saveSuccess({ user })),
-              catchError((e) => of(saveError({ e })))
-            )
+      mergeMap(({ id, name, block_number, address_number, status, role, email, password }) =>
+        this.userService
+          .update(id, name, block_number, address_number, status, role, email, password)
+          .pipe(
+            map((user) => saveSuccess({ user })),
+            catchError((e) => of(saveError({ e })))
+          )
       )
     )
-  );
+  )
 
   removeUser$ = createEffect(() =>
     this.actions$.pipe(
@@ -83,9 +69,10 @@ export class UserEffect {
       mergeMap(({ id }) =>
         this.userService.remove(id).pipe(
           map((user) => removeSuccess({ user })),
+          tap(() => this.router.navigate(['private/users'])),
           catchError((e) => of(saveError({ e })))
         )
       )
     )
-  );
+  )
 }

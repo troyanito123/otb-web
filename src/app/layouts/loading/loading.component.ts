@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { authLoading } from '@state/selectors/auth.selector';
+import { selectedUserLoading } from '@state/selectors/user.selector';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/state/app.reducer';
 
@@ -30,11 +32,11 @@ export class LoadingComponent implements OnInit {
 
   ngOnInit(): void {
     this.authSubs = this.store
-      .select('auth')
-      .subscribe(({ loading }) => (this.loading = loading));
+      .select(authLoading)
+      .subscribe((loading) => (this.loading = loading));
     this.userSubs = this.store
-      .select('user')
-      .subscribe(({ loading }) => (this.loading = loading));
+      .select(selectedUserLoading)
+      .subscribe((loading) => (this.loading = loading));
     this.monthlyPaymentsMadeSubs = this.store
       .select('monthlyPaymentMade')
       .subscribe(({ loading }) => (this.loading = loading));

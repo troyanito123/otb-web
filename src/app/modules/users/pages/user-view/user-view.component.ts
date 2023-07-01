@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
-import { User } from 'src/app/models/user.model';
-import { cleanUser, loadUser, remove } from 'src/app/state/actions/user.action';
-import { AppState } from 'src/app/state/app.reducer';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
+import { ActivatedRoute } from '@angular/router'
+import { Store } from '@ngrx/store'
+import { selectedUser } from '@state/selectors/user.selector'
+import { Observable } from 'rxjs'
+import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component'
+import { User } from 'src/app/models/user.model'
+import { cleanUser, loadUser, remove } from 'src/app/state/actions/user.action'
+import { AppState } from 'src/app/state/app.reducer'
 
 @Component({
   selector: 'app-user-view',
@@ -14,41 +15,30 @@ import { AppState } from 'src/app/state/app.reducer';
   styleUrls: ['./user-view.component.scss'],
 })
 export class UserViewComponent implements OnInit, OnDestroy {
-  public user!: User | null;
-
-  private userSubs!: Subscription;
+  public user$: Observable<User | null>
 
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private router: Router,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.user$ = this.store.select(selectedUser)
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe(({ id }) =>
-      this.store.dispatch(loadUser({ id }))
-    );
-
-    this.store.select('user').subscribe(({ user, removed }) => {
-      this.user = user;
-      if (removed) this.router.navigate(['private/users']);
-    });
+    this.route.params.subscribe(({ id }) => this.store.dispatch(loadUser({ id })))
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(cleanUser());
-    this.userSubs?.unsubscribe();
+    this.store.dispatch(cleanUser())
   }
 
-  remove() {
+  remove(id: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { name: 'usuario' },
-    });
+    })
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.store.dispatch(remove({ id: this.user!.id }));
-      }
-    });
+      if (result) this.store.dispatch(remove({ id }))
+    })
   }
 }

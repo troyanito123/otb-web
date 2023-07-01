@@ -105,7 +105,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   private handledSaveFinish(user: User | null) {
     this.form.reset();
-    this.router.navigate(['../', user!.id], {relativeTo: this.route});
+    this.router.navigate(['../', 'detail'], {relativeTo: this.route});
   }
   private handledError(error: any) {
     alert('ERROR AL CREAR EL USUARIO');
