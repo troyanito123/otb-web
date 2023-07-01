@@ -33,6 +33,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { appReducers } from './state/app.reducer'
 import { EffectsArray } from './state/effects'
 import { environment } from 'src/environments/environment'
+import { RouteReuseStrategy } from '@angular/router'
+import { CustomRouteReuseStrategy } from './app-custom-route-reuse.strategy'
 
 /*CONFIG STORE */
 
@@ -66,6 +68,7 @@ import { environment } from 'src/environments/environment'
       useClass: HttpHeadersService,
       multi: true,
     },
+    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
   ],
   bootstrap: [AppComponent],
 })

@@ -1,30 +1,30 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component';
-import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component';
-import { UserBlockComponent } from './pages/user-block/user-block.component';
-import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component';
-import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
-import { UserDetailComponent } from './pages/user-detail/user-detail.component';
-import { UserEditComponent } from './pages/user-edit/user-edit.component';
-import { UserExtraContributionComponent } from './pages/user-extra-contribution/user-extra-contribution.component';
-import { UserFinesComponent } from './pages/user-fines/user-fines.component';
-import { UserIncomesCreateComponent } from './pages/user-incomes/user-incomes-create/user-incomes-create.component';
-import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list/user-incomes-list.component';
-import { UserIncomesComponent } from './pages/user-incomes/user-incomes.component';
-import { UserListComponent } from './pages/user-list/user-list.component';
-import { UserNewComponent } from './pages/user-new/user-new.component';
-import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
-import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component';
-import { UserViewComponent } from './pages/user-view/user-view.component';
-import { UsersComponent } from './users.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { UserAllBlocksComponent } from './pages/user-all-blocks/user-all-blocks.component'
+import { UserAttendencesComponent } from './pages/user-attendences/user-attendences.component'
+import { UserBlockComponent } from './pages/user-block/user-block.component'
+import { UserCertificationsComponent } from './pages/user-certifications/user-certifications.component'
+import { UserContributionComponent } from './pages/user-contribution/user-contribution.component'
+import { UserDetailComponent } from './pages/user-detail/user-detail.component'
+import { UserEditComponent } from './pages/user-edit/user-edit.component'
+import { UserExtraContributionComponent } from './pages/user-extra-contribution/user-extra-contribution.component'
+import { UserFinesComponent } from './pages/user-fines/user-fines.component'
+import { UserIncomesCreateComponent } from './pages/user-incomes/user-incomes-create/user-incomes-create.component'
+import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list/user-incomes-list.component'
+import { UserIncomesComponent } from './pages/user-incomes/user-incomes.component'
+import { UserListComponent } from './pages/user-list/user-list.component'
+import { UserNewComponent } from './pages/user-new/user-new.component'
+import { UserPaymentComponent } from './pages/user-payment/user-payment.component'
+import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component'
+import { UserViewComponent } from './pages/user-view/user-view.component'
+import { UsersComponent } from './users.component'
 
 const routes: Routes = [
   {
     path: '',
     component: UsersComponent,
     children: [
-      { path: 'list', component: UserListComponent },
+      { path: 'list', component: UserListComponent, data: { mustBeStored: true } },
       { path: 'new', component: UserNewComponent },
       {
         path: 'blocks',
@@ -64,7 +64,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

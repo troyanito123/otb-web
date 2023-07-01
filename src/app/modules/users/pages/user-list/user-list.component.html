@@ -1,7 +1,7 @@
 <div class="users_container">
   <h2>Vecinos OTB SAN JOSE</h2>
   <mat-form-field>
-    <input matInput placeholder="Buscador..." #keyword />
+    <input matInput placeholder="Buscador..." #keyword (keydown.enter)="search()" />
   </mat-form-field>
   <button mat-fab color="primary" (click)="search()">
     <mat-icon>search</mat-icon>
