@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
-import { Store } from '@ngrx/store';
+import { Store } from '@ngrx/store'
 
-import { renew } from './state/actions/auth.action';
-import { AppState } from './state/app.reducer';
+import { AuthActions } from './state/actions/auth.action'
+import { AppState } from './state/app.reducer'
 
 @Component({
   selector: 'app-root',
@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(renew());
+    this.store.dispatch(AuthActions.renew({ forward: '/private/dashboard' }))
   }
 }

@@ -3,7 +3,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 
 import { Store } from '@ngrx/store'
 import { AppState } from 'src/app/state/app.reducer'
-import * as authActions from 'src/app/state/actions/auth.action'
+import { AuthActions } from 'src/app/state/actions/auth.action'
 
 @Component({
   selector: 'app-signin',
@@ -20,7 +20,12 @@ export class SigninComponent {
 
   public signin() {
     if (this.form.invalid) return
-    this.store.dispatch(authActions.signin(this.form.value))
+    this.store.dispatch(
+      AuthActions.signin({
+        ...this.form.value,
+        forward: '/private/dashboard',
+      })
+    )
   }
 
   private createForm() {

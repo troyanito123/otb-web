@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { mergeMap, map, catchError, tap } from 'rxjs/operators'
 import { of } from 'rxjs'
-import { renew, setError, setUser, signin, signout, unsetUser } from '../actions/auth.action'
+import { AuthActions } from '../actions/auth.action'
 import { AuthService } from 'src/app/services/auth.service'
 import { Router } from '@angular/router'
 import { DialogService } from 'src/app/utils/dialog.service'
@@ -18,14 +18,15 @@ export class AuthEffect {
 
   signin$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(signin),
-      mergeMap(({ email, password }) =>
+      ofType(AuthActions.signin),
+      tap(console.log),
+      mergeMap(({ email, password, forward }) =>
         this.authService.signin(email, password).pipe(
-          map(({ user, access_token }) => setUser({ user, access_token })),
-          tap(() => this.router.navigate(['/private/dashboard'])),
+          map(({ user, access_token }) => AuthActions.setUser({ user, access_token })),
+          tap(() => this.router.navigate([forward])),
           catchError((e) => {
-            this.dialogService.open('Error al iniciar sesión', 'Por favor revisa tus credenciales.')
-            return of(setError({ e }))
+            this.dialogService.open('Error', 'Credenciales incorrectas')
+            return of(AuthActions.setError({ e }))
           })
         )
       )
@@ -34,11 +35,11 @@ export class AuthEffect {
 
   signout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(signout),
-      mergeMap(() =>
+      ofType(AuthActions.signout),
+      mergeMap(({ forward }) =>
         this.authService.signout().pipe(
-          map(() => unsetUser()),
-          tap(() => this.router.navigate(['/public']))
+          map(() => AuthActions.unsetUser()),
+          tap(() => this.router.navigateByUrl(forward))
         )
       )
     )
@@ -46,12 +47,12 @@ export class AuthEffect {
 
   renew$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(renew),
-      mergeMap(() =>
+      ofType(AuthActions.renew),
+      mergeMap(({ forward }) =>
         this.authService.renew().pipe(
-          map(({ user, access_token }) => setUser({ user, access_token })),
-          tap(() => this.router.navigate(['/private/dashboard'])),
-          catchError((e) => of(unsetUser()))
+          map(({ user, access_token }) => AuthActions.setUser({ user, access_token })),
+          tap(() => this.router.navigateByUrl(forward)),
+          catchError((e) => of(AuthActions.unsetUser()))
         )
       )
     )
