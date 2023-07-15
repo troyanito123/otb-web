@@ -3,6 +3,7 @@ import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { userFeature } from '@state/reducers/user.reducer';
 import { Subscription } from 'rxjs';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
 import { ContributionPaid } from 'src/app/models/contribution-paid.model';
@@ -114,7 +115,7 @@ export class UserContributionComponent implements OnInit, OnDestroy {
   }
 
   private listenerStore() {
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
       this.user = user;
       if (user)
         this.store.dispatch(

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { clean } from 'src/app/state/actions/users.action';
+import { UsersActions } from 'src/app/state/actions/users.action';
 import { AppState } from 'src/app/state/app.reducer';
 import { BLOCKS } from 'src/app/utils/gobal-data';
 
@@ -16,6 +16,6 @@ export class UserAllBlocksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.store.dispatch(clean());
+    this.store.dispatch(UsersActions.clean());
   }
 }

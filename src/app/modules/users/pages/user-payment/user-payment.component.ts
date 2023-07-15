@@ -15,6 +15,7 @@ import { MonthlyPaymentsPipe } from 'src/app/pipes/monthly-payments.pipe';
 import { Transaction } from 'src/app/models/transaction.model';
 import { Router } from '@angular/router';
 import { couldPay } from 'src/app/utils/helper';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @Component({
   selector: 'app-user-payment',
@@ -47,7 +48,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit(): void {
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
       this.user = user;
       this.loadPayments(user!.id, this.yearInput.value!);
     });

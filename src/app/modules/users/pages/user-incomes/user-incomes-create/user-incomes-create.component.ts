@@ -6,6 +6,7 @@ import { AppState } from '@state/app.reducer';
 import * as IncomeActions from '@state/actions/incomes.action';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @Component({
   selector: 'app-user-incomes-create',
@@ -31,7 +32,7 @@ export class UserIncomesCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
       this.user = user;
     });
     this.incomeSubs = this.store

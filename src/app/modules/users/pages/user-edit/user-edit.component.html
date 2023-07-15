@@ -1,4 +1,8 @@
-<ng-container *ngIf="user && roles.length">
+<ng-container *ngIf="(user$ | async) && (roles$ | async)?.length">
   <h2>Actualiza al usuario</h2>
-  <app-user-form [user]="user" [roles]="roles"></app-user-form>
+  <app-user-form
+    [user]="user$ | async"
+    [roles]="(roles$ | async) ?? []"
+    (onSubmit)="update($event)"
+  ></app-user-form>
 </ng-container>

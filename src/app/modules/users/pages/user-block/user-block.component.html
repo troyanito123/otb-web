@@ -1,14 +1,14 @@
 <ng-container *ngIf="block">
   <h2 style="margin-top: 1rem">VECINOS DEL MANZANO {{ block }}</h2>
-  <hr />
-  <mat-selection-list [multiple]="false">
-    <mat-list-option
-      *ngFor="let user of users"
+  <mat-divider></mat-divider>
+  <mat-list>
+    <mat-list-item
+      *ngFor="let user of users$ | async"
       [routerLink]="['../../', user.id, 'detail']"
     >
-      <mat-icon mat-list-icon>person</mat-icon>
-      <div mat-line>{{ user.name }}</div>
-      <div mat-line>Lote #{{ user.address_number }}</div>
-    </mat-list-option>
-  </mat-selection-list>
+      <mat-icon matListItemIcon>person</mat-icon>
+      <div matListItemTitle>{{ user.name }}</div>
+      <div matListItemLine>Lote #{{ user.address_number }}</div>
+    </mat-list-item>
+  </mat-list>
 </ng-container>

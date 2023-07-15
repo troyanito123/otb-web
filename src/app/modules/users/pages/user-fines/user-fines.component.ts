@@ -21,6 +21,7 @@ import { Transaction } from 'src/app/models/transaction.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @Component({
   selector: 'app-user-fines',
@@ -108,7 +109,7 @@ export class UserFinesComponent implements OnInit, OnDestroy {
   }
 
   private subscribeStore() {
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
       this.user = user;
       this.store.dispatch(FinesActions.loadByUser({ id: user!.id }));
       this.store.dispatch(AttendencesActions.loadByUser({ userId: user!.id }));

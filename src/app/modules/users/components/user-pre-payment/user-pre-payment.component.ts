@@ -15,6 +15,7 @@ import { Transaction } from 'src/app/models/transaction.model';
 import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertComponent } from 'src/app/layouts/alert/alert.component';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @Component({
   selector: 'app-user-pre-payment',
@@ -109,8 +110,8 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
       });
 
     this.userSubs = this.store
-      .select('user')
-      .subscribe(({ user }) => (this.user = user));
+      .select(userFeature.selectUser)
+      .subscribe((user) => (this.user = user));
   }
 
   private generateTransactions() {

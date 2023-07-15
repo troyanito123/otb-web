@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store'
+import { createFeature, createReducer, on } from '@ngrx/store'
 import { User } from 'src/app/models/user.model'
 import { signin, setUser, setError, signout, unsetUser, renew } from '../actions/auth.action'
 
@@ -16,7 +16,7 @@ export const initialAuthState: AuthState = {
   error: null,
 }
 
-export const authReducer = createReducer(
+const authReducer = createReducer(
   initialAuthState,
 
   on(signin, () => ({
@@ -57,3 +57,5 @@ export const authReducer = createReducer(
     error: null,
   }))
 )
+
+export const authFeature = createFeature({name: 'auth', reducer: authReducer})

@@ -6,6 +6,7 @@ import { IncomeModel } from '@models/income.model';
 import { Subscription } from 'rxjs';
 import { distinct, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @Component({
   selector: 'app-user-incomes-list',
@@ -23,10 +24,10 @@ export class UserIncomesListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store
-      .select('user')
+      .select(userFeature.selectUser)
       .pipe(
         distinct(),
-        tap(({ user }) => {
+        tap((user) => {
           if (user) {
             this.userId = user.id;
             this.store.dispatch(IncomeActions.loadByUser({ userId: user.id }));

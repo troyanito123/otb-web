@@ -12,6 +12,7 @@ import { Attendence } from 'src/app/models/attendence.model';
 import { User } from 'src/app/models/user.model';
 import { AttendenceMeeting } from 'src/app/models/attendence-meeting.mode';
 import { ToAttendencePipe } from 'src/app/pipes/to-attendence.pipe';
+import { userFeature } from '@state/reducers/user.reducer';
 @Component({
   selector: 'app-user-attendences',
   templateUrl: './user-attendences.component.html',
@@ -61,7 +62,7 @@ export class UserAttendencesComponent implements OnInit, OnDestroy {
   }
 
   private subscribeStore() {
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
       this.user = user;
       this.store.dispatch(
         AttendencesActions.loadByUser({ userId: this.user!.id })

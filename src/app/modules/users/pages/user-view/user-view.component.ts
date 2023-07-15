@@ -1,13 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material/dialog'
 import { ActivatedRoute } from '@angular/router'
-import { Store } from '@ngrx/store'
-import { selectedUser } from '@state/selectors/user.selector'
-import { Observable } from 'rxjs'
+import { MatDialog } from '@angular/material/dialog'
 import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component'
-import { User } from 'src/app/models/user.model'
-import { cleanUser, loadUser, remove } from 'src/app/state/actions/user.action'
-import { AppState } from 'src/app/state/app.reducer'
+import { Store } from '@ngrx/store'
+import { userFeature } from '@state/reducers/user.reducer'
+import { UserActions } from '@state/actions/user.action'
 
 @Component({
   selector: 'app-user-view',
@@ -15,22 +12,16 @@ import { AppState } from 'src/app/state/app.reducer'
   styleUrls: ['./user-view.component.scss'],
 })
 export class UserViewComponent implements OnInit, OnDestroy {
-  public user$: Observable<User | null>
+  public user$ = this.store.select(userFeature.selectUser)
 
-  constructor(
-    private store: Store<AppState>,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
-  ) {
-    this.user$ = this.store.select(selectedUser)
-  }
+  constructor(private store: Store, private route: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(({ id }) => this.store.dispatch(loadUser({ id })))
+    this.route.params.subscribe(({ id }) => this.store.dispatch(UserActions.loadUser({ id })))
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(cleanUser())
+    this.store.dispatch(UserActions.cleanUser())
   }
 
   remove(id: number) {
@@ -38,7 +29,15 @@ export class UserViewComponent implements OnInit, OnDestroy {
       data: { name: 'usuario' },
     })
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.store.dispatch(remove({ id }))
+      if (result)
+        this.store.dispatch(
+          UserActions.remove({
+            id,
+            forward: '/private/users',
+            messageSupplier: (name: string) =>
+              `Se cambio el estado del vecino \"${name}\" a ELIMINADO`,
+          })
+        )
     })
   }
 }

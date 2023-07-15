@@ -1,51 +1,52 @@
-import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
+import { createAction, props } from '@ngrx/store'
+import { User } from 'src/app/models/user.model'
 
-export const loadUser = createAction('[USER] load', props<{ id: number }>());
-export const loadSuccess = createAction(
-  '[USER] load success',
-  props<{ user: User }>()
-);
-export const loadError = createAction('[USER] load error', props<{ e: any }>());
-export const cleanUser = createAction('[USER] clean');
+const loadUser = createAction('[USER] load', props<{ id: number }>())
 
-export const create = createAction(
+const create = createAction(
   '[USER] create',
   props<{
-    name: string;
-    block_number: string;
-    address_number: string;
+    name: string
+    block_number: string
+    address_number: string
+    forwadSupplier: (id: number) => string
+    messageSupplier: (name: string) => string
   }>()
-);
+)
 
-export const update = createAction(
+const update = createAction(
   '[USER] update',
   props<{
-    id: number;
-    name: string;
-    block_number: string;
-    address_number: string;
-    status: string;
-    role: string;
-    email?: string;
-    password?: string;
+    id: number
+    name: string
+    block_number: string
+    address_number: string
+    status: string
+    role: string
+    forwadSupplier: (id: number) => string
+    messageSupplier: (name: string) => string
+    email?: string
+    password?: string
   }>()
-);
+)
 
-export const saveSuccess = createAction(
-  '[USER] save success',
-  props<{ user: User }>()
-);
-export const saveError = createAction('[USER] save error', props<{ e: any }>());
-
-export const remove = createAction(
+const remove = createAction(
   '[USER] remove user',
-  props<{ id: number }>()
-);
+  props<{ id: number; forward: string; messageSupplier: (name: string) => string }>()
+)
 
-export const removeSuccess = createAction(
-  '[USER] remove user success',
-  props<{ user: User }>()
-);
+const loadSuccess = createAction('[USER] load success', props<{ user: User }>())
+const modifySuccess = createAction('[USER] modify success', props<{ user: User }>())
+const setError = createAction('[USER] set error', props<{ e: any }>())
+const cleanUser = createAction('[USER] clean') 
 
-export const savedDefault = createAction('[USER] saved on false');
+export const UserActions = {
+  loadUser,
+  create,
+  update,
+  remove,
+  loadSuccess,
+  modifySuccess,
+  setError,
+  cleanUser,
+}

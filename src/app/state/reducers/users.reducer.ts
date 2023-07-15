@@ -1,37 +1,21 @@
-import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
-import * as UsersActions from '../actions/users.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { User } from 'src/app/models/user.model'
+import { UsersActions } from '../actions/users.action'
 
 export interface UsersState {
-  users: User[];
-  loading: boolean;
-  saveFinish: boolean;
-  error: any;
+  users: User[]
+  loading: boolean
+  error: any
 }
 
 export const initialUsersState: UsersState = {
   users: [],
   loading: false,
-  saveFinish: false,
   error: null,
-};
+}
 
-const _usersReducer = createReducer(
+const usersReducer = createReducer(
   initialUsersState,
-
-  on(UsersActions.load, () => ({
-    users: [],
-    loading: true,
-    saveFinish: false,
-    error: null,
-  })),
-
-  on(UsersActions.loadSuccess, (state, { users }) => ({
-    users,
-    loading: false,
-    saveFinish: false,
-    error: null,
-  })),
 
   on(UsersActions.loadByBlock, (state) => ({
     ...state,
@@ -43,31 +27,17 @@ const _usersReducer = createReducer(
     ...state,
     users,
     loading: false,
-    error: null,
-  })),
-
-  on(UsersActions.loadSuccess, (state, { users }) => ({
-    users,
-    loading: false,
-    saveFinish: false,
-    error: null,
   })),
 
   on(UsersActions.loadError, (state, { e }) => ({
-    users: [],
+    ...state,
     loading: false,
-    saveFinish: false,
     error: e.error,
   })),
 
   on(UsersActions.clean, () => ({
-    users: [],
-    loading: false,
-    saveFinish: false,
-    error: null,
+    ...initialUsersState,
   }))
-);
+)
 
-export function usersReducer(state: any, action: any) {
-  return _usersReducer(state, action);
-}
+export const usersFeature = createFeature({ name: 'users', reducer: usersReducer })

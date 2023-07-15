@@ -4,7 +4,7 @@ import {
   AttendencesState,
 } from './reducers/attendences.reducer';
 import { expensesReducer, ExpensesState } from './reducers/expenses.reducer';
-import { authReducer, AuthState } from './reducers/auth.reducer';
+import { authFeature, AuthState } from './reducers/auth.reducer';
 import {
   certificationReducer,
   CertificationState,
@@ -39,9 +39,7 @@ import {
   TransactionsState,
 } from './reducers/receipt.reducer';
 
-import { rolesReducer, RolesState } from './reducers/roles.reducer';
-import { userReducer, UserState } from './reducers/user.reducer';
-import { usersReducer, UsersState } from './reducers/users.reducer';
+import { roleFeature, RolesState } from './reducers/roles.reducer';
 import { expenseReducer, ExpenseState } from './reducers/expense.reducer';
 import {
   incomeExpensesReducer,
@@ -68,12 +66,12 @@ import {
 } from './reducers/extra-contribution.reducer';
 import { incomeReducer, IncomeState } from './reducers/incomes.reducer';
 import { reportReducer, ReportSate } from './reducers/reports.reducer';
+import { userFeature, UserState } from './reducers/user.reducer';
 
 export interface AppState {
-  auth: AuthState;
-  users: UsersState;
-  user: UserState;
-  roles: RolesState;
+  [authFeature.name]: AuthState;
+  [userFeature.name]: UserState;
+  [roleFeature.name]: RolesState;
   monthlyPayments: MonthlyPaymentsState;
   monthlyPaymentMade: MonthlyPaymentsMadeState;
   prePayment: PrePaymentState;
@@ -99,10 +97,9 @@ export interface AppState {
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
-  auth: authReducer,
-  users: usersReducer,
-  user: userReducer,
-  roles: rolesReducer,
+  [authFeature.name]: authFeature.reducer,
+  [userFeature.name]: userFeature.reducer,
+  [roleFeature.name]: roleFeature.reducer,
   monthlyPayments: monthlyPaymentsReducer,
   monthlyPaymentMade: monthlyPaymentsMadeReducer,
   prePayment: prePaymentReducer,

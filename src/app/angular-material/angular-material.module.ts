@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatSelectModule } from '@angular/material/select'
 import { MatSortModule } from '@angular/material/sort'
 import { MatSidenavModule } from '@angular/material/sidenav'
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatMenuModule } from '@angular/material/menu'
@@ -38,6 +39,7 @@ import { MatMenuModule } from '@angular/material/menu'
     MatSortModule,
     MatTableModule,
     MatToolbarModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -58,6 +60,7 @@ import { MatMenuModule } from '@angular/material/menu'
     MatSortModule,
     MatTableModule,
     MatToolbarModule,
+    MatSnackBarModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
 })

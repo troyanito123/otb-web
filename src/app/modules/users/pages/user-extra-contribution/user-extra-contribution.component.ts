@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { userFeature } from '@state/reducers/user.reducer';
 import { Subscription } from 'rxjs';
 
 import { ConfirmDialogComponent } from 'src/app/layouts/confirm-dialog/confirm-dialog.component';
@@ -42,7 +43,7 @@ export class UserExtraContributionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
+    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
       this.user = user;
       user && this.store.dispatch(ExtraContActions.loadByUser({ id: user.id }));
     });

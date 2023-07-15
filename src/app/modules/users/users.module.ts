@@ -27,6 +27,11 @@ import { UserExtraContributionComponent } from './pages/user-extra-contribution/
 import { UserIncomesComponent } from './pages/user-incomes/user-incomes.component';
 import { UserIncomesCreateComponent } from './pages/user-incomes/user-incomes-create/user-incomes-create.component';
 import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list/user-incomes-list.component';
+import { StoreModule } from '@ngrx/store';
+import { usersFeature } from '@state/reducers/users.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UsersEffect } from '@state/effects/users.effect';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @NgModule({
   declarations: [
@@ -59,6 +64,8 @@ import { UserIncomesListComponent } from './pages/user-incomes/user-incomes-list
     PipesModule,
     QRCodeModule,
     AngularMaterialModule,
+    StoreModule.forFeature(usersFeature.name, usersFeature.reducer),
+    EffectsModule.forFeature([UsersEffect])
   ],
 })
 export class UsersModule {}

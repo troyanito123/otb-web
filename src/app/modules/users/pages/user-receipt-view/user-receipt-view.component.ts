@@ -12,6 +12,7 @@ import { Transaction } from 'src/app/models/transaction.model';
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { userFeature } from '@state/reducers/user.reducer';
 @Component({
   selector: 'app-user-receipt-view',
   templateUrl: './user-receipt-view.component.html',
@@ -68,8 +69,8 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
 
   private subscribeStore() {
     this.userSubs = this.store
-      .select('user')
-      .subscribe(({ user }) => (this.user = user));
+      .select(userFeature.selectUser)
+      .subscribe((user) => (this.user = user));
 
     this.authSubs = this.store
       .select('auth')

@@ -6,8 +6,8 @@ import { AppState } from 'src/app/state/app.reducer'
 import * as AuthActions from 'src/app/state/actions/auth.action'
 
 import { SidenavService } from 'src/app/utils/sidenav.service'
-import { authUser } from '@state/selectors/auth.selector'
 import { User } from '@models/user.model'
+import { authFeature } from '@state/reducers/auth.reducer'
 
 @Component({
   selector: 'app-header',
@@ -17,8 +17,8 @@ import { User } from '@models/user.model'
 export class HeaderComponent {
   public user$: Observable<User | null>
 
-  constructor(private store: Store<AppState>, private sidenavService: SidenavService) {
-    this.user$ = this.store.select(authUser)
+  constructor(private store: Store, private sidenavService: SidenavService) {
+    this.user$ = this.store.select(authFeature.selectUser)
   }
 
   signout() {

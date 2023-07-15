@@ -1,9 +1,6 @@
 import { Component } from '@angular/core'
 import { Store } from '@ngrx/store'
-import { selectedUser } from '@state/selectors/user.selector'
-import { Observable } from 'rxjs'
-import { User } from 'src/app/models/user.model'
-import { AppState } from 'src/app/state/app.reducer'
+import { userFeature } from '@state/reducers/user.reducer'
 
 @Component({
   selector: 'app-user-detail',
@@ -11,9 +8,7 @@ import { AppState } from 'src/app/state/app.reducer'
   styleUrls: ['./user-detail.component.scss'],
 })
 export class UserDetailComponent {
-  public user$: Observable<User | null>
+  public user$ = this.store.select(userFeature.selectUser)
 
-  constructor(private store: Store<AppState>) {
-    this.user$ = this.store.select(selectedUser)
-  }
+  constructor(private store: Store) {}
 }

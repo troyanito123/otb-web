@@ -15,6 +15,7 @@ import {
   CertificationType,
 } from 'src/app/models/certification.model';
 import { Transaction } from 'src/app/models/transaction.model';
+import { userFeature } from '@state/reducers/user.reducer';
 
 @Component({
   selector: 'app-user-certifications',
@@ -76,8 +77,8 @@ export class UserCertificationsComponent implements OnInit, OnDestroy {
 
   private subscribeStore() {
     this.userSubs = this.store
-      .select('user')
-      .subscribe(({ user }) => (this.user = user));
+      .select(userFeature.selectUser)
+      .subscribe((user) => (this.user = user));
 
     this.certificationSubs = this.store
       .select('certification')
