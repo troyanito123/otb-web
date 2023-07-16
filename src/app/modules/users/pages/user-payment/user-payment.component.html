@@ -14,11 +14,11 @@
     </button>
   </div>
 
-  <div class="flex-row-start-start">
+  <div class="flex-column-center-stretch ">
     <table
       mat-table
       [dataSource]="(mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at"
-      class="mat-elevation-z8"
+      class="mat-elevation-z1"
     >
       <ng-container matColumnDef="year">
         <th mat-header-cell *matHeaderCellDef>AÑO</th>
@@ -58,7 +58,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <div style="width: 40%">
+    <div>
       <app-user-pre-payment></app-user-pre-payment>
     </div>
   </div>

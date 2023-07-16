@@ -2,7 +2,8 @@
   <button
   mat-raised-button
   color="primary"
-  (click)="print(auth.name)"
+  *ngIf="user$ | async as user"
+  (click)="print(user.name)"
   style="margin-bottom: 1rem"
 >
   Imprimir
