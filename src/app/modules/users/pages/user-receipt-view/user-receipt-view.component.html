@@ -20,7 +20,7 @@
   </div>
 
   <div class="detail_receipt" *ngIf="transactions$ | async as transactions">
-    <div>
+    <div *ngIf="transactions.length">
       <div class="detail_description">
         <p><strong>Descripción: </strong></p>
         <p *ngFor="let item of transactions" class="description_item">
@@ -38,12 +38,12 @@
         {{ transactions | transactionsToTotal | number: "1.2" }} Bs.
       </p>
 
-      <p>
+      <p >
         <strong>Fecha de registro:</strong>
         {{ transactions[0].date | date: "fullDate" | uppercase }}
       </p>
     </div>
-    <div>
+    <div *ngIf="transactions.length && user && auth">
       <qr-code [value]="qrValue(transactions, user, auth.name)" [size]="200"></qr-code>
     </div>
   </div>
