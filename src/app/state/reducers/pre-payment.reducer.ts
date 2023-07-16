@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from '@ngrx/store'
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
 import { PrePayment } from 'src/app/models/pre-payment'
 import { PrePaymentActions } from '../actions/pre-payment.action'
 
@@ -28,6 +28,12 @@ const prePaymentReducer = createReducer(
   }))
 )
 
-export const prePaymentFeature = createFeature({name: 'prePayment', reducer: prePaymentReducer})
-
-
+export const prePaymentFeature = createFeature({
+  name: 'prePayment',
+  reducer: prePaymentReducer,
+  extraSelectors: ({ selectPrePayments }) => ({
+    selectPrePaymentTotal: createSelector(selectPrePayments, (prePayments) =>
+      prePayments.reduce((counter, item) => counter + item.amountForPay, 0)
+    ),
+  }),
+})

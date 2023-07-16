@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { mergeMap, map, catchError, switchMap } from 'rxjs/operators'
+import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators'
 import { of } from 'rxjs'
 
 import { Actions, createEffect, ofType } from '@ngrx/effects'
@@ -8,13 +8,17 @@ import { MonthlyPaymentMadeActions } from '../actions/monthly-payments-made.acti
 import { MonthlyPaymentMadeService } from 'src/app/services/monthly-payment-made.service'
 import { Store } from '@ngrx/store'
 import { userFeature } from '@state/reducers/user.reducer'
+import { addTransaction } from '@state/actions/transactions.action'
+import { Router } from '@angular/router'
+import { PrePaymentActions } from '@state/actions/pre-payment.action'
 
 @Injectable()
 export class MonthlyPaymentsMadeEffect {
   constructor(
     private actions$: Actions,
     private monthlyPaymentMadeService: MonthlyPaymentMadeService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   loadMonthlyPaymentsMade$ = createEffect(() =>
@@ -53,14 +57,33 @@ export class MonthlyPaymentsMadeEffect {
   createManyMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MonthlyPaymentMadeActions.createManyPaymentsMade),
-      mergeMap(({ userId, monthsId, date }) =>
-        this.monthlyPaymentMadeService.createManyMonthlyPayments(userId, monthsId, date).pipe(
+      mergeMap(({ monthsId, date, generateTransactionsCallbak, forwardSupplier }) =>
+        this.store.select(userFeature.selectUser).pipe(
+          switchMap((user) =>
+            this.monthlyPaymentMadeService.createManyMonthlyPayments(user!.id, monthsId, date)
+          ),
           map((monthlyPaymentsMade) =>
             MonthlyPaymentMadeActions.addPaymentsMade({
               monthlyPaymentsMade,
+              generateTransactionsCallbak,
+              forward: forwardSupplier(monthlyPaymentsMade[0].id),
             })
           ),
           catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
+        )
+      )
+    )
+  )
+
+  addPaymentsMade$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MonthlyPaymentMadeActions.addPaymentsMade),
+      mergeMap(({ monthlyPaymentsMade, generateTransactionsCallbak, forward }) =>
+        of(addTransaction({ transactions: generateTransactionsCallbak(monthlyPaymentsMade) })).pipe(
+          tap(() => {
+            this.router.navigateByUrl(forward)
+            this.store.dispatch(PrePaymentActions.cleanPayment())
+          })
         )
       )
     )

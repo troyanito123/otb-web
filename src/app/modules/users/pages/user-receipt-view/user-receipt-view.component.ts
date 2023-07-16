@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
@@ -41,7 +41,7 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
         : new Date().toISOString(),
     });
   }
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.subscribeStore();
@@ -52,6 +52,7 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
   }
 
   public print() {
+
     const element = document.getElementById('receipt');
     html2canvas(element!).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -59,11 +60,8 @@ export class UserReceiptViewComponent implements OnInit, OnDestroy {
       doc.addImage(imgData, 'letter', 5, 15, 200, 120);
       doc.addImage(imgData, 'letter', 5, 160, 200, 120);
       doc.save(`${this.user?.name}.pdf`);
-      this.router
-        .navigate(['private/users', this.user?.id])
-        .then(() =>
-          this.store.dispatch(TransactionsActions.cleanTransactions())
-        );
+      this.store.dispatch(TransactionsActions.cleanTransactions())
+      this.router.navigate(['../', 'detail'], {relativeTo: this.route});
     });
   }
 
