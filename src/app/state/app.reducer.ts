@@ -16,7 +16,7 @@ import {
 import { MonthlyPaymentsState, monthlyPaymentsFeature } from './reducers/monthly-payments.reducer'
 import { preContributionsReducer, PreContributionsState } from './reducers/pre-contribution.reducer'
 import { prePaymentFeature, PrePaymentState } from './reducers/pre-payment.reducer'
-import { transactionsReducer, TransactionsState } from './reducers/receipt.reducer'
+import { transactionsFeature, TransactionsState } from './reducers/receipt.reducer'
 
 import { roleFeature, RolesState } from './reducers/roles.reducer'
 import { expenseReducer, ExpenseState } from './reducers/expense.reducer'
@@ -45,7 +45,7 @@ export interface AppState {
   contributions: ContributionsState
   contributionsPaid: ContributionsPaidState
   preContribution: PreContributionsState
-  transactions: TransactionsState
+  [transactionsFeature.name]: TransactionsState
   certification: CertificationState
   meetings: MeetingsState
   attendences: AttendencesState
@@ -73,7 +73,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   contributions: contributionsReducer,
   contributionsPaid: contributionsPaidReducer,
   preContribution: preContributionsReducer,
-  transactions: transactionsReducer,
+  [transactionsFeature.name]: transactionsFeature.reducer,
   certification: certificationReducer,
   meetings: meetingsReducer,
   attendences: attendencesReducer,

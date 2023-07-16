@@ -1,23 +1,24 @@
-<button
+<ng-container *ngIf="auth$ | async as auth">
+  <button
   mat-raised-button
   color="primary"
-  (click)="print()"
+  (click)="print(auth.name)"
   style="margin-bottom: 1rem"
 >
   Imprimir
 </button>
 
-<div class="receipt_container" id="receipt" #receipt *ngIf="user && auth">
+<div class="receipt_container" id="receipt" #receipt *ngIf="user$ | async as user">
   <div class="header_receipt">
     <img src="../../../../../assets/logo1.PNG" alt="" />
     <div>
       <h1>OTB SAN JOSE</h1>
       <h1>LA TAMBORADA</h1>
     </div>
-    <img src="../../../../../assets/logo2.PNG" alt="" />
+    <img src="../../../../../assets/logosj.jpg" alt="" />
   </div>
 
-  <div class="detail_receipt" *ngIf="transactions.length">
+  <div class="detail_receipt" *ngIf="transactions$ | async as transactions">
     <div>
       <div class="detail_description">
         <p><strong>Descripción: </strong></p>
@@ -42,7 +43,7 @@
       </p>
     </div>
     <div>
-      <qr-code [value]="qrValue" [size]="200"></qr-code>
+      <qr-code [value]="qrValue(transactions, user, auth.name)" [size]="200"></qr-code>
     </div>
   </div>
   <div class="foote_receipt">
@@ -63,3 +64,5 @@
     </div>
   </div>
 </div>
+
+</ng-container>
