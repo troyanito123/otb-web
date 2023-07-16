@@ -1,74 +1,68 @@
-import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { mergeMap, map, catchError, switchMap } from 'rxjs/operators'
+import { of } from 'rxjs'
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 
-import * as MonthlyPaymentsMadeActions from '../actions/monthly-payments-made.action';
-import { MonthlyPaymentMadeService } from 'src/app/services/monthly-payment-made.service';
+import { MonthlyPaymentMadeActions } from '../actions/monthly-payments-made.action'
+import { MonthlyPaymentMadeService } from 'src/app/services/monthly-payment-made.service'
+import { Store } from '@ngrx/store'
+import { userFeature } from '@state/reducers/user.reducer'
 
 @Injectable()
 export class MonthlyPaymentsMadeEffect {
   constructor(
     private actions$: Actions,
-    private monthlyPaymentMadeService: MonthlyPaymentMadeService
+    private monthlyPaymentMadeService: MonthlyPaymentMadeService,
+    private store: Store
   ) {}
 
   loadMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentsMadeActions.loadPaymentsMade),
-      mergeMap(({ id, year }) =>
-        this.monthlyPaymentMadeService
-          .getMonthlyPaymentsMadeByUserAndYear(id, year)
-          .pipe(
-            map((monthlyPaymentsMade) =>
-              MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess({
-                monthlyPaymentsMade,
-              })
-            ),
-            catchError((e) =>
-              of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e }))
-            )
-          )
-      )
-    )
-  );
-
-  loadByDate$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(MonthlyPaymentsMadeActions.loadByDate),
-      mergeMap(({ initDate, endDate }) =>
-        this.monthlyPaymentMadeService.getByDate(initDate, endDate).pipe(
-          map((monthlyPaymentsMade) =>
-            MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess({
-              monthlyPaymentsMade,
-            })
+      ofType(MonthlyPaymentMadeActions.loadPaymentsMade),
+      mergeMap(({ year }) =>
+        this.store.select(userFeature.selectUser).pipe(
+          switchMap((user) =>
+            this.monthlyPaymentMadeService.getMonthlyPaymentsMadeByUserAndYear(user!.id, year)
           ),
-          catchError((e) =>
-            of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e }))
-          )
+          map((monthlyPaymentsMade) =>
+            MonthlyPaymentMadeActions.loadPaymentsMadeSuccess({ monthlyPaymentsMade })
+          ),
+          catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
         )
       )
     )
-  );
+  )
+
+  loadByDate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MonthlyPaymentMadeActions.loadByDate),
+      mergeMap(({ initDate, endDate }) =>
+        this.monthlyPaymentMadeService.getByDate(initDate, endDate).pipe(
+          map((monthlyPaymentsMade) =>
+            MonthlyPaymentMadeActions.loadPaymentsMadeSuccess({
+              monthlyPaymentsMade,
+            })
+          ),
+          catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
+        )
+      )
+    )
+  )
 
   createManyMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentsMadeActions.createManyPaymentsMade),
+      ofType(MonthlyPaymentMadeActions.createManyPaymentsMade),
       mergeMap(({ userId, monthsId, date }) =>
-        this.monthlyPaymentMadeService
-          .createManyMonthlyPayments(userId, monthsId, date)
-          .pipe(
-            map((monthlyPaymentsMade) =>
-              MonthlyPaymentsMadeActions.addPaymentsMade({
-                monthlyPaymentsMade,
-              })
-            ),
-            catchError((e) =>
-              of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e }))
-            )
-          )
+        this.monthlyPaymentMadeService.createManyMonthlyPayments(userId, monthsId, date).pipe(
+          map((monthlyPaymentsMade) =>
+            MonthlyPaymentMadeActions.addPaymentsMade({
+              monthlyPaymentsMade,
+            })
+          ),
+          catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
+        )
       )
     )
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
 import * as MonthlyPaymentActions from '../actions/monthly-payment.action';
 
@@ -20,7 +20,7 @@ export const initialMonthlyPaymentState: MonthlyPaymentState = {
   error: null,
 };
 
-const _monthlyPaymentReducer = createReducer(
+export const monthlyPaymentReducer = createReducer(
   initialMonthlyPaymentState,
 
   on(MonthlyPaymentActions.load, (state) => ({
@@ -91,7 +91,3 @@ const _monthlyPaymentReducer = createReducer(
     error: null,
   }))
 );
-
-export function monthlyPaymentReducer(state: any, action: any) {
-  return _monthlyPaymentReducer(state, action);
-}

@@ -1,21 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
-import { User } from 'src/app/models/user.model';
-import * as MonthlyPaymentsAction from 'src/app/state/actions/monthly-payments.action';
-import * as MonthlyPaymentsMadeAction from 'src/app/state/actions/monthly-payments-made.action';
-import * as PrePaymentActions from 'src/app/state/actions/pre-payment.action';
-import * as TransactionsActions from 'src/app/state/actions/transactions.action';
-import { AppState } from 'src/app/state/app.reducer';
-import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made';
-import { PrePayment } from 'src/app/models/pre-payment';
-import { MonthlyPaymentsPipe } from 'src/app/pipes/monthly-payments.pipe';
-import { Transaction } from 'src/app/models/transaction.model';
-import { Router } from '@angular/router';
-import { couldPay } from 'src/app/utils/helper';
-import { userFeature } from '@state/reducers/user.reducer';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { FormControl, Validators } from '@angular/forms'
+import { Store } from '@ngrx/store'
+import { MonthlyPaymentActions } from 'src/app/state/actions/monthly-payments.action'
+import { MonthlyPaymentMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
+import { PrePaymentActions } from 'src/app/state/actions/pre-payment.action'
+import * as TransactionsActions from 'src/app/state/actions/transactions.action'
+import { AppState } from 'src/app/state/app.reducer'
+import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
+import { PrePayment } from 'src/app/models/pre-payment'
+import { Transaction } from 'src/app/models/transaction.model'
+import { ActivatedRoute, Router } from '@angular/router'
+import { userFeature } from '@state/reducers/user.reducer'
+import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer'
+import { monthlyPaymentsMadeFeature } from '@state/reducers/monthly-payments-made.reducer'
+import { MatSelectChange } from '@angular/material/select'
 
 @Component({
   selector: 'app-user-payment',
@@ -23,101 +21,58 @@ import { userFeature } from '@state/reducers/user.reducer';
   styleUrls: ['./user-payment.component.scss'],
 })
 export class UserPaymentComponent implements OnInit, OnDestroy {
-  private userSubs!: Subscription;
-  public user!: User | null;
+  yearInput = new FormControl(new Date().getFullYear().toString(), Validators.required)
+  years = ['2021', '2022', '2023']
 
-  private monthlyPaymentsSubs!: Subscription;
-  public monthlyPayments: MonthlyPayment[] = [];
+  displayedColumns: string[] = ['year', 'month', 'amountForPay', 'amountPay', 'option']
 
-  private monthlyPaymentsMadeSubs!: Subscription;
-  public monthlyPaymentsMade: MonthlyPaymentMade[] = [];
+  protected user$ = this.store.select(userFeature.selectUser)
+  protected mp$ = this.store.select(monthlyPaymentsFeature.selectMonthlyPayments)
+  protected mpm$ = this.store.select(monthlyPaymentsMadeFeature.selectMonthlyPaymentsMade)
 
-  yearInput = new UntypedFormControl('2021', Validators.required);
-  years = ['2021', '2022', '2023'];
-
-  displayedColumns: string[] = [
-    'year',
-    'month',
-    'amountForPay',
-    'amountPay',
-    'option',
-  ];
-
-  dataSource: PrePayment[] = [];
-
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.userSubs = this.store.select(userFeature.selectUser).subscribe((user) => {
-      this.user = user;
-      this.loadPayments(user!.id, this.yearInput.value!);
-    });
-
-    this.listenerPayments();
-
-    this.yearInput.valueChanges.subscribe((year) =>
-      this.loadPayments(this.user!.id, year!)
-    );
+    this.loadPayments(this.yearInput.value!)
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(MonthlyPaymentsAction.clean());
-    this.store.dispatch(MonthlyPaymentsMadeAction.clean());
-    this.userSubs?.unsubscribe();
-    this.monthlyPaymentsSubs?.unsubscribe();
-    this.monthlyPaymentsMadeSubs?.unsubscribe();
+    this.store.dispatch(MonthlyPaymentActions.clean())
+    this.store.dispatch(MonthlyPaymentMadeActions.clean())
+  }
+
+  yearInputChange(data: MatSelectChange) {
+    this.loadPayments(data.value)
   }
 
   addToPrePaid(prePayment: PrePayment) {
-    this.store.dispatch(PrePaymentActions.addPayment({ prePayment }));
+    this.store.dispatch(PrePaymentActions.addPayment({ prePayment }))
   }
 
-  public reprint() {
+  public reprint(data: MonthlyPaymentMade[]) {
     this.store.dispatch(
       TransactionsActions.addTransaction({
-        transactions: this.generateTransactions(),
+        transactions: this.generateTransactions(data),
       })
-    );
-    this.router.navigate(['private/users', this.user!.id, 'receipt-view']);
+    )
+    this.router.navigate(['../', 'receipt-view'], { relativeTo: this.route })
   }
 
-  private generateTransactions() {
-    return this.monthlyPaymentsMade.map((p) => {
-      const { monthlyPayment, amount, date } = p;
-      const { month, year } = monthlyPayment;
-      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
-      return new Transaction(description, amount, date);
-    });
+  private generateTransactions(data: MonthlyPaymentMade[]) {
+    return data.map((p) => {
+      const { monthlyPayment, amount, date } = p
+      const { month, year } = monthlyPayment
+      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`
+      return new Transaction(description, amount, date)
+    })
   }
 
-  private loadPayments(id: number, year: string) {
-    this.store.dispatch(MonthlyPaymentsAction.loadPayments({ year }));
-    this.store.dispatch(
-      MonthlyPaymentsMadeAction.loadPaymentsMade({ id, year })
-    );
-  }
-
-  private listenerPayments() {
-    this.monthlyPaymentsSubs = this.store
-      .select('monthlyPayments')
-      .subscribe(({ monthlyPayments }) => {
-        this.monthlyPayments = monthlyPayments;
-        this.dataSource = new MonthlyPaymentsPipe().transform(
-          this.monthlyPayments,
-          this.monthlyPaymentsMade
-        ).filter(mp => couldPay(mp.year, mp.month, this.user!.subscription_at));
-
-        
-      });
-
-    this.monthlyPaymentsMadeSubs = this.store
-      .select('monthlyPaymentMade')
-      .subscribe(({ monthlyPaymentsMade }) => {
-        this.monthlyPaymentsMade = monthlyPaymentsMade;
-        this.dataSource = new MonthlyPaymentsPipe().transform(
-          this.monthlyPayments,
-          this.monthlyPaymentsMade
-        ).filter(mp => couldPay(mp.year, mp.month, this.user!.subscription_at))
-      });
+  private loadPayments(year: string) {
+    this.store.dispatch(MonthlyPaymentActions.loadPayments({ year }))
+    this.store.dispatch(MonthlyPaymentMadeActions.loadPaymentsMade({ year }))
   }
 }

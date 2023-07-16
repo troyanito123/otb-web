@@ -1,21 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs'
 
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as MonthlyPaymentsMadeActions from 'src/app/state/actions/monthly-payments-made.action';
-import * as PrePaymentActions from 'src/app/state/actions/pre-payment.action';
-import * as TransactionsActions from 'src/app/state/actions/transactions.action';
+import { Store } from '@ngrx/store'
+import { AppState } from 'src/app/state/app.reducer'
+import { MonthlyPaymentMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
+import { PrePaymentActions } from 'src/app/state/actions/pre-payment.action'
+import * as TransactionsActions from 'src/app/state/actions/transactions.action'
 
-import { PrePayment } from 'src/app/models/pre-payment';
-import { User } from 'src/app/models/user.model';
-import { Transaction } from 'src/app/models/transaction.model';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertComponent } from 'src/app/layouts/alert/alert.component';
-import { userFeature } from '@state/reducers/user.reducer';
+import { PrePayment } from 'src/app/models/pre-payment'
+import { User } from 'src/app/models/user.model'
+import { Transaction } from 'src/app/models/transaction.model'
+import { FormControl, UntypedFormControl, Validators } from '@angular/forms'
+import { MatDialog } from '@angular/material/dialog'
+import { AlertComponent } from 'src/app/layouts/alert/alert.component'
+import { userFeature } from '@state/reducers/user.reducer'
 
 @Component({
   selector: 'app-user-pre-payment',
@@ -23,19 +23,19 @@ import { userFeature } from '@state/reducers/user.reducer';
   styleUrls: ['./user-pre-payment.component.scss'],
 })
 export class UserPrePaymentComponent implements OnInit, OnDestroy {
-  public prePayments: PrePayment[] = [];
-  private prePaymentsSubs!: Subscription;
+  public prePayments: PrePayment[] = []
+  private prePaymentsSubs!: Subscription
 
-  private monthlyPaymentsMadeSubs!: Subscription;
+  private monthlyPaymentsMadeSubs!: Subscription
 
-  public total = 0;
+  public total = 0
 
-  public user!: User | null;
-  private userSubs!: Subscription;
+  public user!: User | null
+  private userSubs!: Subscription
 
-  displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option'];
+  protected displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option']
 
-  inputDate = new UntypedFormControl(new Date().toISOString(), [Validators.required]);
+  protected inputDate = new FormControl(new Date().toISOString(), [Validators.required])
 
   constructor(
     private store: Store<AppState>,
@@ -44,17 +44,17 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.listenerStore();
+    this.listenerStore()
   }
 
   ngOnDestroy(): void {
-    this.prePaymentsSubs?.unsubscribe();
-    this.monthlyPaymentsMadeSubs?.unsubscribe();
-    this.userSubs?.unsubscribe();
+    this.prePaymentsSubs?.unsubscribe()
+    this.monthlyPaymentsMadeSubs?.unsubscribe()
+    this.userSubs?.unsubscribe()
   }
 
   substractToPrePaid(id: number) {
-    this.store.dispatch(PrePaymentActions.subtractPayment({ id }));
+    this.store.dispatch(PrePaymentActions.subtractPayment({ id }))
   }
 
   confirmPaid() {
@@ -64,19 +64,19 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
           title: 'Error al realizar un pago',
           content: 'Tiene que añadir por lo menos una mensualidad.',
         },
-      });
-      return;
+      })
+      return
     }
 
-    const monthsId = JSON.stringify(this.prePayments.map((p) => p.id));
+    const monthsId = JSON.stringify(this.prePayments.map((p) => p.id))
 
     this.store.dispatch(
-      MonthlyPaymentsMadeActions.createManyPaymentsMade({
+      MonthlyPaymentMadeActions.createManyPaymentsMade({
         userId: this.user!.id,
         monthsId,
         date: new Date(this.inputDate.value!),
       })
-    );
+    )
   }
 
   private listenerStore() {
@@ -88,41 +88,28 @@ export class UserPrePaymentComponent implements OnInit, OnDestroy {
             TransactionsActions.addTransaction({
               transactions: this.generateTransactions(),
             })
-          );
-          this.store.dispatch(PrePaymentActions.cleanPayment());
+          )
+          this.store.dispatch(PrePaymentActions.cleanPayment())
 
-          this.router.navigate([
-            'private/users',
-            this.user!.id,
-            'receipt-view',
-          ]);
+          this.router.navigate(['private/users', this.user!.id, 'receipt-view'])
         }
-      });
+      })
 
-    this.prePaymentsSubs = this.store
-      .select('prePayment')
-      .subscribe(({ prePayments }) => {
-        this.prePayments = prePayments;
-        this.total = this.prePayments.reduce(
-          (counter, item) => counter + item.amountForPay,
-          0
-        );
-      });
+    this.prePaymentsSubs = this.store.select('prePayment').subscribe(({ prePayments }) => {
+      this.prePayments = prePayments
+      this.total = this.prePayments.reduce((counter, item) => counter + item.amountForPay, 0)
+    })
 
     this.userSubs = this.store
       .select(userFeature.selectUser)
-      .subscribe((user) => (this.user = user));
+      .subscribe((user) => (this.user = user))
   }
 
   private generateTransactions() {
     return this.prePayments.map((p) => {
-      const { month, year, amountForPay } = p;
-      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
-      return new Transaction(
-        description,
-        amountForPay,
-        new Date(this.inputDate.value!)
-      );
-    });
+      const { month, year, amountForPay } = p
+      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`
+      return new Transaction(description, amountForPay, new Date(this.inputDate.value!))
+    })
   }
 }

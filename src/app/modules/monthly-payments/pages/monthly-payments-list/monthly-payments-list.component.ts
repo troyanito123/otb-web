@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as MonthlyPaymentsActions from 'src/app/state/actions/monthly-payments.action';
-import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
-import { Subscription } from 'rxjs';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { AppState } from 'src/app/state/app.reducer'
+import { MonthlyPaymentActions } from 'src/app/state/actions/monthly-payments.action'
+import { FormControl, Validators } from '@angular/forms'
+import { MatSelectChange } from '@angular/material/select'
+import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer'
 
 @Component({
   selector: 'app-monthly-payments-list',
@@ -12,42 +12,25 @@ import { UntypedFormControl, Validators } from '@angular/forms';
   styleUrls: ['./monthly-payments-list.component.scss'],
 })
 export class MonthlyPaymentsListComponent implements OnInit, OnDestroy {
-  public monthlyPayments: MonthlyPayment[] = [];
-  private monthlyPaymentsSubs!: Subscription;
+  protected monthlyPayments$ = this.store.select(monthlyPaymentsFeature.selectMonthlyPayments)
 
-  public years = ['2021', '2022', '2023'];
+  protected years = ['2021', '2022', '2023']
 
-  public inputYear = new UntypedFormControl('2021', [Validators.required]);
+  protected inputYear = new FormControl('2021', [Validators.required])
 
-  displayedColumns = ['year', 'month', 'amount'];
+  protected displayedColumns = ['year', 'month', 'amount']
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(
-      MonthlyPaymentsActions.loadPayments({ year: this.inputYear.value! })
-    );
-
-    this.inputYear.valueChanges.subscribe((year) =>
-      this.store.dispatch(MonthlyPaymentsActions.loadPayments({ year: year! }))
-    );
-    this.subscribeStore();
+    this.store.dispatch(MonthlyPaymentActions.loadPayments({ year: this.inputYear.value! }))
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(MonthlyPaymentsActions.clean());
-    this.unsubscribeStore();
+    this.store.dispatch(MonthlyPaymentActions.clean())
   }
 
-  private subscribeStore() {
-    this.monthlyPaymentsSubs = this.store
-      .select('monthlyPayments')
-      .subscribe(({ monthlyPayments }) => {
-        this.monthlyPayments = monthlyPayments;
-      });
-  }
-
-  private unsubscribeStore() {
-    this.monthlyPaymentsSubs?.unsubscribe();
+  yearInputChange(data: MatSelectChange) {
+    this.store.dispatch(MonthlyPaymentActions.loadPayments({ year: String(data) }))
   }
 }
