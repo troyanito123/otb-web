@@ -5,6 +5,7 @@ import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dial
 import { Store } from '@ngrx/store'
 import { userFeature } from '@state/reducers/user.reducer'
 import { UserActions } from '@state/actions/user.action'
+import { PrePaymentActions } from '@state/actions/pre-payment.action'
 
 @Component({
   selector: 'app-user-view',
@@ -22,6 +23,7 @@ export class UserViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(UserActions.cleanUser())
+    this.store.dispatch(PrePaymentActions.cleanPayment())
   }
 
   remove(id: number) {

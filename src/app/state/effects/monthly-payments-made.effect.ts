@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators'
+import { mergeMap, map, catchError, switchMap, tap, filter, first } from 'rxjs/operators'
 import { of } from 'rxjs'
 
 import { Actions, createEffect, ofType } from '@ngrx/effects'
@@ -26,6 +26,8 @@ export class MonthlyPaymentsMadeEffect {
       ofType(MonthlyPaymentMadeActions.loadPaymentsMade),
       mergeMap(({ year }) =>
         this.store.select(userFeature.selectUser).pipe(
+          filter((user) => user !== null),
+          first(),
           switchMap((user) =>
             this.monthlyPaymentMadeService.getMonthlyPaymentsMadeByUserAndYear(user!.id, year)
           ),
@@ -59,6 +61,8 @@ export class MonthlyPaymentsMadeEffect {
       ofType(MonthlyPaymentMadeActions.createManyPaymentsMade),
       mergeMap(({ monthsId, date, generateTransactionsCallbak, forwardSupplier }) =>
         this.store.select(userFeature.selectUser).pipe(
+          filter((user) => user !== null),
+          first(),
           switchMap((user) =>
             this.monthlyPaymentMadeService.createManyMonthlyPayments(user!.id, monthsId, date)
           ),

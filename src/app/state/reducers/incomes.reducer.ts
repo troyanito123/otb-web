@@ -22,7 +22,7 @@ const incomeReducer = createReducer(
   on(IncomesActions.load, (state) => ({
     ...state,
     loading: true,
-    error: undefined,
+    error: null,
   })),
 
   on(IncomesActions.loadSuccess, (state, { income }) => ({
@@ -34,7 +34,7 @@ const incomeReducer = createReducer(
   on(IncomesActions.loadByUser, (state) => ({
     ...state,
     loading: true,
-    error: undefined,
+    error: null,
   })),
 
   on(IncomesActions.loadByUserSuccess, (state, { incomes }) => ({
@@ -45,20 +45,19 @@ const incomeReducer = createReducer(
 
   on(IncomesActions.create, (state) => ({
     ...state,
-    error: undefined,
+    error: null,
     loading: true,
   })),
 
   on(IncomesActions.update, (state) => ({
     ...state,
-    error: undefined,
+    error: null,
     loading: true,
   })),
 
   on(IncomesActions.setIncome, (state, { income }) => ({
     ...state,
     loading: false,
-    saved: true,
     income,
   })),
 

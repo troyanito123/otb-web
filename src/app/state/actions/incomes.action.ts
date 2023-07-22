@@ -3,7 +3,7 @@ import { IncomeModel } from 'src/app/models/income.model'
 
 const load = createAction('[INCOMES] load income', props<{ id: number }>())
 
-const loadByUser = createAction('[INCOMES] load by user', props<{ userId: number }>())
+const loadByUser = createAction('[INCOMES] load by user')
 
 const loadByUserSuccess = createAction(
   '[INCOMES] load by user success',
@@ -22,8 +22,9 @@ const create = createAction(
     amount: number
     description: string
     collector: string
-    date: Date
-    userId: number
+    date: Date,
+    forwardSupplier: (id: number) => string,
+    messageSupplier: (text: string) => string
   }>()
 )
 
@@ -36,12 +37,11 @@ const update = createAction(
     date: Date
     status: string,
     forwardSupplier: (id: number) => string,
+    messageSupplier: (text: string) => string
   }>()
 )
 
 const clean = createAction('[INCOMES] clean')
-
-const unsetSaved = createAction('[INCOMES] set saved to false')
 
 export const IncomesActions = {
   load,
@@ -53,5 +53,4 @@ export const IncomesActions = {
   create,
   update,
   clean,
-  unsetSaved,
 }

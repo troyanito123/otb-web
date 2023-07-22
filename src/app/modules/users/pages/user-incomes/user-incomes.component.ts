@@ -12,6 +12,7 @@ export class UserIncomesComponent implements OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   ngOnDestroy(): void {
+    console.log('saliendo')
     this.store.dispatch(IncomesActions.clean());
   }
 }

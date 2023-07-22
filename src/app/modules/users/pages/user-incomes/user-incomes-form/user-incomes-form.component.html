@@ -1,12 +1,6 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSubmit()"
-  class="flex-column-center-stretch"
->
+<form [formGroup]="form" (ngSubmit)="saveChanges()" class="flex-column-center-stretch">
   <h1>
-    {{
-      isEditing ? "Estas editando un ingreso..." : "Estas creando un ingreso..."
-    }}
+    {{ income ? 'Modificar ingreso de usuario' : 'Crear ingreso de usuario' }}
   </h1>
   <mat-form-field>
     <mat-label>Monto</mat-label>
@@ -27,12 +21,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Cobrador</mat-label>
-    <input
-      matInput
-      type="text"
-      formControlName="collector"
-      placeholder="Juan pinto"
-    />
+    <input matInput type="text" formControlName="collector" placeholder="Juan pinto" />
     <mat-icon matSuffix color="primary">person</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
@@ -44,7 +33,7 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field *ngIf="isEditing">
+  <mat-form-field *ngIf="income">
     <mat-label>Fecha de pago</mat-label>
     <mat-select formControlName="status">
       <mat-option [value]="status" *ngFor="let status of statusList">

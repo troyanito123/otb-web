@@ -32,6 +32,8 @@ import { usersFeature } from '@state/reducers/users.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffect } from '@state/effects/users.effect';
 import { userFeature } from '@state/reducers/user.reducer';
+import { UserIncomesFormComponent } from './pages/user-incomes/user-incomes-form/user-incomes-form.component';
+import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit/user-incomes-edit.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { userFeature } from '@state/reducers/user.reducer';
     UserIncomesComponent,
     UserIncomesCreateComponent,
     UserIncomesListComponent,
+    UserIncomesFormComponent,
+    UserIncomesEditComponent,
   ],
   imports: [
     CommonModule,

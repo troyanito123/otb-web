@@ -18,6 +18,7 @@ import { UserPaymentComponent } from './pages/user-payment/user-payment.componen
 import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component'
 import { UserViewComponent } from './pages/user-view/user-view.component'
 import { UsersComponent } from './users.component'
+import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit/user-incomes-edit.component'
 
 const routes: Routes = [
   {
@@ -50,10 +51,11 @@ const routes: Routes = [
             children: [
               { path: 'list', component: UserIncomesListComponent },
               { path: 'new', component: UserIncomesCreateComponent },
+              { path: ':id', component: UserIncomesEditComponent },
               { path: '', redirectTo: 'list', pathMatch: 'full' },
             ],
           },
-          {
+          { 
             path: 'extra-contributions',
             component: UserExtraContributionComponent,
           },
