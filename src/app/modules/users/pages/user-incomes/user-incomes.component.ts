@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as IncomeActions from '@state/actions/incomes.action';
+import {IncomesActions} from '@state/actions/incomes.action';
 import { AppState } from '@state/app.reducer';
 
 @Component({
@@ -12,6 +12,6 @@ export class UserIncomesComponent implements OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   ngOnDestroy(): void {
-    this.store.dispatch(IncomeActions.clean());
+    this.store.dispatch(IncomesActions.clean());
   }
 }

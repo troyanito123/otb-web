@@ -1,27 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { IncomeModel } from '@models/income.model';
-import { AppState } from '@state/app.reducer';
-import { Subscription } from 'rxjs';
+import { Component, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { AppState } from '@state/app.reducer'
+import { incomesFeature } from '@state/reducers/incomes.reducer'
 
 @Component({
   selector: 'app-income-detail',
   templateUrl: './income-detail.component.html',
   styleUrls: ['./income-detail.component.scss'],
 })
-export class IncomeDetailComponent implements OnInit, OnDestroy {
-  public income?: IncomeModel;
-  private incomeSubs?: Subscription;
-
-  constructor(private store: Store<AppState>) {}
-
-  ngOnInit(): void {
-    this.incomeSubs = this.store.select('incomes').subscribe(({ income }) => {
-      this.income = income;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.incomeSubs?.unsubscribe();
-  }
+export class IncomeDetailComponent {
+  income$ = inject(Store<AppState>).select(incomesFeature.selectIncome)
 }

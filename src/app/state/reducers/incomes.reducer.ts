@@ -1,22 +1,22 @@
-import { createReducer, on } from '@ngrx/store';
-import { IncomeModel } from 'src/app/models/income.model';
-import * as IncomesActions from '../actions/incomes.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { IncomeModel } from 'src/app/models/income.model'
+import { IncomesActions } from '../actions/incomes.action'
 
 export interface IncomeState {
-  loading: boolean;
-  saved: boolean;
-  income?: IncomeModel;
-  error?: any;
-  incomes: IncomeModel[];
+  loading: boolean
+  income: IncomeModel | null
+  error: any
+  incomes: IncomeModel[]
 }
 
 export const initialIncomeState: IncomeState = {
   loading: false,
-  saved: false,
+  income: null,
+  error: null,
   incomes: [],
-};
+}
 
-const _incomeReducer = createReducer(
+const incomeReducer = createReducer(
   initialIncomeState,
 
   on(IncomesActions.load, (state) => ({
@@ -68,20 +68,9 @@ const _incomeReducer = createReducer(
     error,
   })),
 
-  on(IncomesActions.unsetSaved, (state) => ({
-    ...state,
-    saved: false,
-  })),
-
   on(IncomesActions.clean, (state) => ({
-    income: undefined,
-    error: undefined,
-    saved: false,
-    loading: false,
-    incomes: [],
+    ...initialIncomeState,
   }))
-);
+)
 
-export function incomeReducer(state: any, action: any) {
-  return _incomeReducer(state, action);
-}
+export const incomesFeature = createFeature({ name: 'incomes', reducer: incomeReducer })

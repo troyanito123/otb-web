@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
-import * as IncomeActions from '@state/actions/incomes.action';
+import { IncomesActions } from '@state/actions/incomes.action';
 
 @Component({
   selector: 'app-income-view',
-  templateUrl: './income-view.component.html',
-  styleUrls: ['./income-view.component.scss'],
+  template: `<router-outlet></router-outlet>`,
+  styles: [''],
 })
 export class IncomeViewComponent implements OnInit, OnDestroy {
   constructor(
@@ -18,11 +18,11 @@ export class IncomeViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({ id }) => {
-      this.store.dispatch(IncomeActions.load({ id }));
+      this.store.dispatch(IncomesActions.load({ id }));
     });
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(IncomeActions.clean());
+    this.store.dispatch(IncomesActions.clean());
   }
 }

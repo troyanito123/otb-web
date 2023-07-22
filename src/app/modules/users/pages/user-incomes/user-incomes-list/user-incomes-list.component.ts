@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
-import * as IncomeActions from '@state/actions/incomes.action';
+import { IncomesActions } from '@state/actions/incomes.action';
 import { IncomeModel } from '@models/income.model';
 import { Subscription } from 'rxjs';
 import { distinct, tap } from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class UserIncomesListComponent implements OnInit, OnDestroy {
         tap((user) => {
           if (user) {
             this.userId = user.id;
-            this.store.dispatch(IncomeActions.loadByUser({ userId: user.id }));
+            this.store.dispatch(IncomesActions.loadByUser({ userId: user.id }));
           }
         })
       )
@@ -56,6 +56,6 @@ export class UserIncomesListComponent implements OnInit, OnDestroy {
   }
 
   editIncome(incomeId: number) {
-    this.store.dispatch(IncomeActions.load({ id: incomeId }));
+    this.store.dispatch(IncomesActions.load({ id: incomeId }));
   }
 }

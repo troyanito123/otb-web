@@ -3,7 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { User } from '@models/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.reducer';
-import * as IncomeActions from '@state/actions/incomes.action';
+import { IncomesActions } from '@state/actions/incomes.action';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { userFeature } from '@state/reducers/user.reducer';
@@ -37,9 +37,9 @@ export class UserIncomesCreateComponent implements OnInit, OnDestroy {
     });
     this.incomeSubs = this.store
       .select('incomes')
-      .subscribe(({ saved, income }) => {
-        if (saved)
-          this.router.navigate(['private/users/', this.user!.id, 'incomes']);
+      .subscribe(({ income }) => {
+        // if (saved)
+        //   this.router.navigate(['private/users/', this.user!.id, 'incomes']);
         if (income) {
           this.form.reset({ ...income });
           this.isEditing = true;
@@ -52,7 +52,7 @@ export class UserIncomesCreateComponent implements OnInit, OnDestroy {
     this.userSubs?.unsubscribe();
     this.incomeSubs?.unsubscribe();
     this.isEditing = false;
-    this.store.dispatch(IncomeActions.clean());
+    this.store.dispatch(IncomesActions.clean());
   }
 
   public onSubmit() {
@@ -62,11 +62,11 @@ export class UserIncomesCreateComponent implements OnInit, OnDestroy {
 
     if (this.isEditing) {
       this.store.dispatch(
-        IncomeActions.update({ id: this.incomeId, ...this.form.value })
+        IncomesActions.update({ id: this.incomeId, ...this.form.value })
       );
     } else {
       this.store.dispatch(
-        IncomeActions.create({ userId: this.user?.id, ...this.form.value })
+        IncomesActions.create({ userId: this.user?.id, ...this.form.value })
       );
     }
   }
