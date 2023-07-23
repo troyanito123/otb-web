@@ -80,9 +80,11 @@ export class IncomesEffects {
   loadByUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(IncomesActions.loadByUser),
-      mergeMap(() => this.store.select(userFeature.selectUser)),
-      mergeMap((user) =>
-        this.incomeService.getAllByUser(user!.id).pipe(
+      mergeMap(() =>
+        this.store.select(userFeature.selectUser).pipe(
+          filter(user => user !== null),
+          first(),
+          switchMap((user) => this.incomeService.getAllByUser(user!.id)),
           map((incomes) => IncomesActions.loadByUserSuccess({ incomes })),
           catchError((error) => of(IncomesActions.setError({ error })))
         )
