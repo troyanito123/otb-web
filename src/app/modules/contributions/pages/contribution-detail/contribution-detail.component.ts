@@ -1,74 +1,53 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, inject } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store'
+import { ContributionActions } from 'src/app/state/actions/contribution.action'
 
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as ContributionActions from 'src/app/state/actions/contribution.action';
-
-import { Contribution } from 'src/app/models/contribution.model';
-
-import { AlertComponent } from 'src/app/layouts/alert/alert.component';
-import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component'
+import { contributionFeature } from '@state/reducers/contribution.reducer'
 
 @Component({
   selector: 'app-contribution-detail',
-  templateUrl: './contribution-detail.component.html',
-  styleUrls: ['./contribution-detail.component.scss'],
+  template: `
+    <div class="flex-column-center-center">
+      <ng-container *ngIf="contribution$ | async as contribution">
+        <mat-card appearance="outlined" style="width: 80%">
+          <mat-card-header>
+            <mat-card-title>Aporte</mat-card-title>
+          </mat-card-header>
+          <mat-card-content *ngIf="contribution">
+            <p><strong>Descripción: </strong> {{ contribution.description }}</p>
+            <p><strong>Aporte: </strong> {{ contribution.amount }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="flex-row-end-center">
+              <button mat-button color="warn" (click)="remove(contribution.id)">Eliminar</button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+    </div>
+  `,
 })
-export class ContributionDetailComponent implements OnInit, OnDestroy {
-  public contribution!: Contribution | null;
-  private contributionSubs!: Subscription;
+export class ContributionDetailComponent {
+  #store = inject(Store)
+  #matDialog = inject(MatDialog)
+  readonly contribution$ = this.#store.select(contributionFeature.selectContribution)
 
-  constructor(
-    private store: Store<AppState>,
-    private matDialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
-    this.subscribeStore();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribeStore();
-  }
-
-  public remove() {
-    const dialog = this.matDialog.open(DeleteDialogComponent, {
+  public remove(id: number) {
+    const dialog = this.#matDialog.open(DeleteDialogComponent, {
       data: { name: 'aporte' },
-    });
-
+    })
     dialog.afterClosed().subscribe((result) => {
       if (result)
-        this.store.dispatch(
-          ContributionActions.remove({ id: this.contribution!.id })
-        );
-    });
-  }
-
-  private subscribeStore() {
-    this.contributionSubs = this.store
-      .select('contribution')
-      .subscribe(({ contribution, removed }) => {
-        this.contribution = contribution;
-
-        if (removed)
-          this.router.navigate(['../../'], {relativeTo: this.route}).then(() =>
-            this.matDialog.open(AlertComponent, {
-              data: {
-                title: 'Aporte eliminado',
-                content: 'Se elimino correctamente un aporte',
-              },
-            })
-          );
-      });
-  }
-
-  private unsubscribeStore() {
-    this.contributionSubs?.unsubscribe();
+        this.#store.dispatch(
+          ContributionActions.remove({
+            id,
+            forward: 'private/contributions/list',
+            messageSupplier: (text: string) => `Aporte \"${text}\" ha sido eliminado`,
+          })
+        )
+    })
   }
 }

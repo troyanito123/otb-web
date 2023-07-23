@@ -1,22 +1,24 @@
 <div class="flex-column-center-center">
   <h2>Lista de aportes a la OTB</h2>
 
-  <table mat-table #table [dataSource]="contributions">
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>DESCRIPCIÓN</th>
-      <td mat-cell *matCellDef="let row">{{ row.description }}</td>
-    </ng-container>
+  <ng-container *ngIf="contributions$ | async as contributions">
+    <table mat-table [dataSource]="contributions">
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>DESCRIPCIÓN</th>
+        <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>MULTA</th>
-      <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
-    </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>APORTE</th>
+        <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      [routerLink]="['../', row.id]"
-    ></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="['../', row.id]"
+      ></tr>
+    </table>
+  </ng-container>
 </div>

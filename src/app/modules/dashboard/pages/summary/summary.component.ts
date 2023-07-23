@@ -29,13 +29,13 @@ export class SummaryComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(IncomeExpensesActions.loadCertifications());
-    this.store.dispatch(IncomeExpensesActions.loadContribution());
-    this.store.dispatch(IncomeExpensesActions.loadMonthlyPayments());
-    this.store.dispatch(IncomeExpensesActions.loadExpenses());
-    this.store.dispatch(IncomeExpensesActions.loadFines());
-    this.store.dispatch(IncomeExpensesActions.loadExtraContribution());
-    this.store.dispatch(IncomeExpensesActions.loadIncome());
+    // this.store.dispatch(IncomeExpensesActions.loadCertifications());
+    // this.store.dispatch(IncomeExpensesActions.loadContribution());
+    // this.store.dispatch(IncomeExpensesActions.loadMonthlyPayments());
+    // this.store.dispatch(IncomeExpensesActions.loadExpenses());
+    // this.store.dispatch(IncomeExpensesActions.loadFines());
+    // this.store.dispatch(IncomeExpensesActions.loadExtraContribution());
+    // this.store.dispatch(IncomeExpensesActions.loadIncome());
 
     this.incomeExpensesSubs = this.store
       .select('incomeExpenses')
@@ -91,7 +91,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch(IncomeExpensesActions.clean());
+    // this.store.dispatch(IncomeExpensesActions.clean());
     this.incomeExpensesSubs?.unsubscribe();
   }
 

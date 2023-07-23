@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { ContributionActions } from '@state/actions/contribution.action'
 
 @Component({
   selector: 'app-contribution-new',
-  templateUrl: './contribution-new.component.html',
-  styleUrls: ['./contribution-new.component.scss']
+  template: ` <app-contribution-form (onSubmit)="create($event)"></app-contribution-form> `,
 })
-export class ContributionNewComponent implements OnInit {
+export class ContributionNewComponent {
+  #store = inject(Store)
 
-  constructor() { }
-
-  ngOnInit(): void {
+  create(data: any) {
+    this.#store.dispatch(
+      ContributionActions.create({
+        ...data,
+        forwardSupplier: (id: number) => `private/contributions/${id}/detail`,
+        messageSupplier: (text: string) => `Aporte \"${text}\" creado correctamente`,
+      })
+    )
   }
-
 }

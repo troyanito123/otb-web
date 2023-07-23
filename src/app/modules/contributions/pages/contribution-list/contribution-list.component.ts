@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { Contribution } from 'src/app/models/contribution.model';
-import * as ContributionsActions from 'src/app/state/actions/contributions.action';
-import { AppState } from 'src/app/state/app.reducer';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { contributionsFeature } from '@state/reducers/contributions.reducer'
+import { ContributionsActions } from 'src/app/state/actions/contributions.action'
 
 @Component({
   selector: 'app-contribution-list',
@@ -11,24 +9,15 @@ import { AppState } from 'src/app/state/app.reducer';
   styleUrls: ['./contribution-list.component.scss'],
 })
 export class ContributionListComponent implements OnInit, OnDestroy {
-  public contributions: Contribution[] = [];
-  private contributionsSubs!: Subscription;
-
-  displayedColumns = ['description', 'amount'];
-
-  constructor(private store: Store<AppState>) {}
+  #store = inject(Store)
+  readonly contributions$ = this.#store.select(contributionsFeature.selectContributions)
+  readonly displayedColumns = ['description', 'amount']
 
   ngOnInit(): void {
-    this.store.dispatch(ContributionsActions.loadContributions());
-    this.contributionsSubs = this.store
-      .select('contributions')
-      .subscribe(({ contributions }) => {
-        this.contributions = contributions;
-      });
+    this.#store.dispatch(ContributionsActions.loadContributions())
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(ContributionsActions.cleanContributions());
-    this.contributionsSubs?.unsubscribe();
+    this.#store.dispatch(ContributionsActions.cleanContributions())
   }
 }

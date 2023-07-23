@@ -1,104 +1,39 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as ContributionActions from 'src/app/state/actions/contribution.action';
-
-import { Contribution } from 'src/app/models/contribution.model';
-import {ActivatedRoute, Router} from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Contribution } from 'src/app/models/contribution.model'
 
 @Component({
   selector: 'app-contribution-form',
   templateUrl: './contribution-form.component.html',
   styleUrls: ['./contribution-form.component.scss'],
 })
-export class ContributionFormComponent implements OnInit, OnDestroy {
-  @Input() contribution!: Contribution | null;
+export class ContributionFormComponent implements OnInit {
+  #formBuilder = inject(FormBuilder)
+  public form: FormGroup = this.createForm()
 
-  form!: UntypedFormGroup;
-
-  private constributionSubs!: Subscription;
-
-  get isEditing() {
-    return !!this.contribution;
-  }
-
-  constructor(
-    private fb: UntypedFormBuilder,
-    private router: Router,
-    private store: Store<AppState>,
-    private route: ActivatedRoute
-  ) {}
+  @Input() contribution: Contribution | null = null
+  @Output() onSubmit = new EventEmitter()
 
   ngOnInit(): void {
-    this.createForm();
-    this.subscribeStore();
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(ContributionActions.softClean());
-    this.unsubscribeStore();
+    if (this.contribution) this.form.reset({ ...this.contribution })
   }
 
   public save() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    if (this.isEditing) this.update();
-    if (!this.isEditing) this.create();
-  }
-
-  private create() {
-    const { description, amount } = this.form.value;
-    this.store.dispatch(ContributionActions.create({ description, amount }));
-  }
-
-  private update() {
-    const { description, amount } = this.form.value;
-    this.store.dispatch(
-      ContributionActions.update({
-        id: this.contribution!.id,
-        description,
-        amount,
-      })
-    );
-  }
-
-  private subscribeStore() {
-    this.constributionSubs = this.store
-      .select('contribution')
-      .subscribe(({ contribution, created, updated }) => {
-        if (created) this.handledCreated(contribution!);
-        if (updated) this.handledUpdated(contribution!);
-      });
-  }
-
-  private unsubscribeStore() {
-    this.constributionSubs?.unsubscribe();
-  }
-
-  private handledCreated(contribution: Contribution) {
-    this.router.navigate(['../', contribution.id], {relativeTo: this.route});
-  }
-
-  private handledUpdated(contribution: Contribution) {
-    this.router.navigate(['../', contribution.id], {relativeTo: this.route});
+    if (this.form.invalid) return
+    this.onSubmit.emit({ ...this.form.value, id: this.contribution?.id })
   }
 
   private createForm() {
-    this.form = this.fb.group({
+    return this.#formBuilder.group({
       description: [
-        this.isEditing ? this.contribution!.description : '',
+        this.contribution ? this.contribution.description : '',
         [Validators.required, Validators.minLength(6)],
       ],
 
       amount: [
-        this.isEditing ? this.contribution!.amount : 10,
+        this.contribution ? this.contribution.amount : 10,
         [Validators.required, Validators.min(5), Validators.max(1000)],
       ],
-    });
+    })
   }
 }

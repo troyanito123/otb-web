@@ -13,7 +13,7 @@ import { Transaction } from 'src/app/models/transaction.model';
 import { User } from 'src/app/models/user.model';
 import { PreContributionsPipe } from 'src/app/pipes/pre-contributions.pipe';
 import * as ContributionsPaidActions from 'src/app/state/actions/contributions-paid.action';
-import * as ContributionsActions from 'src/app/state/actions/contributions.action';
+import {ContributionsActions} from 'src/app/state/actions/contributions.action';
 import * as PreContributionsActions from 'src/app/state/actions/pre-constribution.action';
 import * as TransactionsActions from 'src/app/state/actions/transactions.action';
 import { AppState } from 'src/app/state/app.reducer';

@@ -7,7 +7,7 @@ import {
   contributionsPaidReducer,
   ContributionsPaidState,
 } from './reducers/contributions-paid.reducer'
-import { contributionsReducer, ContributionsState } from './reducers/contributions.reducer'
+import { contributionsFeature, ContributionsState } from './reducers/contributions.reducer'
 import { meetingsReducer, MeetingsState } from './reducers/meetings.reducer'
 import {
   MonthlyPaymentsMadeState,
@@ -23,7 +23,7 @@ import { expenseReducer, ExpenseState } from './reducers/expense.reducer'
 import { incomeExpensesReducer, IncomeExpensesState } from './reducers/income-expenses.reducer'
 import { meetingReducer, MeetingState } from './reducers/meeting.reducer'
 import { monthlyPaymentReducer, MonthlyPaymentState } from './reducers/monthly-payment.reducer'
-import { contributionReducer, ContributionState } from './reducers/contribution.reducer'
+import { contributionFeature, ContributionState } from './reducers/contribution.reducer'
 import { finesReducer, FinesState } from './reducers/fines.reducer'
 import { preFinesReducer, PreFinesState } from './reducers/pre-fine.reducer'
 import { certificationsReducer, CertificationsState } from './reducers/certifications.reducer'
@@ -42,7 +42,7 @@ export interface AppState {
   [monthlyPaymentsFeature.name]: MonthlyPaymentsState
   [monthlyPaymentsMadeFeature.name]: MonthlyPaymentsMadeState
   [prePaymentFeature.name]: PrePaymentState
-  contributions: ContributionsState
+  [contributionsFeature.name]: ContributionsState
   contributionsPaid: ContributionsPaidState
   preContribution: PreContributionsState
   [transactionsFeature.name]: TransactionsState
@@ -54,7 +54,7 @@ export interface AppState {
   incomeExpenses: IncomeExpensesState
   meeting: MeetingState
   monthlyPayment: MonthlyPaymentState
-  contribution: ContributionState
+  [contributionFeature.name]: ContributionState
   fines: FinesState
   preFines: PreFinesState
   certifications: CertificationsState
@@ -70,7 +70,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   [monthlyPaymentsFeature.name]: monthlyPaymentsFeature.reducer,
   [monthlyPaymentsMadeFeature.name]: monthlyPaymentsMadeFeature.reducer,
   [prePaymentFeature.name]: prePaymentFeature.reducer,
-  contributions: contributionsReducer,
+  [contributionsFeature.name]: contributionsFeature.reducer,
   contributionsPaid: contributionsPaidReducer,
   preContribution: preContributionsReducer,
   [transactionsFeature.name]: transactionsFeature.reducer,
@@ -82,7 +82,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   incomeExpenses: incomeExpensesReducer,
   meeting: meetingReducer,
   monthlyPayment: monthlyPaymentReducer,
-  contribution: contributionReducer,
+  [contributionFeature.name]: contributionFeature.reducer,
   fines: finesReducer,
   preFines: preFinesReducer,
   certifications: certificationsReducer,

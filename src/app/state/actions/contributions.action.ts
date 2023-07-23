@@ -1,20 +1,23 @@
-import { createAction, props } from '@ngrx/store';
-import { Contribution } from 'src/app/models/contribution.model';
+import { createAction, props } from '@ngrx/store'
+import { Contribution } from 'src/app/models/contribution.model'
 
-export const loadContributions = createAction(
-  '[CONTRIBUTIONS] load contributions'
-);
+const loadContributions = createAction('[CONTRIBUTIONS] load contributions')
 
-export const loadContributionsSuccess = createAction(
+const loadContributionsSuccess = createAction(
   '[CONTRIBUTIONS] load contributions success',
   props<{ contributions: Contribution[] }>()
-);
+)
 
-export const loadContributionsError = createAction(
+const loadContributionsError = createAction(
   '[CONTRIBUTIONS] load contributions error',
   props<{ e: any }>()
-);
+)
 
-export const cleanContributions = createAction(
-  '[CONTRIBUTIONS] clean contributions'
-);
+const cleanContributions = createAction('[CONTRIBUTIONS] clean contributions')
+
+export const ContributionsActions = {
+  loadContributions,
+  loadContributionsSuccess,
+  loadContributionsError,
+  cleanContributions,
+}
