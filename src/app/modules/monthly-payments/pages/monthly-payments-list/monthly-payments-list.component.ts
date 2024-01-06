@@ -14,7 +14,7 @@ import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer
 export class MonthlyPaymentsListComponent implements OnInit, OnDestroy {
   protected monthlyPayments$ = this.store.select(monthlyPaymentsFeature.selectMonthlyPayments)
 
-  protected years = ['2021', '2022', '2023']
+  protected years = ['2021', '2022', '2023', '2024']
 
   protected inputYear = new FormControl('2021', [Validators.required])
 

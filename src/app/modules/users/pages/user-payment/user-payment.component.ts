@@ -22,7 +22,7 @@ import { MatSelectChange } from '@angular/material/select'
 })
 export class UserPaymentComponent implements OnInit, OnDestroy {
   yearInput = new FormControl(new Date().getFullYear().toString(), Validators.required)
-  years = ['2021', '2022', '2023']
+  years = ['2021', '2022', '2023', '2024']
 
   displayedColumns: string[] = ['year', 'month', 'amountForPay', 'amountPay', 'option']
 
@@ -53,6 +53,10 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
     this.store.dispatch(PrePaymentActions.addPayment({ prePayment }))
   }
 
+  addAllToPrePaid(prePayments: PrePayment[]) {
+    console.log(prePayments)
+  }
+
   public reprint(data: MonthlyPaymentMade[]) {
     this.store.dispatch(
       TransactionsActions.addTransaction({
@@ -63,12 +67,28 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   }
 
   private generateTransactions(data: MonthlyPaymentMade[]) {
-    return data.map((p) => {
-      const { monthlyPayment, amount, date } = p
-      const { month, year } = monthlyPayment
-      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`
-      return new Transaction(description, amount, date)
-    })
+    const info = data.reduce(
+      (acum: { sum: number; desc: string[] }, curr) => {
+        return {
+          desc: [
+            ...acum.desc,
+            `${curr.monthlyPayment.month}/${curr.monthlyPayment.year}(${new Date(
+              curr.date
+            ).toLocaleString('es', { year: 'numeric', month: '2-digit', day: '2-digit' })})`,
+          ],
+          sum: acum.sum + curr.amount,
+        }
+      },
+      { sum: 0, desc: [] }
+    )
+
+    return [
+      new Transaction(
+        `REIMPRESION: Mensualidades de: ${info.desc.join(' - ')}`,
+        info.sum,
+        new Date()
+      ),
+    ]
   }
 
   private loadPayments(year: string) {
