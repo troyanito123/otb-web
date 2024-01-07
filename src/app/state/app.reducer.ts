@@ -4,7 +4,7 @@ import { expensesReducer, ExpensesState } from './reducers/expenses.reducer'
 import { authFeature, AuthState } from './reducers/auth.reducer'
 import { certificationReducer, CertificationState } from './reducers/certification.reducer'
 import {
-  contributionsPaidReducer,
+  contributionPaidFeature,
   ContributionsPaidState,
 } from './reducers/contributions-paid.reducer'
 import { contributionsFeature, ContributionsState } from './reducers/contributions.reducer'
@@ -14,7 +14,7 @@ import {
   monthlyPaymentsMadeFeature,
 } from './reducers/monthly-payments-made.reducer'
 import { MonthlyPaymentsState, monthlyPaymentsFeature } from './reducers/monthly-payments.reducer'
-import { preContributionsReducer, PreContributionsState } from './reducers/pre-contribution.reducer'
+import { preContributionFeature, PreContributionsState } from './reducers/pre-contribution.reducer'
 import { prePaymentFeature, PrePaymentState } from './reducers/pre-payment.reducer'
 import { transactionsFeature, TransactionsState } from './reducers/receipt.reducer'
 
@@ -43,7 +43,7 @@ export interface AppState {
   [monthlyPaymentsMadeFeature.name]: MonthlyPaymentsMadeState
   [prePaymentFeature.name]: PrePaymentState
   [contributionsFeature.name]: ContributionsState
-  contributionsPaid: ContributionsPaidState
+  [contributionPaidFeature.name]: ContributionsPaidState
   preContribution: PreContributionsState
   [transactionsFeature.name]: TransactionsState
   certification: CertificationState
@@ -71,8 +71,8 @@ export const appReducers: ActionReducerMap<AppState> = {
   [monthlyPaymentsMadeFeature.name]: monthlyPaymentsMadeFeature.reducer,
   [prePaymentFeature.name]: prePaymentFeature.reducer,
   [contributionsFeature.name]: contributionsFeature.reducer,
-  contributionsPaid: contributionsPaidReducer,
-  preContribution: preContributionsReducer,
+  [contributionPaidFeature.name]: contributionPaidFeature.reducer,
+  [preContributionFeature.name]: preContributionFeature.reducer,
   [transactionsFeature.name]: transactionsFeature.reducer,
   certification: certificationReducer,
   meetings: meetingsReducer,

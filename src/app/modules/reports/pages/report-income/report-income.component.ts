@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs'
 import { Store } from '@ngrx/store'
 import { AppState } from 'src/app/state/app.reducer'
 import { MonthlyPaymentMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
-import * as ContributionsPaidActions from 'src/app/state/actions/contributions-paid.action'
+import { ContributionsPaidActions } from 'src/app/state/actions/contributions-paid.action'
 import * as CertificationsActions from 'src/app/state/actions/certifications.action'
 import * as FinesActions from 'src/app/state/actions/fines.actions'
 import * as ReportActions from 'src/app/state/actions/reports.action'
@@ -63,10 +63,8 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
 
     this.contributionsPaidSubs = this.store
       .select('contributionsPaid')
-      .subscribe(({ contributionsPaid, loaded }) => {
-        if (loaded) {
-          this.generatePdfContributions(contributionsPaid)
-        }
+      .subscribe(({ contributionsPaid }) => {
+        this.generatePdfContributions(contributionsPaid)
       })
 
     this.certifcationsSubs = this.store

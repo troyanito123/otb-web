@@ -1,49 +1,38 @@
-import { createReducer, on } from '@ngrx/store';
-import { ContributionPaid } from 'src/app/models/contribution-paid.model';
-import * as ContributionsPaidActions from '../actions/contributions-paid.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { ContributionPaid } from 'src/app/models/contribution-paid.model'
+import { ContributionsPaidActions } from '../actions/contributions-paid.action'
 
 export interface ContributionsPaidState {
-  contributionsPaid: ContributionPaid[];
-  loading: boolean;
-  saved: boolean;
-  loaded: boolean;
-  error: any;
+  contributionsPaid: ContributionPaid[]
+  loading: boolean
+  error: any
 }
 
 export const initialContributionsPaid: ContributionsPaidState = {
   contributionsPaid: [],
   loading: false,
-  saved: false,
-  loaded: false,
   error: null,
-};
+}
 
-const _contributionsPaidReducer = createReducer(
+const contributionsPaidReducer = createReducer(
   initialContributionsPaid,
 
   on(ContributionsPaidActions.loadContributionsPaid, (state) => ({
     ...state,
     loading: true,
-    saved: false,
   })),
 
   on(ContributionsPaidActions.loadContributionsPaidByDate, (state) => ({
     ...state,
     loading: true,
-    loaded: false,
     error: null,
   })),
 
-  on(
-    ContributionsPaidActions.loadContributionsPaidSuccess,
-    (state, { contributionsPaid }) => ({
-      ...state,
-      contributionsPaid,
-      loading: false,
-      loaded: true,
-      error: null,
-    })
-  ),
+  on(ContributionsPaidActions.loadContributionsPaidSuccess, (state, { contributionsPaid }) => ({
+    ...state,
+    contributionsPaid,
+    loading: false,
+  })),
 
   on(ContributionsPaidActions.loadContributionsPaidError, (state, { e }) => ({
     ...state,
@@ -51,11 +40,9 @@ const _contributionsPaidReducer = createReducer(
     error: e.error,
   })),
 
-  on(ContributionsPaidActions.cleanContributionsPaid, (state) => ({
+  on(ContributionsPaidActions.cleanContributionsPaid, () => ({
     contributionsPaid: [],
     loading: false,
-    saved: false,
-    loaded: false,
     error: null,
   })),
 
@@ -64,33 +51,25 @@ const _contributionsPaidReducer = createReducer(
     loading: true,
   })),
 
-  on(
-    ContributionsPaidActions.addContributionsPaid,
-    (state, { contributionPaid }) => ({
-      ...state,
-      contributionsPaid: [...state.contributionsPaid, contributionPaid],
-      saved: true,
-      loading: false,
-    })
-  ),
+  on(ContributionsPaidActions.addContributionsPaid, (state, { contributionPaid }) => ({
+    ...state,
+    contributionsPaid: [...state.contributionsPaid, contributionPaid],
+    loading: false,
+  })),
 
   on(ContributionsPaidActions.createManyContributionsPaid, (state) => ({
     ...state,
-    saved: false,
     loading: true,
   })),
 
-  on(
-    ContributionsPaidActions.addManyContributionsPaid,
-    (state, { contributionsPaid }) => ({
-      ...state,
-      contributionsPaid: state.contributionsPaid.concat(contributionsPaid),
-      saved: true,
-      loading: false,
-    })
-  )
-);
+  on(ContributionsPaidActions.addManyContributionsPaid, (state, { contributionsPaid }) => ({
+    ...state,
+    contributionsPaid: state.contributionsPaid.concat(contributionsPaid),
+    loading: false,
+  }))
+)
 
-export function contributionsPaidReducer(state: any, action: any) {
-  return _contributionsPaidReducer(state, action);
-}
+export const contributionPaidFeature = createFeature({
+  name: 'contributionsPaid',
+  reducer: contributionsPaidReducer,
+})

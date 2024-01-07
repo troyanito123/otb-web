@@ -1,46 +1,63 @@
-import { createAction, props } from '@ngrx/store';
-import { ContributionPaid } from 'src/app/models/contribution-paid.model';
+import { Transaction } from '@models/transaction.model'
+import { createAction, props } from '@ngrx/store'
+import { ContributionPaid } from 'src/app/models/contribution-paid.model'
 
-export const loadContributionsPaid = createAction(
-  '[CONTRIBUTIONS_PAID] load contributions paid',
-  props<{ userId: number }>()
-);
+const loadContributionsPaid = createAction('[CONTRIBUTIONS_PAID] load contributions paid')
 
-export const loadContributionsPaidByDate = createAction(
+const loadContributionsPaidByDate = createAction(
   '[CONTRIBUTIONS_PAID] load contributions paid by date',
   props<{ initDate: string; endDate: string }>()
-);
+)
 
-export const loadContributionsPaidSuccess = createAction(
+const loadContributionsPaidSuccess = createAction(
   '[CONTRIBUTIONS_PAID] load contributions paid success',
   props<{ contributionsPaid: ContributionPaid[] }>()
-);
+)
 
-export const loadContributionsPaidError = createAction(
+const loadContributionsPaidError = createAction(
   '[CONTRIBUTIONS_PAID] load contributions paid error',
   props<{ e: any }>()
-);
+)
 
-export const cleanContributionsPaid = createAction(
-  '[CONTRIBUTIONS_PAID] clean contributions paid'
-);
+const cleanContributionsPaid = createAction('[CONTRIBUTIONS_PAID] clean contributions paid')
 
-export const createContributionsPaid = createAction(
+const createContributionsPaid = createAction(
   '[CONTRIBUTIONS_PAID] create contributions paid',
   props<{ amount: number; userId: number; contributionId: number }>()
-);
+)
 
-export const addContributionsPaid = createAction(
+const addContributionsPaid = createAction(
   '[CONTRIBUTIONS_PAID] Add contributions paid',
   props<{ contributionPaid: ContributionPaid }>()
-);
+)
 
-export const createManyContributionsPaid = createAction(
+const createManyContributionsPaid = createAction(
   '[CONTRIBUTIONS_PAID] create many contributions paid',
-  props<{ userId: number; contributionsId: string; date: Date }>()
-);
+  props<{
+    contributionsId: string
+    date: Date
+    generateTransactionsCallback: (contributionsPaid: ContributionPaid[]) => Transaction[]
+    forwadSupplier: (id: number) => string
+  }>()
+)
 
-export const addManyContributionsPaid = createAction(
+const addManyContributionsPaid = createAction(
   '[CONTRIBUTIONS_PAID] Add many contributions paid',
-  props<{ contributionsPaid: ContributionPaid[] }>()
-);
+  props<{
+    contributionsPaid: ContributionPaid[]
+    generateTransactionsCallback: (contributionsPaid: ContributionPaid[]) => Transaction[]
+    forward: string
+  }>()
+)
+
+export const ContributionsPaidActions = {
+  loadContributionsPaid,
+  loadContributionsPaidByDate,
+  loadContributionsPaidSuccess,
+  loadContributionsPaidError,
+  cleanContributionsPaid,
+  createContributionsPaid,
+  addContributionsPaid,
+  createManyContributionsPaid,
+  addManyContributionsPaid,
+}
