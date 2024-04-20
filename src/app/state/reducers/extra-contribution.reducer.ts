@@ -1,7 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
 import {
   ExtraContribution,
-  ExtraContributionPaid,
   ExtraContributionPayMade,
 } from 'src/app/models/extra-contribution.interface'
 import { ExtraContActions } from '../actions/extra-contribution.action'
@@ -10,7 +9,6 @@ export interface ExtraContributionState {
   extraContributions: ExtraContribution[]
   extraContribution: ExtraContribution | null
   extraContributionMade: ExtraContributionPayMade[]
-  extraContributionPaid: ExtraContributionPaid | null
   loading: boolean
   error: any
 }
@@ -19,7 +17,6 @@ export const initialExtraContributionState: ExtraContributionState = {
   extraContributions: [],
   extraContribution: null,
   extraContributionMade: [],
-  extraContributionPaid: null,
   loading: false,
   error: null,
 }
@@ -86,12 +83,6 @@ const extraContributionReducer = createReducer(
     loading: true,
   })),
 
-  on(ExtraContActions.paymentSuccess, (state, { data }) => ({
-    ...state,
-    loading: false,
-    extraContributionPaid: data,
-  })),
-
   on(ExtraContActions.setError, (state, { e }) => ({
     ...state,
     loading: false,
@@ -102,7 +93,6 @@ const extraContributionReducer = createReducer(
     extraContributions: [],
     extraContribution: null,
     extraContributionMade: [],
-    extraContributionPaid: null,
     loading: false,
     error: null,
   }))

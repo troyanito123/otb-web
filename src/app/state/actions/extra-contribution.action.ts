@@ -1,3 +1,4 @@
+import { Transaction } from '@models/transaction.model'
 import { createAction, props } from '@ngrx/store'
 import {
   ExtraContribution,
@@ -39,10 +40,7 @@ const update = createAction(
   }>()
 )
 
-const loadByUser = createAction(
-  '[EXTRA-CONTRIBUTION] load extra contributions by user',
-  props<{ id: number }>()
-)
+const loadByUser = createAction('[EXTRA-CONTRIBUTION] load extra contributions by user')
 
 const loadByUserSuccess = createAction(
   '[EXTRA-CONTRIBUTION] load extra contributions by user success',
@@ -51,12 +49,11 @@ const loadByUserSuccess = createAction(
 
 const payment = createAction(
   '[EXTRA-CONTRIBUTION] payment an extra contribution',
-  props<{ userId: number; contributionId: number }>()
-)
-
-const paymentSuccess = createAction(
-  '[EXTRA-CONTRIBUTION] payment an extra contribution success',
-  props<{ data: ExtraContributionPaid }>()
+  props<{
+    contributionId: number
+    generateTransactionsCallback: (contributionsPaid: ExtraContributionPaid) => Transaction[]
+    forwardSupplier: (id: number) => string
+  }>()
 )
 
 const setError = createAction('[EXTRA-CONTRIBUTION] Set error', props<{ e: any }>())
@@ -74,7 +71,6 @@ export const ExtraContActions = {
   create,
   update,
   payment,
-  paymentSuccess,
   setError,
   clean,
 }

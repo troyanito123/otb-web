@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { mergeMap, map, catchError, tap } from 'rxjs/operators'
+import { mergeMap, map, catchError, tap, filter, first, switchMap } from 'rxjs/operators'
 import { of } from 'rxjs'
 
 import { Actions, createEffect, ofType } from '@ngrx/effects'
@@ -7,13 +7,17 @@ import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { ExtraContActions } from '../actions/extra-contribution.action'
 import { ExtraContributionService } from 'src/app/services/extra-contribution.service'
 import { Router } from '@angular/router'
+import { Store } from '@ngrx/store'
+import { userFeature } from '@state/reducers/user.reducer'
+import { addTransaction } from 'src/app/state/actions/transactions.action'
 
 @Injectable()
 export class ExtraContributionEffect {
   constructor(
     private actions$: Actions,
     private extraContService: ExtraContributionService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   loadAll$ = createEffect(() =>
@@ -33,10 +37,16 @@ export class ExtraContributionEffect {
   loadByUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExtraContActions.loadByUser),
-      mergeMap(({ id }) =>
-        this.extraContService.getByUser(id).pipe(
-          map((data) => ExtraContActions.loadByUserSuccess({ data })),
-          catchError((e) => of(ExtraContActions.setError({ e })))
+      mergeMap(() =>
+        this.store.select(userFeature.selectUser).pipe(
+          filter((user) => user !== null),
+          first(),
+          switchMap((user) =>
+            this.extraContService.getByUser(user!.id).pipe(
+              map((data) => ExtraContActions.loadByUserSuccess({ data })),
+              catchError((e) => of(ExtraContActions.setError({ e })))
+            )
+          )
         )
       )
     )
@@ -87,9 +97,15 @@ export class ExtraContributionEffect {
   payment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExtraContActions.payment),
-      mergeMap(({ userId, contributionId }) =>
-        this.extraContService.payment(userId, contributionId).pipe(
-          map((data) => ExtraContActions.paymentSuccess({ data })),
+      mergeMap(({ contributionId, generateTransactionsCallback, forwardSupplier }) =>
+        this.store.select(userFeature.selectUser).pipe(
+          filter((user) => user !== null),
+          first(),
+          switchMap((user) => this.extraContService.payment(user!.id, contributionId)),
+          tap((data) => {
+            this.router.navigateByUrl(forwardSupplier(data.user.id))
+          }),
+          map((data) => addTransaction({ transactions: generateTransactionsCallback(data) })),
           catchError((e) => of(ExtraContActions.setError({ e })))
         )
       )
