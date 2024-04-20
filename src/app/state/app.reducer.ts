@@ -28,7 +28,7 @@ import { finesReducer, FinesState } from './reducers/fines.reducer'
 import { preFinesReducer, PreFinesState } from './reducers/pre-fine.reducer'
 import { certificationsReducer, CertificationsState } from './reducers/certifications.reducer'
 import {
-  extraContributionReducer,
+  extraContributionFeature,
   ExtraContributionState,
 } from './reducers/extra-contribution.reducer'
 import { incomesFeature ,IncomeState   } from './reducers/incomes.reducer'
@@ -86,7 +86,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   fines: finesReducer,
   preFines: preFinesReducer,
   certifications: certificationsReducer,
-  extraContributions: extraContributionReducer,
+  [extraContributionFeature.name]: extraContributionFeature.reducer,
   incomes: incomesFeature.reducer,
   report: reportReducer,
 }

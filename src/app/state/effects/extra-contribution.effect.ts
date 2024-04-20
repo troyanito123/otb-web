@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { mergeMap, map, catchError, tap } from 'rxjs/operators'
+import { of } from 'rxjs'
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects'
 
-import * as ExtraContActions from '../actions/extra-contribution.action';
-import { ExtraContributionService } from 'src/app/services/extra-contribution.service';
+import { ExtraContActions } from '../actions/extra-contribution.action'
+import { ExtraContributionService } from 'src/app/services/extra-contribution.service'
+import { Router } from '@angular/router'
 
 @Injectable()
 export class ExtraContributionEffect {
   constructor(
     private actions$: Actions,
-    private extraContService: ExtraContributionService
+    private extraContService: ExtraContributionService,
+    private router: Router
   ) {}
 
   loadAll$ = createEffect(() =>
@@ -26,7 +28,7 @@ export class ExtraContributionEffect {
         )
       )
     )
-  );
+  )
 
   loadByUser$ = createEffect(() =>
     this.actions$.pipe(
@@ -38,49 +40,49 @@ export class ExtraContributionEffect {
         )
       )
     )
-  );
+  )
 
   loadOne$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExtraContActions.loadOne),
       mergeMap(({ id }) =>
         this.extraContService.getOne(id).pipe(
-          map((extraContribution) =>
-            ExtraContActions.loadOneSuccess({ data: extraContribution })
-          ),
+          map((extraContribution) => ExtraContActions.loadOneSuccess({ data: extraContribution })),
           catchError((e) => of(ExtraContActions.setError({ e })))
         )
       )
     )
-  );
+  )
 
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExtraContActions.create),
-      mergeMap(({ data }) =>
+      mergeMap(({ data, forwardSupplier }) =>
         this.extraContService.create(data).pipe(
-          map((extraContribution) =>
-            ExtraContActions.createSuccess({ data: extraContribution })
-          ),
+          tap(({ id }) => {
+            this.router.navigateByUrl(forwardSupplier(id))
+          }),
+          map((extraContribution) => ExtraContActions.loadOneSuccess({ data: extraContribution })),
           catchError((e) => of(ExtraContActions.setError({ e })))
         )
       )
     )
-  );
+  )
 
   update$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ExtraContActions.update),
-      mergeMap(({ id, data }) =>
+      mergeMap(({ id, data, forwardSupplier }) =>
         this.extraContService.update(id, data).pipe(
-          map((extraContribution) =>
-            ExtraContActions.updateSuccess({ data: extraContribution })
-          ),
+          tap(({ id }) => {
+            this.router.navigateByUrl(forwardSupplier(id))
+          }),
+          map((extraContribution) => ExtraContActions.loadOneSuccess({ data: extraContribution })),
           catchError((e) => of(ExtraContActions.setError({ e })))
         )
       )
     )
-  );
+  )
 
   payment$ = createEffect(() =>
     this.actions$.pipe(
@@ -92,5 +94,5 @@ export class ExtraContributionEffect {
         )
       )
     )
-  );
+  )
 }

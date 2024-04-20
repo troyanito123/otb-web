@@ -1,18 +1,15 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-import { AppState } from 'src/app/state/app.reducer';
-import * as ExtraContActions from 'src/app/state/actions/extra-contribution.action';
+import { ExtraContActions } from 'src/app/state/actions/extra-contribution.action';
 
 @Component({
   selector: 'app-extra-contributions-view',
-  templateUrl: './extra-contributions-view.component.html',
-  styleUrls: ['./extra-contributions-view.component.scss'],
+  template: `<router-outlet></router-outlet>`,
 })
 export class ExtraContributionsViewComponent implements OnInit, OnDestroy {
   constructor(
-    private store: Store<AppState>,
+    private store: Store,
     private activatedRoute: ActivatedRoute
   ) {}
 
