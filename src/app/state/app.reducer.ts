@@ -8,7 +8,7 @@ import {
   ContributionsPaidState,
 } from './reducers/contributions-paid.reducer'
 import { contributionsFeature, ContributionsState } from './reducers/contributions.reducer'
-import { meetingsReducer, MeetingsState } from './reducers/meetings.reducer'
+import { meetingsFeature, MeetingsState } from './reducers/meetings.reducer'
 import {
   MonthlyPaymentsMadeState,
   monthlyPaymentsMadeFeature,
@@ -47,7 +47,7 @@ export interface AppState {
   preContribution: PreContributionsState
   [transactionsFeature.name]: TransactionsState
   certification: CertificationState
-  meetings: MeetingsState
+  [meetingsFeature.name]: MeetingsState
   attendences: AttendencesState
   expenses: ExpensesState
   expense: ExpenseState
@@ -75,7 +75,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   [preContributionFeature.name]: preContributionFeature.reducer,
   [transactionsFeature.name]: transactionsFeature.reducer,
   certification: certificationReducer,
-  meetings: meetingsReducer,
+  [meetingsFeature.name]: meetingsFeature.reducer,
   attendences: attendencesReducer,
   expenses: expensesReducer,
   expense: expenseReducer,

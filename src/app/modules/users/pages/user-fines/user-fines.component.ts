@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
 import * as FinesActions from 'src/app/state/actions/fines.actions';
 import * as AttendencesActions from 'src/app/state/actions/attendences.actions';
-import * as MeetingsActions from 'src/app/state/actions/meetings.actions';
+import { MeetingsActions } from 'src/app/state/actions/meetings.actions';
 
 import { User } from 'src/app/models/user.model';
 import { Fine } from 'src/app/models/fine.model';

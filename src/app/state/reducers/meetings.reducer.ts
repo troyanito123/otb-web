@@ -1,6 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { Meeting } from 'src/app/models/meeting.model';
-import * as MeetingsActions from '../actions/meetings.actions';
+import { MeetingsActions } from '../actions/meetings.actions';
 
 export interface MeetingsState {
   meetings: Meeting[];
@@ -16,7 +16,7 @@ export const initialMeetingsState: MeetingsState = {
   error: null,
 };
 
-const _meetingsReducer = createReducer(
+const meetingsReducer = createReducer(
   initialMeetingsState,
 
   on(MeetingsActions.load, (state) => ({
@@ -33,7 +33,7 @@ const _meetingsReducer = createReducer(
     error: null,
   })),
 
-  on(MeetingsActions.loadSucces, (state, { meetings }) => ({
+  on(MeetingsActions.loadSuccess, (state, { meetings }) => ({
     ...state,
     meetings,
     loaded: true,
@@ -48,6 +48,4 @@ const _meetingsReducer = createReducer(
   }))
 );
 
-export function meetingsReducer(state: any, action: any) {
-  return _meetingsReducer(state, action);
-}
+export const meetingsFeature = createFeature({ name: 'meetings', reducer: meetingsReducer })

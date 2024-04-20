@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
-import * as MeetingsActions from 'src/app/state/actions/meetings.actions';
+import { MeetingsActions } from 'src/app/state/actions/meetings.actions';
 
 import { Meeting } from 'src/app/models/meeting.model';
 

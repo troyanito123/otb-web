@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.reducer';
-import * as MeetingsActions from 'src/app/state/actions/meetings.actions';
+import { MeetingsActions } from 'src/app/state/actions/meetings.actions';
 import * as AttendencesActions from 'src/app/state/actions/attendences.actions';
 
 import { Subscription } from 'rxjs';
