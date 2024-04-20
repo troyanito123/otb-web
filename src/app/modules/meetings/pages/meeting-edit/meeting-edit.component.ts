@@ -1,35 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { Meeting } from 'src/app/models/meeting.model';
-import { AppState } from 'src/app/state/app.reducer';
+import { Component, inject } from '@angular/core'
+import { MeetingData } from '@models/meeting.model'
+import { Store } from '@ngrx/store'
+import { MeetingActions } from '@state/actions/meeting.actions'
+import { meetingFeature } from '@state/reducers/meeting.reducer'
 
 @Component({
   selector: 'app-meeting-edit',
-  templateUrl: './meeting-edit.component.html',
-  styleUrls: ['./meeting-edit.component.scss'],
+  template: `
+    <ng-container *ngIf="meeting$ | async as meeting">
+      <app-meeting-form
+        [meeting]="meeting"
+        (clickSave)="update($event, meeting.id)"
+      ></app-meeting-form>
+    </ng-container>
+  `,
 })
-export class MeetingEditComponent implements OnInit {
-  public meeting!: Meeting | null;
-  private meetingSubs!: Subscription;
+export class MeetingEditComponent {
+  #store = inject(Store)
+  readonly meeting$ = this.#store.select(meetingFeature.selectMeeting)
 
-  constructor(private store: Store<AppState>) {}
-
-  ngOnInit(): void {
-    this.subscribeStore();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribeStore();
-  }
-
-  private subscribeStore() {
-    this.meetingSubs = this.store.select('meeting').subscribe(({ meeting }) => {
-      this.meeting = meeting;
-    });
-  }
-
-  private unsubscribeStore() {
-    this.meetingSubs?.unsubscribe();
+  public update(data: MeetingData, id: number) {
+    this.#store.dispatch(
+      MeetingActions.update({
+        id,
+        data,
+        forwardSupplier: (id: number) => `/private/meetings/${id}`,
+      })
+    )
   }
 }

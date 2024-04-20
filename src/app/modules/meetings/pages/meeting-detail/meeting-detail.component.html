@@ -1,26 +1,17 @@
-<div
-  *ngIf="meeting"
-  class="m-top-1"
->
+<div *ngIf="meeting$ | async as meeting" class="m-top-1">
   <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>{{ meeting.name }}</mat-card-title>
-      <mat-card-subtitle>{{
-        meeting.date | date: "fullDate" | uppercase
-      }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ meeting.date | date : 'fullDate' | uppercase }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <p><strong>Puntos a tratar: </strong> {{ meeting.description }}</p>
       <p><strong>Conclusiones: </strong> {{ meeting.conclutions }}</p>
-      <p>
-        <strong>Multa: </strong> {{ meeting.fine_amount | number: "1.2" }} Bs.
-      </p>
+      <p><strong>Multa: </strong> {{ meeting.fine_amount | number : '1.2' }} Bs.</p>
     </mat-card-content>
 
     <mat-card-actions align="end">
-        <button mat-raised-button color="warn" (click)="delete()">
-          Eliminar
-        </button>
+      <button mat-raised-button color="warn" (click)="delete(meeting.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -21,7 +21,7 @@ import { transactionsFeature, TransactionsState } from './reducers/receipt.reduc
 import { roleFeature, RolesState } from './reducers/roles.reducer'
 import { expenseReducer, ExpenseState } from './reducers/expense.reducer'
 import { incomeExpensesReducer, IncomeExpensesState } from './reducers/income-expenses.reducer'
-import { meetingReducer, MeetingState } from './reducers/meeting.reducer'
+import { meetingFeature, MeetingState } from './reducers/meeting.reducer'
 import { monthlyPaymentReducer, MonthlyPaymentState } from './reducers/monthly-payment.reducer'
 import { contributionFeature, ContributionState } from './reducers/contribution.reducer'
 import { finesReducer, FinesState } from './reducers/fines.reducer'
@@ -52,7 +52,7 @@ export interface AppState {
   expenses: ExpensesState
   expense: ExpenseState
   incomeExpenses: IncomeExpensesState
-  meeting: MeetingState
+  [meetingFeature.name]: MeetingState
   monthlyPayment: MonthlyPaymentState
   [contributionFeature.name]: ContributionState
   fines: FinesState
@@ -80,7 +80,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   expenses: expensesReducer,
   expense: expenseReducer,
   incomeExpenses: incomeExpensesReducer,
-  meeting: meetingReducer,
+  [meetingFeature.name]: meetingFeature.reducer,
   monthlyPayment: monthlyPaymentReducer,
   [contributionFeature.name]: contributionFeature.reducer,
   fines: finesReducer,
