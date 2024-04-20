@@ -58,7 +58,7 @@ export interface AppState {
   fines: FinesState
   preFines: PreFinesState
   certifications: CertificationsState
-  extraContributions: ExtraContributionState
+  [extraContributionFeature.name]: ExtraContributionState
   [incomesFeature.name]: IncomeState
   report: ReportSate
 }
