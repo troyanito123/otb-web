@@ -1,8 +1,8 @@
-<div>
+<div *ngIf="userMeetingsAttendance$ | async as userMeetingsAttendance">
   <h2>Reuniones</h2>
   <table
     mat-table
-    [dataSource]="attendenceMeeting"
+    [dataSource]="userMeetingsAttendance"
     class="mat-elevation-z8"
     style="width: 80%"
   >
@@ -32,8 +32,8 @@
         <button
           mat-raised-button
           color="primary"
-          (click)="markAttendence(element)"
-          *ngIf="element.isPresent === 'NO' && canAsist(element.date)"
+          (click)="markAttendance(element.id)"
+          *ngIf="element.isPresent === 'NO' && canAssist(element.date)"
         >
           Asistir
         </button>

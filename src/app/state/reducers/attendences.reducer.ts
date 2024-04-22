@@ -1,23 +1,39 @@
-import { createReducer, on } from '@ngrx/store';
-import { Attendence } from 'src/app/models/attendence.model';
-import * as AttendencesActions from '../actions/attendences.actions';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { Attendence } from 'src/app/models/attendence.model'
+import { AttendencesActions } from '../actions/attendences.actions'
+import { AttendenceMeeting } from '@models/attendence-meeting.mode'
 
 export interface AttendencesState {
-  attendences: Attendence[];
-  loading: boolean;
-  loaded: boolean;
-  error: any;
+  attendences: Attendence[]
+  userMeetingsAttendance: AttendenceMeeting[]
+  loading: boolean
+  loaded: boolean
+  error: any
 }
 
 export const initialAttendencesState: AttendencesState = {
   attendences: [],
+  userMeetingsAttendance: [],
   loading: false,
   loaded: false,
   error: null,
-};
+}
 
-const _attendencesReducer = createReducer(
+const attendencesReducer = createReducer(
   initialAttendencesState,
+
+  on(AttendencesActions.loadUserMeetingsAttendance, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(AttendencesActions.loadUserMeetingsAttendanceSuccess, (state, { userMeetingsAttendance }) => ({
+    ...state,
+    userMeetingsAttendance,
+    loading: false,
+    error: null,
+  })),
 
   on(AttendencesActions.loadByUser, (state) => ({
     ...state,
@@ -42,6 +58,7 @@ const _attendencesReducer = createReducer(
 
   on(AttendencesActions.clean, () => ({
     attendences: [],
+    userMeetingsAttendance: [],
     loaded: false,
     loading: false,
     error: null,
@@ -64,18 +81,21 @@ const _attendencesReducer = createReducer(
   on(AttendencesActions.create, (state) => ({
     ...state,
     loading: true,
-    loaded: false,
     error: null,
   })),
 
   on(AttendencesActions.createSuccess, (state, { attendence }) => ({
     ...state,
-    attendences: [...state.attendences, attendence],
+    userMeetingsAttendance: state.userMeetingsAttendance.map((uma) =>
+      uma.id === attendence.meeting.id
+        ? AttendenceMeeting.fromJson({ ...uma, fine_amount: 0, isPresent: 'SI' })
+        : { ...uma }
+    ),
     loading: false,
-    loaded: true,
   }))
-);
+)
 
-export function attendencesReducer(state: any, action: any) {
-  return _attendencesReducer(state, action);
-}
+export const attendencesFeature = createFeature({
+  name: 'attendences',
+  reducer: attendencesReducer,
+})
