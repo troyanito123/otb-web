@@ -2,7 +2,7 @@ import { ActionReducerMap } from '@ngrx/store'
 import { attendencesFeature, AttendencesState } from './reducers/attendences.reducer'
 import { expensesReducer, ExpensesState } from './reducers/expenses.reducer'
 import { authFeature, AuthState } from './reducers/auth.reducer'
-import { certificationReducer, CertificationState } from './reducers/certification.reducer'
+import { certificationFeature, CertificationState } from './reducers/certification.reducer'
 import {
   contributionPaidFeature,
   ContributionsPaidState,
@@ -46,7 +46,7 @@ export interface AppState {
   [contributionPaidFeature.name]: ContributionsPaidState
   preContribution: PreContributionsState
   [transactionsFeature.name]: TransactionsState
-  certification: CertificationState
+  [certificationFeature.name]: CertificationState
   [meetingsFeature.name]: MeetingsState
   [attendencesFeature.name]: AttendencesState
   expenses: ExpensesState
@@ -74,7 +74,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   [contributionPaidFeature.name]: contributionPaidFeature.reducer,
   [preContributionFeature.name]: preContributionFeature.reducer,
   [transactionsFeature.name]: transactionsFeature.reducer,
-  certification: certificationReducer,
+  [certificationFeature.name]: certificationFeature.reducer,
   [meetingsFeature.name]: meetingsFeature.reducer,
   [attendencesFeature.name]: attendencesFeature.reducer,
   expenses: expensesReducer,

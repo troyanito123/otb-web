@@ -1,68 +1,58 @@
-import { createAction, props } from '@ngrx/store';
-import {
-  Certification,
-  CertificationType,
-} from 'src/app/models/certification.model';
+import { Transaction } from '@models/transaction.model'
+import { createAction, props } from '@ngrx/store'
+import { Certification, CertificationType } from 'src/app/models/certification.model'
 
-export const load = createAction(
-  '[CERTIFICATION] load certification',
-  props<{ id: number }>()
-);
+const load = createAction('[CERTIFICATION] load certification', props<{ id: number }>())
 
-export const loadSuccess = createAction(
-  '[CERTIFICATION] load certification success',
+const loadOrSaveSuccess = createAction(
+  '[CERTIFICATION] load or save certification success',
   props<{ certification: Certification }>()
-);
+)
 
-export const create = createAction(
+const create = createAction(
   '[CERTIFICATION] create one',
   props<{
-    description: string;
-    amount: number;
-    ctype: CertificationType;
-    date: Date;
-    userId: number;
+    description: string
+    amount: number
+    ctype: CertificationType
+    date: Date
+    forwardSupplier: (id: number) => string
+    transactionsCallback: (certification: Certification) => Transaction
   }>()
-);
+)
 
-export const createSuccess = createAction(
-  '[CERTIFICATION] create success',
-  props<{ certification: Certification }>()
-);
-
-export const update = createAction(
+const update = createAction(
   '[CERTIFICATION] update certification one',
   props<{
-    id: number;
-    description: string;
-    amount: number;
-    ctype: CertificationType;
-    date: Date;
+    id: number
+    description: string
+    amount: number
+    ctype: CertificationType
+    date: Date
+    forwardSupplier: (id?: number) => string
+    messageSupplier: (certification: Certification) => string
   }>()
-);
+)
 
-export const updateSuccess = createAction(
-  '[CERTIFICATION] update certification success',
-  props<{ certification: Certification }>()
-);
-
-export const remove = createAction(
+const remove = createAction(
   '[CERTIFICATION] remove certification one',
-  props<{ id: number }>()
-);
+  props<{
+    id: number
+    forwardSupplier: (id?: number) => string
+    messageSupplier: (certification: Certification) => string
+  }>()
+)
 
-export const removeSuccess = createAction(
-  '[CERTIFICATION] remove certification success',
-  props<{ certification: Certification }>()
-);
+const error = createAction('[CERTIFICATION] catch error', props<{ e: any }>())
 
-export const error = createAction(
-  '[CERTIFICATION] catch error',
-  props<{ e: any }>()
-);
+const clean = createAction('[CERTIFICATION] clean')
 
-export const clean = createAction('[CERTIFICATION] clean');
-
-export const softClean = createAction(
-  '[CERTIFICATION] clean updated created saved'
-);
+export const CertificationActions = {
+  load,
+  create,
+  update,
+  remove,
+  loadOrSaveSuccess,
+  error,
+  clean,
+}
