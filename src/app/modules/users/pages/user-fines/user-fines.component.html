@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" style="width: 100%">
+<table mat-table [dataSource]="(allMeetingsByUserFines$ | async) ?? []" style="width: 100%">
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef>FECHA</th>
     <td mat-cell *matCellDef="let element">{{ element.meetingDate | date }}</td>
@@ -17,33 +17,30 @@
   <ng-container matColumnDef="fine">
     <th mat-header-cell *matHeaderCellDef>MULTA</th>
     <td mat-cell *matCellDef="let element">
-      {{ element.fine | currency: "Bs." }}
+      {{ element.fine | currency : 'Bs.' }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="finePaid">
     <th mat-header-cell *matHeaderCellDef>MULTA PAGADA</th>
     <td mat-cell *matCellDef="let element">
-      {{ element.finePaid | currency: "Bs." }}
+      {{ element.finePaid | currency : 'Bs.' }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="option">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <ng-container *ngIf="element.meetingDate | couldPayFine: user!.subscription_at; else paylable">
-        NO APLICA
-      </ng-container>
-      <ng-template #paylable>
+      <ng-container>
         <button
-        mat-raised-button
-        color="primary"
-        *ngIf="element.fine > element.finePaid"
-        (click)="addToPrePaid(element)"
-      >
-        Añadir
-      </button>
-      </ng-template>
+          mat-raised-button
+          color="primary"
+          *ngIf="element.fine > element.finePaid"
+          (click)="addToPrePaid(element)"
+        >
+          Añadir
+        </button>
+      </ng-container>
     </td>
   </ng-container>
 
@@ -51,11 +48,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
-<div
-  class="flex-row-start-start"
-  style="margin-top: 1rem; width: 100%"
->
-  <table mat-table [dataSource]="preFinesPaid" style="width: 50%">
+<div class="flex-column-center-stretch">
+  <table mat-table [dataSource]="(preFinesPaid$ | async) ?? []">
     <ng-container matColumnDef="meetingx">
       <th mat-header-cell *matHeaderCellDef>REUNION</th>
       <td mat-cell *matCellDef="let row">{{ row.meetingName | uppercase }}</td>
@@ -63,15 +57,13 @@
 
     <ng-container matColumnDef="finex">
       <th mat-header-cell *matHeaderCellDef>MULTA A PAGAR</th>
-      <td mat-cell *matCellDef="let row">{{ row.fine | number: "1.2" }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.fine | number : '1.2' }}</td>
     </ng-container>
 
     <ng-container matColumnDef="optionx">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <button mat-raised-button color="accent" (click)="removeToPrePaid(row)">
-          Quitar
-        </button>
+        <button mat-raised-button color="accent" (click)="removeToPrePaid(row)">Quitar</button>
       </td>
     </ng-container>
 
@@ -79,18 +71,15 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumnsPrePaid"></tr>
   </table>
 
-  <div
-    class="flex-column-start-stretch"
-    style="width: 50%"
-  >
+  <div class="flex-column-start-stretch" *ngIf="preFinesPaid$ | async as preFinesPaid">
     <mat-form-field appearance="fill">
       <mat-label>Fecha de registro</mat-label>
       <input matInput [matDatepicker]="picker" [formControl]="inputDate" />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <h2>Total: {{ totalFinesPaid }}</h2>
-    <button mat-raised-button color="primary" (click)="confirmPaid()">
+    <h2>Total: {{ totalFinesPaid$ | async }}</h2>
+    <button mat-raised-button color="primary" (click)="confirmPaid(preFinesPaid)">
       Confirmar Pago
     </button>
   </div>

@@ -2,15 +2,6 @@ import { AttendenceMeeting } from '@models/attendence-meeting.mode'
 import { createAction, props } from '@ngrx/store'
 import { Attendence } from 'src/app/models/attendence.model'
 
-//Deprecated uses loadAllByUser
-const loadByUser = createAction('[ATTENDENCES] load attencendes', props<{ userId: number }>())
-
-//Deprecated uses loadAllByUserSuccess
-const load = createAction(
-  '[ATTENDENCES] load success attencendes',
-  props<{ attendences: Attendence[] }>()
-)
-
 const loadUserMeetingsAttendance = createAction(
   '[ATTENDENCES] load all meetings by user attendance',
 )
@@ -41,8 +32,6 @@ const loadByMeetingSuccess = createAction(
 )
 
 export const AttendencesActions = {
-  loadByUser,
-  load,
   clean,
   create,
   createSuccess,

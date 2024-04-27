@@ -1,27 +1,41 @@
-import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { mergeMap, map, catchError, switchMap, filter, first, tap } from 'rxjs/operators'
+import { of } from 'rxjs'
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as FinesActions from '../actions/fines.actions';
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { FinesActions } from '../actions/fines.actions'
 
-import { FineService } from 'src/app/services/fine.service';
+import { FineService } from 'src/app/services/fine.service'
+import { Store } from '@ngrx/store'
+import { userFeature } from '@state/reducers/user.reducer'
+import { Router } from '@angular/router'
+import { addTransaction } from '@state/actions/transactions.action'
+import { PreFinesActions } from '@state/actions/pre-fine.action'
 
 @Injectable()
 export class FinesEffect {
-  constructor(private actions$: Actions, private fineService: FineService) {}
+  constructor(
+    private actions$: Actions,
+    private fineService: FineService,
+    private store: Store,
+    private router: Router
+  ) {}
 
-  loadByUser$ = createEffect(() =>
+  loadAllFinesByUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(FinesActions.loadByUser),
-      mergeMap(({ id }) =>
-        this.fineService.getByUser(id).pipe(
-          map((fines) => FinesActions.loadSuccess({ fines })),
-          catchError((e) => of(FinesActions.error({ e })))
+      ofType(FinesActions.loadAllFinesByUser),
+      switchMap(() =>
+        this.store.select(userFeature.selectUser).pipe(
+          filter((user) => user !== null),
+          first()
         )
-      )
+      ),
+      switchMap((user) => this.fineService.loadAllFinesByUser(user!.id)),
+      map((allUserPreFines) => FinesActions.loadAllFinesByUserSuccess({ allUserPreFines })),
+      catchError((e) => of(FinesActions.error({ e })))
     )
-  );
+  )
+
 
   loadByDate$ = createEffect(() =>
     this.actions$.pipe(
@@ -33,17 +47,27 @@ export class FinesEffect {
         )
       )
     )
-  );
+  )
 
   createMany$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FinesActions.createMany),
-      mergeMap(({ userId, date, meetingIds }) =>
-        this.fineService.createMany(userId, date, meetingIds).pipe(
-          map((fines) => FinesActions.createManySuccess({ fines })),
-          catchError((e) => of(FinesActions.error({ e })))
+      switchMap(({ date, meetingIds, transactions, forwardSupplier }) =>
+        this.store.select(userFeature.selectUser).pipe(
+          filter((user) => user !== null),
+          first(),
+          switchMap((user) =>
+            this.fineService.createMany(user!.id, date, meetingIds).pipe(
+              map((fines) => FinesActions.createManySuccess({ fines })),
+              switchMap(() => of(addTransaction({ transactions }))),
+              tap(() => {
+                this.router.navigateByUrl(forwardSupplier(user!.id))
+              }),
+              catchError((e) => of(FinesActions.error({ e })))
+            )
+          )
         )
       )
     )
-  );
+  )
 }

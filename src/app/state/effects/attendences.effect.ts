@@ -34,18 +34,6 @@ export class AttendencesEffect {
     )
   )
 
-  loadByUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AttendencesActions.loadByUser),
-      mergeMap(({ userId }) =>
-        this.attendencesService.getByUser(userId).pipe(
-          map((attendences) => AttendencesActions.load({ attendences })),
-          catchError((e) => of(AttendencesActions.error({ e })))
-        )
-      )
-    )
-  )
-
   loadByMeeting$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AttendencesActions.loadByMeeting),

@@ -10,7 +10,7 @@ import { AppState } from 'src/app/state/app.reducer'
 import { MonthlyPaymentMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
 import { ContributionsPaidActions } from 'src/app/state/actions/contributions-paid.action'
 import * as CertificationsActions from 'src/app/state/actions/certifications.action'
-import * as FinesActions from 'src/app/state/actions/fines.actions'
+import { FinesActions } from 'src/app/state/actions/fines.actions'
 import * as ReportActions from 'src/app/state/actions/reports.action'
 
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
@@ -75,8 +75,8 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
         }
       })
 
-    this.finesSubs = this.store.select('fines').subscribe(({ fines, loaded }) => {
-      if (loaded) {
+    this.finesSubs = this.store.select('fines').subscribe(({ fines }) => {
+      if (fines.length) {
         this.generatePdfFines(fines)
       }
     })

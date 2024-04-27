@@ -24,8 +24,8 @@ import { incomeExpensesReducer, IncomeExpensesState } from './reducers/income-ex
 import { meetingFeature, MeetingState } from './reducers/meeting.reducer'
 import { monthlyPaymentReducer, MonthlyPaymentState } from './reducers/monthly-payment.reducer'
 import { contributionFeature, ContributionState } from './reducers/contribution.reducer'
-import { finesReducer, FinesState } from './reducers/fines.reducer'
-import { preFinesReducer, PreFinesState } from './reducers/pre-fine.reducer'
+import { finesFeature, FinesState } from './reducers/fines.reducer'
+import { preFineFeature, PreFinesState } from './reducers/pre-fine.reducer'
 import { certificationsReducer, CertificationsState } from './reducers/certifications.reducer'
 import {
   extraContributionFeature,
@@ -55,8 +55,8 @@ export interface AppState {
   [meetingFeature.name]: MeetingState
   monthlyPayment: MonthlyPaymentState
   [contributionFeature.name]: ContributionState
-  fines: FinesState
-  preFines: PreFinesState
+  [finesFeature.name]: FinesState
+  [preFineFeature.name]: PreFinesState
   certifications: CertificationsState
   [extraContributionFeature.name]: ExtraContributionState
   [incomesFeature.name]: IncomeState
@@ -83,8 +83,8 @@ export const appReducers: ActionReducerMap<AppState> = {
   [meetingFeature.name]: meetingFeature.reducer,
   monthlyPayment: monthlyPaymentReducer,
   [contributionFeature.name]: contributionFeature.reducer,
-  fines: finesReducer,
-  preFines: preFinesReducer,
+  [finesFeature.name]: finesFeature.reducer,
+  [preFineFeature.name]: preFineFeature.reducer,
   certifications: certificationsReducer,
   [extraContributionFeature.name]: extraContributionFeature.reducer,
   incomes: incomesFeature.reducer,

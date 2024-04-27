@@ -1,34 +1,47 @@
-import { createAction, props } from '@ngrx/store';
-import { Fine } from 'src/app/models/fine.model';
+import { PreFinesPaid } from '@models/pre-fines-paid.model'
+import { Transaction } from '@models/transaction.model'
+import { createAction, props } from '@ngrx/store'
+import { Fine } from 'src/app/models/fine.model'
 
-export const loadByUser = createAction(
-  '[FINES] load fines by user',
-  props<{ id: number }>()
-);
+const loadAllFinesByUser = createAction('[FINES] load all meetings and fines')
+const loadAllFinesByUserSuccess = createAction(
+  '[FINES] load all meetings and fines success',
+  props<{ allUserPreFines: PreFinesPaid[] }>()
+)
 
-export const loadByDate = createAction(
-  '[FINES] load fines by date',
+const loadByDate = createAction(
+  '[FINES] load all meetings by user fines',
   props<{ initDate: string; endDate: string }>()
-);
+)
 
-export const loadSuccess = createAction(
-  '[FINES] load fines by user success',
-  props<{ fines: Fine[] }>()
-);
+const loadSuccess = createAction('[FINES] load fines by user success', props<{ fines: Fine[] }>())
 
-export const createMany = createAction(
+const createMany = createAction(
   '[FINES] create many fines',
-  props<{ userId: number; date: Date; meetingIds: string }>()
-);
+  props<{
+    date: Date
+    meetingIds: string
+    transactions: Transaction[]
+    forwardSupplier: (id?: number) => string
+  }>()
+)
 
-export const createManySuccess = createAction(
+const createManySuccess = createAction(
   '[FINES] create many fines success',
   props<{ fines: Fine[] }>()
-);
+)
 
-export const clean = createAction('[FINES] clean fines state');
+const clean = createAction('[FINES] clean fines state')
 
-export const error = createAction(
-  '[FINES] error on fines state',
-  props<{ e: any }>()
-);
+const error = createAction('[FINES] error on fines state', props<{ e: any }>())
+
+export const FinesActions = {
+  loadAllFinesByUser,
+  loadAllFinesByUserSuccess,
+  loadByDate,
+  loadSuccess,
+  createMany,
+  createManySuccess,
+  clean,
+  error,
+}

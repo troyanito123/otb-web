@@ -1,6 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { PreFinesPaid } from 'src/app/models/pre-fines-paid.model';
-import * as PreFinesActions from '../actions/pre-fine.action';
+import { PreFinesActions } from '../actions/pre-fine.action';
 
 export interface PreFinesState {
   preFines: PreFinesPaid[];
@@ -12,7 +12,7 @@ export const initialPreFinesState: PreFinesState = {
   total: 0,
 };
 
-const _preFinesReducer = createReducer(
+const preFinesReducer = createReducer(
   initialPreFinesState,
 
   on(PreFinesActions.addFinePaid, (state, { preFine }) => ({
@@ -35,6 +35,4 @@ const _preFinesReducer = createReducer(
   }))
 );
 
-export function preFinesReducer(state: any, action: any) {
-  return _preFinesReducer(state, action);
-}
+export const preFineFeature = createFeature({name: 'preFines', reducer: preFinesReducer})

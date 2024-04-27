@@ -35,13 +35,6 @@ const attendencesReducer = createReducer(
     error: null,
   })),
 
-  on(AttendencesActions.loadByUser, (state) => ({
-    ...state,
-    loaded: false,
-    loading: true,
-    error: null,
-  })),
-
   on(AttendencesActions.loadByMeeting, (state) => ({
     ...state,
     loaded: false,
@@ -62,13 +55,6 @@ const attendencesReducer = createReducer(
     loaded: false,
     loading: false,
     error: null,
-  })),
-
-  on(AttendencesActions.load, (state, { attendences }) => ({
-    ...state,
-    attendences,
-    loaded: true,
-    loading: false,
   })),
 
   on(AttendencesActions.error, (state, { e }) => ({

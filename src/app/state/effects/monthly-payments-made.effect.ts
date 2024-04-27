@@ -70,7 +70,7 @@ export class MonthlyPaymentsMadeEffect {
             MonthlyPaymentMadeActions.addPaymentsMade({
               monthlyPaymentsMade,
               generateTransactionsCallbak,
-              forward: forwardSupplier(monthlyPaymentsMade[0].id),
+              forward: forwardSupplier(monthlyPaymentsMade[0].user.id),
             })
           ),
           catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
