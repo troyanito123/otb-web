@@ -1,51 +1,53 @@
-<button
-  mat-raised-button
-  color="primary"
-  style="margin-bottom: 1rem"
-  (click)="print()"
->
-  Imprimir
-</button>
+<ng-container *ngIf="expense$ | async as expense">
+  <button
+    mat-raised-button
+    color="primary"
+    style="margin-bottom: 1rem"
+    (click)="print(expense, receipt)"
+  >
+    Imprimir
+  </button>
 
-<div class="receipt_container" #receipt>
-  <div class="header_receipt">
-    <img src="../../../../../assets/logo1.PNG" alt="" />
-    <div>
-      <h1>OTB SAN JOSE</h1>
-      <h1>LA TAMBORADA</h1>
-      <h2>RECIBO DE EGRESO</h2>
-    </div>
-    <img src="../../../../../assets/logosj.jpg" alt="" />
-  </div>
-
-  <div class="detail_receipt">
-    <div>
-      <p><strong>Descripción: </strong> {{ expense?.description }}</p>
-      <p><strong>Monto:</strong> {{ expense?.amount | currency: "Bs." }}</p>
-      <p><strong>Abonado a: </strong>{{ expense?.to_user }}</p>
-      <p><strong>Entregado por: </strong>{{ expense?.from_user }}</p>
-      <p>
-        <strong>Fecha de registro:</strong>
-        {{ expense?.date | date: "fullDate" }}
-      </p>
-      <p><strong>Código: </strong>#00{{ expense?.code }}</p>
-    </div>
-  </div>
-  <div class="foote_receipt">
-    <div>
-      <p>.............................</p>
-      <p><strong>Recibi conforme</strong></p>
-      <p>
-        <strong>{{ expense?.to_user }}</strong>
-      </p>
+  <div class="receipt_container" #receipt>
+    <div class="header_receipt">
+      <img src="../../../../../assets/logo1.PNG" alt="" />
+      <div>
+        <h1>OTB SAN JOSE</h1>
+        <h1>LA TAMBORADA</h1>
+        <h2>RECIBO DE EGRESO</h2>
+      </div>
+      <img src="../../../../../assets/logosj.jpg" alt="" />
     </div>
 
-    <div>
-      <p>.............................</p>
-      <p><strong>Entrege conforme</strong></p>
-      <p>
-        <strong>{{ expense?.from_user }}</strong>
-      </p>
+    <div class="detail_receipt">
+      <div>
+        <p><strong>Descripción: </strong> {{ expense?.description }}</p>
+        <p><strong>Monto:</strong> {{ expense?.amount | currency : 'Bs.' }}</p>
+        <p><strong>Abonado a: </strong>{{ expense?.to_user }}</p>
+        <p><strong>Entregado por: </strong>{{ expense?.from_user }}</p>
+        <p>
+          <strong>Fecha de registro:</strong>
+          {{ expense?.date | date : 'fullDate' }}
+        </p>
+        <p><strong>Código: </strong>#00{{ expense?.code }}</p>
+      </div>
+    </div>
+    <div class="foote_receipt">
+      <div>
+        <p>.............................</p>
+        <p><strong>Recibi conforme</strong></p>
+        <p>
+          <strong>{{ expense?.to_user }}</strong>
+        </p>
+      </div>
+
+      <div>
+        <p>.............................</p>
+        <p><strong>Entrege conforme</strong></p>
+        <p>
+          <strong>{{ expense?.from_user }}</strong>
+        </p>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
