@@ -19,7 +19,6 @@ export class AuthEffect {
   signin$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signin),
-      tap(console.log),
       mergeMap(({ email, password, forward }) =>
         this.authService.signin(email, password).pipe(
           map(({ user, access_token }) => AuthActions.setUser({ user, access_token })),
