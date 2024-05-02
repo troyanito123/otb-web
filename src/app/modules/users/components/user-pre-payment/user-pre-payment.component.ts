@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { Store } from '@ngrx/store'
 import { AppState } from '@state/app.reducer'
-import { MonthlyPaymentMadeActions } from '@state/actions/monthly-payments-made.action'
+import { MonthlyPaymentsMadeActions } from '@state/actions/monthly-payments-made.action'
 import { PrePaymentActions } from '@state/actions/pre-payment.action'
 import { PrePayment } from 'src/app/models/pre-payment'
 import { Transaction } from 'src/app/models/transaction.model'
@@ -37,7 +37,7 @@ export class UserPrePaymentComponent {
     const monthsId = JSON.stringify(prePayments.map((p) => p.id))
 
     this.store.dispatch(
-      MonthlyPaymentMadeActions.createManyPaymentsMade({
+      MonthlyPaymentsMadeActions.createManyPaymentsMade({
         monthsId,
         date: new Date(this.inputDate.value!),
         generateTransactionsCallbak: this.generateTransactions,

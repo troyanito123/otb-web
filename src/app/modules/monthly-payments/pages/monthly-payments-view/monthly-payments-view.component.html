@@ -1,17 +1,8 @@
-<div
-  class="flex-row-start-center"
-  style="margin-left: 1rem"
->
-  <button
-    mat-raised-button
-    [routerLink]="['./detail']"
-    routerLinkActive="active"
-  >
-    Detalle
-  </button>
-  <button mat-raised-button [routerLink]="['./edit']" routerLinkActive="active">
-    Editar
-  </button>
+<div class="flex-row-start-center" style="margin: 1rem">
+  <button mat-raised-button [routerLink]="['./detail']" routerLinkActive="active">Detalle</button>
+  <button mat-raised-button [routerLink]="['./edit']" routerLinkActive="active">Editar</button>
 </div>
 
-<router-outlet></router-outlet>
+<div style="margin: 1rem">
+  <router-outlet></router-outlet>
+</div>

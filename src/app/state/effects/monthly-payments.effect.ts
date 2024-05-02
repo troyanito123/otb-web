@@ -3,7 +3,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators'
 import { of } from 'rxjs'
 
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { MonthlyPaymentActions } from '../actions/monthly-payments.action'
+import { MonthlyPaymentsActions } from '../actions/monthly-payments.action'
 import { MonthlyPaymentService } from 'src/app/services/monthly-payment.service'
 
 @Injectable()
@@ -12,11 +12,11 @@ export class MonthlyPaymentsEffect {
 
   loadMonthlyPayments$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentActions.loadPayments),
+      ofType(MonthlyPaymentsActions.loadPayments),
       mergeMap(({ year }) =>
         this.monthlyPaymentService.getMonthlyPaymentsByYear(year).pipe(
-          map((monthlyPayments) => MonthlyPaymentActions.loadPaymentsSuccess({ monthlyPayments })),
-          catchError((e) => of(MonthlyPaymentActions.loadPaymentsError({ e })))
+          map((monthlyPayments) => MonthlyPaymentsActions.loadPaymentsSuccess({ monthlyPayments })),
+          catchError((e) => of(MonthlyPaymentsActions.loadPaymentsError({ e })))
         )
       )
     )

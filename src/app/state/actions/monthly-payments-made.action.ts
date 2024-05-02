@@ -1,5 +1,5 @@
-import { PrePayment } from '@models/pre-payment';
-import { Transaction } from '@models/transaction.model';
+import { PrePayment } from '@models/pre-payment'
+import { Transaction } from '@models/transaction.model'
 import { createAction, props } from '@ngrx/store'
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
 
@@ -24,17 +24,26 @@ const loadPaymentsMadeError = createAction(
 
 const createManyPaymentsMade = createAction(
   '[PAYMENTS_MADE] Create many monthly payments',
-  props<{ monthsId: string; date: Date, generateTransactionsCallbak: (prePayments: MonthlyPaymentMade[]) => Transaction[], forwardSupplier: (id: number) => string }>()
+  props<{
+    monthsId: string
+    date: Date
+    generateTransactionsCallbak: (prePayments: MonthlyPaymentMade[]) => Transaction[]
+    forwardSupplier: (id: number) => string
+  }>()
 )
 
 const addPaymentsMade = createAction(
   '[PAYMENTS_MADE] add monthly payments',
-  props<{ monthlyPaymentsMade: MonthlyPaymentMade[], generateTransactionsCallbak: (prePayments: MonthlyPaymentMade[]) => Transaction[], forward: string }>()
+  props<{
+    monthlyPaymentsMade: MonthlyPaymentMade[]
+    generateTransactionsCallbak: (prePayments: MonthlyPaymentMade[]) => Transaction[]
+    forward: string
+  }>()
 )
 
 const clean = createAction('[PAYMENTS_MADE] clean payments made state')
 
-export const MonthlyPaymentMadeActions = {
+export const MonthlyPaymentsMadeActions = {
   loadPaymentsMade,
   loadByDate,
   loadPaymentsMadeSuccess,

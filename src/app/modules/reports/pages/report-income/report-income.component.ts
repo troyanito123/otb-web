@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs'
 
 import { Store } from '@ngrx/store'
 import { AppState } from 'src/app/state/app.reducer'
-import { MonthlyPaymentMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
+import { MonthlyPaymentsMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
 import { ContributionsPaidActions } from 'src/app/state/actions/contributions-paid.action'
 import * as CertificationsActions from 'src/app/state/actions/certifications.action'
 import { FinesActions } from 'src/app/state/actions/fines.actions'
@@ -89,7 +89,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(MonthlyPaymentMadeActions.clean())
+    this.store.dispatch(MonthlyPaymentsMadeActions.clean())
     this.store.dispatch(ContributionsPaidActions.cleanContributionsPaid())
     this.store.dispatch(CertificationsActions.clean())
     this.store.dispatch(FinesActions.clean())
@@ -111,7 +111,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     switch (income) {
       case this.incomes[0]:
         this.store.dispatch(
-          MonthlyPaymentMadeActions.loadByDate({
+          MonthlyPaymentsMadeActions.loadByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
           })

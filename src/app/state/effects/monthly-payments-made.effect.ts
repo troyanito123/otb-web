@@ -4,7 +4,7 @@ import { of } from 'rxjs'
 
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 
-import { MonthlyPaymentMadeActions } from '../actions/monthly-payments-made.action'
+import { MonthlyPaymentsMadeActions } from '../actions/monthly-payments-made.action'
 import { MonthlyPaymentMadeService } from 'src/app/services/monthly-payment-made.service'
 import { Store } from '@ngrx/store'
 import { userFeature } from '@state/reducers/user.reducer'
@@ -23,7 +23,7 @@ export class MonthlyPaymentsMadeEffect {
 
   loadMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentMadeActions.loadPaymentsMade),
+      ofType(MonthlyPaymentsMadeActions.loadPaymentsMade),
       mergeMap(({ year }) =>
         this.store.select(userFeature.selectUser).pipe(
           filter((user) => user !== null),
@@ -32,9 +32,9 @@ export class MonthlyPaymentsMadeEffect {
             this.monthlyPaymentMadeService.getMonthlyPaymentsMadeByUserAndYear(user!.id, year)
           ),
           map((monthlyPaymentsMade) =>
-            MonthlyPaymentMadeActions.loadPaymentsMadeSuccess({ monthlyPaymentsMade })
+            MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess({ monthlyPaymentsMade })
           ),
-          catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
+          catchError((e) => of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e })))
         )
       )
     )
@@ -42,15 +42,15 @@ export class MonthlyPaymentsMadeEffect {
 
   loadByDate$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentMadeActions.loadByDate),
+      ofType(MonthlyPaymentsMadeActions.loadByDate),
       mergeMap(({ initDate, endDate }) =>
         this.monthlyPaymentMadeService.getByDate(initDate, endDate).pipe(
           map((monthlyPaymentsMade) =>
-            MonthlyPaymentMadeActions.loadPaymentsMadeSuccess({
+            MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess({
               monthlyPaymentsMade,
             })
           ),
-          catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
+          catchError((e) => of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e })))
         )
       )
     )
@@ -58,7 +58,7 @@ export class MonthlyPaymentsMadeEffect {
 
   createManyMonthlyPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentMadeActions.createManyPaymentsMade),
+      ofType(MonthlyPaymentsMadeActions.createManyPaymentsMade),
       mergeMap(({ monthsId, date, generateTransactionsCallbak, forwardSupplier }) =>
         this.store.select(userFeature.selectUser).pipe(
           filter((user) => user !== null),
@@ -67,13 +67,13 @@ export class MonthlyPaymentsMadeEffect {
             this.monthlyPaymentMadeService.createManyMonthlyPayments(user!.id, monthsId, date)
           ),
           map((monthlyPaymentsMade) =>
-            MonthlyPaymentMadeActions.addPaymentsMade({
+            MonthlyPaymentsMadeActions.addPaymentsMade({
               monthlyPaymentsMade,
               generateTransactionsCallbak,
               forward: forwardSupplier(monthlyPaymentsMade[0].user.id),
             })
           ),
-          catchError((e) => of(MonthlyPaymentMadeActions.loadPaymentsMadeError({ e })))
+          catchError((e) => of(MonthlyPaymentsMadeActions.loadPaymentsMadeError({ e })))
         )
       )
     )
@@ -81,7 +81,7 @@ export class MonthlyPaymentsMadeEffect {
 
   addPaymentsMade$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MonthlyPaymentMadeActions.addPaymentsMade),
+      ofType(MonthlyPaymentsMadeActions.addPaymentsMade),
       mergeMap(({ monthlyPaymentsMade, generateTransactionsCallbak, forward }) =>
         of(addTransaction({ transactions: generateTransactionsCallbak(monthlyPaymentsMade) })).pipe(
           tap(() => {

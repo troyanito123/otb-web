@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store'
-import { MonthlyPaymentActions } from 'src/app/state/actions/monthly-payments.action'
-import { MonthlyPaymentMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
+import { MonthlyPaymentsActions } from 'src/app/state/actions/monthly-payments.action'
+import { MonthlyPaymentsMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
 import { PrePaymentActions } from 'src/app/state/actions/pre-payment.action'
 import * as TransactionsActions from 'src/app/state/actions/transactions.action'
 import { AppState } from 'src/app/state/app.reducer'
@@ -41,8 +41,8 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(MonthlyPaymentActions.clean())
-    this.store.dispatch(MonthlyPaymentMadeActions.clean())
+    this.store.dispatch(MonthlyPaymentsActions.clean())
+    this.store.dispatch(MonthlyPaymentsMadeActions.clean())
   }
 
   yearInputChange(data: MatSelectChange) {
@@ -92,7 +92,7 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
   }
 
   private loadPayments(year: string) {
-    this.store.dispatch(MonthlyPaymentActions.loadPayments({ year }))
-    this.store.dispatch(MonthlyPaymentMadeActions.loadPaymentsMade({ year }))
+    this.store.dispatch(MonthlyPaymentsActions.loadPayments({ year }))
+    this.store.dispatch(MonthlyPaymentsMadeActions.loadPaymentsMade({ year }))
   }
 }

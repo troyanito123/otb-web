@@ -1,4 +1,4 @@
-<div class="flex-column-center-center">
+<ng-container *ngIf="monthlyPayment$ | async as monthlyPayment">
   <mat-card appearance="outlined">
     <mat-card-header>
       <mat-card-title>Mensualidad</mat-card-title>
@@ -9,7 +9,7 @@
       <p><strong>multa: </strong>{{ monthlyPayment.amount }}</p>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button color="warn" (click)="remove()">Eliminar</button>
+      <button mat-flat-button color="warn" (click)="remove(monthlyPayment.id)">Eliminar</button>
     </mat-card-actions>
   </mat-card>
-</div>
+</ng-container>

@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store'
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
-import { MonthlyPaymentMadeActions } from '../actions/monthly-payments-made.action'
+import { MonthlyPaymentsMadeActions } from '../actions/monthly-payments-made.action'
 
 export interface MonthlyPaymentsMadeState {
   monthlyPaymentsMade: MonthlyPaymentMade[]
@@ -21,21 +21,21 @@ export const initialMonthlyPaymentsMade: MonthlyPaymentsMadeState = {
 const monthlyPaymentsMadeReducer = createReducer(
   initialMonthlyPaymentsMade,
 
-  on(MonthlyPaymentMadeActions.loadPaymentsMade, (state) => ({
+  on(MonthlyPaymentsMadeActions.loadPaymentsMade, (state) => ({
     ...state,
     loading: true,
     saved: false,
     loaded: false,
   })),
 
-  on(MonthlyPaymentMadeActions.loadByDate, (state) => ({
+  on(MonthlyPaymentsMadeActions.loadByDate, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     saved: false,
   })),
 
-  on(MonthlyPaymentMadeActions.loadPaymentsMadeSuccess, (state, { monthlyPaymentsMade }) => ({
+  on(MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess, (state, { monthlyPaymentsMade }) => ({
     ...state,
     monthlyPaymentsMade,
     loaded: true,
@@ -43,26 +43,26 @@ const monthlyPaymentsMadeReducer = createReducer(
     error: null,
   })),
 
-  on(MonthlyPaymentMadeActions.loadPaymentsMadeError, (state, { e }) => ({
+  on(MonthlyPaymentsMadeActions.loadPaymentsMadeError, (state, { e }) => ({
     ...state,
     loading: false,
     error: e,
   })),
 
-  on(MonthlyPaymentMadeActions.createManyPaymentsMade, (state) => ({
+  on(MonthlyPaymentsMadeActions.createManyPaymentsMade, (state) => ({
     ...state,
     loading: true,
     saved: false,
   })),
 
-  on(MonthlyPaymentMadeActions.addPaymentsMade, (state, { monthlyPaymentsMade }) => ({
+  on(MonthlyPaymentsMadeActions.addPaymentsMade, (state, { monthlyPaymentsMade }) => ({
     ...state,
     monthlyPaymentsMade: state.monthlyPaymentsMade.concat(monthlyPaymentsMade),
     loading: false,
     saved: true,
   })),
 
-  on(MonthlyPaymentMadeActions.clean, (state) => ({
+  on(MonthlyPaymentsMadeActions.clean, (state) => ({
     monthlyPaymentsMade: [],
     loading: false,
     saved: false,

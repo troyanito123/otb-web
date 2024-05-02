@@ -14,7 +14,7 @@ const loadPaymentsError = createAction(
 
 const clean = createAction('[PAYMENTS] clean payments state')
 
-export const MonthlyPaymentActions = {
+export const MonthlyPaymentsActions = {
   loadPayments,
   loadPaymentsSuccess,
   loadPaymentsError,

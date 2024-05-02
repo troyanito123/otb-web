@@ -22,7 +22,7 @@ import { roleFeature, RolesState } from './reducers/roles.reducer'
 import { expenseFeature, ExpenseState } from './reducers/expense.reducer'
 import { incomeExpensesReducer, IncomeExpensesState } from './reducers/income-expenses.reducer'
 import { meetingFeature, MeetingState } from './reducers/meeting.reducer'
-import { monthlyPaymentReducer, MonthlyPaymentState } from './reducers/monthly-payment.reducer'
+import { monthlyPaymentFeature, MonthlyPaymentState } from './reducers/monthly-payment.reducer'
 import { contributionFeature, ContributionState } from './reducers/contribution.reducer'
 import { finesFeature, FinesState } from './reducers/fines.reducer'
 import { preFineFeature, PreFinesState } from './reducers/pre-fine.reducer'
@@ -44,7 +44,7 @@ export interface AppState {
   [prePaymentFeature.name]: PrePaymentState
   [contributionsFeature.name]: ContributionsState
   [contributionPaidFeature.name]: ContributionsPaidState
-  preContribution: PreContributionsState
+  [preContributionFeature.name]: PreContributionsState
   [transactionsFeature.name]: TransactionsState
   [certificationFeature.name]: CertificationState
   [meetingsFeature.name]: MeetingsState
@@ -53,7 +53,7 @@ export interface AppState {
   [expenseFeature.name]: ExpenseState
   incomeExpenses: IncomeExpensesState
   [meetingFeature.name]: MeetingState
-  monthlyPayment: MonthlyPaymentState
+  [monthlyPaymentFeature.name]: MonthlyPaymentState
   [contributionFeature.name]: ContributionState
   [finesFeature.name]: FinesState
   [preFineFeature.name]: PreFinesState
@@ -81,12 +81,12 @@ export const appReducers: ActionReducerMap<AppState> = {
   [expenseFeature.name]: expenseFeature.reducer,
   incomeExpenses: incomeExpensesReducer,
   [meetingFeature.name]: meetingFeature.reducer,
-  monthlyPayment: monthlyPaymentReducer,
+  [monthlyPaymentFeature.name]: monthlyPaymentFeature.reducer,
   [contributionFeature.name]: contributionFeature.reducer,
   [finesFeature.name]: finesFeature.reducer,
   [preFineFeature.name]: preFineFeature.reducer,
   certifications: certificationsReducer,
   [extraContributionFeature.name]: extraContributionFeature.reducer,
-  incomes: incomesFeature.reducer,
+  [incomesFeature.name]: incomesFeature.reducer,
   report: reportReducer,
 }

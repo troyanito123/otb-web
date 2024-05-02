@@ -1,54 +1,48 @@
-import { createAction, props } from '@ngrx/store';
-import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
+import { createAction, props } from '@ngrx/store'
+import { MonthlyPayment } from 'src/app/models/monthly-payment.model'
 
-export const load = createAction(
-  '[MONTHLY-PAYMENT] load monthly payment',
-  props<{ id: number }>()
-);
+const load = createAction('[MONTHLY-PAYMENT] load monthly payment', props<{ id: number }>())
 
-export const loadSuccess = createAction(
-  '[MONTHLY-PAYMENT] load monthly payment success',
-  props<{ monthlyPayment: MonthlyPayment }>()
-);
-
-export const create = createAction(
+const create = createAction(
   '[MONTHLY-PAYMENT] create monthly payment',
-  props<{ year: string; month: string; amount: number }>()
-);
+  props<{ year: string; month: string; amount: number; forwardSupplier: (id: number) => string }>()
+)
 
-export const createSuccess = createAction(
-  '[MONTHLY-PAYMENT] create monthly payment success',
+const saveOrLoadSuccess = createAction(
+  '[MONTHLY-PAYMENT] save or load payment success',
   props<{ monthlyPayment: MonthlyPayment }>()
-);
+)
 
-export const update = createAction(
+const update = createAction(
   '[MONTHLY-PAYMENT] update monthly payment',
-  props<{ id: number; year: string; month: string; amount: number }>()
-);
+  props<{
+    id: number
+    year: string
+    month: string
+    amount: number
+    forwardSupplier: (id: number) => string
+  }>()
+)
 
-export const updateSuccess = createAction(
-  '[MONTHLY-PAYMENT] update monthly payment success',
-  props<{ monthlyPayment: MonthlyPayment }>()
-);
-
-export const remove = createAction(
+const remove = createAction(
   '[MONTHLY-PAYMENT] remove monthly payment',
-  props<{ id: number }>()
-);
+  props<{
+    id: number
+    forwardSupplier: () => string
+    messageSupplier: () => string
+  }>()
+)
 
-export const removeSuccess = createAction(
-  '[MONTHLY-PAYMENT] remove monthly payment success',
-  props<{ monthlyPayment: MonthlyPayment }>()
-);
+const error = createAction('[MONTHLY-PAYMENT] error', props<{ e: any }>())
 
-export const error = createAction(
-  '[MONTHLY-PAYMENT] error',
-  props<{ e: any }>()
-);
+const clean = createAction('[MONTHLY-PAYMENT] clean all monthly payment state')
 
-export const clean = createAction(
-  '[MONTHLY-PAYMENT] clean all monthly payment state'
-);
-export const softClean = createAction(
-  '[MONTHLY-PAYMENT] clean created updated removed'
-);
+export const MonthlyPaymentActions = {
+  load,
+  create,
+  update,
+  remove,
+  saveOrLoadSuccess,
+  error,
+  clean,
+}

@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store'
 import { MonthlyPayment } from 'src/app/models/monthly-payment.model'
-import { MonthlyPaymentActions } from '../actions/monthly-payments.action'
+import { MonthlyPaymentsActions } from '../actions/monthly-payments.action'
 
 export interface MonthlyPaymentsState {
   monthlyPayments: MonthlyPayment[]
@@ -17,25 +17,25 @@ const initialMonthlyPayments: MonthlyPaymentsState = {
 const monthlyPaymentsReducer = createReducer(
   initialMonthlyPayments,
 
-  on(MonthlyPaymentActions.loadPayments, (state) => ({
+  on(MonthlyPaymentsActions.loadPayments, (state) => ({
     ...state,
     loading: true,
     error: null,
   })),
 
-  on(MonthlyPaymentActions.loadPaymentsSuccess, (state, { monthlyPayments }) => ({
+  on(MonthlyPaymentsActions.loadPaymentsSuccess, (state, { monthlyPayments }) => ({
     ...state,
     monthlyPayments,
     loading: false,
   })),
 
-  on(MonthlyPaymentActions.loadPaymentsError, (state, { e }) => ({
+  on(MonthlyPaymentsActions.loadPaymentsError, (state, { e }) => ({
     ...state,
     loading: false,
     error: e.error,
   })),
 
-  on(MonthlyPaymentActions.clean, () => ({
+  on(MonthlyPaymentsActions.clean, () => ({
     ...initialMonthlyPayments,
   }))
 )

@@ -1,10 +1,4 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="save()"
-  class="flex-column-center-center"
->
-  <h2 *ngIf="!monthlyPayment">Crea una nueva mensualidad</h2>
-  <h2 *ngIf="!!monthlyPayment">Modifica la mensualidad</h2>
+<form [formGroup]="form" (ngSubmit)="save()" class="flex-column-center-center">
   <mat-form-field appearance="fill">
     <mat-label>Año</mat-label>
     <mat-select formControlName="year">
