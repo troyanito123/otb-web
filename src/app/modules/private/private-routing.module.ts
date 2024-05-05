@@ -16,6 +16,7 @@ const routes: Routes = [
           ),
         data: { roles: ['USER', 'ADMIN', 'SUPERVISOR'] },
         canActivate: [AuthGuard],
+        title: 'Junta Vecinal San Jose'
       },
       {
         path: 'users',
@@ -23,6 +24,7 @@ const routes: Routes = [
           import('../users/users.module').then((m) => m.UsersModule),
         data: { roles: ['ADMIN'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Usuarios'
       },
       {
         path: 'expenses',
@@ -30,6 +32,7 @@ const routes: Routes = [
           import('../expenses/expenses.module').then((m) => m.ExpensesModule),
         data: { roles: ['ADMIN', 'SUPERVISOR'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Gastos'
       },
       {
         path: 'meetings',
@@ -37,6 +40,7 @@ const routes: Routes = [
           import('../meetings/meetings.module').then((m) => m.MeetingsModule),
         data: { roles: ['ADMIN'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Reuniones'
       },
 
       {
@@ -47,6 +51,7 @@ const routes: Routes = [
           ),
         data: { roles: ['ADMIN'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Mensualidades'
       },
 
       {
@@ -57,6 +62,7 @@ const routes: Routes = [
           ),
         data: { roles: ['ADMIN'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Aportes'
       },
 
       {
@@ -67,6 +73,7 @@ const routes: Routes = [
           ),
         data: { roles: ['ADMIN'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Certificaciones'
       },
 
       {
@@ -75,6 +82,7 @@ const routes: Routes = [
           import('../reports/reports.module').then((m) => m.ReportsModule),
         data: { roles: ['ADMIN', 'SUPERVISOR'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Reportes'
       },
 
       {
@@ -85,6 +93,7 @@ const routes: Routes = [
           ),
         data: { roles: ['ADMIN', 'SUPERVISOR'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Aportes Extras'
       },
       {
         path: 'incomes',
@@ -92,6 +101,7 @@ const routes: Routes = [
           import('../incomes/incomes.module').then((m) => m.IncomesModule),
         data: { roles: ['ADMIN', 'SUPERVISOR'] },
         canActivate: [AuthGuard],
+        title: 'SJ/Ingresos'
       },
       {
         path: '',
