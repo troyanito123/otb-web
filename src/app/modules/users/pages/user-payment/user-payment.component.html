@@ -18,7 +18,6 @@
     <table
       mat-table
       [dataSource]="(mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at"
-      class="mat-elevation-z1"
     >
       <ng-container matColumnDef="year">
         <th mat-header-cell *matHeaderCellDef>AÑO</th>
