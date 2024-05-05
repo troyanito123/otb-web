@@ -1,6 +1,7 @@
 import { PrePayment } from '@models/pre-payment'
 import { Transaction } from '@models/transaction.model'
 import { createAction, props } from '@ngrx/store'
+import { PDFInput } from '@services/print-table.service'
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
 
 const loadPaymentsMade = createAction(
@@ -10,7 +11,15 @@ const loadPaymentsMade = createAction(
 
 const loadByDate = createAction(
   '[PAYMENTS_MADE] load payments by date',
-  props<{ initDate: string; endDate: string }>()
+  props<{
+    initDate: string
+    endDate: string
+    handlerCallback: (
+      monthlyPayments: MonthlyPaymentMade[],
+      initDate: string,
+      endDate: string
+    ) => PDFInput
+  }>()
 )
 
 const loadPaymentsMadeSuccess = createAction(

@@ -1,95 +1,70 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { Expense } from 'src/app/models/expense.model';
-import { AppState } from 'src/app/state/app.reducer';
-
-import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common';
-import * as ExpensesActions from 'src/app/state/actions/expenses.action';
-import { PrintTableService } from 'src/app/services/print-table.service';
-import * as moment from 'moment';
+import { Component, OnDestroy } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Store } from '@ngrx/store'
+import { Expense } from 'src/app/models/expense.model'
+import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common'
+import { ExpensesActions } from 'src/app/state/actions/expenses.action'
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-report-expenses',
   templateUrl: './report-expenses.component.html',
   styleUrls: ['./report-expenses.component.scss'],
 })
-export class ReportExpensesComponent implements OnInit, OnDestroy {
-  public form!: UntypedFormGroup;
+export class ReportExpensesComponent implements OnDestroy {
+  readonly form: FormGroup
 
-  private expensesSub!: Subscription;
-
-  constructor(
-    private fb: UntypedFormBuilder,
-    private store: Store<AppState>,
-    private printTableService: PrintTableService
-  ) {}
-
-  ngOnInit(): void {
-    this.createForm();
-
-    this.expensesSub = this.store
-      .select('expenses')
-      .subscribe(({ expenses, loaded }) => {
-        if (loaded) {
-          this.generatePdf(expenses);
-        }
-      });
+  constructor(private fb: FormBuilder, private store: Store) {
+    this.form = this.createForm()
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(ExpensesActions.clean());
-    this.expensesSub?.unsubscribe();
+    this.store.dispatch(ExpensesActions.clean())
   }
 
-  private createForm() {
-    this.form = this.fb.group({
-      initDate: [new Date(), Validators.required],
-      endDate: [new Date(), Validators.required],
-    });
-  }
-
-  generateReport() {
-    const { initDate, endDate } = this.form.value;
+  public generateReport() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched()
+      return
+    }
+    const { initDate, endDate } = this.form.value
 
     this.store.dispatch(
       ExpensesActions.loadByDates({
         initDate: moment(initDate).startOf('day').toISOString(),
-        endDate: moment(endDate).endOf('day').toISOString()
+        endDate: moment(endDate).endOf('day').toISOString(),
+        handlerCallback: this.generatePdf,
       })
-    );
+    )
   }
 
-  private generatePdf(expenses: Expense[]) {
-    const pipe = new DatePipe('es-Es');
-    const upper = new UpperCasePipe();
+  private createForm() {
+    return this.fb.group({
+      initDate: [new Date(), Validators.required],
+      endDate: [new Date(), Validators.required],
+    })
+  }
 
-    const head = [['#', 'FECHA', 'QUIEN USÓ', 'PARA QUE USÓ', 'CUANTO USÓ']];
-    const data = expenses.map((e, i) => [
+  private generatePdf(expenses: Expense[], initDate: string, endDate: string) {
+    const pipe = new DatePipe('es-Es')
+    const upper = new UpperCasePipe()
+
+    const head = [['#', 'FECHA', 'QUIEN USÓ', 'PARA QUE USÓ', 'CUANTO USÓ']]
+    const body = expenses.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE, d MMMM, y')),
       e.to_user,
       e.description,
       formatNumber(e.amount, 'es-ES', '1.2'),
-    ]);
+    ])
 
-    const count = expenses.reduce((counter, item) => counter + item.amount, 0);
+    const count = expenses.reduce((counter, item) => counter + item.amount, 0)
 
     const title = `Reporte de gastos del ${pipe.transform(
-      this.form.value.initDate,
+      initDate,
       'd MMMM y'
-    )} al ${pipe.transform(
-      this.form.value.endDate,
-      'd MMMM y'
-    )}. TOTAL: ${formatNumber(count, 'es-Es', '1.2')}`;
+    )} al ${pipe.transform(endDate, 'd MMMM y')}. TOTAL: ${formatNumber(count, 'es-Es', '1.2')}`
 
-    this.printTableService.generatePdf(title, head, data, 'GASTOS');
-  }
-
-  private transformDate(date: Date) {
-    const isoDate = date.toISOString();
-    const auxDate = isoDate.split('-');
-    return `${auxDate[0]}-${auxDate[1]}-${auxDate[2].slice(0, 2)}`;
+    return { title, head, body, type: 'GASTOS' }
   }
 }

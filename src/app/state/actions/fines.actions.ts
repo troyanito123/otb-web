@@ -1,6 +1,7 @@
 import { PreFinesPaid } from '@models/pre-fines-paid.model'
 import { Transaction } from '@models/transaction.model'
 import { createAction, props } from '@ngrx/store'
+import { PDFInput } from '@services/print-table.service'
 import { Fine } from 'src/app/models/fine.model'
 
 const loadAllFinesByUser = createAction('[FINES] load all meetings and fines')
@@ -11,7 +12,11 @@ const loadAllFinesByUserSuccess = createAction(
 
 const loadByDate = createAction(
   '[FINES] load all meetings by user fines',
-  props<{ initDate: string; endDate: string }>()
+  props<{
+    initDate: string
+    endDate: string
+    handlerCallback: (contributions: Fine[], initDate: string, endDate: string) => PDFInput
+  }>()
 )
 
 const loadSuccess = createAction('[FINES] load fines by user success', props<{ fines: Fine[] }>())

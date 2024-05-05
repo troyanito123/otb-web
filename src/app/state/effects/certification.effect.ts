@@ -4,7 +4,7 @@ import { mergeMap, map, catchError, filter, first, switchMap, tap } from 'rxjs/o
 import { of } from 'rxjs'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { CertificationActions } from '../actions/certification.action'
-import * as CertificationsActions from '../actions/certifications.action'
+import { CertificationsActions } from '../actions/certifications.action'
 
 import { CertificationService } from 'src/app/services/certification.service'
 import { Store } from '@ngrx/store'
@@ -12,6 +12,7 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { Router } from '@angular/router'
 import { addTransaction } from '@state/actions/transactions.action'
 import { MatSnackBar } from '@angular/material/snack-bar'
+import { PrintTableService } from '@services/print-table.service'
 
 @Injectable()
 export class CertificationEffect {
@@ -21,6 +22,7 @@ export class CertificationEffect {
     private store: Store,
     private router: Router,
     private matSnackBar: MatSnackBar,
+    private printTableService: PrintTableService,
   ) {}
 
   create$ = createEffect(() =>
@@ -54,7 +56,7 @@ export class CertificationEffect {
       ofType(CertificationActions.update),
       mergeMap(({ id, description, amount, ctype, date, forwardSupplier, messageSupplier }) =>
         this.certificationService.updated(id, description, amount, ctype, date).pipe(
-          tap(certification => {
+          tap((certification) => {
             this.router.navigateByUrl(forwardSupplier(certification.id))
             this.matSnackBar.open(messageSupplier(certification), 'Ok')
           }),
@@ -81,18 +83,6 @@ export class CertificationEffect {
     )
   )
 
-  getAll$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CertificationsActions.load),
-      mergeMap(() =>
-        this.certificationService.getAll().pipe(
-          map(({ certifications }) => CertificationsActions.loadSuccess({ certifications })),
-          catchError((e) => of(CertificationsActions.error({ e })))
-        )
-      )
-    )
-  )
-
   getOne$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CertificationActions.load),
@@ -108,8 +98,11 @@ export class CertificationEffect {
   getByDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CertificationsActions.loadByDate),
-      mergeMap(({ initDate, endDate }) =>
+      mergeMap(({ initDate, endDate, handlerCallback }) =>
         this.certificationService.getByDate(initDate, endDate).pipe(
+          tap((certifications) => {
+            this.printTableService.generatePdf(handlerCallback(certifications, initDate, endDate))
+          }),
           map((certifications) => CertificationsActions.loadSuccess({ certifications })),
           catchError((e) => of(CertificationsActions.error({ e })))
         )

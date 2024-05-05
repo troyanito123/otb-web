@@ -1,12 +1,21 @@
 import { Transaction } from '@models/transaction.model'
 import { createAction, props } from '@ngrx/store'
+import { PDFInput } from '@services/print-table.service'
 import { ContributionPaid } from 'src/app/models/contribution-paid.model'
 
 const loadContributionsPaid = createAction('[CONTRIBUTIONS_PAID] load contributions paid')
 
 const loadContributionsPaidByDate = createAction(
   '[CONTRIBUTIONS_PAID] load contributions paid by date',
-  props<{ initDate: string; endDate: string }>()
+  props<{
+    initDate: string
+    endDate: string
+    handlerCallback: (
+      contributions: ContributionPaid[],
+      initDate: string,
+      endDate: string
+    ) => PDFInput
+  }>()
 )
 
 const loadContributionsPaidSuccess = createAction(

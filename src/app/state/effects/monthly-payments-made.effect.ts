@@ -11,6 +11,7 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { addTransaction } from '@state/actions/transactions.action'
 import { Router } from '@angular/router'
 import { PrePaymentActions } from '@state/actions/pre-payment.action'
+import { PrintTableService } from '@services/print-table.service'
 
 @Injectable()
 export class MonthlyPaymentsMadeEffect {
@@ -18,7 +19,8 @@ export class MonthlyPaymentsMadeEffect {
     private actions$: Actions,
     private monthlyPaymentMadeService: MonthlyPaymentMadeService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private printTableService: PrintTableService,
   ) {}
 
   loadMonthlyPaymentsMade$ = createEffect(() =>
@@ -43,8 +45,11 @@ export class MonthlyPaymentsMadeEffect {
   loadByDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MonthlyPaymentsMadeActions.loadByDate),
-      mergeMap(({ initDate, endDate }) =>
+      mergeMap(({ initDate, endDate, handlerCallback }) =>
         this.monthlyPaymentMadeService.getByDate(initDate, endDate).pipe(
+          tap((monthlyPaymentsMade) => {
+            this.printTableService.generatePdf(handlerCallback(monthlyPaymentsMade, initDate, endDate))
+          }),
           map((monthlyPaymentsMade) =>
             MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess({
               monthlyPaymentsMade,

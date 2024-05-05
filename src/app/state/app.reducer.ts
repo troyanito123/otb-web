@@ -1,6 +1,6 @@
 import { ActionReducerMap } from '@ngrx/store'
 import { attendencesFeature, AttendencesState } from './reducers/attendences.reducer'
-import { expensesReducer, ExpensesState } from './reducers/expenses.reducer'
+import { expensesFeature, ExpensesState } from './reducers/expenses.reducer'
 import { authFeature, AuthState } from './reducers/auth.reducer'
 import { certificationFeature, CertificationState } from './reducers/certification.reducer'
 import {
@@ -20,19 +20,19 @@ import { transactionsFeature, TransactionsState } from './reducers/receipt.reduc
 
 import { roleFeature, RolesState } from './reducers/roles.reducer'
 import { expenseFeature, ExpenseState } from './reducers/expense.reducer'
-import { incomeExpensesReducer, IncomeExpensesState } from './reducers/income-expenses.reducer'
+import { incomeExpensesFeature, IncomeExpensesState } from './reducers/income-expenses.reducer'
 import { meetingFeature, MeetingState } from './reducers/meeting.reducer'
 import { monthlyPaymentFeature, MonthlyPaymentState } from './reducers/monthly-payment.reducer'
 import { contributionFeature, ContributionState } from './reducers/contribution.reducer'
 import { finesFeature, FinesState } from './reducers/fines.reducer'
 import { preFineFeature, PreFinesState } from './reducers/pre-fine.reducer'
-import { certificationsReducer, CertificationsState } from './reducers/certifications.reducer'
+import { certificationsFeature, CertificationsState } from './reducers/certifications.reducer'
 import {
   extraContributionFeature,
   ExtraContributionState,
 } from './reducers/extra-contribution.reducer'
 import { incomesFeature, IncomeState } from './reducers/incomes.reducer'
-import { reportReducer, ReportSate } from './reducers/reports.reducer'
+import { reportFeature, ReportSate } from './reducers/reports.reducer'
 import { userFeature, UserState } from './reducers/user.reducer'
 
 export interface AppState {
@@ -49,18 +49,18 @@ export interface AppState {
   [certificationFeature.name]: CertificationState
   [meetingsFeature.name]: MeetingsState
   [attendencesFeature.name]: AttendencesState
-  expenses: ExpensesState
+  [expensesFeature.name]: ExpensesState
   [expenseFeature.name]: ExpenseState
-  incomeExpenses: IncomeExpensesState
+  [incomeExpensesFeature.name]: IncomeExpensesState
   [meetingFeature.name]: MeetingState
   [monthlyPaymentFeature.name]: MonthlyPaymentState
   [contributionFeature.name]: ContributionState
   [finesFeature.name]: FinesState
   [preFineFeature.name]: PreFinesState
-  certifications: CertificationsState
+  [certificationsFeature.name]: CertificationsState
   [extraContributionFeature.name]: ExtraContributionState
   [incomesFeature.name]: IncomeState
-  report: ReportSate
+  [reportFeature.name]: ReportSate
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
@@ -77,16 +77,16 @@ export const appReducers: ActionReducerMap<AppState> = {
   [certificationFeature.name]: certificationFeature.reducer,
   [meetingsFeature.name]: meetingsFeature.reducer,
   [attendencesFeature.name]: attendencesFeature.reducer,
-  expenses: expensesReducer,
+  [expensesFeature.name]: expensesFeature.reducer,
   [expenseFeature.name]: expenseFeature.reducer,
-  incomeExpenses: incomeExpensesReducer,
+  [incomeExpensesFeature.name]: incomeExpensesFeature.reducer,
   [meetingFeature.name]: meetingFeature.reducer,
   [monthlyPaymentFeature.name]: monthlyPaymentFeature.reducer,
   [contributionFeature.name]: contributionFeature.reducer,
   [finesFeature.name]: finesFeature.reducer,
   [preFineFeature.name]: preFineFeature.reducer,
-  certifications: certificationsReducer,
+  [certificationsFeature.name]: certificationsFeature.reducer,
   [extraContributionFeature.name]: extraContributionFeature.reducer,
   [incomesFeature.name]: incomesFeature.reducer,
-  report: reportReducer,
+  [reportFeature.name]: reportFeature.reducer,
 }

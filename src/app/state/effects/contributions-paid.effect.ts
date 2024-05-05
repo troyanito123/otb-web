@@ -11,6 +11,7 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { addTransaction } from '@state/actions/transactions.action'
 import { Router } from '@angular/router'
 import { PreContributionsActions } from '@state/actions/pre-constribution.action'
+import { PrintTableService } from '@services/print-table.service'
 
 @Injectable()
 export class ContributionsPaidEffect {
@@ -18,7 +19,8 @@ export class ContributionsPaidEffect {
     private actions$: Actions,
     private contributionPaidService: ContributionPaidService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private printTableService: PrintTableService,
   ) {}
 
   loadContributionsPaid$ = createEffect(() =>
@@ -46,8 +48,11 @@ export class ContributionsPaidEffect {
   loadContributionsPaidByDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ContributionsPaidActions.loadContributionsPaidByDate),
-      mergeMap(({ initDate, endDate }) =>
+      mergeMap(({ initDate, endDate, handlerCallback }) =>
         this.contributionPaidService.getByDate(initDate, endDate).pipe(
+          tap((contributionsPaid) => {
+            this.printTableService.generatePdf(handlerCallback(contributionsPaid, initDate, endDate))
+          }),
           map((contributionsPaid) =>
             ContributionsPaidActions.loadContributionsPaidSuccess({
               contributionsPaid,

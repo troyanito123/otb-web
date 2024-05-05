@@ -11,6 +11,7 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { Router } from '@angular/router'
 import { addTransaction } from '@state/actions/transactions.action'
 import { PreFinesActions } from '@state/actions/pre-fine.action'
+import { PrintTableService } from '@services/print-table.service'
 
 @Injectable()
 export class FinesEffect {
@@ -18,7 +19,8 @@ export class FinesEffect {
     private actions$: Actions,
     private fineService: FineService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private printTableService: PrintTableService,
   ) {}
 
   loadAllFinesByUser$ = createEffect(() =>
@@ -40,8 +42,11 @@ export class FinesEffect {
   loadByDate$ = createEffect(() =>
     this.actions$.pipe(
       ofType(FinesActions.loadByDate),
-      mergeMap(({ initDate, endDate }) =>
+      mergeMap(({ initDate, endDate, handlerCallback }) =>
         this.fineService.getByDate(initDate, endDate).pipe(
+          tap((fines) => {
+            this.printTableService.generatePdf(handlerCallback(fines, initDate, endDate))
+          }),
           map((fines) => FinesActions.loadSuccess({ fines })),
           catchError((e) => of(FinesActions.error({ e })))
         )

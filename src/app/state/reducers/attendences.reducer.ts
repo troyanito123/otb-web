@@ -7,7 +7,6 @@ export interface AttendencesState {
   attendences: Attendence[]
   userMeetingsAttendance: AttendenceMeeting[]
   loading: boolean
-  loaded: boolean
   error: any
 }
 
@@ -15,7 +14,6 @@ export const initialAttendencesState: AttendencesState = {
   attendences: [],
   userMeetingsAttendance: [],
   loading: false,
-  loaded: false,
   error: null,
 }
 
@@ -37,7 +35,6 @@ const attendencesReducer = createReducer(
 
   on(AttendencesActions.loadByMeeting, (state) => ({
     ...state,
-    loaded: false,
     loading: true,
     error: null,
   })),
@@ -45,21 +42,18 @@ const attendencesReducer = createReducer(
   on(AttendencesActions.loadByMeetingSuccess, (state, { attendences }) => ({
     ...state,
     attendences,
-    loaded: true,
     loading: false,
   })),
 
   on(AttendencesActions.clean, () => ({
     attendences: [],
     userMeetingsAttendance: [],
-    loaded: false,
     loading: false,
     error: null,
   })),
 
   on(AttendencesActions.error, (state, { e }) => ({
     ...state,
-    loaded: true,
     loading: false,
     error: e.error,
   })),

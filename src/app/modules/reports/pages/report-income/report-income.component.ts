@@ -1,20 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
+import { Component, OnDestroy } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common'
 
-import { Subscription } from 'rxjs'
 
 import { Store } from '@ngrx/store'
-import { AppState } from 'src/app/state/app.reducer'
 import { MonthlyPaymentsMadeActions } from 'src/app/state/actions/monthly-payments-made.action'
 import { ContributionsPaidActions } from 'src/app/state/actions/contributions-paid.action'
-import * as CertificationsActions from 'src/app/state/actions/certifications.action'
+import { CertificationsActions } from 'src/app/state/actions/certifications.action'
 import { FinesActions } from 'src/app/state/actions/fines.actions'
-import * as ReportActions from 'src/app/state/actions/reports.action'
+import { ReportActions } from 'src/app/state/actions/reports.action'
 
 import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
-import { PrintTableService } from 'src/app/services/print-table.service'
+import { PDFInput } from 'src/app/services/print-table.service'
 import { ContributionPaid } from 'src/app/models/contribution-paid.model'
 import { Certification } from 'src/app/models/certification.model'
 import { Fine } from 'src/app/models/fine.model'
@@ -26,8 +24,8 @@ import * as moment from 'moment'
   templateUrl: './report-income.component.html',
   styleUrls: ['./report-income.component.scss'],
 })
-export class ReportIncomeComponent implements OnInit, OnDestroy {
-  incomes = [
+export class ReportIncomeComponent implements OnDestroy {
+  readonly incomes = [
     'MONTHLYPAYMENTS',
     'CONTRIBUTIONS',
     'CERTIFICATIONS',
@@ -36,56 +34,13 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     'INCOMES',
   ]
 
-  public form!: UntypedFormGroup
-
-  private monthlyPaymentsMadeSubs!: Subscription
-  private contributionsPaidSubs!: Subscription
-  private certifcationsSubs!: Subscription
-  private finesSubs!: Subscription
-  private reportSubs!: Subscription
-  private reportTile = ''
+  readonly form: FormGroup
 
   constructor(
-    private fb: UntypedFormBuilder,
-    private store: Store<AppState>,
-    private printTableService: PrintTableService
-  ) {}
-
-  ngOnInit(): void {
-    this.createForm()
-    this.monthlyPaymentsMadeSubs = this.store
-      .select('monthlyPaymentMade')
-      .subscribe(({ monthlyPaymentsMade, loaded }) => {
-        if (loaded) {
-          this.generatePdf(monthlyPaymentsMade)
-        }
-      })
-
-    this.contributionsPaidSubs = this.store
-      .select('contributionsPaid')
-      .subscribe(({ contributionsPaid }) => {
-        this.generatePdfContributions(contributionsPaid)
-      })
-
-    this.certifcationsSubs = this.store
-      .select('certifications')
-      .subscribe(({ certifications, loaded }) => {
-        if (loaded) {
-          this.generatePdfCertificationes(certifications)
-        }
-      })
-
-    this.finesSubs = this.store.select('fines').subscribe(({ fines }) => {
-      if (fines.length) {
-        this.generatePdfFines(fines)
-      }
-    })
-
-    this.reportSubs = this.store.select('report').subscribe(({ loaded, report }) => {
-      if (loaded) {
-        this.generatePdfReport(report)
-      }
-    })
+    private fb: FormBuilder,
+    private store: Store,
+  ) {
+    this.form = this.createForm()
   }
 
   ngOnDestroy(): void {
@@ -94,12 +49,6 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     this.store.dispatch(CertificationsActions.clean())
     this.store.dispatch(FinesActions.clean())
     this.store.dispatch(ReportActions.clean())
-
-    this.monthlyPaymentsMadeSubs?.unsubscribe()
-    this.contributionsPaidSubs?.unsubscribe()
-    this.certifcationsSubs?.unsubscribe()
-    this.finesSubs?.unsubscribe()
-    this.reportSubs?.unsubscribe()
   }
 
   public generate() {
@@ -114,6 +63,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
           MonthlyPaymentsMadeActions.loadByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
+            handlerCallback: this.generatePdfData
           })
         )
         break
@@ -123,6 +73,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
           ContributionsPaidActions.loadContributionsPaidByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
+            handlerCallback: this.generatePdfContributionsData,
           })
         )
         break
@@ -132,6 +83,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
           CertificationsActions.loadByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
+            handlerCallback: this.generatePdfCertificationsData,
           })
         )
         break
@@ -141,6 +93,7 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
           FinesActions.loadByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
+            handlerCallback: this.generatePdfFinesData
           })
         )
         break
@@ -149,39 +102,38 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
           ReportActions.getExtraContributionReportByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
+            handlerCallback: this.generatePdfIncomeData
           })
         )
-        this.reportTile = 'APORTES EXTRAS'
         break
       case this.incomes[5]:
         this.store.dispatch(
           ReportActions.getIncomesReportByDate({
             initDate: moment(initDate).startOf('day').toISOString(),
             endDate: moment(endDate).endOf('day').toISOString(),
+            handlerCallback: this.generatePdfIncomeData
           })
         )
-        this.reportTile = 'INGRESOS EXTRAS'
         break
-
       default:
         break
     }
   }
 
   private createForm() {
-    this.form = this.fb.group({
+    return this.fb.group({
       income: [this.incomes[0], Validators.required],
       initDate: [new Date(), Validators.required],
       endDate: [new Date(), Validators.required],
     })
   }
 
-  private generatePdf(monthlyPaymentsMade: MonthlyPaymentMade[]) {
+  private generatePdfData(monthlyPaymentsMade: MonthlyPaymentMade[], initDate: string, endDate: string): PDFInput{
     const pipe = new DatePipe('es-Es')
     const upper = new UpperCasePipe()
 
     const head = [['#', 'FECHA', 'QUIEN PAGÓ', 'CUANTO PAGÓ']]
-    const data = monthlyPaymentsMade.map((e, i) => [
+    const body = monthlyPaymentsMade.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE d MMMM, y')),
       e.user.name,
@@ -190,23 +142,22 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     const count = monthlyPaymentsMade.reduce((counter, item) => counter + item.amount, 0)
 
     const title = `Reporte de MENSUALIDADES del ${pipe.transform(
-      this.form.value.initDate,
+      initDate,
       'd MMMM y'
-    )} al ${pipe.transform(this.form.value.endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
+    )} al ${pipe.transform(endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
       count,
       'es-Es',
       '1.2'
     )}`
-
-    this.printTableService.generatePdf(title, head, data, 'INGRESOS')
+    return {title, head, body, type: 'INGRESOS'};
   }
 
-  private generatePdfContributions(contributionsPaid: ContributionPaid[]) {
+  private generatePdfContributionsData(contributionsPaid: ContributionPaid[], initDate: string, endDate: string): PDFInput {
     const pipe = new DatePipe('es-Es')
     const upper = new UpperCasePipe()
 
     const head = [['#', 'FECHA', 'QUIEN PAGÓ', 'CUANTO PAGÓ']]
-    const data = contributionsPaid.map((e, i) => [
+    const body = contributionsPaid.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE d MMMM, y')),
       e.user.name,
@@ -215,23 +166,23 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     const count = contributionsPaid.reduce((counter, item) => counter + item.amount, 0)
 
     const title = `Reporte de APORTES del ${pipe.transform(
-      this.form.value.initDate,
+      initDate,
       'd MMMM y'
-    )} al ${pipe.transform(this.form.value.endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
+    )} al ${pipe.transform(endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
       count,
       'es-Es',
       '1.2'
     )}`
 
-    this.printTableService.generatePdf(title, head, data, 'APORTES')
+    return {title, head, body, type: 'APORTES'}
   }
 
-  private generatePdfCertificationes(certifications: Certification[]) {
+  private generatePdfCertificationsData(certifications: Certification[], initDate: string, endDate: string): PDFInput {
     const pipe = new DatePipe('es-Es')
     const upper = new UpperCasePipe()
 
     const head = [['#', 'FECHA', 'QUIEN PAGÓ', 'CUANTO PAGÓ']]
-    const data = certifications.map((e, i) => [
+    const body = certifications.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE d MMMM, y')),
       e.user.name,
@@ -240,23 +191,23 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     const count = certifications.reduce((counter, item) => counter + item.amount, 0)
 
     const title = `Reporte de CERTIFICACIONES del ${pipe.transform(
-      this.form.value.initDate,
+      initDate,
       'd MMMM y'
-    )} al ${pipe.transform(this.form.value.endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
+    )} al ${pipe.transform(endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
       count,
       'es-Es',
       '1.2'
     )}`
 
-    this.printTableService.generatePdf(title, head, data, 'CERTIFICACIONES')
+    return {title, head, body, type: 'CERTIFICACIONES'}
   }
 
-  private generatePdfReport(report: Report[]) {
+  private generatePdfIncomeData(report: Report[], initDate: string, endDate: string, reportType = ''): PDFInput {
     const pipe = new DatePipe('es-Es')
     const upper = new UpperCasePipe()
 
     const head = [['#', 'FECHA', 'QUIEN PAGÓ', 'DESCRIPCION', 'CUANTO PAGÓ']]
-    const data = report.map((e, i) => [
+    const body = report.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE d MMMM, y')),
       e.fromUser,
@@ -264,25 +215,23 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
       formatNumber(e.amount, 'es-ES', '1.2'),
     ])
     const count = report.reduce((counter, item) => counter + item.amount, 0)
-
-    const title = `Reporte de ${this.reportTile} del ${pipe.transform(
-      this.form.value.initDate,
+    const title = `Reporte de ${reportType} del ${pipe.transform(
+      initDate,
       'd MMMM y'
-    )} al ${pipe.transform(this.form.value.endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
+    )} al ${pipe.transform(endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
       count,
       'es-Es',
       '1.2'
     )}`
-
-    this.printTableService.generatePdf(title, head, data, this.reportTile)
+    return {title, head, body, type: reportType}
   }
 
-  private generatePdfFines(fines: Fine[]) {
+  private generatePdfFinesData(fines: Fine[], initDate: string, endDate: string): PDFInput {
     const pipe = new DatePipe('es-Es')
     const upper = new UpperCasePipe()
 
     const head = [['#', 'FECHA', 'QUIEN PAGÓ', 'CUANTO PAGÓ']]
-    const data = fines.map((e, i) => [
+    const body = fines.map((e, i) => [
       i + 1,
       upper.transform(pipe.transform(e.date, 'EEEE d MMMM, y')),
       e.user.name,
@@ -291,20 +240,14 @@ export class ReportIncomeComponent implements OnInit, OnDestroy {
     const count = fines.reduce((counter, item) => counter + item.fine_paid, 0)
 
     const title = `Reporte de MULTAS del ${pipe.transform(
-      this.form.value.initDate,
+      initDate,
       'd MMMM y'
-    )} al ${pipe.transform(this.form.value.endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
+    )} al ${pipe.transform(endDate, 'd MMMM y')}. TOTAL: ${formatNumber(
       count,
       'es-Es',
       '1.2'
     )}`
 
-    this.printTableService.generatePdf(title, head, data, 'MULTAS')
-  }
-
-  private transformDate(date: Date) {
-    const isoDate = date.toISOString()
-    const auxDate = isoDate.split('-')
-    return `${auxDate[0]}-${auxDate[1]}-${auxDate[2].slice(0, 2)}`
+    return {title, head, body, type: 'MULTAS'}
   }
 }

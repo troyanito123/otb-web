@@ -26,7 +26,7 @@ export class ExtraContributionsDetailComponent {
     const datePipe = new DatePipe('es-Es')
     const upperPipe = new UpperCasePipe()
     const head = [['#', 'FECHA', 'QUIEN PAGÓ', 'CUANTO PAGÓ']]
-    const data = payments.map((e, i) => [
+    const body = payments.map((e, i) => [
       i + 1,
       upperPipe.transform(datePipe.transform(e.date, 'EEEE d MMMM, y')),
       e.user.name,
@@ -42,6 +42,6 @@ export class ExtraContributionsDetailComponent {
       'es-Es',
       '1.2'
     )}, Aportantes: ${payments.length}`
-    this.printTableService.generatePdf(title, head, data, name)
+    this.printTableService.generatePdf({title, head, body, type: name})
   }
 }

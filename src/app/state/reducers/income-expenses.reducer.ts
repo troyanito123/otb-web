@@ -1,19 +1,19 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
 
-import * as IncomeExpensesActions from '../actions/income-expenses.actions';
+import { IncomeExpensesActions } from '../actions/income-expenses.actions'
 
 export interface IncomeExpensesState {
-  contributions: number;
-  extraContributions: number;
-  monthlyPayments: number;
-  certifications: number;
-  fines: number;
-  expenses: number;
-  incomes: number;
-  incomesFromPeople: number;
-  total: number;
-  loading: boolean;
-  error: any;
+  contributions: number
+  extraContributions: number
+  monthlyPayments: number
+  certifications: number
+  fines: number
+  expenses: number
+  incomes: number
+  incomesFromPeople: number
+  total: number
+  loading: boolean
+  error: any
 }
 
 export const initialIncomeExpensesState: IncomeExpensesState = {
@@ -28,114 +28,45 @@ export const initialIncomeExpensesState: IncomeExpensesState = {
   total: 0,
   loading: false,
   error: null,
-};
+}
 
-const _incomeExpensesReducer = createReducer(
+const incomeExpensesReducer = createReducer(
   initialIncomeExpensesState,
-
-  on(IncomeExpensesActions.loadCertifications, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(IncomeExpensesActions.loadCertificationsSuccess, (state, { total }) => ({
-    ...state,
-    certifications: Number(total),
-    incomes: state.incomes + Number(total),
-    loading: false,
-    total: state.incomes + Number(total) - state.expenses,
-  })),
-
-  on(IncomeExpensesActions.loadIncome, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(IncomeExpensesActions.loadIncomeSuccess, (state, { total }) => ({
-    ...state,
-    incomesFromPeople: Number(total),
-    incomes: state.incomes + Number(total),
-    loading: false,
-    total: state.incomes + Number(total) - state.expenses,
-  })),
-
-  on(IncomeExpensesActions.loadExtraContribution, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(
-    IncomeExpensesActions.loadExtraContributionSuccess,
-    (state, { total }) => ({
-      ...state,
-      extraContributions: Number(total),
-      incomes: state.incomes + Number(total),
-      loading: false,
-      total: state.incomes + Number(total) - state.expenses,
-    })
-  ),
-
-  on(IncomeExpensesActions.loadContribution, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(IncomeExpensesActions.loadContributionSuccess, (state, { total }) => ({
-    ...state,
-    contributions: Number(total),
-    incomes: state.incomes + Number(total),
-    loading: false,
-    total: state.incomes + Number(total) - state.expenses,
-  })),
-
-  on(IncomeExpensesActions.loadMonthlyPayments, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(IncomeExpensesActions.loadMonthlyPaymentSuccess, (state, { total }) => ({
-    ...state,
-    monthlyPayments: Number(total),
-    incomes: state.incomes + Number(total),
-    loading: false,
-    total: state.incomes + Number(total) - state.expenses,
-  })),
-
-  on(IncomeExpensesActions.loadFines, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(IncomeExpensesActions.loadFinesSuccess, (state, { total }) => ({
-    ...state,
-    fines: Number(total),
-    incomes: state.incomes + Number(total),
-    loading: false,
-    total: state.incomes + Number(total) - state.expenses,
-  })),
-
-  on(IncomeExpensesActions.loadExpenses, (state) => ({
-    ...state,
-    loading: true,
-    error: null,
-  })),
-
-  on(IncomeExpensesActions.loadExpensesSuccess, (state, { total }) => ({
-    ...state,
-    expenses: Number(total),
-    loading: false,
-    total: state.incomes - (state.expenses + Number(total)),
-  })),
 
   on(IncomeExpensesActions.error, (state, { e }) => ({
     ...state,
     error: e.error,
+  })),
+  on(IncomeExpensesActions.loadIncomesExpenses, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(IncomeExpensesActions.loadIncomesExpensesSuccess, (state, data) => ({
+    ...state,
+    loading: false,
+    contributions: data.contributions,
+    extraContributions: data.extraContributions,
+    monthlyPayments: data.monthlyPayments,
+    certifications: data.certifications,
+    fines: data.fines,
+    expenses: data.expenses,
+    incomesFromPeople: data.incomesFromPeople,
+    incomes:
+      data.contributions +
+      data.extraContributions +
+      data.monthlyPayments +
+      data.certifications +
+      data.fines +
+      data.incomesFromPeople,
+    total:
+      data.contributions +
+      data.extraContributions +
+      data.monthlyPayments +
+      data.certifications +
+      data.fines +
+      data.incomesFromPeople -
+      data.expenses,
   })),
 
   on(IncomeExpensesActions.clean, (state) => ({
@@ -151,8 +82,59 @@ const _incomeExpensesReducer = createReducer(
     loading: false,
     error: null,
   }))
-);
+)
 
-export function incomeExpensesReducer(state: any, action: any) {
-  return _incomeExpensesReducer(state, action);
-}
+export const incomeExpensesFeature = createFeature({
+  name: 'incomeExpenses',
+  reducer: incomeExpensesReducer,
+  extraSelectors: ({
+    selectContributions,
+    selectExtraContributions,
+    selectMonthlyPayments,
+    selectCertifications,
+    selectFines,
+    selectIncomesFromPeople,
+  }) => ({
+    incomesList: createSelector(
+      selectContributions,
+      selectExtraContributions,
+      selectMonthlyPayments,
+      selectCertifications,
+      selectFines,
+      selectIncomesFromPeople,
+      (
+        selectContributions,
+        selectExtraContributions,
+        selectMonthlyPayments,
+        selectCertifications,
+        selectFines,
+        selectIncomesFromPeople
+      ) => [
+        {
+          name: 'Mensualidades',
+          value: selectMonthlyPayments,
+        },
+        {
+          name: 'Aportes',
+          value: selectContributions,
+        },
+        {
+          name: 'Certificaciones',
+          value: selectCertifications,
+        },
+        {
+          name: 'Multas',
+          value: selectFines,
+        },
+        {
+          name: 'Ingresos Extras',
+          value: selectIncomesFromPeople,
+        },
+        {
+          name: 'Contribuciones extras',
+          value: selectExtraContributions,
+        },
+      ]
+    ),
+  }),
+})
