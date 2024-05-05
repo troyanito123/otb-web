@@ -22,7 +22,7 @@ export class AuthEffect {
       mergeMap(({ email, password, forward }) =>
         this.authService.signin(email, password).pipe(
           map(({ user, access_token }) => AuthActions.setUser({ user, access_token })),
-          tap(() => this.router.navigate([forward])),
+          tap(async () => await this.router.navigate([forward])),
           catchError((e) => {
             this.dialogService.open('Error', 'Credenciales incorrectas')
             return of(AuthActions.setError({ e }))
