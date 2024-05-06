@@ -35,6 +35,7 @@ import { EffectsArray } from './state/effects'
 import { environment } from 'src/environments/environment'
 import { RouteReuseStrategy } from '@angular/router'
 import { CustomRouteReuseStrategy } from './app-custom-route-reuse.strategy'
+import { MAT_CARD_CONFIG } from '@angular/material/card'
 
 /*CONFIG STORE */
 
@@ -63,6 +64,7 @@ import { CustomRouteReuseStrategy } from './app-custom-route-reuse.strategy'
   providers: [
     { provide: LOCALE_ID, useValue: 'es' },
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+    { provide: MAT_CARD_CONFIG, useValue: { appearance: 'outlined' } },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeadersService,

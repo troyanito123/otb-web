@@ -1,4 +1,4 @@
-<mat-card appearance="outlined" *ngIf="certification$ | async as certification">
+<mat-card *ngIf="certification$ | async as certification">
   <mat-card-header>
     <mat-card-title>{{ certification.user.name | uppercase }}</mat-card-title>
     <mat-card-subtitle>
