@@ -13,7 +13,6 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { UserPaymentComponent } from './pages/user-payment/user-payment.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { UserPrePaymentComponent } from './components/user-pre-payment/user-pre-payment.component';
-import { QRCodeModule } from 'angular2-qrcode';
 import { UserContributionComponent } from './pages/user-contribution/user-contribution.component';
 import { UserDetailComponent } from './pages/user-detail/user-detail.component';
 import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt-view.component';
@@ -66,7 +65,6 @@ import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit
     UsersRoutingModule,
     ReactiveFormsModule,
     PipesModule,
-    QRCodeModule,
     AngularMaterialModule,
     StoreModule.forFeature(usersFeature.name, usersFeature.reducer),
     EffectsModule.forFeature([UsersEffect])
