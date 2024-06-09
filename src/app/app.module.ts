@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -47,17 +47,17 @@ import { MAT_CARD_CONFIG } from '@angular/material/card'
     DeleteDialogComponent,
     ConfirmDialogComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot(EffectsArray),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
-      connectInZone: true
+      connectInZone: true,
     }),
     BrowserAnimationsModule,
     AngularMaterialModule,
@@ -72,7 +72,7 @@ import { MAT_CARD_CONFIG } from '@angular/material/card'
       multi: true,
     },
     { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

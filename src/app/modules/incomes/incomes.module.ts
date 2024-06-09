@@ -7,7 +7,7 @@ import { IncomeListComponent } from './pages/income-list/income-list.component'
 import { IncomeEditComponent } from './pages/income-edit/income-edit.component'
 import { IncomeViewComponent } from './pages/income-view/income-view.component'
 import { IncomeDetailComponent } from './pages/income-detail/income-detail.component'
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module'
 import { ReactiveFormsModule } from '@angular/forms'
 import { IncomeFormComponent } from './components/income-form/income-form.component'
@@ -19,14 +19,9 @@ import { IncomeFormComponent } from './components/income-form/income-form.compon
     IncomeEditComponent,
     IncomeViewComponent,
     IncomeDetailComponent,
-    IncomeFormComponent
+    IncomeFormComponent,
   ],
-  imports: [
-    CommonModule,
-    IncomesRoutingModule,
-    HttpClientModule,
-    AngularMaterialModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, IncomesRoutingModule, AngularMaterialModule, ReactiveFormsModule],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class IncomesModule {}
