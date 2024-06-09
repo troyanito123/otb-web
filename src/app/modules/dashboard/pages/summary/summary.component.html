@@ -2,15 +2,10 @@
   <h2 class="title">Resumen hacienda</h2>
   <mat-card appearance="outlined" class="chart">
     <mat-card-header>
-      <mat-card-title>Ingresos</mat-card-title>
+      <mat-card-title><h2>Ingresos</h2></mat-card-title>
     </mat-card-header>
-    <mat-card-content *ngIf="incomesChart$ | async as incomesChart">
-      <!-- <ngx-charts-advanced-pie-chart
-        [view]="[650, 250]"
-        scheme="vivid"
-        [results]="incomesChart"
-      > -->
-      <!-- </ngx-charts-advanced-pie-chart> -->
+    <mat-card-content>
+      <div style="width: 480px;"><canvas #incomes></canvas></div>
     </mat-card-content>
   </mat-card>
 
@@ -33,4 +28,5 @@
       <h1>{{ total$ | async | currency : "Bs." }}</h1>
     </mat-card-content>
   </mat-card>
+
 </div>
