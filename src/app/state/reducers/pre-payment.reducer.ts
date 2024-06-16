@@ -1,16 +1,16 @@
-import { createReducer, on } from '@ngrx/store';
-import { PrePayment } from 'src/app/models/pre-payment';
-import * as PrePaymentActions from '../actions/pre-payment.action';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
+import { PrePayment } from 'src/app/models/pre-payment'
+import { PrePaymentActions } from '../actions/pre-payment.action'
 
 export interface PrePaymentState {
-  prePayments: PrePayment[];
+  prePayments: PrePayment[]
 }
 
 export const initialPrePaymentState: PrePaymentState = {
   prePayments: [],
-};
+}
 
-const _prePaymentReducer = createReducer(
+const prePaymentReducer = createReducer(
   initialPrePaymentState,
 
   on(PrePaymentActions.addPayment, (state, { prePayment }) => ({
@@ -26,8 +26,14 @@ const _prePaymentReducer = createReducer(
   on(PrePaymentActions.cleanPayment, () => ({
     prePayments: [],
   }))
-);
+)
 
-export function prePaymentReducer(state: any, action: any) {
-  return _prePaymentReducer(state, action);
-}
+export const prePaymentFeature = createFeature({
+  name: 'prePayment',
+  reducer: prePaymentReducer,
+  extraSelectors: ({ selectPrePayments }) => ({
+    selectPrePaymentTotal: createSelector(selectPrePayments, (prePayments) =>
+      prePayments.reduce((counter, item) => counter + item.amountForPay, 0)
+    ),
+  }),
+})

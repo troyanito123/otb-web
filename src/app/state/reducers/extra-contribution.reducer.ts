@@ -1,31 +1,27 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
 import {
   ExtraContribution,
-  ExtraContributionPaid,
   ExtraContributionPayMade,
-} from 'src/app/models/extra-contribution.interface';
-import * as ExtraContActions from '../actions/extra-contribution.action';
+} from 'src/app/models/extra-contribution.interface'
+import { ExtraContActions } from '../actions/extra-contribution.action'
 
 export interface ExtraContributionState {
-  extraContributions: ExtraContribution[];
-  extraContribution?: ExtraContribution;
-  extraContributionMade: ExtraContributionPayMade[];
-  extraContributionPaid?: ExtraContributionPaid;
-  created: boolean;
-  updated: boolean;
-  loading: boolean;
-  error?: any;
+  extraContributions: ExtraContribution[]
+  extraContribution: ExtraContribution | null
+  extraContributionMade: ExtraContributionPayMade[]
+  loading: boolean
+  error: any
 }
 
 export const initialExtraContributionState: ExtraContributionState = {
   extraContributions: [],
+  extraContribution: null,
   extraContributionMade: [],
   loading: false,
-  created: false,
-  updated: false,
-};
+  error: null,
+}
 
-const _extraContributionReducer = createReducer(
+const extraContributionReducer = createReducer(
   initialExtraContributionState,
 
   on(ExtraContActions.loadAll, (state) => ({
@@ -66,7 +62,7 @@ const _extraContributionReducer = createReducer(
 
   on(ExtraContActions.unSetCurrent, (state) => ({
     ...state,
-    extraContribution: undefined,
+    extraContribution: null,
   })),
 
   on(ExtraContActions.create, (state) => ({
@@ -75,24 +71,10 @@ const _extraContributionReducer = createReducer(
     loading: true,
   })),
 
-  on(ExtraContActions.createSuccess, (state, { data }) => ({
-    ...state,
-    loading: false,
-    created: true,
-    extraContribution: data,
-  })),
-
   on(ExtraContActions.update, (state) => ({
     ...state,
     error: null,
     loading: true,
-  })),
-
-  on(ExtraContActions.updateSuccess, (state, { data }) => ({
-    ...state,
-    extraContribution: data,
-    updated: true,
-    loading: false,
   })),
 
   on(ExtraContActions.payment, (state) => ({
@@ -101,36 +83,34 @@ const _extraContributionReducer = createReducer(
     loading: true,
   })),
 
-  on(ExtraContActions.paymentSuccess, (state, { data }) => ({
-    ...state,
-    loading: false,
-    extraContributionPaid: data,
-  })),
-
   on(ExtraContActions.setError, (state, { e }) => ({
     ...state,
     loading: false,
     error: e,
   })),
 
-  on(ExtraContActions.partialClean, (state) => ({
-    ...state,
-    updated: false,
-    created: false,
-  })),
-
   on(ExtraContActions.clean, () => ({
     extraContributions: [],
-    extraContribution: undefined,
+    extraContribution: null,
     extraContributionMade: [],
-    extraContributionPaid: undefined,
     loading: false,
-    error: undefined,
-    created: false,
-    updated: false,
+    error: null,
   }))
-);
+)
 
-export function extraContributionReducer(state: any, action: any) {
-  return _extraContributionReducer(state, action);
-}
+export const extraContributionFeature = createFeature({
+  name: 'extraContributions',
+  reducer: extraContributionReducer,
+  extraSelectors: ({ selectExtraContribution }) => ({
+    payments: createSelector(
+      selectExtraContribution,
+      (extraContribution) => extraContribution?.extra_contributions_paid ?? []
+    ),
+    total: createSelector(selectExtraContribution, (extraContribution) =>
+      (extraContribution?.extra_contributions_paid ?? []).reduce(
+        (counter, item) => counter + item.amount,
+        0
+      )
+    ),
+  }),
+})

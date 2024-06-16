@@ -1,66 +1,35 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-
-import { Subscription } from 'rxjs';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as MonthlyPaymentActions from 'src/app/state/actions/monthly-payment.action';
-
-import { MatDialog } from '@angular/material/dialog';
-
-import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
-import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component';
-import { AlertComponent } from 'src/app/layouts/alert/alert.component';
+import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { MonthlyPaymentActions } from 'src/app/state/actions/monthly-payment.action'
+import { MatDialog } from '@angular/material/dialog'
+import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dialog.component'
+import { monthlyPaymentFeature } from '@state/reducers/monthly-payment.reducer'
 
 @Component({
   selector: 'app-monthly-payments-detail',
   templateUrl: './monthly-payments-detail.component.html',
   styleUrls: ['./monthly-payments-detail.component.scss'],
 })
-export class MonthlyPaymentsDetailComponent implements OnInit, OnDestroy {
-  public monthlyPayment!: MonthlyPayment | null;
-  private monthlyPaymentSubs!: Subscription;
+export class MonthlyPaymentsDetailComponent {
+  readonly monthlyPayment$ = this.store.select(monthlyPaymentFeature.selectMonthlyPayment)
 
-  constructor(
-    private store: Store<AppState>,
-    private matDialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private store: Store, private matDialog: MatDialog) {}
 
-  ngOnInit(): void {
-    this.monthlyPaymentSubs = this.store
-      .select('monthlyPayment')
-      .subscribe(({ monthlyPayment, removed }) => {
-        this.monthlyPayment = monthlyPayment;
-        if (removed)
-          this.router.navigate(['../../'], {relativeTo: this.route}).then(() =>
-            this.matDialog.open(AlertComponent, {
-              data: {
-                title: 'Mensualidad eliminada',
-                content: 'Se elimino correctamente una mensualidad',
-              },
-            })
-          );
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.monthlyPaymentSubs?.unsubscribe();
-  }
-
-  remove() {
+  remove(id: number) {
     const dialog = this.matDialog.open(DeleteDialogComponent, {
       data: { name: 'mensualidad' },
-    });
+    })
 
     dialog.afterClosed().subscribe((result) => {
       if (result) {
         this.store.dispatch(
-          MonthlyPaymentActions.remove({ id: this.monthlyPayment!.id })
-        );
+          MonthlyPaymentActions.remove({
+            id,
+            forwardSupplier: () => '/private/monthly-payments',
+            messageSupplier: () => `Se eliminó la mensualidad`,
+          })
+        )
       }
-    });
+    })
   }
 }

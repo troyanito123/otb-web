@@ -1,83 +1,76 @@
-import { createAction, props } from '@ngrx/store';
+import { Transaction } from '@models/transaction.model'
+import { createAction, props } from '@ngrx/store'
 import {
   ExtraContribution,
   ExtraContributionData,
   ExtraContributionPaid,
   ExtraContributionPayMade,
-} from 'src/app/models/extra-contribution.interface';
+} from 'src/app/models/extra-contribution.interface'
 
-export const loadAll = createAction(
-  '[EXTRA-CONTRIBUTION] load all extra contributions'
-);
+const loadAll = createAction('[EXTRA-CONTRIBUTION] load all extra contributions')
 
-export const loadAllSuccess = createAction(
+const loadAllSuccess = createAction(
   '[EXTRA-CONTRIBUTION] load all extra contributions success',
   props<{ data: ExtraContribution[] }>()
-);
+)
 
-export const loadByUser = createAction(
-  '[EXTRA-CONTRIBUTION] load extra contributions by user',
-  props<{ id: number }>()
-);
-
-export const loadByUserSuccess = createAction(
-  '[EXTRA-CONTRIBUTION] load extra contributions by user success',
-  props<{ data: ExtraContributionPayMade[] }>()
-);
-
-export const loadOne = createAction(
+const loadOne = createAction(
   '[EXTRA-CONTRIBUTION] load one extra contribution',
   props<{ id: number }>()
-);
+)
 
-export const loadOneSuccess = createAction(
+const loadOneSuccess = createAction(
   '[EXTRA-CONTRIBUTION] load one extra contribution success',
   props<{ data: ExtraContribution }>()
-);
+)
 
-export const unSetCurrent = createAction(
-  '[EXTRA-CONTRIBUTION] un set current extra contribution'
-);
+const unSetCurrent = createAction('[EXTRA-CONTRIBUTION] un set current extra contribution')
 
-export const create = createAction(
+const create = createAction(
   '[EXTRA-CONTRIBUTION] create an extra contribution',
-  props<{ data: ExtraContributionData }>()
-);
+  props<{ data: ExtraContributionData; forwardSupplier: (id: number) => string }>()
+)
 
-export const createSuccess = createAction(
-  '[EXTRA-CONTRIBUTION] create an extra contribution success',
-  props<{ data: ExtraContribution }>()
-);
-
-export const update = createAction(
+const update = createAction(
   '[EXTRA-CONTRIBUTION] update an extra contribution',
-  props<{ id: number; data: Omit<ExtraContributionData, 'amount'> }>()
-);
+  props<{
+    id: number
+    data: Omit<ExtraContributionData, 'amount'>
+    forwardSupplier: (id: number) => string
+  }>()
+)
 
-export const updateSuccess = createAction(
-  '[EXTRA-CONTRIBUTION] update an extra contribution success',
-  props<{ data: ExtraContribution }>()
-);
+const loadByUser = createAction('[EXTRA-CONTRIBUTION] load extra contributions by user')
 
-export const payment = createAction(
+const loadByUserSuccess = createAction(
+  '[EXTRA-CONTRIBUTION] load extra contributions by user success',
+  props<{ data: ExtraContributionPayMade[] }>()
+)
+
+const payment = createAction(
   '[EXTRA-CONTRIBUTION] payment an extra contribution',
-  props<{ userId: number; contributionId: number }>()
-);
+  props<{
+    contributionId: number
+    generateTransactionsCallback: (contributionsPaid: ExtraContributionPaid) => Transaction[]
+    forwardSupplier: (id: number) => string
+  }>()
+)
 
-export const paymentSuccess = createAction(
-  '[EXTRA-CONTRIBUTION] payment an extra contribution success',
-  props<{ data: ExtraContributionPaid }>()
-);
+const setError = createAction('[EXTRA-CONTRIBUTION] Set error', props<{ e: any }>())
 
-export const setError = createAction(
-  '[EXTRA-CONTRIBUTION] Set error',
-  props<{ e: any }>()
-);
+const clean = createAction('[EXTRA-CONTRIBUTION] clean extra contribution store')
 
-export const partialClean = createAction(
-  '[EXTRA-CONTRIBUTION] Set created and update to false'
-);
-
-export const clean = createAction(
-  '[EXTRA-CONTRIBUTION] clean extra contribution store'
-);
+export const ExtraContActions = {
+  loadAll,
+  loadAllSuccess,
+  loadByUser,
+  loadByUserSuccess,
+  loadOne,
+  loadOneSuccess,
+  unSetCurrent,
+  create,
+  update,
+  payment,
+  setError,
+  clean,
+}

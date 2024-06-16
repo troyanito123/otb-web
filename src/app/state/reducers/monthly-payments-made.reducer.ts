@@ -1,50 +1,46 @@
-import { createReducer, on } from '@ngrx/store';
-import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made';
-import * as MonthlyPaymentsMadeActions from '../actions/monthly-payments-made.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { MonthlyPaymentMade } from 'src/app/models/monthly-payment-made'
+import { MonthlyPaymentsMadeActions } from '../actions/monthly-payments-made.action'
 
 export interface MonthlyPaymentsMadeState {
-  monthlyPaymentsMade: MonthlyPaymentMade[];
-  loading: boolean;
-  saved: boolean;
-  loaded: boolean;
-  error: any;
+  monthlyPaymentsMade: MonthlyPaymentMade[]
+  loading: boolean
+
+  error: any
 }
 
 export const initialMonthlyPaymentsMade: MonthlyPaymentsMadeState = {
   monthlyPaymentsMade: [],
   loading: false,
-  saved: false,
-  loaded: false,
-  error: null,
-};
 
-const _monthlyPaymentsMadeReducer = createReducer(
+
+  error: null,
+}
+
+const monthlyPaymentsMadeReducer = createReducer(
   initialMonthlyPaymentsMade,
 
   on(MonthlyPaymentsMadeActions.loadPaymentsMade, (state) => ({
     ...state,
     loading: true,
-    saved: false,
-    loaded: false,
+
+
   })),
 
   on(MonthlyPaymentsMadeActions.loadByDate, (state) => ({
     ...state,
+    error: null,
     loading: true,
-    loaded: false,
-    saved: false,
+
+
   })),
 
-  on(
-    MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess,
-    (state, { monthlyPaymentsMade }) => ({
-      ...state,
-      monthlyPaymentsMade,
-      loaded: true,
-      loading: false,
-      error: null,
-    })
-  ),
+  on(MonthlyPaymentsMadeActions.loadPaymentsMadeSuccess, (state, { monthlyPaymentsMade }) => ({
+    ...state,
+    monthlyPaymentsMade,
+    loading: false,
+
+  })),
 
   on(MonthlyPaymentsMadeActions.loadPaymentsMadeError, (state, { e }) => ({
     ...state,
@@ -55,29 +51,22 @@ const _monthlyPaymentsMadeReducer = createReducer(
   on(MonthlyPaymentsMadeActions.createManyPaymentsMade, (state) => ({
     ...state,
     loading: true,
-    saved: false,
   })),
 
-  on(
-    MonthlyPaymentsMadeActions.addPaymentsMade,
-    (state, { monthlyPaymentsMade }) => ({
-      ...state,
-      monthlyPaymentsMade:
-        state.monthlyPaymentsMade.concat(monthlyPaymentsMade),
-      loading: false,
-      saved: true,
-    })
-  ),
+  on(MonthlyPaymentsMadeActions.addPaymentsMade, (state, { monthlyPaymentsMade }) => ({
+    ...state,
+    monthlyPaymentsMade: state.monthlyPaymentsMade.concat(monthlyPaymentsMade),
+    loading: false,
+  })),
 
   on(MonthlyPaymentsMadeActions.clean, (state) => ({
     monthlyPaymentsMade: [],
     loading: false,
-    saved: false,
-    loaded: false,
     error: null,
   }))
-);
+)
 
-export function monthlyPaymentsMadeReducer(state: any, action: any) {
-  return _monthlyPaymentsMadeReducer(state, action);
-}
+export const monthlyPaymentsMadeFeature = createFeature({
+  name: 'monthlyPaymentMade',
+  reducer: monthlyPaymentsMadeReducer,
+})

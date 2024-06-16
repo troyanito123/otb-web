@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as CertificationActions from 'src/app/state/actions/certification.action';
-import { AppState } from 'src/app/state/app.reducer';
+import { CertificationActions } from 'src/app/state/actions/certification.action';
 
 @Component({
   selector: 'app-certification-view',
@@ -10,7 +9,7 @@ import { AppState } from 'src/app/state/app.reducer';
   styleUrls: ['./certification-view.component.scss'],
 })
 export class CertificationViewComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
+  constructor(private store: Store, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(({ id }) =>

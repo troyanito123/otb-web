@@ -1,16 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-
-import { Subscription } from 'rxjs';
-
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as AttendencesActions from 'src/app/state/actions/attendences.actions';
-import * as MeetingsActions from 'src/app/state/actions/meetings.actions';
-
+import { AttendencesActions } from 'src/app/state/actions/attendences.actions';
 import { Meeting } from 'src/app/models/meeting.model';
 import { Attendence } from 'src/app/models/attendence.model';
-import { PrintTableService } from 'src/app/services/print-table.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-attendences',
@@ -19,60 +13,43 @@ import { PrintTableService } from 'src/app/services/print-table.service';
 })
 export class ReportAttendencesComponent implements OnInit, OnDestroy {
   public meetings: Meeting[] = [];
-  private meetingsSubs!: Subscription;
-
-  private attendecesSubs!: Subscription;
-
-  public meetingInput!: UntypedFormControl;
+  readonly meetingInput: FormControl;
 
   constructor(
-    private store: Store<AppState>,
-    private printTableService: PrintTableService
-  ) {}
+    private store: Store,
+    private route: ActivatedRoute,
+  ) {
+    this.meetingInput = new FormControl(null, Validators.required)
+  }
 
   ngOnInit(): void {
-    this.store.dispatch(MeetingsActions.load());
-
-    this.meetingsSubs = this.store
-      .select('meetings')
-      .subscribe(({ meetings }) => {
-        this.meetings = meetings;
-        this.meetingInput = new UntypedFormControl(
-          meetings.length ? meetings[0] : '',
-          Validators.required
-        );
-      });
-
-    this.attendecesSubs = this.store
-      .select('attendences')
-      .subscribe(({ attendences, loaded }) => {
-        if (loaded) {
-          this.generatePdf(attendences);
-        }
-      });
+    this.route.data.subscribe(({meetings}) => {
+      this.meetings = meetings
+    }) 
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(AttendencesActions.clean());
-    this.store.dispatch(MeetingsActions.clean());
-    this.meetingsSubs?.unsubscribe();
-    this.attendecesSubs?.unsubscribe();
   }
 
   public generateReport() {
+    if(this.meetingInput.invalid) {
+      this.meetingInput.markAllAsTouched()
+      return;
+    }
     this.store.dispatch(
       AttendencesActions.loadByMeeting({
         meetingId: this.meetingInput.value.id,
+        meetingName: this.meetingInput.value.name,
+        handlerCallback: (attendences: Attendence[], meetingName: string) => {
+          const head = [['#', 'NOMBRE', 'FIRMA']];
+          const body = attendences.map((a, i) => [i + 1, a.user.name, '']);
+      
+          const title = `LISTA DE ASISTENCIA DE: ${meetingName}`;
+      
+          return {title, head, body, type: 'ASISTENCIAS'}
+        }
       })
     );
-  }
-
-  private generatePdf(attendences: Attendence[]) {
-    const head = [['#', 'NOMBRE', 'FIRMA']];
-    const data = attendences.map((a, i) => [i + 1, a.user.name, '']);
-
-    const title = `LISTA DE ASISTENCIA DE: ${this.meetingInput.value.name}`;
-
-    this.printTableService.generatePdf(title, head, data, 'ASISTENCIAS');
   }
 }

@@ -1,16 +1,16 @@
-import { createReducer, on } from '@ngrx/store';
-import { Transaction } from 'src/app/models/transaction.model';
-import * as TransactionsActions from '../actions/transactions.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { Transaction } from 'src/app/models/transaction.model'
+import * as TransactionsActions from '../actions/transactions.action'
 
 export interface TransactionsState {
-  transactions: Transaction[];
+  transactions: Transaction[]
 }
 
 export const initialTransactionsState: TransactionsState = {
   transactions: [],
-};
+}
 
-const _transactionsReducer = createReducer(
+const transactionsReducer = createReducer(
   initialTransactionsState,
 
   on(TransactionsActions.addTransaction, (state, { transactions }) => ({
@@ -20,8 +20,9 @@ const _transactionsReducer = createReducer(
   on(TransactionsActions.cleanTransactions, () => ({
     transactions: [],
   }))
-);
+)
 
-export function transactionsReducer(state: any, action: any) {
-  return _transactionsReducer(state, action);
-}
+export const transactionsFeature = createFeature({
+  name: 'transactions',
+  reducer: transactionsReducer,
+})

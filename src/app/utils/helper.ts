@@ -1,54 +1,53 @@
-export const couldPay = (
-  year: string,
-  month: string,
-  subscriptionAt: string
-): boolean => {
-  const monthNumber = getMonth(month);
-  const currentMontlyPayment = new Date(`${year}-${monthNumber}-01`);
-  const subscriptionAtDate = new Date(subscriptionAt);
-  return currentMontlyPayment >= subscriptionAtDate;
-};
+export const couldPay = (year: string, month: string, subscriptionAt: string): boolean => {
+  const monthNumber = getMonth(month)
+  const currentMontlyPayment = new Date(`${year}-${monthNumber}-01`)
+  const subscriptionAtDate = new Date(subscriptionAt)
+  return currentMontlyPayment >= subscriptionAtDate
+}
 
-
-export const getMonth = (month: string): string =>{
+export const getMonth = (month: string): string => {
   let res = '01'
   switch (month) {
     case 'ENERO':
       res = '01'
-      break;
+      break
     case 'FEBRERO':
       res = '02'
-      break;
+      break
     case 'MARZO':
       res = '03'
-      break;
+      break
     case 'ABRIL':
       res = '04'
-      break;
+      break
     case 'MAYO':
       res = '05'
-      break;
+      break
     case 'JUNIO':
       res = '06'
-      break;
+      break
     case 'JULIO':
       res = '07'
-      break;
+      break
     case 'AGOSTO':
       res = '08'
-      break;
+      break
     case 'SEPTIEMBRE':
       res = '09'
-      break;
+      break
     case 'OCTUBRE':
       res = '10'
-      break;
+      break
     case 'NOVIEMBRE':
       res = '11'
-      break;
+      break
     case 'DICIEMBRE':
       res = '12'
-      break;
+      break
   }
   return res
+}
+
+export const formatShortDate = (date: Date | string): string => {
+  return new Date(date).toLocaleString('es', { year: 'numeric', month: '2-digit', day: '2-digit' })
 }

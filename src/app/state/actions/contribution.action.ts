@@ -1,51 +1,49 @@
-import { createAction, props } from '@ngrx/store';
-import { Contribution } from 'src/app/models/contribution.model';
+import { createAction, props } from '@ngrx/store'
+import { Contribution } from 'src/app/models/contribution.model'
 
-export const load = createAction(
-  '[CONTRIBUTION] load contribution',
-  props<{ id: number }>()
-);
+const load = createAction('[CONTRIBUTION] load contribution', props<{ id: number }>())
 
-export const loadSuccess = createAction(
-  '[CONTRIBUTION] load contribution success',
-  props<{ contribution: Contribution }>()
-);
-
-export const create = createAction(
+const create = createAction(
   '[CONTRIBUTION] create contribution',
-  props<{ description: string; amount: number }>()
-);
+  props<{
+    description: string
+    amount: number
+    forwardSupplier: (id: number) => string
+    messageSupplier: (text: string) => string
+  }>()
+)
 
-export const createSuccess = createAction(
-  '[CONTRIBUTION] create contribution success',
-  props<{ contribution: Contribution }>()
-);
-
-export const update = createAction(
+const update = createAction(
   '[CONTRIBUTION] update contribution',
-  props<{ id: number; description: string; amount: number }>()
-);
+  props<{
+    id: number
+    description: string
+    amount: number
+    forwardSupplier: (id: number) => string
+    messageSupplier: (text: string) => string
+  }>()
+)
 
-export const updateSuccess = createAction(
-  '[CONTRIBUTION] update contribution success',
-  props<{ contribution: Contribution }>()
-);
-
-export const remove = createAction(
+const remove = createAction(
   '[CONTRIBUTION] remove contribution',
-  props<{ id: number }>()
-);
+  props<{ id: number; forward: string; messageSupplier: (text: string) => string }>()
+)
 
-export const removeSuccess = createAction(
-  '[CONTRIBUTION] remove contribution success',
+const success = createAction(
+  '[CONTRIBUTION] Set contribution',
   props<{ contribution: Contribution }>()
-);
+)
 
-export const error = createAction('[CONTRIBUTION] error', props<{ e: any }>());
+const error = createAction('[CONTRIBUTION] Set error', props<{ e: any }>())
 
-export const clean = createAction(
-  '[CONTRIBUTION] clean all contribution state'
-);
-export const softClean = createAction(
-  '[CONTRIBUTION] clean created updated removed'
-);
+const clean = createAction('[CONTRIBUTION] Clear')
+
+export const ContributionActions = {
+  load,
+  success,
+  create,
+  update,
+  remove,
+  error,
+  clean,
+}

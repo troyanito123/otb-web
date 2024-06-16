@@ -8,35 +8,29 @@
         <p class="title">OTB SAN JOSE</p>
       </div>
       <div>
-        <mat-form-field appearance="legacy" class="button-expand">
+        <mat-form-field class="button-expand">
           <mat-label>Correo</mat-label>
-          <input
-            matInput
-            placeholder="Placeholder"
-            type="text"
-            formControlName="email"
-          />
+          <input matInput placeholder="Correo electrónico" type="text" formControlName="email" />
           <mat-icon matSuffix color="primary">email</mat-icon>
-          <mat-hint>user@test.com</mat-hint>
+          <mat-error>Es requerido</mat-error>
+          <mat-hint>user&#64;test.com</mat-hint>
         </mat-form-field>
 
-        <mat-form-field appearance="legacy" class="button-expand">
+        <mat-form-field class="button-expand">
           <mat-label>Contraseña</mat-label>
           <input
             matInput
-            placeholder="Placeholder"
-            type="password"
+            placeholder="Contraseña"
+            [type]="showPassword ? 'text' : 'password'"
             formControlName="password"
           />
-          <mat-icon matSuffix color="primary">password</mat-icon>
+          <mat-icon matSuffix color="primary" (click)="showPassword = !showPassword">
+            {{ showPassword ? 'visibility' : 'visibility_off' }}
+          </mat-icon>
+          <mat-error>Es requerido</mat-error>
           <mat-hint>Minimo 6 caracteres</mat-hint>
         </mat-form-field>
-        <button
-          mat-raised-button
-          color="primary"
-          class="button-expand custom-button"
-          type="submit"
-        >
+        <button mat-raised-button color="primary" class="button-expand custom-button" type="submit">
           INGRESAR
         </button>
       </div>

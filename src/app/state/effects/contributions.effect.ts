@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import * as ContributionsActions from '../actions/contributions.action';
+import {ContributionsActions} from '../actions/contributions.action';
 import { ContributionService } from 'src/app/services/contribution.service';
 
 @Injectable()

@@ -1,6 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { Contribution } from 'src/app/models/contribution.model';
-import * as ContributionsActions from '../actions/contributions.action';
+import {ContributionsActions} from '../actions/contributions.action';
 
 export interface ContributionsState {
   contributions: Contribution[];
@@ -14,7 +14,7 @@ export const initialContributions: ContributionsState = {
   error: null,
 };
 
-const _contributionsReducer = createReducer(
+const contributionsReducer = createReducer(
   initialContributions,
 
   on(ContributionsActions.loadContributions, (state) => ({
@@ -45,6 +45,4 @@ const _contributionsReducer = createReducer(
   }))
 );
 
-export function contributionsReducer(state: any, action: any) {
-  return _contributionsReducer(state, action);
-}
+export const contributionsFeature = createFeature({name: 'contributions', reducer: contributionsReducer})

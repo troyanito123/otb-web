@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core'
+import { MeetingData } from '@models/meeting.model'
+import { Store } from '@ngrx/store'
+import { MeetingActions } from '@state/actions/meeting.actions'
 
 @Component({
   selector: 'app-meeting-new',
-  templateUrl: './meeting-new.component.html',
-  styleUrls: ['./meeting-new.component.scss']
+  template: ` <app-meeting-form (clickSave)="saveData($event)"></app-meeting-form> `,
 })
-export class MeetingNewComponent implements OnInit {
+export class MeetingNewComponent {
+  #store = inject(Store)
 
-  constructor() { }
-
-  ngOnInit(): void {
+  public saveData(data: MeetingData) {
+    this.#store.dispatch(
+      MeetingActions.create({ data, forwardSupplier: (id: number) => `/private/meetings/${id}` })
+    )
   }
-
 }

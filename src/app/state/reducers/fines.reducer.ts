@@ -1,43 +1,46 @@
-import { createReducer, on } from '@ngrx/store';
-import { Fine } from 'src/app/models/fine.model';
-import * as FinesActions from '../actions/fines.actions';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { Fine } from 'src/app/models/fine.model'
+import { FinesActions } from '../actions/fines.actions'
+import { PreFinesPaid } from '@models/pre-fines-paid.model'
 
 export interface FinesState {
-  fines: Fine[];
-  loading: boolean;
-  saved: boolean;
-  loaded: boolean;
-  error: any;
+  fines: Fine[]
+  allUserPreFines: PreFinesPaid[],
+  loading: boolean
+  error: any
 }
 
 export const initialFinesState: FinesState = {
   fines: [],
+  allUserPreFines: [],
   loading: false,
-  loaded: false,
-  saved: false,
   error: null,
-};
+}
 
-const _finesReducer = createReducer(
+const finesReducer = createReducer(
   initialFinesState,
 
-  on(FinesActions.loadByUser, (state) => ({
+  on(FinesActions.loadAllFinesByUser, (state) => ({
     ...state,
     loading: true,
     error: null,
   })),
 
+  on(FinesActions.loadAllFinesByUserSuccess, (state, { allUserPreFines }) => ({
+    ...state,
+    loading: false,
+    allUserPreFines
+  })),
+
   on(FinesActions.loadByDate, (state) => ({
     ...state,
     loading: true,
-    loaded: false,
     error: null,
   })),
 
   on(FinesActions.loadSuccess, (state, { fines }) => ({
     ...state,
     fines,
-    loaded: true,
     loading: false,
   })),
 
@@ -49,7 +52,6 @@ const _finesReducer = createReducer(
   on(FinesActions.createManySuccess, (state) => ({
     ...state,
     loading: false,
-    saved: true,
   })),
 
   on(FinesActions.error, (state, { e }) => ({
@@ -60,13 +62,10 @@ const _finesReducer = createReducer(
 
   on(FinesActions.clean, () => ({
     fines: [],
+    allUserPreFines: [],
     loading: false,
-    loaded: false,
-    saved: false,
     error: null,
   }))
-);
+)
 
-export function finesReducer(state: any, action: any) {
-  return _finesReducer(state, action);
-}
+export const finesFeature = createFeature({ name: 'fines', reducer: finesReducer })

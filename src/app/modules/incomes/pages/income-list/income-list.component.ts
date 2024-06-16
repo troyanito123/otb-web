@@ -1,15 +1,14 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { fromEvent, merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { IncomeService } from 'src/app/services/income.service';
 import { IncomeDataSource } from './income-datasource';
 

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-contributions',
-  templateUrl: './contributions.component.html',
-  styleUrls: ['./contributions.component.scss']
+  template: `
+    <div style="margin: 1rem">
+      <div class="flex-row-end-center">
+        <button mat-raised-button [routerLink]="['./list']" routerLinkActive="active">Lista</button>
+        <button mat-raised-button [routerLink]="['./new']" routerLinkActive="active">Nuevo</button>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+  `,
 })
-export class ContributionsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class ContributionsComponent {}

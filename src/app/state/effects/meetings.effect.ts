@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import * as MeetingsActions from '../actions/meetings.actions';
+import { MeetingsActions } from '../actions/meetings.actions';
 import { MeetingService } from 'src/app/services/meeting.service';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class MeetingsEffect {
       ofType(MeetingsActions.load),
       mergeMap(() =>
         this.meetingService.getAll().pipe(
-          map((meetings) => MeetingsActions.loadSucces({ meetings })),
+          map((meetings) => MeetingsActions.loadSuccess({ meetings })),
           catchError((e) => of(MeetingsActions.error({ e })))
         )
       )

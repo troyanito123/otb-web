@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { mergeMap, map, catchError } from 'rxjs/operators'
+import { of } from 'rxjs'
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UserService } from 'src/app/services/user.service';
-import * as UsersActions from '../actions/users.action';
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { UserService } from 'src/app/services/user.service'
+import { UsersActions } from '../actions/users.action'
 
 @Injectable()
 export class UsersEffect {
@@ -15,10 +15,10 @@ export class UsersEffect {
       ofType(UsersActions.loadByBlock),
       mergeMap(({ block }) =>
         this.userService.findByBlock(block).pipe(
-          map((users) => UsersActions.loadSuccess({ users })),
+          map((users) => UsersActions.loadByBlockSuccess({ users })),
           catchError((e) => of(UsersActions.loadError({ e })))
         )
       )
     )
-  );
+  )
 }

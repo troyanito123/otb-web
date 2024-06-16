@@ -1,21 +1,24 @@
-<ng-container *ngIf="user">
+<ng-container *ngIf="user$ | async as user">
   <div class="flex-row-start-center">
     <mat-form-field appearance="fill">
       <mat-label>Año de cobro</mat-label>
-      <mat-select [formControl]="yearInput">
+      <mat-select [formControl]="yearInput" (selectionChange)="yearInputChange($event)">
         <mat-option [value]="year" *ngFor="let year of years">
           {{ year }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="reprint()">
+    <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="reprint(mpm)">
       REIMPRESION
     </button>
   </div>
 
-  <div class="flex-row-start-start">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div class="flex-column-center-stretch ">
+    <table
+      mat-table
+      [dataSource]="(mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at"
+    >
       <ng-container matColumnDef="year">
         <th mat-header-cell *matHeaderCellDef>AÑO</th>
         <td mat-cell *matCellDef="let element">{{ element.year }}</td>
@@ -54,7 +57,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <div style="width: 40%">
+    <div>
       <app-user-pre-payment></app-user-pre-payment>
     </div>
   </div>

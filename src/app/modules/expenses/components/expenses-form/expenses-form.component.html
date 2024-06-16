@@ -1,8 +1,4 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="save()"
-  class="flex-column-center-center"
->
+<form [formGroup]="form" (ngSubmit)="save()" class="flex-column-center-center">
   <mat-form-field appearance="fill">
     <mat-label>Descripción</mat-label>
     <textarea
@@ -17,13 +13,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Monto</mat-label>
-    <input
-      matInput
-      type="number"
-      formControlName="amount"
-      placeholder="5"
-      autocomplete="off"
-    />
+    <input matInput type="number" formControlName="amount" placeholder="5" autocomplete="off" />
     <span matPrefix>$&nbsp;</span>
     <span matSuffix>.00</span>
     <mat-hint>Campo obligatorio</mat-hint>

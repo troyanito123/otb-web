@@ -1,41 +1,32 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { Role } from 'src/app/models/role.model';
-import { User } from 'src/app/models/user.model';
-import { loadRoles } from 'src/app/state/actions/role.action';
-import { cleanUser, loadUser } from 'src/app/state/actions/user.action';
-import { AppState } from 'src/app/state/app.reducer';
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { roleFeature } from '@state/reducers/roles.reducer'
+import { userFeature } from '@state/reducers/user.reducer'
+import { RoleActions } from 'src/app/state/actions/role.action'
+import { UserActions } from 'src/app/state/actions/user.action'
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss'],
 })
-export class UserEditComponent implements OnInit, OnDestroy {
-  private userSubs!: Subscription;
-  private rolesSubs!: Subscription;
+export class UserEditComponent implements OnInit {
+  public user$ = this.store.select(userFeature.selectUser)
+  public roles$ = this.store.select(roleFeature.selectRoles)
 
-  public user!: User | null;
-  public roles: Role[] = [];
-
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadRoles());
-
-    this.userSubs = this.store.select('user').subscribe(({ user }) => {
-      this.user = user;
-    });
-
-    this.rolesSubs = this.store
-      .select('roles')
-      .subscribe(({ roles }) => (this.roles = roles));
+    this.store.dispatch(RoleActions.loadRoles())
   }
 
-  ngOnDestroy(): void {
-    this.userSubs?.unsubscribe();
-    this.rolesSubs?.unsubscribe();
+  update(data: any) {
+    this.store.dispatch(
+      UserActions.update({
+        ...data,
+        forwadSupplier: (id: number) => `/private/users/${id}/detail`,
+        messageSupplier: (name: string) => `Se guardaron los datos del vecino: \"${name}\".`,
+      })
+    )
   }
 }

@@ -1,6 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { Role } from 'src/app/models/role.model';
-import { loadRoles, loadSuccess, loadError } from '../actions/role.action';
+import { RoleActions } from '../actions/role.action';
 
 export interface RolesState {
   roles: Role[];
@@ -14,28 +14,27 @@ export const initialRolesState: RolesState = {
   error: null,
 };
 
-const _rolesReducer = createReducer(
+const rolesReducer = createReducer(
   initialRolesState,
 
-  on(loadRoles, (state) => ({
+  on(RoleActions.loadRoles, (state) => ({
     ...state,
     loading: true,
   })),
 
-  on(loadSuccess, (state, { roles }) => ({
+  on(RoleActions.loadSuccess, (state, { roles }) => ({
     ...state,
     roles,
     loading: false,
     error: null,
   })),
 
-  on(loadError, (state, { e }) => ({
+  on(RoleActions.loadError, (state, { e }) => ({
     ...state,
     loading: false,
     error: true,
   }))
 );
 
-export function rolesReducer(state: any, action: any) {
-  return _rolesReducer(state, action);
-}
+
+export const roleFeature = createFeature({name: 'roleFeature', reducer: rolesReducer})

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { MeetingsActions } from '@state/actions/meetings.actions'
 
 @Component({
   selector: 'app-meetings',
   templateUrl: './meetings.component.html',
-  styleUrls: ['./meetings.component.scss']
+  styleUrls: ['./meetings.component.scss'],
 })
-export class MeetingsComponent implements OnInit {
+export class MeetingsComponent implements OnDestroy {
+  #store = inject(Store)
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.#store.dispatch(MeetingsActions.clean())
   }
-
 }

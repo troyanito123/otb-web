@@ -1,18 +1,31 @@
-import { createAction, props } from '@ngrx/store';
-import { Expense } from 'src/app/models/expense.model';
+import { createAction, props } from '@ngrx/store'
+import { PDFInput } from '@services/print-table.service'
+import { Expense } from 'src/app/models/expense.model'
 
-export const load = createAction('[EXPENSES] load expenses');
+const load = createAction('[EXPENSES] load expenses')
 
-export const loadByDates = createAction(
+const loadByDates = createAction(
   '[EXPENSES] load expenses by date',
-  props<{ initDate: string; endDate: string }>()
-);
+  props<{
+    initDate: string
+    endDate: string
+    handlerCallback: (contributions: Expense[], initDate: string, endDate: string) => PDFInput
+  }>()
+)
 
-export const loadSuccess = createAction(
+const loadSuccess = createAction(
   '[EXPENSES] load expenses success',
   props<{ expenses: Expense[] }>()
-);
+)
 
-export const error = createAction('[EXPENSES] error', props<{ e: any }>());
+const error = createAction('[EXPENSES] error', props<{ e: any }>())
 
-export const clean = createAction('[EXPENSES] clean');
+const clean = createAction('[EXPENSES] clean')
+
+export const ExpensesActions = {
+  load,
+  loadByDates,
+  loadSuccess,
+  error,
+  clean,
+}

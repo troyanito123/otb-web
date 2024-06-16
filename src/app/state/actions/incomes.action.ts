@@ -1,58 +1,56 @@
-import { createAction, props } from '@ngrx/store';
-import { IncomeModel } from 'src/app/models/income.model';
+import { createAction, props } from '@ngrx/store'
+import { IncomeModel } from 'src/app/models/income.model'
 
-export const load = createAction(
-  '[INCOMES] load income',
-  props<{ id: number }>()
-);
+const load = createAction('[INCOMES] load income', props<{ id: number }>())
 
-export const loadByUser = createAction(
-  '[INCOMES] load by user',
-  props<{ userId: number }>()
-);
+const loadByUser = createAction('[INCOMES] load by user')
 
-export const loadByUserSuccess = createAction(
+const loadByUserSuccess = createAction(
   '[INCOMES] load by user success',
   props<{ incomes: IncomeModel[] }>()
-);
+)
 
-export const loadSuccess = createAction(
-  '[INCOMES] load income succes',
-  props<{ income: IncomeModel }>()
-);
+const loadSuccess = createAction('[INCOMES] load income succes', props<{ income: IncomeModel }>())
 
-export const setIncome = createAction(
-  '[INCOMES] set income',
-  props<{ income: IncomeModel }>()
-);
+const setIncome = createAction('[INCOMES] set income', props<{ income: IncomeModel }>())
 
-export const setError = createAction(
-  '[INCOMES] set error',
-  props<{ error: any }>()
-);
+const setError = createAction('[INCOMES] set error', props<{ error: any }>())
 
-export const create = createAction(
+const create = createAction(
   '[INCOMES] create income',
   props<{
-    amount: number;
-    description: string;
-    collector: string;
-    date: Date;
-    userId: number;
+    amount: number
+    description: string
+    collector: string
+    date: Date,
+    forwardSupplier: (id: number) => string,
+    messageSupplier: (text: string) => string
   }>()
-);
+)
 
-export const update = createAction(
+const update = createAction(
   '[INCOMES] update income',
   props<{
-    id: number;
-    amount: number;
-    description: string;
-    date: Date;
-    status: string;
+    id: number
+    amount: number
+    description: string
+    date: Date
+    status: string,
+    forwardSupplier: (id: number) => string,
+    messageSupplier: (text: string) => string
   }>()
-);
+)
 
-export const clean = createAction('[INCOMES] clean');
+const clean = createAction('[INCOMES] clean')
 
-export const unsetSaved = createAction('[INCOMES] set saved to false');
+export const IncomesActions = {
+  load,
+  loadByUser,
+  loadByUserSuccess,
+  loadSuccess,
+  setIncome,
+  setError,
+  create,
+  update,
+  clean,
+}

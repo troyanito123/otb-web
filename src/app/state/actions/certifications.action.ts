@@ -1,23 +1,28 @@
-import { createAction, props } from '@ngrx/store';
-import { Certification } from 'src/app/models/certification.model';
+import { createAction, props } from '@ngrx/store'
+import { PDFInput } from '@services/print-table.service'
+import { Certification } from 'src/app/models/certification.model'
 
-export const load = createAction('[CERTIFICATIONS] load certifications');
-
-export const loadByDate = createAction(
+const loadByDate = createAction(
   '[CERTIFICATIONS] load certifications by date',
-  props<{ initDate: string; endDate: string }>()
-);
+  props<{
+    initDate: string
+    endDate: string
+    handlerCallback: (contributions: Certification[], initDate: string, endDate: string) => PDFInput
+  }>()
+)
 
-export const loadSuccess = createAction(
+const loadSuccess = createAction(
   '[CERTIFICATIONS] load certifications success',
   props<{ certifications: Certification[] }>()
-);
+)
 
-export const error = createAction(
-  '[CERTIFICATIONS] catch error',
-  props<{ e: any }>()
-);
+const error = createAction('[CERTIFICATIONS] catch error', props<{ e: any }>())
 
-export const clean = createAction(
-  '[CERTIFICATIONS] clean certifications state'
-);
+const clean = createAction('[CERTIFICATIONS] clean certifications state')
+
+export const CertificationsActions = {
+  loadByDate,
+  loadSuccess,
+  error,
+  clean,
+}

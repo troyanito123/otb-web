@@ -13,3 +13,11 @@ export class Meeting {
     public conclutions: string | null
   ) {}
 }
+
+export type MeetingData = {
+  name: string,
+  date: Date,
+  description: string,
+  fine_amount: number,
+  conclutions?: string,
+}

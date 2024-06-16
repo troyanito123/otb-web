@@ -2,7 +2,7 @@
   <div>
     <mat-form-field appearance="fill">
       <mat-label>Año</mat-label>
-      <mat-select [formControl]="inputYear">
+      <mat-select [formControl]="inputYear" (valueChange)="yearInputChange($event)">
         <mat-option *ngFor="let year of years" [value]="year">
           {{ year }}
         </mat-option>
@@ -10,7 +10,7 @@
     </mat-form-field>
   </div>
 
-  <table mat-table [dataSource]="monthlyPayments">
+  <table mat-table [dataSource]="(monthlyPayments$ | async) ?? []">
     <ng-container matColumnDef="year">
       <th mat-header-cell *matHeaderCellDef>Año</th>
       <td mat-cell *matCellDef="let row">{{ row.year }}</td>
@@ -22,8 +22,8 @@
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>Multa</th>
-      <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+      <th mat-header-cell *matHeaderCellDef>Aporte</th>
+      <td mat-cell *matCellDef="let row">{{ row.amount | currency: 'Bs. ' }}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
@@ -33,6 +33,3 @@
     ></tr>
   </table>
 </div>
-<div
-  class="list_container flex-row-center-center"
-></div>

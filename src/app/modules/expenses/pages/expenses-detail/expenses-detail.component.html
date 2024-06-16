@@ -1,31 +1,24 @@
-<div style="width: 80%">
-  <h2>Detalle del gasto</h2>
+<h2>Detalle del gasto</h2>
 
-  <ng-container *ngIf="expense">
-    <mat-card>
-      <mat-card-title>
-        <p>COD GASTO: #00{{ expense.code }}</p>
-      </mat-card-title>
-      <mat-card-content
-        ><p><strong>Descripción: </strong> {{ expense.description }}</p>
-        <p><strong>Monto:</strong> {{ expense.amount | number: "1.2" }} Bs.</p>
-        <p>
-          <strong>Fecha: </strong>
-          {{ expense.date | date: "fullDate" | uppercase }}
-        </p>
-        <p><strong>Quién dio: </strong> {{ expense.from_user }}</p>
-        <p><strong>Quién recibio: </strong>{{ expense.to_user }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <div
-          *ngIf="auth?.role == 'ADMIN'"
-          class="flex-row-end-center"
-        >
-          <button mat-raised-button color="warn" (click)="remove()">
-            Eliminar
-          </button>
-        </div>
-      </mat-card-actions>
-    </mat-card>
-  </ng-container>
-</div>
+<ng-container *ngIf="expense$ | async as expense">
+  <mat-card appearance="outlined">
+    <mat-card-title>
+      <p>COD GASTO: #00{{ expense.code }}</p>
+    </mat-card-title>
+    <mat-card-content>
+      <p><strong>Descripción: </strong> {{ expense.description }}</p>
+      <p><strong>Monto:</strong> {{ expense.amount | number : '1.2' }} Bs.</p>
+      <p>
+        <strong>Fecha: </strong>
+        {{ expense.date | date : 'fullDate' | uppercase }}
+      </p>
+      <p><strong>Quién dio: </strong> {{ expense.from_user }}</p>
+      <p><strong>Quién recibio: </strong>{{ expense.to_user }}</p>
+    </mat-card-content>
+    <mat-card-actions *ngIf="auth$ | async as auth" align="end">
+      <div *ngIf="auth?.role == 'ADMIN'" class="flex-row-end-center">
+        <button mat-flat-button color="warn" (click)="remove(expense.id)">Eliminar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>

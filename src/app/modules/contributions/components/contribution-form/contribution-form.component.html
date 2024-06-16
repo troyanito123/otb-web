@@ -4,17 +4,11 @@
   class="flex-column-center-center"
   style="margin-top: 1rem"
 >
-  <h2 *ngIf="isEditing">Modifica una contribución</h2>
-  <h2 *ngIf="!isEditing">Crea una contribución</h2>
+  <h2>{{ contribution ? 'Modifica una contribución' : 'Crea una contribución' }}</h2>
   <mat-form-field appearance="fill">
     <mat-label>Descripción</mat-label>
 
-    <textarea
-      formControlName="description"
-      matInput
-      placeholder="APORTE PARA ..."
-    >
-    </textarea>
+    <textarea formControlName="description" matInput placeholder="APORTE PARA ..."> </textarea>
 
     <mat-icon matSuffix>description</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>

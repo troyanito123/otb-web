@@ -1,10 +1,11 @@
-<mat-action-list>
+<mat-list>
+  <div mat-subheader><h1>Aportes extras</h1></div>
   <mat-list-item
-    *ngFor="let item of extraContributions"
-    [routerLink]="['../', item.id]"
+    *ngFor="let contribution of extraContributions$ | async"
+    [routerLink]="['../', contribution.id]"
   >
-    <mat-icon matListIcon>folder</mat-icon>
-    <h3 matLine>{{ item.name }}</h3>
-    <h4 matLine>{{ item.amount | currency: "Bs." }}</h4>
+    <mat-icon matListItemIcon>folder</mat-icon>
+    <div matListItemTitle>{{ contribution.name | uppercase }}</div>
+    <div matListItemLine>{{ contribution.amount | currency : 'Bs.' }}</div>
   </mat-list-item>
-</mat-action-list>
+</mat-list>

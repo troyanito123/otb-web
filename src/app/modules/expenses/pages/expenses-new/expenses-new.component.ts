@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { ExpenseActions } from '@state/actions/expense.action'
+import { authFeature } from '@state/reducers/auth.reducer'
 
 @Component({
   selector: 'app-expenses-new',
-  templateUrl: './expenses-new.component.html',
-  styleUrls: ['./expenses-new.component.scss']
+  template: `
+    <h2>Registrar un gasto</h2>
+    <ng-container *ngIf="auth$ | async as auth">
+      <app-expenses-form (clickSave)="create($event)" [auth]="auth"></app-expenses-form>
+    </ng-container>
+  `,
 })
-export class ExpensesNewComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class ExpensesNewComponent {
+  #store = inject(Store)
+  readonly auth$ = this.#store.select(authFeature.selectUser)
+  public create(data: any) {
+    this.#store.dispatch(
+      ExpenseActions.create({ ...data, forwardSupplier: (id) => `/private/expenses/${id}/detail` })
+    )
   }
-
 }

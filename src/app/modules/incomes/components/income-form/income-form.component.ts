@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { IncomeModel } from 'src/app/models/income.model';
-import { IncomeService } from 'src/app/services/income.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { IncomeModel } from 'src/app/models/income.model'
 
 @Component({
   selector: 'app-income-form',
@@ -9,31 +8,31 @@ import { IncomeService } from 'src/app/services/income.service';
   styleUrls: ['./income-form.component.scss'],
 })
 export class IncomeFormComponent implements OnInit {
-  public form: UntypedFormGroup;
+  public form: FormGroup
 
-  public statusList = ['ACTIVE', 'INACTIVE', 'DELETED'];
+  public statusList = ['ACTIVE', 'INACTIVE', 'DELETED']
 
-  @Input() income!: IncomeModel;
+  @Input() income!: IncomeModel
+  @Output() onSubmit = new EventEmitter()
 
-  constructor(private fb: UntypedFormBuilder, private incomeService: IncomeService) {
-    this.form = this.createForm();
+  constructor(private fb: FormBuilder) {
+    this.form = this.createForm()
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form.reset({ ...this.income })
+  }
 
-  public onSubmit() {
-    console.log(this.form.value);
+  public saveChanges() {
+    this.onSubmit.emit({ ...this.form.value, id: this.income.id })
   }
 
   private createForm() {
     return this.fb.group({
-      amount: [
-        0,
-        [Validators.required, Validators.min(0), Validators.max(999999)],
-      ],
+      amount: [0, [Validators.required, Validators.min(0), Validators.max(999999)]],
       description: ['', [Validators.required]],
       date: [new Date(), [Validators.required]],
       status: [this.statusList[0], [Validators.required]],
-    });
+    })
   }
 }

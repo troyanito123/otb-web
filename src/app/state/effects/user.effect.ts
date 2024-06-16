@@ -1,52 +1,53 @@
-import { Injectable } from '@angular/core';
-import { mergeMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { mergeMap, map, catchError, tap } from 'rxjs/operators'
+import { of } from 'rxjs'
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UserService } from 'src/app/services/user.service';
-import {
-  loadUser,
-  loadError,
-  loadSuccess,
-  create,
-  saveSuccess,
-  saveError,
-  update,
-  remove,
-  removeSuccess,
-} from '../actions/user.action';
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { UserService } from 'src/app/services/user.service'
+import { UserActions } from '../actions/user.action'
+import { Router } from '@angular/router'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Injectable()
 export class UserEffect {
-  constructor(private actions$: Actions, private userService: UserService) {}
+  constructor(
+    private actions$: Actions,
+    private userService: UserService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadUser),
+      ofType(UserActions.loadUser),
       mergeMap(({ id }) =>
         this.userService.getOne(id).pipe(
-          map((user) => loadSuccess({ user })),
-          catchError((e) => of(loadError({ e })))
+          map((user) => UserActions.loadSuccess({ user })),
+          catchError((e) => of(UserActions.setError({ e })))
         )
       )
     )
-  );
+  )
 
   createUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(create),
-      mergeMap(({ name, block_number, address_number }) =>
+      ofType(UserActions.create),
+      mergeMap(({ name, block_number, address_number, forwadSupplier, messageSupplier }) =>
         this.userService.create(name, block_number, address_number).pipe(
-          map((user) => saveSuccess({ user })),
-          catchError((e) => of(saveError({ e })))
+          tap(({ id, name }) => {
+            this.snackBar.open(messageSupplier(name), 'OK')
+            this.router.navigateByUrl(forwadSupplier(id))
+          })
         )
-      )
+      ),
+      map((user) => UserActions.modifySuccess({ user })),
+      catchError((e) => of(UserActions.setError({ e })))
     )
-  );
+  )
 
   updateUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(update),
+      ofType(UserActions.update),
       mergeMap(
         ({
           id,
@@ -57,35 +58,36 @@ export class UserEffect {
           role,
           email,
           password,
+          forwadSupplier,
+          messageSupplier,
         }) =>
           this.userService
-            .update(
-              id,
-              name,
-              block_number,
-              address_number,
-              status,
-              role,
-              email,
-              password
-            )
+            .update(id, name, block_number, address_number, status, role, email, password)
             .pipe(
-              map((user) => saveSuccess({ user })),
-              catchError((e) => of(saveError({ e })))
+              tap(({ id, name }) => {
+                this.snackBar.open(messageSupplier(name), 'OK')
+                this.router.navigateByUrl(forwadSupplier(id))
+              })
             )
-      )
+      ),
+      map((user) => UserActions.modifySuccess({ user })),
+      catchError((e) => of(UserActions.setError({ e })))
     )
-  );
+  )
 
   removeUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(remove),
-      mergeMap(({ id }) =>
+      ofType(UserActions.remove),
+      mergeMap(({ id, forward, messageSupplier }) =>
         this.userService.remove(id).pipe(
-          map((user) => removeSuccess({ user })),
-          catchError((e) => of(saveError({ e })))
+          tap(({ name }) => {
+            this.router.navigateByUrl(forward)
+            this.snackBar.open(messageSupplier(name), 'OK')
+          })
         )
-      )
+      ),
+      map((user) => UserActions.modifySuccess({ user })),
+      catchError((e) => of(UserActions.setError({ e })))
     )
-  );
+  )
 }

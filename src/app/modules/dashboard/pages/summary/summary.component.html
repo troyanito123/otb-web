@@ -1,36 +1,32 @@
-<div class="sumary-container">
+<div class="summary-container">
   <h2 class="title">Resumen hacienda</h2>
-  <mat-card class="chart">
+  <mat-card appearance="outlined" class="chart">
     <mat-card-header>
-      <mat-card-title>Ingresos</mat-card-title>
+      <mat-card-title><h2>Ingresos</h2></mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <ngx-charts-advanced-pie-chart
-        [view]="view"
-        scheme="vivid"
-        [results]="incomesChart"
-      >
-      </ngx-charts-advanced-pie-chart>
+      <div style="width: 480px;"><canvas #incomes></canvas></div>
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="expense">
+  <mat-card appearance="outlined" class="expense">
     <mat-card-header >
       <mat-card-title><h2>Egresos</h2></mat-card-title>
     </mat-card-header>
     <mat-card-content class="content">
       <mat-icon color="primary">money_off</mat-icon>
-      <h1>{{ expenses | currency : "Bs." }}</h1>
+      <h1>{{ expenses$ | async | currency : "Bs." }}</h1>
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="total">
+  <mat-card appearance="outlined" class="total">
     <mat-card-header>
       <mat-card-title><h2>En Caja</h2></mat-card-title>
     </mat-card-header>
     <mat-card-content class="content">
       <mat-icon color="primary">savings</mat-icon>
-      <h1>{{ total | currency : "Bs." }}</h1>
+      <h1>{{ total$ | async | currency : "Bs." }}</h1>
     </mat-card-content>
   </mat-card>
+
 </div>

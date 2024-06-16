@@ -1,4 +1,4 @@
-<div class="overlay" *ngIf="loading">
+<div class="overlay" *ngIf="loading$ | async">
   <div>
     <div id="wifi-loader">
       <svg class="circle-outer" viewBox="0 0 86 86">

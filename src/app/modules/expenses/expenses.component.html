@@ -1,8 +1,6 @@
 <div style="margin: 2rem">
-  <div class="flex-row-end-center">
-    <button mat-raised-button routerLink="list" routerLinkActive="active">
-      Lista
-    </button>
+  <div class="flex-row-end-center" *ngIf="auth$ | async as auth">
+    <button mat-raised-button routerLink="list" routerLinkActive="active">Lista</button>
     <button
       *ngIf="auth?.role == 'ADMIN'"
       mat-raised-button

@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as ExtraContActions from 'src/app/state/actions/extra-contribution.action';
+import { Component, OnInit, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { ExtraContActions } from 'src/app/state/actions/extra-contribution.action'
+import { ExtraContributionData } from '@models/extra-contribution.interface'
 
 @Component({
   selector: 'app-extra-contributions-new',
-  templateUrl: './extra-contributions-new.component.html',
-  styleUrls: ['./extra-contributions-new.component.scss'],
+  template: `
+    <app-extra-contribution-form (clickSave)="save($event)"></app-extra-contribution-form>
+  `,
 })
-export class ExtraContributionsNewComponent implements OnInit {
-  constructor(private store: Store<AppState>) {}
+export class ExtraContributionsNewComponent {
+  #store = inject(Store)
 
-  ngOnInit(): void {
-    this.store.dispatch(ExtraContActions.partialClean());
+  public save(data: ExtraContributionData) {
+    this.#store.dispatch(
+      ExtraContActions.create({
+        data,
+        forwardSupplier: (id: number) => `/private/extra-contributions/${id}`,
+      })
+    )
   }
 }

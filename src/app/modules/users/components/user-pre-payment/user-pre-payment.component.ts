@@ -1,127 +1,68 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { Subscription } from 'rxjs';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as MonthlyPaymentsMadeActions from 'src/app/state/actions/monthly-payments-made.action';
-import * as PrePaymentActions from 'src/app/state/actions/pre-payment.action';
-import * as TransactionsActions from 'src/app/state/actions/transactions.action';
-
-import { PrePayment } from 'src/app/models/pre-payment';
-import { User } from 'src/app/models/user.model';
-import { Transaction } from 'src/app/models/transaction.model';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertComponent } from 'src/app/layouts/alert/alert.component';
+import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { AppState } from '@state/app.reducer'
+import { MonthlyPaymentsMadeActions } from '@state/actions/monthly-payments-made.action'
+import { PrePaymentActions } from '@state/actions/pre-payment.action'
+import { PrePayment } from 'src/app/models/pre-payment'
+import { Transaction } from 'src/app/models/transaction.model'
+import { FormControl, Validators } from '@angular/forms'
+import { prePaymentFeature } from '@state/reducers/pre-payment.reducer'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MonthlyPaymentMade } from '@models/monthly-payment-made'
 
 @Component({
   selector: 'app-user-pre-payment',
   templateUrl: './user-pre-payment.component.html',
   styleUrls: ['./user-pre-payment.component.scss'],
 })
-export class UserPrePaymentComponent implements OnInit, OnDestroy {
-  public prePayments: PrePayment[] = [];
-  private prePaymentsSubs!: Subscription;
+export class UserPrePaymentComponent {
+  protected displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option']
 
-  private monthlyPaymentsMadeSubs!: Subscription;
+  protected inputDate = new FormControl(new Date().toISOString(), [Validators.required])
 
-  public total = 0;
+  protected prePayments$ = this.store.select(prePaymentFeature.selectPrePayments)
+  protected prePaymentsTotal$ = this.store.select(prePaymentFeature.selectPrePaymentTotal)
 
-  public user!: User | null;
-  private userSubs!: Subscription;
-
-  displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option'];
-
-  inputDate = new UntypedFormControl(new Date().toISOString(), [Validators.required]);
-
-  constructor(
-    private store: Store<AppState>,
-    private router: Router,
-    private matDialog: MatDialog
-  ) {}
-
-  ngOnInit(): void {
-    this.listenerStore();
-  }
-
-  ngOnDestroy(): void {
-    this.prePaymentsSubs?.unsubscribe();
-    this.monthlyPaymentsMadeSubs?.unsubscribe();
-    this.userSubs?.unsubscribe();
-  }
+  constructor(private store: Store<AppState>, private matSnackBar: MatSnackBar) {}
 
   substractToPrePaid(id: number) {
-    this.store.dispatch(PrePaymentActions.subtractPayment({ id }));
+    this.store.dispatch(PrePaymentActions.subtractPayment({ id }))
   }
 
-  confirmPaid() {
-    if (!this.prePayments.length) {
-      this.matDialog.open(AlertComponent, {
-        data: {
-          title: 'Error al realizar un pago',
-          content: 'Tiene que añadir por lo menos una mensualidad.',
-        },
-      });
-      return;
+  confirmPaid(prePayments: PrePayment[]) {
+    if (!prePayments.length) {
+      this.matSnackBar.open('Agregue un pago primero', 'OK')
+      return
     }
-
-    const monthsId = JSON.stringify(this.prePayments.map((p) => p.id));
+    const monthsId = JSON.stringify(prePayments.map((p) => p.id))
 
     this.store.dispatch(
       MonthlyPaymentsMadeActions.createManyPaymentsMade({
-        userId: this.user!.id,
         monthsId,
         date: new Date(this.inputDate.value!),
+        generateTransactionsCallbak: this.generateTransactions,
+        forwardSupplier: (id: number) => `/private/users/${id}/receipt-view`,
       })
-    );
+    )
   }
 
-  private listenerStore() {
-    this.monthlyPaymentsMadeSubs = this.store
-      .select('monthlyPaymentMade')
-      .subscribe(({ saved }) => {
-        if (saved) {
-          this.store.dispatch(
-            TransactionsActions.addTransaction({
-              transactions: this.generateTransactions(),
-            })
-          );
-          this.store.dispatch(PrePaymentActions.cleanPayment());
-
-          this.router.navigate([
-            'private/users',
-            this.user!.id,
-            'receipt-view',
-          ]);
+  generateTransactions = (prePayments: MonthlyPaymentMade[]): Transaction[] => {
+    const info = prePayments.reduce(
+      (acum: { sum: number; desc: string[] }, curr) => {
+        return {
+          desc: [...acum.desc, `${curr.monthlyPayment.month}/${curr.monthlyPayment.year}`],
+          sum: acum.sum + curr.amount,
         }
-      });
+      },
+      { sum: 0, desc: [] }
+    )
 
-    this.prePaymentsSubs = this.store
-      .select('prePayment')
-      .subscribe(({ prePayments }) => {
-        this.prePayments = prePayments;
-        this.total = this.prePayments.reduce(
-          (counter, item) => counter + item.amountForPay,
-          0
-        );
-      });
-
-    this.userSubs = this.store
-      .select('user')
-      .subscribe(({ user }) => (this.user = user));
-  }
-
-  private generateTransactions() {
-    return this.prePayments.map((p) => {
-      const { month, year, amountForPay } = p;
-      const description = `PAGO MENSUALIDAD DE: ${month} - ${year}`;
-      return new Transaction(
-        description,
-        amountForPay,
+    return [
+      new Transaction(
+        `Mensualidades de: ${info.desc.join(' - ')}`,
+        info.sum,
         new Date(this.inputDate.value!)
-      );
-    });
+      ),
+    ]
   }
 }

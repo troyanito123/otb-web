@@ -1,4 +1,4 @@
-<mat-table [dataSource]="incomes">
+<mat-table [dataSource]="(incomes$ | async) ?? []">
   <ng-container matColumnDef="date">
     <mat-header-cell *matHeaderCellDef> FECHA </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{ row.date | date }} </mat-cell>
@@ -19,7 +19,7 @@
   <ng-container matColumnDef="options">
     <mat-header-cell *matHeaderCellDef> OPCIONES </mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <button mat-icon-button color="primary" (click)="editIncome(row.id)">
+      <button mat-icon-button color="primary" [routerLink]="['../', row.id]">
         <mat-icon>edit</mat-icon>
       </button>
     </mat-cell>

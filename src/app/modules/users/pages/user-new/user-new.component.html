@@ -1,4 +1,4 @@
-<ng-container *ngIf="roles.length">
-  <h2>Registra un nuevo vecino</h2>
-  <app-user-form [roles]="roles"></app-user-form>
+<h2>Registra un nuevo vecino</h2>
+<ng-container *ngIf="(roles$ | async)?.length">
+  <app-user-form [roles]="(roles$ | async) ?? []" (onSubmit)="create($event)"></app-user-form>
 </ng-container>

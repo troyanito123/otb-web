@@ -1,15 +1,14 @@
 <div class="container">
   <h2>MANZANOS DE LA OTB</h2>
-  <mat-chip-list cdkDropList cdkDropListOrientation="horizontal">
-    <mat-chip
+  <mat-chip-listbox cdkDropList cdkDropListOrientation="horizontal">
+    <mat-chip-option
       cdkDrag
       *ngFor="let block of blocks"
-      selected
       color="primary"
       [routerLink]="['./', block]"
     >
       {{ block }}
-    </mat-chip>
-  </mat-chip-list>
+    </mat-chip-option>
+  </mat-chip-listbox>
   <router-outlet></router-outlet>
 </div>

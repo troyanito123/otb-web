@@ -1,106 +1,64 @@
-import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
-import {
-  loadUser,
-  loadSuccess,
-  loadError,
-  cleanUser,
-  create,
-  update,
-  saveSuccess,
-  saveError,
-  remove,
-  removeSuccess,
-  savedDefault,
-} from '../actions/user.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { User } from 'src/app/models/user.model'
+import { UserActions } from '../actions/user.action'
 
 export interface UserState {
-  user: User | null;
-  loading: boolean;
-  saved: boolean;
-  removed: boolean;
-  error: any;
+  user: User | null
+  loading: boolean
+  error: any
 }
 
 export const initialUsersState: UserState = {
   user: null,
   loading: false,
-  saved: false,
-  removed: false,
   error: null,
-};
+}
 
-const _userReducer = createReducer(
+const userReducer = createReducer(
   initialUsersState,
 
-  on(loadUser, (state, { id }) => ({
+  on(UserActions.loadUser, (state) => ({
     ...state,
+    error: null,
     loading: true,
   })),
 
-  on(loadSuccess, (state, { user }) => ({
+  on(UserActions.loadSuccess, (state, { user }) => ({
     ...state,
     user,
     loading: false,
   })),
 
-  on(loadError, (state, { e }) => ({
+  on(UserActions.setError, (state, { e }) => ({
     ...state,
-    user: null,
     loading: false,
     error: e.error,
   })),
 
-  on(cleanUser, () => ({
-    user: null,
-    loading: false,
-    saved: false,
-    removed: false,
-    error: null,
+  on(UserActions.cleanUser, () => ({
+    ...initialUsersState,
   })),
 
-  on(create, (state) => ({
+  on(UserActions.create, (state) => ({
     ...state,
     loading: true,
   })),
 
-  on(update, (state) => ({
+  on(UserActions.update, (state) => ({
     ...state,
     loading: true,
   })),
 
-  on(remove, (state) => ({
+  on(UserActions.remove, (state) => ({
     ...state,
     loading: true,
   })),
 
-  on(saveSuccess, (state, { user }) => ({
+  on(UserActions.modifySuccess, (state, { user }) => ({
     ...state,
     user,
     loading: false,
-    saved: true,
-  })),
-
-  on(saveError, (state, { e }) => ({
-    ...state,
-    loading: false,
-    saved: false,
-    error: e.error,
-  })),
-
-  on(removeSuccess, (state) => ({
-    ...state,
-    loading: false,
-    removed: true,
-  })),
-
-  on(savedDefault, (state) => ({
-    ...state,
-    saved: false,
-    error: null,
   }))
-);
+)
 
-export function userReducer(state: any, action: any) {
-  return _userReducer(state, action);
-}
+export const userFeature = createFeature({ name: 'user', reducer: userReducer })

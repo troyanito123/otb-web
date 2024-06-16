@@ -1,61 +1,51 @@
-import { createReducer, on } from '@ngrx/store';
-import { Expense } from 'src/app/models/expense.model';
-import * as ExpensesActions from '../actions/expenses.action';
+import { createFeature, createReducer, on } from '@ngrx/store'
+import { Expense } from 'src/app/models/expense.model'
+import { ExpensesActions } from '../actions/expenses.action'
 
 export interface ExpensesState {
-  expenses: Expense[];
-  loading: boolean;
-  loaded: boolean;
-  error: any;
+  expenses: Expense[]
+  loading: boolean
+  error: any
 }
 
 export const initialExpensesState: ExpensesState = {
   expenses: [],
   loading: false,
-  loaded: false,
   error: null,
-};
+}
 
-const _expensesReducer = createReducer(
+const expensesReducer = createReducer(
   initialExpensesState,
 
   on(ExpensesActions.load, (state) => ({
     ...state,
     loading: true,
-    loaded: false,
     error: null,
   })),
 
   on(ExpensesActions.loadByDates, (state) => ({
     ...state,
-    expenses: [],
     loading: true,
-    loaded: false,
     error: null,
   })),
 
   on(ExpensesActions.loadSuccess, (state, { expenses }) => ({
+    ...state,
     expenses,
     loading: false,
-    loaded: true,
-    error: null,
   })),
 
   on(ExpensesActions.error, (state, { e }) => ({
     ...state,
     loading: false,
-    loaded: true,
     error: e.error,
   })),
 
   on(ExpensesActions.clean, () => ({
     expenses: [],
     loading: false,
-    loaded: false,
     error: null,
   }))
-);
+)
 
-export function expensesReducer(state: any, action: any) {
-  return _expensesReducer(state, action);
-}
+export const expensesFeature = createFeature({ name: 'expenses', reducer: expensesReducer })

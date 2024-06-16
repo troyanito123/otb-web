@@ -1,32 +1,31 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as MonthlyPaymentActions from 'src/app/state/actions/monthly-payment.action';
-
-import { MonthlyPayment } from 'src/app/models/monthly-payment.model';
+import { Component, inject } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { MonthlyPaymentActions } from '@state/actions/monthly-payment.action'
+import { monthlyPaymentFeature } from '@state/reducers/monthly-payment.reducer'
 
 @Component({
   selector: 'app-monthly-payments-edit',
-  templateUrl: './monthly-payments-edit.component.html',
-  styleUrls: ['./monthly-payments-edit.component.scss'],
+  template: `
+    <ng-container *ngIf="monthlyPayment$ | async as monthlyPayment">
+      <h2>Modifica la mensualidad</h2>
+      <app-monthly-payments-form
+        [monthlyPayment]="monthlyPayment"
+        (clickSave)="update($event, monthlyPayment.id)"
+      ></app-monthly-payments-form>
+    </ng-container>
+  `,
 })
-export class MonthlyPaymentsEditComponent implements OnInit, OnDestroy {
-  public monthlyPayment!: MonthlyPayment | null;
-  private monthlyPaymentSubs!: Subscription;
+export class MonthlyPaymentsEditComponent {
+  #store = inject(Store)
+  readonly monthlyPayment$ = this.#store.select(monthlyPaymentFeature.selectMonthlyPayment)
 
-  constructor(private store: Store<AppState>) {}
-
-  ngOnInit(): void {
-    this.monthlyPaymentSubs = this.store
-      .select('monthlyPayment')
-      .subscribe(({ monthlyPayment }) => {
-        this.monthlyPayment = monthlyPayment;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.monthlyPaymentSubs?.unsubscribe();
+  public update(data: any, id: number) {
+    this.#store.dispatch(
+      MonthlyPaymentActions.update({
+        ...data,
+        id,
+        forwardSupplier: (id) => `/private/monthly-payments/${id}`,
+      })
+    )
   }
 }

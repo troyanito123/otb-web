@@ -11,13 +11,11 @@
 }
 
 
-.sumary-container{
-  height: 100%;
+.summary-container{
   display: grid;
-  grid-template-rows: 3rem 300px 200px;
-  grid-template-columns: 50% 50%;
+  grid-template-rows: 3rem 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   justify-items: center;
-  align-items: center;
   gap: 1rem;
 
   .title {

@@ -1,83 +1,34 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core'
 
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store'
+import { CertificationActions } from 'src/app/state/actions/certification.action'
 
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/app.reducer';
-import * as CertificationActions from 'src/app/state/actions/certification.action';
-
-import { Certification } from 'src/app/models/certification.model';
-import { Router } from '@angular/router';
+import { certificationFeature } from '@state/reducers/certification.reducer'
 
 @Component({
   selector: 'app-certification-edit',
   templateUrl: './certification-edit.component.html',
   styleUrls: ['./certification-edit.component.scss'],
 })
-export class CertificationEditComponent implements OnInit, OnDestroy {
-  public certification!: Certification | null;
-  private certificationSubs!: Subscription;
+export class CertificationEditComponent {
+  readonly certification$ = this.store.select(certificationFeature.selectCertification)
 
-  public form!: UntypedFormGroup;
-  public certificationsTypes = ['SIMPLE', 'COMPLETE'];
+  constructor(private store: Store) {}
 
-  constructor(
-    private store: Store<AppState>,
-    private fb: UntypedFormBuilder,
-    private router: Router
-  ) {}
+  public update(data: any, id: number) {
+    const { description, amount, type, date } = data
 
-  ngOnInit(): void {
-    this.certificationSubs = this.store
-      .select('certification')
-      .subscribe(({ certification, error, updated }) => {
-        this.certification = certification;
-        this.createForm();
-        if (error) this.handledError(error);
-        if (updated) this.handledUpdated(certification!);
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.store.dispatch(CertificationActions.softClean());
-    this.certificationSubs?.unsubscribe();
-  }
-
-  save() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    const { description, amount, type, date } = this.form.value;
     this.store.dispatch(
       CertificationActions.update({
-        id: this.certification!.id,
+        id,
         description,
         amount,
         ctype: type,
         date,
+        forwardSupplier: (id) => `private/certifications/${id}`,
+        messageSupplier: (certification) =>
+          `Certificación del usuario ${certification.user.name} actualizado`,
       })
-    );
-  }
-
-  private handledError(error: any) {
-    console.log(error);
-  }
-
-  private handledUpdated(certification: Certification) {
-    this.router.navigate(['private/certifications', certification.id]);
-  }
-
-  private createForm() {
-    this.form = this.fb.group({
-      description: [this.certification?.description, [Validators.required]],
-      amount: [
-        this.certification?.amount,
-        [Validators.required, Validators.min(0), Validators.max(10000)],
-      ],
-      type: [this.certification?.type, [Validators.required]],
-      date: [this.certification?.date, [Validators.required]],
-    });
+    )
   }
 }

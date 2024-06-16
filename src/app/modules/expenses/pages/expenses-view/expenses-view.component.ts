@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import * as ExpenseActions from '@state/actions/expense.action';
-import { AppState } from '@state/app.reducer';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { Store } from '@ngrx/store'
+import { ExpenseActions } from '@state/actions/expense.action'
 
 @Component({
   selector: 'app-expenses-view',
@@ -10,15 +9,15 @@ import { AppState } from '@state/app.reducer';
   styleUrls: ['./expenses-view.component.scss'],
 })
 export class ExpensesViewComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
+  constructor(private route: ActivatedRoute, private store: Store) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(({ id }) => {
-      this.store.dispatch(ExpenseActions.load({ id }));
-    });
+      this.store.dispatch(ExpenseActions.load({ id }))
+    })
   }
 
   ngOnDestroy(): void {
-    this.store.dispatch(ExpenseActions.clean());
+    this.store.dispatch(ExpenseActions.clean())
   }
 }

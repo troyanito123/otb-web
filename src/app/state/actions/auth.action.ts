@@ -1,20 +1,26 @@
-import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/models/user.model';
+import { createAction, props } from '@ngrx/store'
+import { User } from 'src/app/models/user.model'
 
-export const signin = createAction(
+const signin = createAction(
   '[AUTH] signin user',
-  props<{ email: string; password: string }>()
-);
+  props<{ email: string; password: string; forward: string }>()
+)
 
-export const signout = createAction('[AUTH] signout user');
+const signout = createAction('[AUTH] signout user', props<{ forward: string }>())
 
-export const renew = createAction('[AUTH] renew user');
+const renew = createAction('[AUTH] renew user', props<{ forward: string }>())
 
-export const setUser = createAction(
-  '[AUTH] Set user',
-  props<{ user: User; access_token: string }>()
-);
+const setUser = createAction('[AUTH] Set user', props<{ user: User; access_token: string }>())
 
-export const unsetUser = createAction('[AUTH] unset user');
+const unsetUser = createAction('[AUTH] unset user')
 
-export const setError = createAction('[AUTH] set error', props<{ e: any }>());
+const setError = createAction('[AUTH] set error', props<{ e: any }>())
+
+export const AuthActions = {
+  signin,
+  signout,
+  renew,
+  setUser,
+  unsetUser,
+  setError,
+}

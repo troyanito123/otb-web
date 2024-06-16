@@ -7,4 +7,8 @@ export class PreFinesPaid {
     public fine: number,
     public finePaid: number
   ) {}
+
+  static fromJson({ meetingId, meetingName, meetingDate, attendence, fine, finePaid }: any) {
+    return new PreFinesPaid(meetingId, meetingName, meetingDate, attendence, fine, finePaid)
+  }
 }
