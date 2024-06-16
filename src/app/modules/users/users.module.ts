@@ -30,9 +30,9 @@ import { StoreModule } from '@ngrx/store';
 import { usersFeature } from '@state/reducers/users.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UsersEffect } from '@state/effects/users.effect';
-import { userFeature } from '@state/reducers/user.reducer';
 import { UserIncomesFormComponent } from './pages/user-incomes/user-incomes-form/user-incomes-form.component';
 import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit/user-incomes-edit.component';
+import { QrCodeCustomComponent } from './components/qr-code-custom/qr-code-custom.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +66,7 @@ import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit
     ReactiveFormsModule,
     PipesModule,
     AngularMaterialModule,
+    QrCodeCustomComponent,
     StoreModule.forFeature(usersFeature.name, usersFeature.reducer),
     EffectsModule.forFeature([UsersEffect])
   ],

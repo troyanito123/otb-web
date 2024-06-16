@@ -44,7 +44,7 @@
       </p>
     </div>
     <div *ngIf="transactions.length && user && auth">
-      <!-- <qr-code [value]="qrValue(transactions, user, auth.name)" [size]="200"></qr-code> -->
+      <app-qr-code-custom [data]="qrValue(transactions, user, auth.name)"></app-qr-code-custom>
     </div>
   </div>
   <div class="foote_receipt">
