@@ -38,7 +38,7 @@ export class FineService {
 
   public loadAllFinesByUser(userId: number) {
     return this.http
-      .get<[]>(`${this.url}/meetings-user/${userId}`)
-      .pipe(map((data) => data.map(PreFinesPaid.fromJson)))
+      .get<{fines: []}>(`${this.url}/meetings-user/${userId}`)
+      .pipe(map((data) => data.fines.map(PreFinesPaid.fromJson)))
   }
 }
