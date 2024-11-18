@@ -5,13 +5,15 @@ import { PreFinesPaid } from '@models/pre-fines-paid.model'
 
 export interface FinesState {
   fines: Fine[]
-  allUserPreFines: PreFinesPaid[],
+  total: number
+  allUserPreFines: PreFinesPaid[]
   loading: boolean
   error: any
 }
 
 export const initialFinesState: FinesState = {
   fines: [],
+  total: 0,
   allUserPreFines: [],
   loading: false,
   error: null,
@@ -29,7 +31,11 @@ const finesReducer = createReducer(
   on(FinesActions.loadAllFinesByUserSuccess, (state, { allUserPreFines }) => ({
     ...state,
     loading: false,
-    allUserPreFines
+    total: allUserPreFines
+      .filter((d) => d.attendence === 'NO')
+      .map((d) => d.fine - d.finePaid)
+      .reduce((a, c) => a + c, 0),
+    allUserPreFines,
   })),
 
   on(FinesActions.loadByDate, (state) => ({
@@ -62,6 +68,7 @@ const finesReducer = createReducer(
 
   on(FinesActions.clean, () => ({
     fines: [],
+    total: 0,
     allUserPreFines: [],
     loading: false,
     error: null,

@@ -48,6 +48,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
+<h2>Total multas: {{total$ |  async | currency: 'Bs. '}}</h2>
+
 <div class="flex-column-center-stretch">
   <table mat-table [dataSource]="(preFinesPaid$ | async) ?? []">
     <ng-container matColumnDef="meetingx">

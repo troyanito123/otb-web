@@ -23,6 +23,7 @@ export class UserFinesComponent implements OnDestroy {
   readonly inputDate = new FormControl(new Date().toISOString(), [Validators.required])
 
   readonly allMeetingsByUserFines$ = this.store.select(finesFeature.selectAllUserPreFines)
+  readonly total$ = this.store.select(finesFeature.selectTotal)
   readonly preFinesPaid$ = this.store.select(preFineFeature.selectPreFines)
   readonly totalFinesPaid$ = this.store.select(preFineFeature.selectTotal)
 
