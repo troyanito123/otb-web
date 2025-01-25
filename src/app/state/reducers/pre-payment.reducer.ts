@@ -19,6 +19,10 @@ const prePaymentReducer = createReducer(
       : [...state.prePayments, prePayment],
   })),
 
+  on(PrePaymentActions.addManyPayment, (state, { prePayments }) => ({
+    prePayments: [...prePayments]
+  })),
+
   on(PrePaymentActions.subtractPayment, (state, { id }) => ({
     prePayments: state.prePayments.filter((p) => p.id !== id),
   })),

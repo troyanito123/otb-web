@@ -22,7 +22,7 @@ import { MatSelectChange } from '@angular/material/select'
 })
 export class UserPaymentComponent implements OnInit, OnDestroy {
   yearInput = new FormControl(new Date().getFullYear().toString(), Validators.required)
-  years = ['2021', '2022', '2023', '2024']
+  years = ['2021', '2022', '2023', '2024', '2025']
 
   displayedColumns: string[] = ['year', 'month', 'amountForPay', 'amountPay', 'option']
 
@@ -53,8 +53,13 @@ export class UserPaymentComponent implements OnInit, OnDestroy {
     this.store.dispatch(PrePaymentActions.addPayment({ prePayment }))
   }
 
-  addAllToPrePaid(prePayments: PrePayment[]) {
-    console.log(prePayments)
+  addManyToPrePaid(prePayments: PrePayment[]) {
+    const prePaymentsToPay = prePayments.filter((p) => p.amountForPay > p.amountPay)  
+    this.store.dispatch(PrePaymentActions.addManyPayment({ prePayments: prePaymentsToPay }))
+  }
+
+  cleanPrePayment() {
+    this.store.dispatch(PrePaymentActions.cleanPayment())
   }
 
   public reprint(data: MonthlyPaymentMade[]) {

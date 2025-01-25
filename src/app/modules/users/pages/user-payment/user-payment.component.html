@@ -12,6 +12,14 @@
     <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="reprint(mpm)">
       REIMPRESION
     </button>
+    <ng-container *ngIf="((mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at) as yearPayments">
+      <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="addManyToPrePaid(yearPayments)">
+        TODO DEL AÑO
+      </button>
+      <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="cleanPrePayment()">
+        LIMPIAR
+      </button>
+    </ng-container>
   </div>
 
   <div class="flex-column-center-stretch ">
