@@ -14,7 +14,7 @@ export class MonthlyPaymentsFormComponent implements OnInit {
 
   @Output() clickSave = new EventEmitter<any>()
 
-  readonly years = ['2021', '2022', '2023', '2024']
+  readonly years = ['2021', '2022', '2023', '2024', '2025']
 
   readonly months = [
     'ENERO',
