@@ -5,26 +5,27 @@
       [routerLink]="['dashboard']"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: false }"
-    >
+      >
       INICIO
     </button>
 
-    <button
-      mat-flat-button
-      [routerLink]="['users']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: false }"
-      *ngIf="auth?.role == 'ADMIN'"
-    >
-      USUARIOS
-    </button>
+    @if (auth?.role == 'ADMIN') {
+      <button
+        mat-flat-button
+        [routerLink]="['users']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >
+        USUARIOS
+      </button>
+    }
 
     <button
       mat-flat-button
       [routerLink]="['expenses']"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: false }"
-    >
+      >
       GASTOS
     </button>
     <button
@@ -32,65 +33,69 @@
       [routerLink]="['incomes']"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: false }"
-    >
+      >
       INGRESOS
     </button>
 
-    <button
-      mat-flat-button
-      [routerLink]="['meetings']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: false }"
-      *ngIf="auth?.role == 'ADMIN'"
-    >
-      REUNIONES
-    </button>
+    @if (auth?.role == 'ADMIN') {
+      <button
+        mat-flat-button
+        [routerLink]="['meetings']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >
+        REUNIONES
+      </button>
+    }
 
-    <button
-      mat-flat-button
-      [routerLink]="['monthly-payments']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: false }"
-      *ngIf="auth?.role == 'ADMIN'"
-    >
-      MENSUALIDADES
-    </button>
+    @if (auth?.role == 'ADMIN') {
+      <button
+        mat-flat-button
+        [routerLink]="['monthly-payments']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >
+        MENSUALIDADES
+      </button>
+    }
 
-    <button
-      mat-flat-button
-      [routerLink]="['contributions']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: false }"
-      *ngIf="auth?.role == 'ADMIN'"
-    >
-      APORTES
-    </button>
+    @if (auth?.role == 'ADMIN') {
+      <button
+        mat-flat-button
+        [routerLink]="['contributions']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >
+        APORTES
+      </button>
+    }
 
     <button
       mat-flat-button
       [routerLink]="['extra-contributions']"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: false }"
-    >
+      >
       APORTES EXTRAS
     </button>
 
-    <button
-      mat-flat-button
-      [routerLink]="['certifications']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: false }"
-      *ngIf="auth?.role == 'ADMIN'"
-    >
-      CERTIFICACIONES
-    </button>
+    @if (auth?.role == 'ADMIN') {
+      <button
+        mat-flat-button
+        [routerLink]="['certifications']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >
+        CERTIFICACIONES
+      </button>
+    }
 
     <button
       mat-flat-button
       [routerLink]="['reports']"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: false }"
-    >
+      >
       REPORTES
     </button>
   </div>

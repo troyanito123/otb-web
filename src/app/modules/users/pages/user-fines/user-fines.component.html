@@ -32,14 +32,15 @@
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
       <ng-container>
-        <button
-          mat-raised-button
-          color="primary"
-          *ngIf="element.fine > element.finePaid"
-          (click)="addToPrePaid(element)"
-        >
-          Añadir
-        </button>
+        @if (element.fine > element.finePaid) {
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addToPrePaid(element)"
+            >
+            Añadir
+          </button>
+        }
       </ng-container>
     </td>
   </ng-container>
@@ -73,16 +74,18 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumnsPrePaid"></tr>
   </table>
 
-  <div class="flex-column-start-stretch" *ngIf="preFinesPaid$ | async as preFinesPaid">
-    <mat-form-field appearance="fill">
-      <mat-label>Fecha de registro</mat-label>
-      <input matInput [matDatepicker]="picker" [formControl]="inputDate" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <h2>Total: {{ totalFinesPaid$ | async }}</h2>
-    <button mat-raised-button color="primary" (click)="confirmPaid(preFinesPaid)">
-      Confirmar Pago
-    </button>
-  </div>
+  @if (preFinesPaid$ | async; as preFinesPaid) {
+    <div class="flex-column-start-stretch">
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de registro</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="inputDate" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <h2>Total: {{ totalFinesPaid$ | async }}</h2>
+      <button mat-raised-button color="primary" (click)="confirmPaid(preFinesPaid)">
+        Confirmar Pago
+      </button>
+    </div>
+  }
 </div>

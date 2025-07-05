@@ -11,24 +11,26 @@ import { contributionFeature } from '@state/reducers/contribution.reducer'
     selector: 'app-contribution-detail',
     template: `
     <div class="flex-column-center-center">
-      <ng-container *ngIf="contribution$ | async as contribution">
+      @if (contribution$ | async; as contribution) {
         <mat-card appearance="outlined" style="width: 80%">
           <mat-card-header>
             <mat-card-title>Aporte</mat-card-title>
           </mat-card-header>
-          <mat-card-content *ngIf="contribution">
-            <p><strong>Descripción: </strong> {{ contribution.description }}</p>
-            <p><strong>Aporte: </strong> {{ contribution.amount }}</p>
-          </mat-card-content>
+          @if (contribution) {
+            <mat-card-content>
+              <p><strong>Descripción: </strong> {{ contribution.description }}</p>
+              <p><strong>Aporte: </strong> {{ contribution.amount }}</p>
+            </mat-card-content>
+          }
           <mat-card-actions>
             <div class="flex-row-end-center">
               <button mat-button color="warn" (click)="remove(contribution.id)">Eliminar</button>
             </div>
           </mat-card-actions>
         </mat-card>
-      </ng-container>
+      }
     </div>
-  `,
+    `,
     standalone: false
 })
 export class ContributionDetailComponent {

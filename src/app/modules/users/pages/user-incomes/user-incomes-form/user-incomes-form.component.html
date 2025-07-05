@@ -33,13 +33,17 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field *ngIf="income">
-    <mat-label>Fecha de pago</mat-label>
-    <mat-select formControlName="status">
-      <mat-option [value]="status" *ngFor="let status of statusList">
-        {{ status }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  @if (income) {
+    <mat-form-field>
+      <mat-label>Fecha de pago</mat-label>
+      <mat-select formControlName="status">
+        @for (status of statusList; track status) {
+          <mat-option [value]="status">
+            {{ status }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
   <button mat-raised-button color="primary" type="submit">Guardar</button>
 </form>

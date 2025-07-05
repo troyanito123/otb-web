@@ -1,14 +1,15 @@
-<ng-container *ngIf="block">
+@if (block) {
   <h2 style="margin-top: 1rem">VECINOS DEL MANZANO {{ block }}</h2>
   <mat-divider></mat-divider>
   <mat-list>
-    <mat-list-item
-      *ngFor="let user of users$ | async"
-      [routerLink]="['../../', user.id, 'detail']"
-    >
-      <mat-icon matListItemIcon>person</mat-icon>
-      <div matListItemTitle>{{ user.name }}</div>
-      <div matListItemLine>Lote #{{ user.address_number }}</div>
-    </mat-list-item>
+    @for (user of users$ | async; track user) {
+      <mat-list-item
+        [routerLink]="['../../', user.id, 'detail']"
+        >
+        <mat-icon matListItemIcon>person</mat-icon>
+        <div matListItemTitle>{{ user.name }}</div>
+        <div matListItemLine>Lote #{{ user.address_number }}</div>
+      </mat-list-item>
+    }
   </mat-list>
-</ng-container>
+}

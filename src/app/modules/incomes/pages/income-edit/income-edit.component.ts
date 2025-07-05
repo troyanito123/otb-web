@@ -7,10 +7,10 @@ import { incomesFeature } from '@state/reducers/incomes.reducer'
 @Component({
     selector: 'app-income-edit',
     template: `
-    <ng-container *ngIf="income$ | async as income">
+    @if (income$ | async; as income) {
       <app-income-form [income]="income" (onSubmit)="onSubmit($event)"></app-income-form>
-    </ng-container>
-  `,
+    }
+    `,
     styles: [],
     standalone: false
 })

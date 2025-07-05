@@ -12,13 +12,17 @@
     <mat-icon>close</mat-icon>
   </button>
 
-  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
+  @if (dataSource.loading$ | async) {
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
 
-  <div *ngIf="size < 1">
-    <h2>No exisiten coincidencias!</h2>
-  </div>
+  @if (size < 1) {
+    <div>
+      <h2>No exisiten coincidencias!</h2>
+    </div>
+  }
 
   <div [ngClass]="size < 1 ? 'd-none' : ''">
     <mat-table
@@ -27,7 +31,7 @@
       matSortActive="date"
       matSortDirection="asc"
       matSortDisableClear
-    >
+      >
       <ng-container matColumnDef="date">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           FECHA

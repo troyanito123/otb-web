@@ -7,13 +7,13 @@ import { meetingFeature } from '@state/reducers/meeting.reducer'
 @Component({
     selector: 'app-meeting-edit',
     template: `
-    <ng-container *ngIf="meeting$ | async as meeting">
+    @if (meeting$ | async; as meeting) {
       <app-meeting-form
         [meeting]="meeting"
         (clickSave)="update($event, meeting.id)"
       ></app-meeting-form>
-    </ng-container>
-  `,
+    }
+    `,
     standalone: false
 })
 export class MeetingEditComponent {

@@ -1,6 +1,6 @@
 <h2>Detalle del gasto</h2>
 
-<ng-container *ngIf="expense$ | async as expense">
+@if (expense$ | async; as expense) {
   <mat-card appearance="outlined">
     <mat-card-title>
       <p>COD GASTO: #00{{ expense.code }}</p>
@@ -15,10 +15,14 @@
       <p><strong>Quién dio: </strong> {{ expense.from_user }}</p>
       <p><strong>Quién recibio: </strong>{{ expense.to_user }}</p>
     </mat-card-content>
-    <mat-card-actions *ngIf="auth$ | async as auth" align="end">
-      <div *ngIf="auth?.role == 'ADMIN'" class="flex-row-end-center">
-        <button mat-flat-button color="warn" (click)="remove(expense.id)">Eliminar</button>
-      </div>
-    </mat-card-actions>
+    @if (auth$ | async; as auth) {
+      <mat-card-actions align="end">
+        @if (auth?.role == 'ADMIN') {
+          <div class="flex-row-end-center">
+            <button mat-flat-button color="warn" (click)="remove(expense.id)">Eliminar</button>
+          </div>
+        }
+      </mat-card-actions>
+    }
   </mat-card>
-</ng-container>
+}

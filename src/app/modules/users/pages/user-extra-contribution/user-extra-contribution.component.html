@@ -1,64 +1,62 @@
-<ng-container *ngIf="extraContributionMade$ | async as extraContributionMade">
-  <div *ngIf="extraContributionMade.length; else empty">
-    <table
-      mat-table
-      [dataSource]="extraContributionMade"
-    >
-      <ng-container matColumnDef="extra-contribution">
-        <th mat-header-cell *matHeaderCellDef>Aporte</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>Monto</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.amount | currency: "Bs." }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="amountPaid">
-        <th mat-header-cell *matHeaderCellDef>Monto Pagado</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.amount_paid | currency: "Bs." }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="datePaid">
-        <th mat-header-cell *matHeaderCellDef>Fecha de pago</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.date_paid | date: "mediumDate" }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="option" *ngIf="user$ | async as user">
-        <th mat-header-cell *matHeaderCellDef>Opciones</th>
-        <td mat-cell *matCellDef="let element">
-          <button
-            *ngIf="element.amount > element.amount_paid"
-            mat-raised-button
-            color="primary"
-            (click)="pay(element.id)"
-          >
-            Pagar
-          </button>
-
-          <button
-            *ngIf="element.amount == element.amount_paid"
-            mat-raised-button
-            color="accent"
-            (click)="printRecipe(element, user.id)"
-          >
-            Recibo
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-  </div>
-
-  <ng-template #empty>
+@if (extraContributionMade$ | async; as extraContributionMade) {
+  @if (extraContributionMade.length) {
+    <div>
+      <table
+        mat-table
+        [dataSource]="extraContributionMade"
+        >
+        <ng-container matColumnDef="extra-contribution">
+          <th mat-header-cell *matHeaderCellDef>Aporte</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.amount | currency: "Bs." }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="amountPaid">
+          <th mat-header-cell *matHeaderCellDef>Monto Pagado</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.amount_paid | currency: "Bs." }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="datePaid">
+          <th mat-header-cell *matHeaderCellDef>Fecha de pago</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.date_paid | date: "mediumDate" }}
+          </td>
+        </ng-container>
+        @if (user$ | async; as user) {
+          <ng-container matColumnDef="option">
+            <th mat-header-cell *matHeaderCellDef>Opciones</th>
+            <td mat-cell *matCellDef="let element">
+              @if (element.amount > element.amount_paid) {
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="pay(element.id)"
+                  >
+                  Pagar
+                </button>
+              }
+              @if (element.amount == element.amount_paid) {
+                <button
+                  mat-raised-button
+                  color="accent"
+                  (click)="printRecipe(element, user.id)"
+                  >
+                  Recibo
+                </button>
+              }
+            </td>
+          </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  } @else {
     <h2>No hay pagos registrados</h2>
-  </ng-template>
-</ng-container>
+  }
+}

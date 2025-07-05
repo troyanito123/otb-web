@@ -4,17 +4,18 @@
       mat-raised-button
       [routerLink]="['./list']"
       routerLinkActive="active"
-    >
+      >
       Lista
     </button>
-    <button
-      mat-raised-button
-      [routerLink]="['./new']"
-      routerLinkActive="active"
-      *ngIf="(auth$ | async)?.role === 'ADMIN'"
-    >
-      Nuevo
-    </button>
+    @if ((auth$ | async)?.role === 'ADMIN') {
+      <button
+        mat-raised-button
+        [routerLink]="['./new']"
+        routerLinkActive="active"
+        >
+        Nuevo
+      </button>
+    }
   </div>
   <router-outlet></router-outlet>
 </div>

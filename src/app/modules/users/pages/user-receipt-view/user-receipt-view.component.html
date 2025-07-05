@@ -1,69 +1,75 @@
-<ng-container *ngIf="auth$ | async as auth">
-  <button
-  mat-raised-button
-  color="primary"
-  *ngIf="user$ | async as user"
-  (click)="print(user.name)"
-  style="margin-bottom: 1rem"
->
-  Imprimir
-</button>
-
-<div class="receipt_container" id="receipt" #receipt *ngIf="user$ | async as user">
-  <div class="header_receipt">
-    <img src="../../../../../assets/logo-receipt-01.png" alt="" />
-    <div>
-      <h1>OTB SAN JOSE</h1>
-      <h1>LA TAMBORADA</h1>
-    </div>
-    <img src="../../../../../assets/logo-receipt-02.jpg" alt="" />
-  </div>
-
-  <div class="detail_receipt" *ngIf="transactions$ | async as transactions">
-    <div *ngIf="transactions.length">
-      <div class="detail_description">
-        <p><strong>Descripción: </strong></p>
-        <p *ngFor="let item of transactions" class="description_item">
-          {{ item.description }} - {{ item.amount | number: "1.2" }}Bs.
-        </p>
+@if (auth$ | async; as auth) {
+  @if (user$ | async; as user) {
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="print(user.name)"
+      style="margin-bottom: 1rem"
+      >
+      Imprimir
+    </button>
+  }
+  @if (user$ | async; as user) {
+    <div class="receipt_container" id="receipt" #receipt>
+      <div class="header_receipt">
+        <img src="../../../../../assets/logo-receipt-01.png" alt="" />
+        <div>
+          <h1>OTB SAN JOSE</h1>
+          <h1>LA TAMBORADA</h1>
+        </div>
+        <img src="../../../../../assets/logo-receipt-02.jpg" alt="" />
       </div>
-      <p><strong>Vecino: </strong> {{ user.name }}</p>
-      <p>
-        <strong>Manzano: </strong> #{{ user.block_number }}
-        <strong>Lote: </strong> #{{ user.address_number }}
-      </p>
-      <p><strong>Directivo OTB: </strong> {{ auth.name }}</p>
-      <p>
-        <strong>Monto:</strong>
-        {{ transactions | transactionsToTotal | number: "1.2" }} Bs.
-      </p>
-
-      <p >
-        <strong>Fecha de registro:</strong>
-        {{ transactions[0].date | date: "fullDate" | uppercase }}
-      </p>
+      @if (transactions$ | async; as transactions) {
+        <div class="detail_receipt">
+          @if (transactions.length) {
+            <div>
+              <div class="detail_description">
+                <p><strong>Descripción: </strong></p>
+                @for (item of transactions; track item) {
+                  <p class="description_item">
+                    {{ item.description }} - {{ item.amount | number: "1.2" }}Bs.
+                  </p>
+                }
+              </div>
+              <p><strong>Vecino: </strong> {{ user.name }}</p>
+              <p>
+                <strong>Manzano: </strong> #{{ user.block_number }}
+                <strong>Lote: </strong> #{{ user.address_number }}
+              </p>
+              <p><strong>Directivo OTB: </strong> {{ auth.name }}</p>
+              <p>
+                <strong>Monto:</strong>
+                {{ transactions | transactionsToTotal | number: "1.2" }} Bs.
+              </p>
+              <p >
+                <strong>Fecha de registro:</strong>
+                {{ transactions[0].date | date: "fullDate" | uppercase }}
+              </p>
+            </div>
+          }
+          @if (transactions.length && user && auth) {
+            <div>
+              <app-qr-code-custom [data]="qrValue(transactions, user, auth.name)"></app-qr-code-custom>
+            </div>
+          }
+        </div>
+      }
+      <div class="foote_receipt">
+        <div>
+          <p>.............................</p>
+          <p><strong>Vecino</strong></p>
+          <p>
+            <strong>{{ user.name }}</strong>
+          </p>
+        </div>
+        <div>
+          <p>.............................</p>
+          <p><strong>Directivo OTB</strong></p>
+          <p>
+            <strong>{{ auth.name }}</strong>
+          </p>
+        </div>
+      </div>
     </div>
-    <div *ngIf="transactions.length && user && auth">
-      <app-qr-code-custom [data]="qrValue(transactions, user, auth.name)"></app-qr-code-custom>
-    </div>
-  </div>
-  <div class="foote_receipt">
-    <div>
-      <p>.............................</p>
-      <p><strong>Vecino</strong></p>
-      <p>
-        <strong>{{ user.name }}</strong>
-      </p>
-    </div>
-
-    <div>
-      <p>.............................</p>
-      <p><strong>Directivo OTB</strong></p>
-      <p>
-        <strong>{{ auth.name }}</strong>
-      </p>
-    </div>
-  </div>
-</div>
-
-</ng-container>
+  }
+}

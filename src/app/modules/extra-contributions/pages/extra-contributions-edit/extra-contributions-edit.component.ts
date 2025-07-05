@@ -7,13 +7,13 @@ import { ExtraContActions } from 'src/app/state/actions/extra-contribution.actio
 @Component({
     selector: 'app-extra-contributions-edit',
     template: `
-    <ng-container *ngIf="extraContribution$ | async as extraContribution">
+    @if (extraContribution$ | async; as extraContribution) {
       <app-extra-contribution-form
         [extraContribution]="extraContribution"
         (clickSave)="update($event, extraContribution.id)"
       ></app-extra-contribution-form>
-    </ng-container>
-  `,
+    }
+    `,
     styles: [],
     standalone: false
 })

@@ -7,17 +7,17 @@ import { expenseFeature } from '@state/reducers/expense.reducer'
 @Component({
     selector: 'app-expenses-edit',
     template: `
-    <ng-container *ngIf="expense$ | async as expense">
+    @if (expense$ | async; as expense) {
       <h2>Editar un gasto</h2>
-      <ng-container *ngIf="auth$ | async as auth">
+      @if (auth$ | async; as auth) {
         <app-expenses-form
           [expense]="expense"
           [auth]="auth"
           (clickSave)="update($event, expense.id)"
         ></app-expenses-form>
-      </ng-container>
-    </ng-container>
-  `,
+      }
+    }
+    `,
     standalone: false
 })
 export class ExpensesEditComponent {

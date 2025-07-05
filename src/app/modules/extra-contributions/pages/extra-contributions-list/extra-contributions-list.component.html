@@ -1,11 +1,12 @@
 <mat-list>
   <div mat-subheader><h1>Aportes extras</h1></div>
-  <mat-list-item
-    *ngFor="let contribution of extraContributions$ | async"
-    [routerLink]="['../', contribution.id]"
-  >
-    <mat-icon matListItemIcon>folder</mat-icon>
-    <div matListItemTitle>{{ contribution.name | uppercase }}</div>
-    <div matListItemLine>{{ contribution.amount | currency : 'Bs.' }}</div>
-  </mat-list-item>
+  @for (contribution of extraContributions$ | async; track contribution) {
+    <mat-list-item
+      [routerLink]="['../', contribution.id]"
+      >
+      <mat-icon matListItemIcon>folder</mat-icon>
+      <div matListItemTitle>{{ contribution.name | uppercase }}</div>
+      <div matListItemLine>{{ contribution.amount | currency : 'Bs.' }}</div>
+    </mat-list-item>
+  }
 </mat-list>

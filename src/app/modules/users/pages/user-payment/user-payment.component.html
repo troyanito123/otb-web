@@ -1,72 +1,73 @@
-<ng-container *ngIf="user$ | async as user">
+@if (user$ | async; as user) {
   <div class="flex-row-start-center">
     <mat-form-field appearance="fill">
       <mat-label>Año de cobro</mat-label>
       <mat-select [formControl]="yearInput" (selectionChange)="yearInputChange($event)">
-        <mat-option [value]="year" *ngFor="let year of years">
-          {{ year }}
-        </mat-option>
+        @for (year of years; track year) {
+          <mat-option [value]="year">
+            {{ year }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
-
-    <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="reprint(mpm)">
-      REIMPRESION
-    </button>
-    <ng-container *ngIf="((mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at) as yearPayments">
-      <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="addManyToPrePaid(yearPayments)">
-        TODO DEL AÑO
+    @if (mpm$ | async; as mpm) {
+      <button mat-raised-button color="primary" (click)="reprint(mpm)">
+        REIMPRESION
       </button>
-      <button mat-raised-button color="primary" *ngIf="mpm$ | async as mpm" (click)="cleanPrePayment()">
-        LIMPIAR
-      </button>
-    </ng-container>
+    }
+    @if (((mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at); as yearPayments) {
+      @if (mpm$ | async; as mpm) {
+        <button mat-raised-button color="primary" (click)="addManyToPrePaid(yearPayments)">
+          TODO DEL AÑO
+        </button>
+      }
+      @if (mpm$ | async; as mpm) {
+        <button mat-raised-button color="primary" (click)="cleanPrePayment()">
+          LIMPIAR
+        </button>
+      }
+    }
   </div>
-
   <div class="flex-column-center-stretch ">
     <table
       mat-table
       [dataSource]="(mp$ | async) ?? [] | monthlyPayments : (mpm$ | async) ?? [] : user.subscription_at"
-    >
+      >
       <ng-container matColumnDef="year">
         <th mat-header-cell *matHeaderCellDef>AÑO</th>
         <td mat-cell *matCellDef="let element">{{ element.year }}</td>
       </ng-container>
-
       <ng-container matColumnDef="month">
         <th mat-header-cell *matHeaderCellDef>MES</th>
         <td mat-cell *matCellDef="let element">{{ element.month }}</td>
       </ng-container>
-
       <ng-container matColumnDef="amountForPay">
         <th mat-header-cell *matHeaderCellDef>MONTO</th>
         <td mat-cell *matCellDef="let element">{{ element.amountForPay }}</td>
       </ng-container>
-
       <ng-container matColumnDef="amountPay">
         <th mat-header-cell *matHeaderCellDef>PAGADO</th>
         <td mat-cell *matCellDef="let element">{{ element.amountPay }}</td>
       </ng-container>
-
       <ng-container matColumnDef="option">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="addToPrePaid(element)"
-            *ngIf="element.amountForPay > element.amountPay"
-          >
-            Añadir
-          </button>
+          @if (element.amountForPay > element.amountPay) {
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="addToPrePaid(element)"
+              >
+              Añadir
+            </button>
+          }
         </td>
       </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-
     <div>
       <app-user-pre-payment></app-user-pre-payment>
     </div>
   </div>
-</ng-container>
+}

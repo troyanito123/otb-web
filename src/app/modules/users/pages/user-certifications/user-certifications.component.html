@@ -4,7 +4,7 @@
   [formGroup]="form"
   (ngSubmit)="save()"
   class="flex-column-start-center"
->
+  >
   <mat-form-field>
     <mat-label>Descripción</mat-label>
     <textarea
@@ -26,7 +26,7 @@
       placeholder="30"
       min="5"
       step="5"
-    />
+      />
     <mat-icon matSuffix>attach_money</mat-icon>
     <mat-hint>Campo obligatorio</mat-hint>
   </mat-form-field>
@@ -34,9 +34,11 @@
   <mat-form-field appearance="fill">
     <mat-label>Tipo</mat-label>
     <mat-select formControlName="type">
-      <mat-option [value]="item" *ngFor="let item of certificationsTypes">
-        {{ item }}
-      </mat-option>
+      @for (item of certificationsTypes; track item) {
+        <mat-option [value]="item">
+          {{ item }}
+        </mat-option>
+      }
     </mat-select>
     <mat-hint align="end">Selecciona</mat-hint>
   </mat-form-field>

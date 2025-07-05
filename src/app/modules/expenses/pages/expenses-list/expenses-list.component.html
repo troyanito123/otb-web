@@ -4,9 +4,11 @@
     <input matInput placeholder="Buscador..." #keyword />
   </mat-form-field>
 
-  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
+  @if (dataSource.loading$ | async) {
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
 
   <mat-table
     [dataSource]="dataSource"
@@ -15,7 +17,7 @@
     matSortDirection="asc"
     matSortDisableClear
     class="demo-table"
-  >
+    >
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         FECHA

@@ -1,45 +1,43 @@
-<div *ngIf="userMeetingsAttendance$ | async as userMeetingsAttendance">
-  <h2>Reuniones</h2>
-  <table
-    mat-table
-    [dataSource]="userMeetingsAttendance"
-    style="width: 80%"
-  >
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>FECHA</th>
-      <td mat-cell *matCellDef="let element">{{ element.date | date }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="isPresent">
-      <th mat-header-cell *matHeaderCellDef>PRESENTE</th>
-      <td mat-cell *matCellDef="let element">{{ element.isPresent }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="fine">
-      <th mat-header-cell *matHeaderCellDef>MULTA</th>
-      <td mat-cell *matCellDef="let element">{{ element.fine }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="option">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="markAttendance(element.id)"
-          *ngIf="element.isPresent === 'NO' && canAssist(element.date)"
-        >
-          Asistir
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="attendenceMeetingColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: attendenceMeetingColumns"></tr>
-  </table>
-</div>
+@if (userMeetingsAttendance$ | async; as userMeetingsAttendance) {
+  <div>
+    <h2>Reuniones</h2>
+    <table
+      mat-table
+      [dataSource]="userMeetingsAttendance"
+      style="width: 80%"
+      >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>FECHA</th>
+        <td mat-cell *matCellDef="let element">{{ element.date | date }}</td>
+      </ng-container>
+      <ng-container matColumnDef="isPresent">
+        <th mat-header-cell *matHeaderCellDef>PRESENTE</th>
+        <td mat-cell *matCellDef="let element">{{ element.isPresent }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fine">
+        <th mat-header-cell *matHeaderCellDef>MULTA</th>
+        <td mat-cell *matCellDef="let element">{{ element.fine }}</td>
+      </ng-container>
+      <ng-container matColumnDef="option">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.isPresent === 'NO' && canAssist(element.date)) {
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="markAttendance(element.id)"
+              >
+              Asistir
+            </button>
+          }
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="attendenceMeetingColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: attendenceMeetingColumns"></tr>
+    </table>
+  </div>
+}

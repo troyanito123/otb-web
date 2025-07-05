@@ -1,94 +1,81 @@
-<ng-container  *ngIf="user$ | async as user">
+@if (user$ | async; as user) {
   <div class="flex-row-start-center flex-wrap">
     <button
       mat-raised-button
       [routerLink]="['./detail']"
       routerLinkActive="active"
-    >
+      >
       Información
     </button>
-
     <button
       mat-raised-button
       routerLinkActive="active"
       [routerLink]="['./payment']"
-    >
+      >
       Mensualidades
     </button>
-
     <button
       mat-raised-button
       routerLinkActive="active"
       [routerLink]="['./incomes']"
-    >
+      >
       Ingresos
     </button>
     <button
       mat-raised-button
       [routerLink]="['./contributions']"
       routerLinkActive="active"
-    >
+      >
       Aportes
     </button>
-
     <button
       mat-raised-button
       [routerLink]="['./extra-contributions']"
       routerLinkActive="active"
-    >
+      >
       Aportes Extras
     </button>
-
     <button
       mat-raised-button
       [routerLink]="['./attendences']"
       routerLinkActive="active"
-    >
+      >
       Asistencias
     </button>
-
     <button
       mat-raised-button
       [routerLink]="['./fines']"
       routerLinkActive="active"
-    >
+      >
       Multas
     </button>
-
     <button
       mat-raised-button
       [routerLink]="['./certifications']"
       routerLinkActive="active"
-    >
+      >
       Certificaciones
     </button>
-
     <button
       mat-raised-button
       [routerLink]="['./receipt-view']"
       routerLinkActive="active"
-    >
+      >
       Recibo
     </button>
-
     <button
       mat-raised-button
       [routerLink]="['./edit']"
       routerLinkActive="active"
-    >
+      >
       Modificar
     </button>
-
     <ng-container>
       <button mat-raised-button color="warn" (click)="remove(user.id)">Eliminar</button>
     </ng-container>
-    
-
   </div>
-
   <div style="margin-top: 12px">
     <p><strong>Usuario: </strong> {{ user.name }}</p>
   </div>
-
   <router-outlet></router-outlet>
-</ng-container>
+}

@@ -1,15 +1,18 @@
 <div style="margin: 2rem">
-  <div class="flex-row-end-center" *ngIf="auth$ | async as auth">
-    <button mat-raised-button routerLink="list" routerLinkActive="active">Lista</button>
-    <button
-      *ngIf="auth?.role == 'ADMIN'"
-      mat-raised-button
-      routerLink="new"
-      routerLinkActive="active"
-    >
-      Nuevo
-    </button>
-  </div>
+  @if (auth$ | async; as auth) {
+    <div class="flex-row-end-center">
+      <button mat-raised-button routerLink="list" routerLinkActive="active">Lista</button>
+      @if (auth?.role == 'ADMIN') {
+        <button
+          mat-raised-button
+          routerLink="new"
+          routerLinkActive="active"
+          >
+          Nuevo
+        </button>
+      }
+    </div>
+  }
 
   <router-outlet></router-outlet>
 </div>

@@ -22,9 +22,11 @@
   <mat-form-field appearance="fill">
     <mat-label>Tipo</mat-label>
     <mat-select formControlName="type">
-      <mat-option [value]="item" *ngFor="let item of certificationsTypes">
-        {{ item | toSpanish }}
-      </mat-option>
+      @for (item of certificationsTypes; track item) {
+        <mat-option [value]="item">
+          {{ item | toSpanish }}
+        </mat-option>
+      }
     </mat-select>
     <mat-hint align="end">Selecciona</mat-hint>
   </mat-form-field>

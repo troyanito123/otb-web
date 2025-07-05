@@ -6,14 +6,14 @@ import { monthlyPaymentFeature } from '@state/reducers/monthly-payment.reducer'
 @Component({
     selector: 'app-monthly-payments-edit',
     template: `
-    <ng-container *ngIf="monthlyPayment$ | async as monthlyPayment">
+    @if (monthlyPayment$ | async; as monthlyPayment) {
       <h2>Modifica la mensualidad</h2>
       <app-monthly-payments-form
         [monthlyPayment]="monthlyPayment"
         (clickSave)="update($event, monthlyPayment.id)"
       ></app-monthly-payments-form>
-    </ng-container>
-  `,
+    }
+    `,
     standalone: false
 })
 export class MonthlyPaymentsEditComponent {

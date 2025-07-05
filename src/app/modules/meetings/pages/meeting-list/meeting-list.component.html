@@ -1,18 +1,19 @@
-<div class="flex-column-center-stretch" *ngIf="meetings$ | async as meetings">
-  <h2>Lista de reuniones en la OTB</h2>
-  <table mat-table [dataSource]="meetings">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let meeting">{{ meeting.name }}</td>
-    </ng-container>
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>FECHA</th>
-      <td mat-cell *matCellDef="let meeting">
-        {{ meeting.date | date : 'fullDate' | uppercase }}
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['../', row.id]"></tr>
-  </table>
-</div>
+@if (meetings$ | async; as meetings) {
+  <div class="flex-column-center-stretch">
+    <h2>Lista de reuniones en la OTB</h2>
+    <table mat-table [dataSource]="meetings">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let meeting">{{ meeting.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>FECHA</th>
+        <td mat-cell *matCellDef="let meeting">
+          {{ meeting.date | date : 'fullDate' | uppercase }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['../', row.id]"></tr>
+    </table>
+  </div>
+}

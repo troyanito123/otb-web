@@ -26,9 +26,11 @@
   <mat-form-field>
     <mat-label>Estado</mat-label>
     <mat-select formControlName="status">
-      <mat-option [value]="status" *ngFor="let status of statusList">
-        {{ status }}
-      </mat-option>
+      @for (status of statusList; track status) {
+        <mat-option [value]="status">
+          {{ status }}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <div class="buttons">

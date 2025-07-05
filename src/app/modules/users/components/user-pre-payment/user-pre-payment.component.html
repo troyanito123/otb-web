@@ -39,13 +39,14 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <button
-    mat-raised-button
-    color="primary"
-    *ngIf="prePayments$ | async as prePayments"
-    (click)="confirmPaid(prePayments)"
-    [disabled]="!prePayments.length"
-  >
-    CONFIRMAR PAGO
-  </button>
+  @if (prePayments$ | async; as prePayments) {
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="confirmPaid(prePayments)"
+      [disabled]="!prePayments.length"
+      >
+      CONFIRMAR PAGO
+    </button>
+  }
 </div>

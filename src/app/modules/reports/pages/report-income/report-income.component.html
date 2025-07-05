@@ -2,9 +2,11 @@
   <div class="flex-column-center-stretch">
     <mat-form-field appearance="fill">
       <mat-select placeholder="Tipo" formControlName="income">
-        <mat-option *ngFor="let type of incomes" [value]="type">
-          {{ type | toSpanish }}
-        </mat-option>
+        @for (type of incomes; track type) {
+          <mat-option [value]="type">
+            {{ type | toSpanish }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 

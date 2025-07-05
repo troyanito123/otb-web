@@ -1,6 +1,6 @@
-<ng-container *ngIf="certification$ | async as certification">
+@if (certification$ | async; as certification) {
   <app-certification-form
     [certification]="certification"
     (clickSave)="update($event, certification.id)"
   ></app-certification-form>
-</ng-container>
+}

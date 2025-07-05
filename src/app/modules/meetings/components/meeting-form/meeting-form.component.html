@@ -3,10 +3,14 @@
     [formGroup]="form"
     (ngSubmit)="save()"
     class="flex-column-center-center"
-  >
+    >
     <div>
-      <h2 *ngIf="!meeting">Crea una nueva reunión</h2>
-      <h2 *ngIf="meeting">Modifica esta reunión</h2>
+      @if (!meeting) {
+        <h2>Crea una nueva reunión</h2>
+      }
+      @if (meeting) {
+        <h2>Modifica esta reunión</h2>
+      }
     </div>
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
@@ -15,7 +19,7 @@
         type="text"
         formControlName="name"
         placeholder="ASAMBLEA GENERAL"
-      />
+        />
       <mat-icon matSuffix color="primary">name</mat-icon>
       <mat-hint>Campo obligatorio</mat-hint>
     </mat-form-field>
@@ -59,7 +63,7 @@
         step="5"
         min="0"
         max="1000"
-      />
+        />
       <span matPrefix>$&nbsp;</span>
       <span matSuffix>.00</span>
       <mat-hint>Campo obligatorio</mat-hint>
