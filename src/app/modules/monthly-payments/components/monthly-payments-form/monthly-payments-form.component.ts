@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MonthlyPayment } from 'src/app/models/monthly-payment.model'
+import { YEARS } from 'src/app/utils/gobal-data'
 
 @Component({
   selector: 'app-monthly-payments-form',
@@ -14,7 +15,7 @@ export class MonthlyPaymentsFormComponent implements OnInit {
 
   @Output() clickSave = new EventEmitter<any>()
 
-  readonly years = ['2021', '2022', '2023', '2024', '2025']
+  readonly years = YEARS
 
   readonly months = [
     'ENERO',

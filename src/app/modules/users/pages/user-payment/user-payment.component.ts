@@ -14,6 +14,7 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer'
 import { monthlyPaymentsMadeFeature } from '@state/reducers/monthly-payments-made.reducer'
 import { MatSelectChange } from '@angular/material/select'
+import { YEARS } from 'src/app/utils/gobal-data'
 
 @Component({
   selector: 'app-user-payment',
@@ -22,7 +23,7 @@ import { MatSelectChange } from '@angular/material/select'
 })
 export class UserPaymentComponent implements OnInit, OnDestroy {
   yearInput = new FormControl(new Date().getFullYear().toString(), Validators.required)
-  years = ['2021', '2022', '2023', '2024', '2025']
+  readonly years = YEARS
 
   displayedColumns: string[] = ['year', 'month', 'amountForPay', 'amountPay', 'option']
 

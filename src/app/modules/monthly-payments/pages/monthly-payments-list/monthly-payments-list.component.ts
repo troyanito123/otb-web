@@ -5,6 +5,7 @@ import { MonthlyPaymentsActions } from 'src/app/state/actions/monthly-payments.a
 import { FormControl, Validators } from '@angular/forms'
 import { MatSelectChange } from '@angular/material/select'
 import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer'
+import { YEARS } from 'src/app/utils/gobal-data'
 
 @Component({
   selector: 'app-monthly-payments-list',
@@ -14,7 +15,7 @@ import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer
 export class MonthlyPaymentsListComponent implements OnInit, OnDestroy {
   readonly monthlyPayments$ = this.store.select(monthlyPaymentsFeature.selectMonthlyPayments)
 
-  readonly years = ['2021', '2022', '2023', '2024']
+  readonly years = YEARS
 
   readonly inputYear = new FormControl('2021', [Validators.required])
 

@@ -16,3 +16,5 @@ export const BLOCKS = [
   '18',
   '003',
 ];
+
+export const YEARS = ['2021', '2022', '2023', '2024', '2025'];
