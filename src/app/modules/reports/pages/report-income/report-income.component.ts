@@ -17,7 +17,7 @@ import { ContributionPaid } from 'src/app/models/contribution-paid.model'
 import { Certification } from 'src/app/models/certification.model'
 import { Fine } from 'src/app/models/fine.model'
 import { Report } from '../../models/report.interface'
-import * as moment from 'moment'
+import moment from 'moment'
 
 @Component({
     selector: 'app-report-income',

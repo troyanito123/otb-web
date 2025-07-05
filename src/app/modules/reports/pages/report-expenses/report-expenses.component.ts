@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store'
 import { Expense } from 'src/app/models/expense.model'
 import { DatePipe, formatNumber, UpperCasePipe } from '@angular/common'
 import { ExpensesActions } from 'src/app/state/actions/expenses.action'
-import * as moment from 'moment'
+import moment from 'moment'
 
 @Component({
     selector: 'app-report-expenses',
