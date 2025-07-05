@@ -5,13 +5,14 @@ import { IncomesActions } from '@state/actions/incomes.action'
 import { incomesFeature } from '@state/reducers/incomes.reducer'
 
 @Component({
-  selector: 'app-user-incomes-edit',
-  template: `
+    selector: 'app-user-incomes-edit',
+    template: `
     <app-user-incomes-form
       [income]="income$ | async"
       (onSubmit)="update($event)"
     ></app-user-incomes-form>
   `,
+    standalone: false
 })
 export class UserIncomesEditComponent implements OnInit {
   #store = inject(Store)

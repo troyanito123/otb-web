@@ -6,9 +6,10 @@ import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dial
 import { meetingFeature } from '@state/reducers/meeting.reducer'
 
 @Component({
-  selector: 'app-meeting-detail',
-  templateUrl: './meeting-detail.component.html',
-  styleUrls: ['./meeting-detail.component.scss'],
+    selector: 'app-meeting-detail',
+    templateUrl: './meeting-detail.component.html',
+    styleUrls: ['./meeting-detail.component.scss'],
+    standalone: false
 })
 export class MeetingDetailComponent {
   readonly meeting$ = this.store.select(meetingFeature.selectMeeting)

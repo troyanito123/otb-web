@@ -7,9 +7,10 @@ import jsPDF from 'jspdf'
 import { expenseFeature } from '@state/reducers/expense.reducer'
 
 @Component({
-  selector: 'app-expenses-receipt',
-  templateUrl: './expenses-receipt.component.html',
-  styleUrls: ['./expenses-receipt.component.scss'],
+    selector: 'app-expenses-receipt',
+    templateUrl: './expenses-receipt.component.html',
+    styleUrls: ['./expenses-receipt.component.scss'],
+    standalone: false
 })
 export class ExpensesReceiptComponent {
   readonly expense$ = inject(Store).select(expenseFeature.selectExpense)

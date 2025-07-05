@@ -6,9 +6,10 @@ import { RoleActions } from 'src/app/state/actions/role.action'
 import { UserActions } from 'src/app/state/actions/user.action'
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.scss'],
+    selector: 'app-user-edit',
+    templateUrl: './user-edit.component.html',
+    styleUrls: ['./user-edit.component.scss'],
+    standalone: false
 })
 export class UserEditComponent implements OnInit {
   public user$ = this.store.select(userFeature.selectUser)

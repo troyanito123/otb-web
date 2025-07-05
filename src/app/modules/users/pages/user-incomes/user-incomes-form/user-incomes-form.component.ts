@@ -3,9 +3,10 @@ import { FormBuilder, Validators } from '@angular/forms'
 import { IncomeModel } from '@models/income.model'
 
 @Component({
-  selector: 'app-user-incomes-form',
-  templateUrl: './user-incomes-form.component.html',
-  styleUrls: ['./user-incomes-form.component.scss'],
+    selector: 'app-user-incomes-form',
+    templateUrl: './user-incomes-form.component.html',
+    styleUrls: ['./user-incomes-form.component.scss'],
+    standalone: false
 })
 export class UserIncomesFormComponent implements OnChanges {
   #formBuilder = inject(FormBuilder)

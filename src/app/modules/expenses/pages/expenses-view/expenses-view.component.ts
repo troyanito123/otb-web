@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store'
 import { ExpenseActions } from '@state/actions/expense.action'
 
 @Component({
-  selector: 'app-expenses-view',
-  templateUrl: './expenses-view.component.html',
-  styleUrls: ['./expenses-view.component.scss'],
+    selector: 'app-expenses-view',
+    templateUrl: './expenses-view.component.html',
+    styleUrls: ['./expenses-view.component.scss'],
+    standalone: false
 })
 export class ExpensesViewComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private store: Store) {}

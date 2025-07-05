@@ -4,9 +4,10 @@ import { ExtraContActions } from 'src/app/state/actions/extra-contribution.actio
 import { authFeature } from '@state/reducers/auth.reducer'
 
 @Component({
-  selector: 'app-extra-contributions',
-  templateUrl: './extra-contributions.component.html',
-  styleUrls: ['./extra-contributions.component.scss'],
+    selector: 'app-extra-contributions',
+    templateUrl: './extra-contributions.component.html',
+    styleUrls: ['./extra-contributions.component.scss'],
+    standalone: false
 })
 export class ExtraContributionsComponent implements OnDestroy {
   #store = inject(Store)

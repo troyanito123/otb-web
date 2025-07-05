@@ -4,7 +4,8 @@ import { Contribution } from '../models/contribution.model';
 import { PreContribution } from '../models/pre-contributions';
 
 @Pipe({
-  name: 'preContributions',
+    name: 'preContributions',
+    standalone: false
 })
 export class PreContributionsPipe implements PipeTransform {
   transform(

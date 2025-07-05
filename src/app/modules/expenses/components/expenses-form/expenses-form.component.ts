@@ -4,9 +4,10 @@ import { Expense } from 'src/app/models/expense.model'
 import { User } from 'src/app/models/user.model'
 
 @Component({
-  selector: 'app-expenses-form',
-  templateUrl: './expenses-form.component.html',
-  styleUrls: ['./expenses-form.component.scss'],
+    selector: 'app-expenses-form',
+    templateUrl: './expenses-form.component.html',
+    styleUrls: ['./expenses-form.component.scss'],
+    standalone: false
 })
 export class ExpensesFormComponent implements OnInit {
   public form!: FormGroup

@@ -6,9 +6,10 @@ import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dial
 import { monthlyPaymentFeature } from '@state/reducers/monthly-payment.reducer'
 
 @Component({
-  selector: 'app-monthly-payments-detail',
-  templateUrl: './monthly-payments-detail.component.html',
-  styleUrls: ['./monthly-payments-detail.component.scss'],
+    selector: 'app-monthly-payments-detail',
+    templateUrl: './monthly-payments-detail.component.html',
+    styleUrls: ['./monthly-payments-detail.component.scss'],
+    standalone: false
 })
 export class MonthlyPaymentsDetailComponent {
   readonly monthlyPayment$ = this.store.select(monthlyPaymentFeature.selectMonthlyPayment)

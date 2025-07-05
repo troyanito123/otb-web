@@ -17,9 +17,10 @@ import { MatSelectChange } from '@angular/material/select'
 import { YEARS } from 'src/app/utils/gobal-data'
 
 @Component({
-  selector: 'app-user-payment',
-  templateUrl: './user-payment.component.html',
-  styleUrls: ['./user-payment.component.scss'],
+    selector: 'app-user-payment',
+    templateUrl: './user-payment.component.html',
+    styleUrls: ['./user-payment.component.scss'],
+    standalone: false
 })
 export class UserPaymentComponent implements OnInit, OnDestroy {
   yearInput = new FormControl(new Date().getFullYear().toString(), Validators.required)

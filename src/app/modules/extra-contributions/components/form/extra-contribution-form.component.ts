@@ -6,9 +6,10 @@ import {
 } from 'src/app/models/extra-contribution.interface'
 
 @Component({
-  selector: 'app-extra-contribution-form',
-  templateUrl: './extra-contribution-form.component.html',
-  styleUrls: ['./extra-contribution-form.component.scss'],
+    selector: 'app-extra-contribution-form',
+    templateUrl: './extra-contribution-form.component.html',
+    styleUrls: ['./extra-contribution-form.component.scss'],
+    standalone: false
 })
 export class ExtraContributionFormComponent implements OnInit {
   public form!: FormGroup

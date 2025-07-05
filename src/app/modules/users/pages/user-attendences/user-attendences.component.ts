@@ -4,9 +4,10 @@ import { AttendencesActions } from 'src/app/state/actions/attendences.actions'
 import { attendencesFeature } from '@state/reducers/attendences.reducer'
 
 @Component({
-  selector: 'app-user-attendences',
-  templateUrl: './user-attendences.component.html',
-  styleUrls: ['./user-attendences.component.scss'],
+    selector: 'app-user-attendences',
+    templateUrl: './user-attendences.component.html',
+    styleUrls: ['./user-attendences.component.scss'],
+    standalone: false
 })
 export class UserAttendencesComponent implements OnDestroy {
   readonly attendenceMeetingColumns = ['name', 'date', 'isPresent', 'fine', 'option']

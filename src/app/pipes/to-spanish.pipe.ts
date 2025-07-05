@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'toSpanish',
+    name: 'toSpanish',
+    standalone: false
 })
 export class ToSpanishPipe implements PipeTransform {
   transform(value: string): string {

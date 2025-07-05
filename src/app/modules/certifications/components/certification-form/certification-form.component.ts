@@ -3,9 +3,10 @@ import { FormBuilder, Validators } from '@angular/forms'
 import { Certification } from '@models/certification.model'
 
 @Component({
-  selector: 'app-certification-form',
-  templateUrl: './certification-form.component.html',
-  styleUrls: ['./certification-form.component.scss'],
+    selector: 'app-certification-form',
+    templateUrl: './certification-form.component.html',
+    styleUrls: ['./certification-form.component.scss'],
+    standalone: false
 })
 export class CertificationFormComponent implements OnInit {
   @Input() certification?: Certification | null

@@ -7,9 +7,10 @@ import { ExpensesActions } from 'src/app/state/actions/expenses.action'
 import * as moment from 'moment'
 
 @Component({
-  selector: 'app-report-expenses',
-  templateUrl: './report-expenses.component.html',
-  styleUrls: ['./report-expenses.component.scss'],
+    selector: 'app-report-expenses',
+    templateUrl: './report-expenses.component.html',
+    styleUrls: ['./report-expenses.component.scss'],
+    standalone: false
 })
 export class ReportExpensesComponent implements OnDestroy {
   readonly form: FormGroup

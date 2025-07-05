@@ -13,9 +13,10 @@ import { IncomeService } from 'src/app/services/income.service';
 import { IncomeDataSource } from './income-datasource';
 
 @Component({
-  selector: 'app-income-list',
-  templateUrl: './income-list.component.html',
-  styleUrls: ['./income-list.component.scss'],
+    selector: 'app-income-list',
+    templateUrl: './income-list.component.html',
+    styleUrls: ['./income-list.component.scss'],
+    standalone: false
 })
 export class IncomeListComponent implements OnInit, AfterViewInit {
   dataSource!: IncomeDataSource;

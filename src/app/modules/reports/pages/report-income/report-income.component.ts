@@ -20,9 +20,10 @@ import { Report } from '../../models/report.interface'
 import * as moment from 'moment'
 
 @Component({
-  selector: 'app-report-income',
-  templateUrl: './report-income.component.html',
-  styleUrls: ['./report-income.component.scss'],
+    selector: 'app-report-income',
+    templateUrl: './report-income.component.html',
+    styleUrls: ['./report-income.component.scss'],
+    standalone: false
 })
 export class ReportIncomeComponent implements OnDestroy {
   readonly incomes = [

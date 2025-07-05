@@ -5,9 +5,10 @@ import { usersFeature } from '@state/reducers/users.reducer'
 import { UsersActions } from 'src/app/state/actions/users.action'
 
 @Component({
-  selector: 'app-user-block',
-  templateUrl: './user-block.component.html',
-  styleUrls: ['./user-block.component.scss'],
+    selector: 'app-user-block',
+    templateUrl: './user-block.component.html',
+    styleUrls: ['./user-block.component.scss'],
+    standalone: false
 })
 export class UserBlockComponent implements OnInit {
   public block?: string

@@ -14,9 +14,10 @@ import { AppState } from 'src/app/state/app.reducer';
 import { SidenavService } from 'src/app/utils/sidenav.service';
 
 @Component({
-  selector: 'app-private',
-  templateUrl: './private.component.html',
-  styleUrls: ['./private.component.scss'],
+    selector: 'app-private',
+    templateUrl: './private.component.html',
+    styleUrls: ['./private.component.scss'],
+    standalone: false
 })
 export class PrivateComponent implements OnInit, OnDestroy {
   public auth!: User | null;

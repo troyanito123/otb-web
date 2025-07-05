@@ -4,9 +4,10 @@ import {IncomesActions} from '@state/actions/incomes.action';
 import { AppState } from '@state/app.reducer';
 
 @Component({
-  selector: 'app-user-incomes',
-  templateUrl: './user-incomes.component.html',
-  styleUrls: ['./user-incomes.component.scss'],
+    selector: 'app-user-incomes',
+    templateUrl: './user-incomes.component.html',
+    styleUrls: ['./user-incomes.component.scss'],
+    standalone: false
 })
 export class UserIncomesComponent implements OnDestroy {
   constructor(private store: Store<AppState>) {}

@@ -4,9 +4,10 @@ import { MonthlyPayment } from 'src/app/models/monthly-payment.model'
 import { YEARS } from 'src/app/utils/gobal-data'
 
 @Component({
-  selector: 'app-monthly-payments-form',
-  templateUrl: './monthly-payments-form.component.html',
-  styleUrls: ['./monthly-payments-form.component.scss'],
+    selector: 'app-monthly-payments-form',
+    templateUrl: './monthly-payments-form.component.html',
+    styleUrls: ['./monthly-payments-form.component.scss'],
+    standalone: false
 })
 export class MonthlyPaymentsFormComponent implements OnInit {
   public form!: FormGroup

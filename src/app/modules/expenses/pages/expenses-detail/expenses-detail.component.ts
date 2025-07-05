@@ -7,9 +7,10 @@ import { expenseFeature } from '@state/reducers/expense.reducer'
 import { authFeature } from '@state/reducers/auth.reducer'
 
 @Component({
-  selector: 'app-expenses-detail',
-  templateUrl: './expenses-detail.component.html',
-  styleUrls: ['./expenses-detail.component.scss'],
+    selector: 'app-expenses-detail',
+    templateUrl: './expenses-detail.component.html',
+    styleUrls: ['./expenses-detail.component.scss'],
+    standalone: false
 })
 export class ExpensesDetailComponent {
   readonly expense$ = this.store.select(expenseFeature.selectExpense)

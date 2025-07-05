@@ -22,9 +22,10 @@ import { AppState } from 'src/app/state/app.reducer'
 import { formatShortDate } from 'src/app/utils/helper'
 
 @Component({
-  selector: 'app-user-contribution',
-  templateUrl: './user-contribution.component.html',
-  styleUrls: ['./user-contribution.component.scss'],
+    selector: 'app-user-contribution',
+    templateUrl: './user-contribution.component.html',
+    styleUrls: ['./user-contribution.component.scss'],
+    standalone: false
 })
 export class UserContributionComponent implements OnInit, OnDestroy {
   public inputDate = new FormControl(new Date().toISOString(), [Validators.required])

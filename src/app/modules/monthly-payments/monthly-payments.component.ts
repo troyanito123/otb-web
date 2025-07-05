@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 
 @Component({
-  selector: 'app-monthly-payments',
-  templateUrl: './monthly-payments.component.html',
-  styleUrls: ['./monthly-payments.component.scss'],
+    selector: 'app-monthly-payments',
+    templateUrl: './monthly-payments.component.html',
+    styleUrls: ['./monthly-payments.component.scss'],
+    standalone: false
 })
 export class MonthlyPaymentsComponent {}

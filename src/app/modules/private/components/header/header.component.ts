@@ -10,9 +10,10 @@ import { User } from '@models/user.model'
 import { authFeature } from '@state/reducers/auth.reducer'
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent {
   public user$: Observable<User | null>

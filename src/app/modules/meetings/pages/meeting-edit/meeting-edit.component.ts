@@ -5,8 +5,8 @@ import { MeetingActions } from '@state/actions/meeting.actions'
 import { meetingFeature } from '@state/reducers/meeting.reducer'
 
 @Component({
-  selector: 'app-meeting-edit',
-  template: `
+    selector: 'app-meeting-edit',
+    template: `
     <ng-container *ngIf="meeting$ | async as meeting">
       <app-meeting-form
         [meeting]="meeting"
@@ -14,6 +14,7 @@ import { meetingFeature } from '@state/reducers/meeting.reducer'
       ></app-meeting-form>
     </ng-container>
   `,
+    standalone: false
 })
 export class MeetingEditComponent {
   #store = inject(Store)

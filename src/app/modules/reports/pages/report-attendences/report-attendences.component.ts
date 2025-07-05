@@ -7,9 +7,10 @@ import { Attendence } from 'src/app/models/attendence.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-report-attendences',
-  templateUrl: './report-attendences.component.html',
-  styleUrls: ['./report-attendences.component.scss'],
+    selector: 'app-report-attendences',
+    templateUrl: './report-attendences.component.html',
+    styleUrls: ['./report-attendences.component.scss'],
+    standalone: false
 })
 export class ReportAttendencesComponent implements OnInit, OnDestroy {
   public meetings: Meeting[] = [];

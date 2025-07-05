@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { ExtraContActions } from 'src/app/state/actions/extra-contribution.action';
 
 @Component({
-  selector: 'app-extra-contributions-view',
-  template: `<router-outlet></router-outlet>`,
+    selector: 'app-extra-contributions-view',
+    template: `<router-outlet></router-outlet>`,
+    standalone: false
 })
 export class ExtraContributionsViewComponent implements OnInit, OnDestroy {
   constructor(

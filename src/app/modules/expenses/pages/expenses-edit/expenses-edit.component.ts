@@ -5,8 +5,8 @@ import { authFeature } from '@state/reducers/auth.reducer'
 import { expenseFeature } from '@state/reducers/expense.reducer'
 
 @Component({
-  selector: 'app-expenses-edit',
-  template: `
+    selector: 'app-expenses-edit',
+    template: `
     <ng-container *ngIf="expense$ | async as expense">
       <h2>Editar un gasto</h2>
       <ng-container *ngIf="auth$ | async as auth">
@@ -18,6 +18,7 @@ import { expenseFeature } from '@state/reducers/expense.reducer'
       </ng-container>
     </ng-container>
   `,
+    standalone: false
 })
 export class ExpensesEditComponent {
   #store = inject(Store)

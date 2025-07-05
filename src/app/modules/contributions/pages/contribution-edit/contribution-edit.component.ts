@@ -4,13 +4,14 @@ import { ContributionActions } from '@state/actions/contribution.action'
 import { contributionFeature } from '@state/reducers/contribution.reducer'
 
 @Component({
-  selector: 'app-contribution-edit',
-  template: `
+    selector: 'app-contribution-edit',
+    template: `
     <app-contribution-form
       [contribution]="contribution$ | async"
       (onSubmit)="update($event)"
     ></app-contribution-form>
   `,
+    standalone: false
 })
 export class ContributionEditComponent {
   #store = inject(Store)

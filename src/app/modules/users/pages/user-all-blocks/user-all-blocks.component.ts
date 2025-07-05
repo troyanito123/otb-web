@@ -5,9 +5,10 @@ import { AppState } from 'src/app/state/app.reducer';
 import { BLOCKS } from 'src/app/utils/gobal-data';
 
 @Component({
-  selector: 'app-user-all-blocks',
-  templateUrl: './user-all-blocks.component.html',
-  styleUrls: ['./user-all-blocks.component.scss'],
+    selector: 'app-user-all-blocks',
+    templateUrl: './user-all-blocks.component.html',
+    styleUrls: ['./user-all-blocks.component.scss'],
+    standalone: false
 })
 export class UserAllBlocksComponent implements OnInit, OnDestroy {
   public blocks = BLOCKS;

@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { IncomeModel } from 'src/app/models/income.model'
 
 @Component({
-  selector: 'app-income-form',
-  templateUrl: './income-form.component.html',
-  styleUrls: ['./income-form.component.scss'],
+    selector: 'app-income-form',
+    templateUrl: './income-form.component.html',
+    styleUrls: ['./income-form.component.scss'],
+    standalone: false
 })
 export class IncomeFormComponent implements OnInit {
   public form: FormGroup

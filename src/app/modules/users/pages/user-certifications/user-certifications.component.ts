@@ -7,9 +7,10 @@ import { CertificationType } from 'src/app/models/certification.model'
 import { Transaction } from 'src/app/models/transaction.model'
 
 @Component({
-  selector: 'app-user-certifications',
-  templateUrl: './user-certifications.component.html',
-  styleUrls: ['./user-certifications.component.scss'],
+    selector: 'app-user-certifications',
+    templateUrl: './user-certifications.component.html',
+    styleUrls: ['./user-certifications.component.scss'],
+    standalone: false
 })
 export class UserCertificationsComponent {
   public form: FormGroup

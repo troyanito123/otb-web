@@ -11,9 +11,10 @@ import { finesFeature } from '@state/reducers/fines.reducer'
 import { preFineFeature } from '@state/reducers/pre-fine.reducer'
 
 @Component({
-  selector: 'app-user-fines',
-  templateUrl: './user-fines.component.html',
-  styleUrls: ['./user-fines.component.scss'],
+    selector: 'app-user-fines',
+    templateUrl: './user-fines.component.html',
+    styleUrls: ['./user-fines.component.scss'],
+    standalone: false
 })
 export class UserFinesComponent implements OnDestroy {
   readonly displayedColumns = ['date', 'meeting', 'attendence', 'fine', 'finePaid', 'option']

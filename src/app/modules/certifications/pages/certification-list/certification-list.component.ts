@@ -17,9 +17,10 @@ import { CertificationsDataSource } from './certification-datasource';
 import { CertificationService } from 'src/app/services/certification.service';
 
 @Component({
-  selector: 'app-certification-list',
-  templateUrl: './certification-list.component.html',
-  styleUrls: ['./certification-list.component.scss'],
+    selector: 'app-certification-list',
+    templateUrl: './certification-list.component.html',
+    styleUrls: ['./certification-list.component.scss'],
+    standalone: false
 })
 export class CertificationListComponent
   implements OnInit, OnDestroy, AfterViewInit

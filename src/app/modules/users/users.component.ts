@@ -3,9 +3,10 @@ import { RouteReuseStrategy } from '@angular/router'
 import { CustomRouteReuseStrategy } from 'src/app/app-custom-route-reuse.strategy'
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.scss'],
+    standalone: false
 })
 export class UsersComponent implements OnInit, OnDestroy {
   constructor(private routeReouseStragegy: RouteReuseStrategy) {}

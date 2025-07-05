@@ -3,8 +3,9 @@ import { Store } from '@ngrx/store'
 import { IncomesActions } from '@state/actions/incomes.action'
 
 @Component({
-  selector: 'app-user-incomes-create',
-  template: ` <app-user-incomes-form (onSubmit)="create($event)"></app-user-incomes-form> `,
+    selector: 'app-user-incomes-create',
+    template: ` <app-user-incomes-form (onSubmit)="create($event)"></app-user-incomes-form> `,
+    standalone: false
 })
 export class UserIncomesCreateComponent implements OnDestroy {
   #store = inject(Store)

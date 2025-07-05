@@ -19,9 +19,10 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { merge } from 'rxjs'
 
 @Component({
-  selector: 'app-loading',
-  templateUrl: './loading.component.html',
-  styleUrls: ['./loading.component.scss'],
+    selector: 'app-loading',
+    templateUrl: './loading.component.html',
+    styleUrls: ['./loading.component.scss'],
+    standalone: false
 })
 export class LoadingComponent {
   #store = inject(Store)

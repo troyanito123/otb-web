@@ -8,8 +8,8 @@ import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dial
 import { contributionFeature } from '@state/reducers/contribution.reducer'
 
 @Component({
-  selector: 'app-contribution-detail',
-  template: `
+    selector: 'app-contribution-detail',
+    template: `
     <div class="flex-column-center-center">
       <ng-container *ngIf="contribution$ | async as contribution">
         <mat-card appearance="outlined" style="width: 80%">
@@ -29,6 +29,7 @@ import { contributionFeature } from '@state/reducers/contribution.reducer'
       </ng-container>
     </div>
   `,
+    standalone: false
 })
 export class ContributionDetailComponent {
   #store = inject(Store)

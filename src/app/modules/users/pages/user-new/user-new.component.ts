@@ -7,9 +7,10 @@ import { RoleActions } from 'src/app/state/actions/role.action'
 import { AppState } from 'src/app/state/app.reducer'
 
 @Component({
-  selector: 'app-user-new',
-  templateUrl: './user-new.component.html',
-  styleUrls: ['./user-new.component.scss'],
+    selector: 'app-user-new',
+    templateUrl: './user-new.component.html',
+    styleUrls: ['./user-new.component.scss'],
+    standalone: false
 })
 export class UserNewComponent implements OnInit {
   public roles$ = this.store.select(roleFeature.selectRoles)

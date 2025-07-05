@@ -4,7 +4,8 @@ import { Attendence } from '../models/attendence.model';
 import { Meeting } from '../models/meeting.model';
 
 @Pipe({
-  name: 'toAttendence',
+    name: 'toAttendence',
+    standalone: false
 })
 export class ToAttendencePipe implements PipeTransform {
   transform(

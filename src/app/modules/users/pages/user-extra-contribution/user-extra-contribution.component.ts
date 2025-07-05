@@ -15,9 +15,10 @@ import { ExtraContActions } from 'src/app/state/actions/extra-contribution.actio
 import { addTransaction } from 'src/app/state/actions/transactions.action'
 
 @Component({
-  selector: 'app-user-extra-contribution',
-  templateUrl: './user-extra-contribution.component.html',
-  styleUrls: ['./user-extra-contribution.component.scss'],
+    selector: 'app-user-extra-contribution',
+    templateUrl: './user-extra-contribution.component.html',
+    styleUrls: ['./user-extra-contribution.component.scss'],
+    standalone: false
 })
 export class UserExtraContributionComponent implements OnInit, OnDestroy {
   public displayedColumns = ['extra-contribution', 'amount', 'amountPaid', 'datePaid', 'option']

@@ -5,8 +5,8 @@ import { ContributionActions } from 'src/app/state/actions/contribution.action'
 import { AppState } from 'src/app/state/app.reducer'
 
 @Component({
-  selector: 'app-contribution-view',
-  template: `
+    selector: 'app-contribution-view',
+    template: `
     <div class="flex-row-start-center">
       <button mat-raised-button [routerLink]="['./detail']" routerLinkActive="active">
         DETALLE
@@ -18,6 +18,7 @@ import { AppState } from 'src/app/state/app.reducer'
       <router-outlet></router-outlet>
     </div>
   `,
+    standalone: false
 })
 export class ContributionViewComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}

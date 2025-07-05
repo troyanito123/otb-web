@@ -4,8 +4,8 @@ import { MonthlyPaymentActions } from '@state/actions/monthly-payment.action'
 import { monthlyPaymentFeature } from '@state/reducers/monthly-payment.reducer'
 
 @Component({
-  selector: 'app-monthly-payments-edit',
-  template: `
+    selector: 'app-monthly-payments-edit',
+    template: `
     <ng-container *ngIf="monthlyPayment$ | async as monthlyPayment">
       <h2>Modifica la mensualidad</h2>
       <app-monthly-payments-form
@@ -14,6 +14,7 @@ import { monthlyPaymentFeature } from '@state/reducers/monthly-payment.reducer'
       ></app-monthly-payments-form>
     </ng-container>
   `,
+    standalone: false
 })
 export class MonthlyPaymentsEditComponent {
   #store = inject(Store)

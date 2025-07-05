@@ -8,9 +8,10 @@ import { DeleteDialogComponent } from 'src/app/layouts/delete-dialog/delete-dial
 import { certificationFeature } from '@state/reducers/certification.reducer'
 
 @Component({
-  selector: 'app-certification-detail',
-  templateUrl: './certification-detail.component.html',
-  styleUrls: ['./certification-detail.component.scss'],
+    selector: 'app-certification-detail',
+    templateUrl: './certification-detail.component.html',
+    styleUrls: ['./certification-detail.component.scss'],
+    standalone: false
 })
 export class CertificationDetailComponent {
   #store = inject(Store)

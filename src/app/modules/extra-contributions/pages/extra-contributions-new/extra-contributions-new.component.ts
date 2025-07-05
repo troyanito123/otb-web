@@ -4,10 +4,11 @@ import { ExtraContActions } from 'src/app/state/actions/extra-contribution.actio
 import { ExtraContributionData } from '@models/extra-contribution.interface'
 
 @Component({
-  selector: 'app-extra-contributions-new',
-  template: `
+    selector: 'app-extra-contributions-new',
+    template: `
     <app-extra-contribution-form (clickSave)="save($event)"></app-extra-contribution-form>
   `,
+    standalone: false
 })
 export class ExtraContributionsNewComponent {
   #store = inject(Store)

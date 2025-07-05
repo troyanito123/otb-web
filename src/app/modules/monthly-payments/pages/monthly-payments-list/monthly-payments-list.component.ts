@@ -8,9 +8,10 @@ import { monthlyPaymentsFeature } from '@state/reducers/monthly-payments.reducer
 import { YEARS } from 'src/app/utils/gobal-data'
 
 @Component({
-  selector: 'app-monthly-payments-list',
-  templateUrl: './monthly-payments-list.component.html',
-  styleUrls: ['./monthly-payments-list.component.scss'],
+    selector: 'app-monthly-payments-list',
+    templateUrl: './monthly-payments-list.component.html',
+    styleUrls: ['./monthly-payments-list.component.scss'],
+    standalone: false
 })
 export class MonthlyPaymentsListComponent implements OnInit, OnDestroy {
   readonly monthlyPayments$ = this.store.select(monthlyPaymentsFeature.selectMonthlyPayments)

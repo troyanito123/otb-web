@@ -8,9 +8,10 @@ import { UserActions } from '@state/actions/user.action'
 import { PrePaymentActions } from '@state/actions/pre-payment.action'
 
 @Component({
-  selector: 'app-user-view',
-  templateUrl: './user-view.component.html',
-  styleUrls: ['./user-view.component.scss'],
+    selector: 'app-user-view',
+    templateUrl: './user-view.component.html',
+    styleUrls: ['./user-view.component.scss'],
+    standalone: false
 })
 export class UserViewComponent implements OnInit, OnDestroy {
   public user$ = this.store.select(userFeature.selectUser)

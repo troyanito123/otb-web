@@ -6,9 +6,10 @@ import { AppState } from '@state/app.reducer';
 import { IncomesActions } from '@state/actions/incomes.action';
 
 @Component({
-  selector: 'app-income-view',
-  template: `<router-outlet></router-outlet>`,
-  styles: [''],
+    selector: 'app-income-view',
+    template: `<router-outlet></router-outlet>`,
+    styles: [''],
+    standalone: false
 })
 export class IncomeViewComponent implements OnInit, OnDestroy {
   constructor(

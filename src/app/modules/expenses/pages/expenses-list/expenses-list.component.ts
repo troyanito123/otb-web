@@ -17,9 +17,10 @@ import { ExpenseService } from 'src/app/services/expense.service';
 import { ExpensesDataSource } from './expenses-datasource';
 
 @Component({
-  selector: 'app-expenses-list',
-  templateUrl: './expenses-list.component.html',
-  styleUrls: ['./expenses-list.component.scss'],
+    selector: 'app-expenses-list',
+    templateUrl: './expenses-list.component.html',
+    styleUrls: ['./expenses-list.component.scss'],
+    standalone: false
 })
 export class ExpensesListComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource!: ExpensesDataSource;

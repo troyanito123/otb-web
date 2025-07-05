@@ -3,8 +3,9 @@ import { Store } from '@ngrx/store'
 import { ContributionActions } from '@state/actions/contribution.action'
 
 @Component({
-  selector: 'app-contribution-new',
-  template: ` <app-contribution-form (onSubmit)="create($event)"></app-contribution-form> `,
+    selector: 'app-contribution-new',
+    template: ` <app-contribution-form (onSubmit)="create($event)"></app-contribution-form> `,
+    standalone: false
 })
 export class ContributionNewComponent {
   #store = inject(Store)

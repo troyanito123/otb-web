@@ -4,9 +4,10 @@ import { ExtraContActions } from 'src/app/state/actions/extra-contribution.actio
 import { extraContributionFeature } from '@state/reducers/extra-contribution.reducer'
 
 @Component({
-  selector: 'app-extra-contributions-list',
-  templateUrl: './extra-contributions-list.component.html',
-  styleUrls: ['./extra-contributions-list.component.scss'],
+    selector: 'app-extra-contributions-list',
+    templateUrl: './extra-contributions-list.component.html',
+    styleUrls: ['./extra-contributions-list.component.scss'],
+    standalone: false
 })
 export class ExtraContributionsListComponent {
   readonly extraContributions$ = this.store.select(

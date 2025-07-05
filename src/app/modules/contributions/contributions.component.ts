@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 
 @Component({
-  selector: 'app-contributions',
-  template: `
+    selector: 'app-contributions',
+    template: `
     <div style="margin: 1rem">
       <div class="flex-row-end-center">
         <button mat-raised-button [routerLink]="['./list']" routerLinkActive="active">Lista</button>
@@ -12,5 +12,6 @@ import { Component, OnInit } from '@angular/core'
       <router-outlet></router-outlet>
     </div>
   `,
+    standalone: false
 })
 export class ContributionsComponent {}

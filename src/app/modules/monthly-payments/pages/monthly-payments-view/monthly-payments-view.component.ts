@@ -5,9 +5,10 @@ import { MonthlyPaymentActions } from 'src/app/state/actions/monthly-payment.act
 import { ActivatedRoute } from '@angular/router'
 
 @Component({
-  selector: 'app-monthly-payments-view',
-  templateUrl: './monthly-payments-view.component.html',
-  styleUrls: ['./monthly-payments-view.component.scss'],
+    selector: 'app-monthly-payments-view',
+    templateUrl: './monthly-payments-view.component.html',
+    styleUrls: ['./monthly-payments-view.component.scss'],
+    standalone: false
 })
 export class MonthlyPaymentsViewComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private route: ActivatedRoute) {}

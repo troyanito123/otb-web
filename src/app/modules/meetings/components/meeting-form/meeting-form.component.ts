@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Meeting, MeetingData } from 'src/app/models/meeting.model'
 
 @Component({
-  selector: 'app-meeting-form',
-  templateUrl: './meeting-form.component.html',
-  styleUrls: ['./meeting-form.component.scss'],
+    selector: 'app-meeting-form',
+    templateUrl: './meeting-form.component.html',
+    styleUrls: ['./meeting-form.component.scss'],
+    standalone: false
 })
 export class MeetingFormComponent implements OnInit {
   @Input() meeting!: Meeting

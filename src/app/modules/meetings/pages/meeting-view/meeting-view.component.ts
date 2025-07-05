@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store'
 import { MeetingActions } from 'src/app/state/actions/meeting.actions'
 
 @Component({
-  selector: 'app-meeting-view',
-  templateUrl: './meeting-view.component.html',
-  styleUrls: ['./meeting-view.component.scss'],
+    selector: 'app-meeting-view',
+    templateUrl: './meeting-view.component.html',
+    styleUrls: ['./meeting-view.component.scss'],
+    standalone: false
 })
 export class MeetingViewComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private route: ActivatedRoute) {}

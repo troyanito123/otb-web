@@ -6,9 +6,10 @@ import { AppState } from 'src/app/state/app.reducer'
 import { AuthActions } from 'src/app/state/actions/auth.action'
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss'],
+    selector: 'app-signin',
+    templateUrl: './signin.component.html',
+    styleUrls: ['./signin.component.scss'],
+    standalone: false
 })
 export class SigninComponent {
   public form: FormGroup

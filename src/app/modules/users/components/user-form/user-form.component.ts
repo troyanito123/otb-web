@@ -6,9 +6,10 @@ import { Role } from 'src/app/models/role.model'
 import { BLOCKS } from 'src/app/utils/gobal-data'
 
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss'],
+    selector: 'app-user-form',
+    templateUrl: './user-form.component.html',
+    styleUrls: ['./user-form.component.scss'],
+    standalone: false
 })
 export class UserFormComponent implements OnInit {
   form!: FormGroup

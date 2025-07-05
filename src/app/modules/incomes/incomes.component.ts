@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 
 @Component({
-  selector: 'app-incomes',
-  template: `
+    selector: 'app-incomes',
+    template: `
     <div style="margin: 1rem">
       <div class="flex-row-end-center" style="margin-bottom: 1rem">
         <button mat-raised-button [routerLink]="['list']" routerLinkActive="active">Lista</button>
@@ -10,6 +10,7 @@ import { Component } from '@angular/core'
       <router-outlet></router-outlet>
     </div>
   `,
-  styles: [],
+    styles: [],
+    standalone: false
 })
 export class IncomesComponent {}

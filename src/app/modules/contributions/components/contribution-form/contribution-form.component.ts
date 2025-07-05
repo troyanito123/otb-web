@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Contribution } from 'src/app/models/contribution.model'
 
 @Component({
-  selector: 'app-contribution-form',
-  templateUrl: './contribution-form.component.html',
-  styleUrls: ['./contribution-form.component.scss'],
+    selector: 'app-contribution-form',
+    templateUrl: './contribution-form.component.html',
+    styleUrls: ['./contribution-form.component.scss'],
+    standalone: false
 })
 export class ContributionFormComponent implements OnInit {
   #formBuilder = inject(FormBuilder)

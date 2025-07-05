@@ -4,9 +4,10 @@ import { IncomesActions } from '@state/actions/incomes.action'
 import { incomesFeature } from '@state/reducers/incomes.reducer'
 
 @Component({
-  selector: 'app-user-incomes-list',
-  templateUrl: './user-incomes-list.component.html',
-  styleUrls: ['./user-incomes-list.component.scss'],
+    selector: 'app-user-incomes-list',
+    templateUrl: './user-incomes-list.component.html',
+    styleUrls: ['./user-incomes-list.component.scss'],
+    standalone: false
 })
 export class UserIncomesListComponent implements OnInit {
   #store = inject(Store)

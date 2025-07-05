@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 import { CertificationActions } from 'src/app/state/actions/certification.action';
 
 @Component({
-  selector: 'app-certification-view',
-  templateUrl: './certification-view.component.html',
-  styleUrls: ['./certification-view.component.scss'],
+    selector: 'app-certification-view',
+    templateUrl: './certification-view.component.html',
+    styleUrls: ['./certification-view.component.scss'],
+    standalone: false
 })
 export class CertificationViewComponent implements OnInit, OnDestroy {
   constructor(private store: Store, private route: ActivatedRoute) {}

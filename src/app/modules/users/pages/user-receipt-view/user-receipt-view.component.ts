@@ -13,9 +13,10 @@ import { userFeature } from '@state/reducers/user.reducer'
 import { authFeature } from '@state/reducers/auth.reducer'
 import { transactionsFeature } from '@state/reducers/receipt.reducer'
 @Component({
-  selector: 'app-user-receipt-view',
-  templateUrl: './user-receipt-view.component.html',
-  styleUrls: ['./user-receipt-view.component.scss'],
+    selector: 'app-user-receipt-view',
+    templateUrl: './user-receipt-view.component.html',
+    styleUrls: ['./user-receipt-view.component.scss'],
+    standalone: false
 })
 export class UserReceiptViewComponent {
   protected auth$ = this.store.select(authFeature.selectUser)

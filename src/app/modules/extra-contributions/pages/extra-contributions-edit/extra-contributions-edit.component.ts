@@ -5,8 +5,8 @@ import { extraContributionFeature } from '@state/reducers/extra-contribution.red
 import { ExtraContActions } from 'src/app/state/actions/extra-contribution.action'
 
 @Component({
-  selector: 'app-extra-contributions-edit',
-  template: `
+    selector: 'app-extra-contributions-edit',
+    template: `
     <ng-container *ngIf="extraContribution$ | async as extraContribution">
       <app-extra-contribution-form
         [extraContribution]="extraContribution"
@@ -14,7 +14,8 @@ import { ExtraContActions } from 'src/app/state/actions/extra-contribution.actio
       ></app-extra-contribution-form>
     </ng-container>
   `,
-  styles: [],
+    styles: [],
+    standalone: false
 })
 export class ExtraContributionsEditComponent {
   #store = inject(Store)

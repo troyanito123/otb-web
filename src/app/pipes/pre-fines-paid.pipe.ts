@@ -5,7 +5,8 @@ import { Meeting } from '../models/meeting.model';
 import { PreFinesPaid } from '../models/pre-fines-paid.model';
 
 @Pipe({
-  name: 'preFinesPaid',
+    name: 'preFinesPaid',
+    standalone: false
 })
 export class PreFinesPaidPipe implements PipeTransform {
   transform(

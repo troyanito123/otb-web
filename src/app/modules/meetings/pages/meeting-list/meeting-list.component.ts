@@ -4,9 +4,10 @@ import { MeetingsActions } from 'src/app/state/actions/meetings.actions'
 import { meetingsFeature } from '@state/reducers/meetings.reducer'
 
 @Component({
-  selector: 'app-meeting-list',
-  templateUrl: './meeting-list.component.html',
-  styleUrls: ['./meeting-list.component.scss'],
+    selector: 'app-meeting-list',
+    templateUrl: './meeting-list.component.html',
+    styleUrls: ['./meeting-list.component.scss'],
+    standalone: false
 })
 export class MeetingListComponent {
   readonly displayedColumns = ['name', 'date']

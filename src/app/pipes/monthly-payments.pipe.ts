@@ -5,7 +5,8 @@ import { PrePayment } from '../models/pre-payment';
 import { couldPay } from '../utils/helper';
 
 @Pipe({
-  name: 'monthlyPayments',
+    name: 'monthlyPayments',
+    standalone: false
 })
 export class MonthlyPaymentsPipe implements PipeTransform {
   transform(

@@ -11,9 +11,10 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MonthlyPaymentMade } from '@models/monthly-payment-made'
 
 @Component({
-  selector: 'app-user-pre-payment',
-  templateUrl: './user-pre-payment.component.html',
-  styleUrls: ['./user-pre-payment.component.scss'],
+    selector: 'app-user-pre-payment',
+    templateUrl: './user-pre-payment.component.html',
+    styleUrls: ['./user-pre-payment.component.scss'],
+    standalone: false
 })
 export class UserPrePaymentComponent {
   protected displayedColumns: string[] = ['year', 'month', 'amountForPay', 'option']

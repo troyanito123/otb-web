@@ -14,9 +14,10 @@ import Chart from 'chart.js/auto'
 import { map, take } from 'rxjs/operators'
 
 @Component({
-  selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss'],
+    selector: 'app-summary',
+    templateUrl: './summary.component.html',
+    styleUrls: ['./summary.component.scss'],
+    standalone: false
 })
 export class SummaryComponent implements OnInit, OnDestroy, AfterViewInit {
   #store = inject(Store)

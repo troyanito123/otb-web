@@ -8,9 +8,10 @@ import { extraContributionFeature } from '@state/reducers/extra-contribution.red
 import { PrintTableService } from 'src/app/services/print-table.service'
 
 @Component({
-  selector: 'app-extra-contributions-detail',
-  templateUrl: './extra-contributions-detail.component.html',
-  styleUrls: ['./extra-contributions-detail.component.scss'],
+    selector: 'app-extra-contributions-detail',
+    templateUrl: './extra-contributions-detail.component.html',
+    styleUrls: ['./extra-contributions-detail.component.scss'],
+    standalone: false
 })
 export class ExtraContributionsDetailComponent {
   readonly displayedColumns = ['name', 'date', 'amount']

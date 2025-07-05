@@ -5,13 +5,14 @@ import { IncomesActions } from '@state/actions/incomes.action'
 import { incomesFeature } from '@state/reducers/incomes.reducer'
 
 @Component({
-  selector: 'app-income-edit',
-  template: `
+    selector: 'app-income-edit',
+    template: `
     <ng-container *ngIf="income$ | async as income">
       <app-income-form [income]="income" (onSubmit)="onSubmit($event)"></app-income-form>
     </ng-container>
   `,
-  styles: [],
+    styles: [],
+    standalone: false
 })
 export class IncomeEditComponent {
   #store = inject(Store<AppState>)

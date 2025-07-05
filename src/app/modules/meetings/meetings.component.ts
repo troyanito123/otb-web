@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store'
 import { MeetingsActions } from '@state/actions/meetings.actions'
 
 @Component({
-  selector: 'app-meetings',
-  templateUrl: './meetings.component.html',
-  styleUrls: ['./meetings.component.scss'],
+    selector: 'app-meetings',
+    templateUrl: './meetings.component.html',
+    styleUrls: ['./meetings.component.scss'],
+    standalone: false
 })
 export class MeetingsComponent implements OnDestroy {
   #store = inject(Store)
