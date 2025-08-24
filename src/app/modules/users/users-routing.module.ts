@@ -19,6 +19,7 @@ import { UserReceiptViewComponent } from './pages/user-receipt-view/user-receipt
 import { UserViewComponent } from './pages/user-view/user-view.component'
 import { UsersComponent } from './users.component'
 import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit/user-incomes-edit.component'
+import { UserReportComponent } from './pages/user-report/user-report.component'
 
 const routes: Routes = [
   {
@@ -58,6 +59,10 @@ const routes: Routes = [
           { 
             path: 'extra-contributions',
             component: UserExtraContributionComponent,
+          },
+          { 
+            path: 'report',
+            component: UserReportComponent,
           },
           { path: '', redirectTo: 'detail', pathMatch: 'full' },
         ],

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
+import { OTBUser } from '@models/user.detail.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -88,5 +89,10 @@ export class UserService {
     return this.http
       .delete(`${this.url}/${id}`)
       .pipe(map((res) => User.fromJson(res)));
+  }
+
+  public getDetail(id: number) {
+    return this.http
+      .get<OTBUser>(`${this.url}/detail/${id}`);
   }
 }

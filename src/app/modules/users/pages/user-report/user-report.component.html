@@ -1,0 +1,191 @@
+@if(userReport$ | async; as userReport) {
+
+<div style="margin-bottom: 20px">
+  <button mat-raised-button (click)="printWithService(userReport)">PDF (Tablas)</button>
+</div>
+
+<div id="userReport" #userReport>
+  <h1>{{ userReport.userName }}</h1>
+  <hr />
+  <h2>Aportes</h2>
+  <h3>Adeuda: {{ userReport.contributionsTotal }}</h3>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Monto</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (contribution of userReport.contributions; track $index) {
+      <tr>
+        <td>{{ contribution.description }}</td>
+        <td>{{ contribution.amount }}</td>
+        <td>{{ contribution.amount_paid === 0 ? 'No pagado' : contribution.amount_paid }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <h2>Aportes extras</h2>
+  <h3>Adeuda: {{ userReport.extraContributionsTotal }}</h3>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Monto</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (extraContribution of userReport.extraContributions; track $index) {
+      <tr>
+        <td>{{ extraContribution.name }}</td>
+        <td>{{ extraContribution.amount }}</td>
+        <td>
+          {{ extraContribution.amount_paid === 0 ? 'No pagado' : extraContribution.amount_paid }}
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <h2>Multas</h2>
+  <h3>Adeuda: {{ userReport.finesTotal }}</h3>
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Asistencia</th>
+        <th>Multa reunión</th>
+        <th>Multa pagada</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (fine of userReport.fines; track $index) {
+      <tr>
+        <td>{{ fine.meetingName }}</td>
+        <td>{{ fine.meetingDate | date }}</td>
+        <td>{{ fine.attendence }}</td>
+        <td>{{ fine.fine }}</td>
+        <td>{{ fine.attendence === 'NO' ? fine.finePaid : 'N/A' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <h2>Mensualidades</h2>
+  <h3>Adeuda: {{ userReport.monthlyTotal }}</h3>
+
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Aporte</th>
+        <th>Cancelado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (payment of userReport.monthly2022; track $index) {
+      <tr>
+        <td>{{ payment.year }}</td>
+        <td>{{ payment.month }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.isMonthlyPaymentPaid ? 'SI' : 'NO' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <hr />
+
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Aporte</th>
+        <th>Cancelado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (payment of userReport.monthly2023 ; track $index) {
+      <tr>
+        <td>{{ payment.year }}</td>
+        <td>{{ payment.month }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.isMonthlyPaymentPaid ? 'SI' : 'NO' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <hr />
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Aporte</th>
+        <th>Cancelado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (payment of userReport.monthly2024 ; track $index) {
+      <tr>
+        <td>{{ payment.year }}</td>
+        <td>{{ payment.month }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.isMonthlyPaymentPaid ? 'SI' : 'NO' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <hr />
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Aporte</th>
+        <th>Cancelado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (payment of userReport.monthly2021 ; track $index) {
+      <tr>
+        <td>{{ payment.year }}</td>
+        <td>{{ payment.month }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.isMonthlyPaymentPaid ? 'SI' : 'NO' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <hr />
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Año</th>
+        <th>Mes</th>
+        <th>Aporte</th>
+        <th>Cancelado</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (payment of userReport.monthly2025; track $index) {
+      <tr>
+        <td>{{ payment.year }}</td>
+        <td>{{ payment.month }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.isMonthlyPaymentPaid ? 'SI' : 'NO' }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<pre>{{ userReport | json }}</pre>
+
+}

@@ -33,6 +33,7 @@ import { UsersEffect } from '@state/effects/users.effect';
 import { UserIncomesFormComponent } from './pages/user-incomes/user-incomes-form/user-incomes-form.component';
 import { UserIncomesEditComponent } from './pages/user-incomes/user-incomes-edit/user-incomes-edit.component';
 import { QrCodeCustomComponent } from './components/qr-code-custom/qr-code-custom.component';
+import { UserReportComponent } from './pages/user-report/user-report.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { QrCodeCustomComponent } from './components/qr-code-custom/qr-code-custo
     UserIncomesListComponent,
     UserIncomesFormComponent,
     UserIncomesEditComponent,
+    UserReportComponent,
   ],
   imports: [
     CommonModule,
