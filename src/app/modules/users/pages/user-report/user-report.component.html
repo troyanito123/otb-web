@@ -1,12 +1,11 @@
 @if(userReport$ | async; as userReport) {
 
 <div style="margin-bottom: 20px">
-  <button mat-raised-button (click)="printWithService(userReport)">PDF (Tablas)</button>
+  <button mat-raised-button color="primary" (click)="printWithService(userReport)">Generar PDF</button>
 </div>
 
 <div id="userReport" #userReport>
   <h1>{{ userReport.userName }}</h1>
-  <hr />
   <h2>Aportes</h2>
   <h3>Adeuda: {{ userReport.contributionsTotal }}</h3>
   <table class="custom-table">
@@ -69,8 +68,8 @@
         <td>{{ fine.meetingName }}</td>
         <td>{{ fine.meetingDate | date }}</td>
         <td>{{ fine.attendence }}</td>
-        <td>{{ fine.fine }}</td>
-        <td>{{ fine.attendence === 'NO' ? fine.finePaid : 'N/A' }}</td>
+        <td>{{ fine.attendence === 'SI' ? 'N/A' : fine.fine }}</td>
+        <td>{{ fine.attendence === 'SI' ? 'N/A' : fine.finePaid }}</td>
       </tr>
       }
     </tbody>
