@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/otb-web",
+    "public": "dist/otb-web/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
