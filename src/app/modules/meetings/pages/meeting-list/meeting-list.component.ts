@@ -10,7 +10,7 @@ import { meetingsFeature } from '@state/reducers/meetings.reducer'
     standalone: false
 })
 export class MeetingListComponent {
-  readonly displayedColumns = ['name', 'date']
+  readonly displayedColumns = ['year', 'name', 'type', 'date', 'fine']
   readonly meetings$ = this.store.select(meetingsFeature.selectMeetings)
 
   constructor(private store: Store) {

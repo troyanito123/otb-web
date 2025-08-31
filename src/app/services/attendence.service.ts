@@ -21,7 +21,6 @@ export class AttendenceService {
   }
 
   public create(userId: number, meetingId: number): Observable<Attendence> {
-    console.log({userId, meetingId})
     return this.http
       .post(this.url, { userId, meetingId })
       .pipe(map((res) => Attendence.fromJson(res)))

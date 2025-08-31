@@ -69,6 +69,24 @@
       <mat-hint>Campo obligatorio</mat-hint>
     </mat-form-field>
 
+    <mat-form-field appearance="fill">
+      <mat-label>Gestión</mat-label>
+      <mat-select  placeholder="Año" formControlName="year">
+      @for (item of years; track $index) {
+        <mat-option [value]="item">{{ item }}</mat-option>
+      }
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo</mat-label>
+      <mat-select  placeholder="Tipo" formControlName="type">
+      @for (item of types; track $index) {
+        <mat-option [value]="item">{{ item | meetingType }}</mat-option>
+      }
+    </mat-select>
+    </mat-form-field>
+
     <button mat-raised-button color="primary" type="submit">Guardar</button>
   </form>
 </div>

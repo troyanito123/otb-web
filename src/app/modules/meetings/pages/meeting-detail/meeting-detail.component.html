@@ -6,9 +6,11 @@
         <mat-card-subtitle>{{ meeting.date | date : 'fullDate' | uppercase }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        <p><strong>Gestión: </strong> {{ meeting.year ?? '--' }}</p>
+        <p><strong>Tipo: </strong> {{ meeting.type | meetingType }}</p>
         <p><strong>Puntos a tratar: </strong> {{ meeting.description }}</p>
         <p><strong>Conclusiones: </strong> {{ meeting.conclutions }}</p>
-        <p><strong>Multa: </strong> {{ meeting.fine_amount | number : '1.2' }} Bs.</p>
+        <p><strong>Multa: </strong> {{ meeting.fine_amount | currency : 'Bs. ' }}</p>
       </mat-card-content>
       <mat-card-actions align="end">
         <button mat-raised-button color="warn" (click)="delete(meeting.id)">Eliminar</button>

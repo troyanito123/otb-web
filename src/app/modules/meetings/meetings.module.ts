@@ -12,6 +12,7 @@ import { MeetingsComponent } from './meetings.component';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MeetingDetailComponent } from './pages/meeting-detail/meeting-detail.component';
+import { MeetingTypePipe } from 'src/app/pipes/meeting-type.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MeetingDetailComponent } from './pages/meeting-detail/meeting-detail.co
     MeetingsRoutingModule,
     AngularMaterialModule,
     ReactiveFormsModule,
+    MeetingTypePipe
   ],
 })
 export class MeetingsModule {}

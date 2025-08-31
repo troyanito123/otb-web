@@ -11,6 +11,8 @@ import { Meeting, MeetingData } from 'src/app/models/meeting.model'
 export class MeetingFormComponent implements OnInit {
   @Input() meeting!: Meeting
   @Output() clickSave = new EventEmitter<MeetingData>()
+  @Input({required: true}) years: string[] = []
+  @Input({required: true}) types: string[] = []
 
   form!: FormGroup
 
@@ -46,6 +48,8 @@ export class MeetingFormComponent implements OnInit {
         this.meeting ? this.meeting.fine_amount : 20,
         [Validators.required, Validators.min(0), Validators.max(1000)],
       ],
+      year: [this.meeting ? this.meeting.year : null],
+      type: [this.meeting ? this.meeting.type : null],
     })
   }
 }

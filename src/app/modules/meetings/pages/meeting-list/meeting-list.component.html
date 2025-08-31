@@ -2,15 +2,27 @@
   <div class="flex-column-center-stretch">
     <h2>Lista de reuniones en la OTB</h2>
     <table mat-table [dataSource]="meetings">
+      <ng-container matColumnDef="year">
+        <th mat-header-cell *matHeaderCellDef>Gestión</th>
+        <td mat-cell *matCellDef="let meeting">{{ meeting.year ?? '--' }}</td>
+      </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
         <td mat-cell *matCellDef="let meeting">{{ meeting.name }}</td>
       </ng-container>
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+        <td mat-cell *matCellDef="let meeting">{{ meeting.type | meetingType }}</td>
+      </ng-container>
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>FECHA</th>
         <td mat-cell *matCellDef="let meeting">
-          {{ meeting.date | date : 'fullDate' | uppercase }}
+          {{ meeting.date | date : 'dd MMM yyyy' | uppercase }}
         </td>
+      </ng-container>
+      <ng-container matColumnDef="fine">
+        <th mat-header-cell *matHeaderCellDef>Multa</th>
+        <td mat-cell *matCellDef="let meeting">{{ meeting.fine_amount | currency : 'Bs. ' }}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['../', row.id]"></tr>

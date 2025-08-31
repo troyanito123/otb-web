@@ -24,7 +24,7 @@ export class MeetingService {
     return this.http.get(`${this.url}/${id}`).pipe(map((res) => Meeting.fromJson(res)))
   }
 
-  public create({ name, description, date, fine_amount, conclutions }: MeetingData) {
+  public create({ name, description, date, fine_amount, conclutions, year, type }: MeetingData) {
     return this.http
       .post(this.url, {
         name: name.toUpperCase(),
@@ -32,11 +32,13 @@ export class MeetingService {
         date,
         fine_amount,
         conclutions,
+        year,
+        type,
       })
       .pipe(map((res) => Meeting.fromJson(res)))
   }
 
-  public update(id: number, { name, description, date, fine_amount, conclutions }: MeetingData) {
+  public update(id: number, { name, description, date, fine_amount, conclutions, year, type }: MeetingData) {
     return this.http
       .put(`${this.url}/${id}`, {
         name,
@@ -44,6 +46,8 @@ export class MeetingService {
         date,
         fine_amount,
         conclutions,
+        year,
+        type,
       })
       .pipe(map((res) => Meeting.fromJson(res)))
   }
