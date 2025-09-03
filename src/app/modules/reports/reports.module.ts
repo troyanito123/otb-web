@@ -9,6 +9,7 @@ import { ReportExpensesComponent } from './pages/report-expenses/report-expenses
 import { ReportAttendencesComponent } from './pages/report-attendences/report-attendences.component';
 import { ReportIncomeComponent } from './pages/report-income/report-income.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ReportListFormatComponent } from './pages/report-list-format/report-list-format.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     ReportExpensesComponent,
     ReportAttendencesComponent,
     ReportIncomeComponent,
+    ReportListFormatComponent,
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import { ReportIncomeComponent } from './pages/report-income/report-income.compo
 import { ReportsComponent } from './reports.component'
 import { Meeting } from '@models/meeting.model'
 import { MeetingService } from '@services/meeting.service'
+import { ReportListFormatComponent } from './pages/report-list-format/report-list-format.component'
 
 const reportAttendanceResolver: ResolveFn<Meeting[]> = () => {
   return inject(MeetingService).getAll()
@@ -29,6 +30,7 @@ const routes: Routes = [
       },
       { path: 'expenses', component: ReportExpensesComponent },
       { path: 'income', component: ReportIncomeComponent },
+      { path: 'lists', component: ReportListFormatComponent },
       { path: '', redirectTo: 'attendences', pathMatch: 'full' },
     ],
   },

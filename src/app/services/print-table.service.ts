@@ -10,6 +10,8 @@ export type PDFInput = {
   type: string;
   subtitle?: string;
   footer?: string;
+  orientation?: 'portrait' | 'landscape';
+  format?: 'a4' | 'letter' | [210, 320];
 }
 
 export interface UserReportData {
@@ -29,11 +31,12 @@ export interface UserReportData {
 export class PrintTableService {
   constructor() {}
 
-  public generatePdf({title, head, body, type, subtitle, footer}: PDFInput) {
-    const doc = new jsPDF()
+  public generatePdf({title, head, body, type, subtitle, footer, orientation, format}: PDFInput) {
+    const doc = new jsPDF({orientation: orientation ?? 'portrait', format: format ?? 'letter'})
 
     // Configurar fuente y título principal
     doc.setFontSize(16)
+    
     doc.setFont('helvetica', 'bold')
     doc.text(title, 105, 20, { align: 'center' })
 
@@ -55,7 +58,7 @@ export class PrintTableService {
         fontStyle: 'bold'
       },
       bodyStyles: {
-        fontSize: 10
+        fontSize: 10,
       },
       alternateRowStyles: {
         fillColor: '#f5f5f5'
@@ -74,12 +77,6 @@ export class PrintTableService {
           { align: 'right' }
         )
 
-        // Agregar fecha de generación
-        doc.text(
-          `Generado: ${new Date().toLocaleDateString('es-ES')}`,
-          15,
-          pageSize.getHeight() - 10
-        )
       }
     })
 
@@ -90,7 +87,7 @@ export class PrintTableService {
       doc.text(footer, 15, finalY + 20)
     }
 
-    doc.save(`REPORTE_${type.toUpperCase()}_${new Date().toISOString().split('T')[0]}.pdf`)
+    doc.save(`REPORTE_${type.toUpperCase()}_${subtitle?.toUpperCase() ?? ''}.pdf`)
   }
 
   // Método específico para generar reporte de usuario
