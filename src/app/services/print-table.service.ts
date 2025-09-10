@@ -35,17 +35,10 @@ export class PrintTableService {
     const doc = new jsPDF({orientation: orientation ?? 'portrait', format: format ?? 'letter'})
 
     // Configurar fuente y título principal
-    doc.setFontSize(16)
-    
+    doc.setFontSize(12)
+    const customTitle = orientation === 'landscape' ? `${title} - ${subtitle}` : title;
     doc.setFont('helvetica', 'bold')
-    doc.text(title, 105, 20, { align: 'center' })
-
-    // Agregar subtítulo si existe
-    if (subtitle) {
-      doc.setFontSize(12)
-      doc.setFont('helvetica', 'normal')
-      doc.text(subtitle, 105, 30, { align: 'center' })
-    }
+    doc.text(customTitle, 15, 12)
 
     // Generar tabla con autoTable
     autoTable(doc, {
@@ -63,7 +56,7 @@ export class PrintTableService {
       alternateRowStyles: {
         fillColor: '#f5f5f5'
       },
-      margin: { top: subtitle ? 40 : 30 },
+      margin: { top: 15 },
       didDrawPage: (data) => {
         // Agregar número de página
         const pageCount = doc.getNumberOfPages()
